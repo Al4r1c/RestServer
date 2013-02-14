@@ -1,0 +1,23 @@
+Config:
+  DEBUG_WEBSITE: true
+  DEBUG_FRAMEWORK: true
+  LOG_TYPE: LOG
+  CHARSET: utf-8
+  DEFAULT_LANG: French
+  DEFAULT_RENDER: JSON
+
+Displayers:
+  LOG: logger
+
+Render:
+  PLAIN: txt
+  HTML:
+    -html
+    -htm
+    -xhtml
+  JSON: json
+  XML: xml
+
+Languages:
+  FRENCH: fr
+  ENGLISH: en

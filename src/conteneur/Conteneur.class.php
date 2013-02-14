@@ -1,0 +1,71 @@
+<?php
+	namespace Conteneur;
+
+	class Conteneur {
+		protected $conteneur;
+
+		public function __construct() {
+			$this->buildConteneur();
+		}
+
+		public function getConteneur() {
+			return $this->conteneur;
+		}
+
+		private function buildConteneur() {
+			$conteneur = new \Pimple();
+
+			$conteneur['configManager'] = $conteneur->share(function() {
+				$configurationManager = new \Serveur\Config\Config();
+				$configurationManager->chargerConfiguration(new \Serveur\Lib\Fichier('config.yaml', 'config'));
+				return $configurationManager;
+			});
+
+			$conteneur['server'] = function() {
+				return new \Serveur\Rest\Server($_SERVER);
+			};
+
+			$conteneur['restRequest'] = function($c) {
+				$restRequete = new \Serveur\Rest\RestRequete();
+				$restRequete->setServer($c['server']);
+				return $restRequete;
+			};
+
+			$conteneur['restReponse'] = function($c) {
+				$restReponse = new \Serveur\Rest\RestReponse();
+				$restReponse->setConfig($c['configManager']);
+				return $restReponse;
+			};
+
+			$conteneur['restManager'] = $conteneur->share(function($c) {
+				$restManager = new \Serveur\Rest\RestManager();
+				$restManager->setRequete($c['restRequest']);
+				$restManager->setReponse($c['restReponse']);
+				return $restManager;
+			});
+
+			$conteneur['i18nManager'] = function($c) {
+				$I18nManager = new \Serveur\I18n\I18nManager();
+				$I18nManager->setConfig($c['configManager']);
+				return $I18nManager;
+			};
+
+			$conteneur['tradManager'] = function($c) {
+				$traductionManager = new \Serveur\I18n\TradManager($c['i18nManager']->getTradFileDefaut());
+				$traductionManager->setFichierTraduction($c['i18nManager']->getTradFileDefaut());
+				return $traductionManager;
+			};
+
+			$conteneur['errorManager'] = $conteneur->share(function($c) {
+				$errorManager = new \Serveur\Exceptions\ErrorManager();
+				$errorManager->setErrorHandler($c['errorHandler']);
+				return $errorManager;
+			});
+
+			$conteneur['errorHandler'] = function() {
+				return new \Serveur\Exceptions\Handler\ErrorHandling();
+			};
+
+			$this->conteneur = $conteneur;
+		}
+	}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "xmli18n.dtd">
+
+<language lang="fr">
+
+    <trad>
+        <message code="notice">Remarque</message>
+        <message code="warning">Attention</message>
+        <message code="error">Erreur</message>
+        <message code="fatalerror">Erreur critique</message>
+        <message code="file">Fichier</message>
+        <message code="line">Ligne</message>
+        <message code="appliError">Application</message>
+        <message code="fileError">Fichier</message>
+        <message code="restReqError">Requête</message>
+        <message code="restResError">Réponse</message>
+        <message code="confError">Fichier de configuration</message>
+        <message code="dataError">Erreur de donnée</message>
+    </trad>
+
+    <errorMessage>
+	    <message code="10000">La classe d'affichage des erreurs "%s" n'existe pas.</message>
+	    <message code="10100">Fichier "%s" introuvable.</message>
+	    <message code="10101">Le fichier "%s" n'a pas pu être créé.</message>
+	    <message code="10102">Les fichiers avec l'extension "%s" ne peuvent être chargés. (Fichier: %s)</message>
+	    <message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
+	    <message code="20001">Aucun format de retour valide trouvé.</message>
+	    <message code="20002">Données serveur invalides.</message>
+	    <message code="20100">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
+	    <message code="20101">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
+	    <message code="30000">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
+	    <message code="40000">La langue "%s" n'est associée à aucune traduction. Langue utilisée à la place: %s.</message>
+	    <message code="40001">Fichier pour la langue "%s" définie par défaut (%s) non trouvé. Langue chargée à la place: %s.</message>
+	    <message code="40002">Fichier pour la langue "%s" définie par défaut (%s) invalide. Langue chargée à la place: %s.</message>
+	    <message code="40003">Fichier pour la langue "%s" non trouvé. (Devrait être: %s)</message>
+	    <message code="40004">Fichier pour la langue "%s" invalide. (%s)</message>
+	    <message code="40005">Aucun fichier de traduction valide n'a été définie ou trouvé.</message>
+	    <message code="40006">Traduction pour l'entité "%s.%s" non trouvée.</message>
+    </errorMessage>
+
+</language>

@@ -1,0 +1,13 @@
+==CHANGELOG==
+
+v0.1
+.htaccess fonctionnel.
+ClassLoader acceptant plusieurs namespace.
+Utilisation d'un composer.
+Conteneur Pimple pour l'initialisation et l'injection de dépendance.
+Base d'un serveur Rest mis en place (renvoie la requête).
+Requête et réponse fonctionnel.
+Configuration (utilise le format YAML, exploité grâce à SPYC) fonctionnelle. Définie notamment la langue (pour les erreurs) et les formats de rendus.
+Internationalisation fonctionnelle.
+Système d'exceptions déployé, associé à un code erreur pour la traduction. En cas d'exception levée, réponse renvoie code status erreur HTTP + signification.
+Aucun tests.

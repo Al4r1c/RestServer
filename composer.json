@@ -1,0 +1,9 @@
+{
+	"require": {
+		"pimple/pimple": "v1.0.1",
+		"lespoilus/spyc": "dev-master"
+	},
+	"config" : {
+        "vendor-dir" : "packages"
+    }
+}

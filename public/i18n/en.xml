@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "xmli18n.dtd">
+
+<language lang="en">
+
+    <trad>
+        <message code="notice">Notice</message>
+        <message code="warning">Warning</message>
+        <message code="error">Error</message>
+        <message code="fatalerror">Fatal error</message>
+        <message code="file">File</message>
+        <message code="line">Line</message>
+	    <message code="appliError">Application</message>
+	    <message code="fileError">Fichier</message>
+        <message code="restReqError">Request</message>
+        <message code="restResError">Response</message>
+        <message code="confError">Configuration file</message>
+        <message code="dataError">Data error</message>
+    </trad>
+
+    <errorMessage>
+	    <message code="10000">Error displaying class "%s" does not exist.</message>
+	    <message code="10100">File "%s" not found.</message>
+	    <message code="10101">File "%s" could not be created.</message>
+	    <message code="10102">File with extension "%s" can't be loaded. (File: %s)</message>
+	    <message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
+	    <message code="20001">No valid return format found.</message>
+	    <message code="20002">Invalid server data.</message>
+	    <message code="20100">HTTP code "%s" is not valid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html for more informations about HTTP code.</message>
+	    <message code="20101">Specified output rendering class (%s) not found.</message>
+		<message code="30000">Framework's configuration file not found. (Should be located: %s)</message>
+	    <message code="40000">Language "%s" is not associated with any translation. Language used instead: %s.</message>
+	    <message code="40001">Default language "%s" file (%s) not found. Language loaded instead: %s.</message>
+	    <message code="40002">Default language "%s" file (%s) invalid. Language loaded instead: %s.</message>
+	    <message code="40003">Language "%s" file not found. (Should be: %s)</message>
+	    <message code="40004">Language "%s" file invalid. (%s)</message>
+	    <message code="40005">No valid translation file set or found.</message>
+        <message code="40006">Translation for the entity "%s.%s" not found.</message>
+    </errorMessage>
+
+</language>
