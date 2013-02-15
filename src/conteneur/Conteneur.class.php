@@ -22,7 +22,9 @@
 			});
 
 			$conteneur['server'] = function() {
-				return new \Serveur\Rest\Server($_SERVER);
+				$server = new \Serveur\Rest\Server();
+				$server->setVarServeur($_SERVER);
+				return $server;
 			};
 
 			$conteneur['restRequest'] = function($c) {

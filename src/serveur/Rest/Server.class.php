@@ -8,7 +8,7 @@
 		private $serveurVariable;
 		private $serveurDonnees;
 
-		public function __construct(array $varServeur) {
+		public function setVarServeur(array $varServeur) {
 			$this->setServeurVariable($varServeur);
 			$this->setServeurDonnees($varServeur['REQUEST_METHOD']);
 		}

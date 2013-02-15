@@ -5,7 +5,7 @@
 	use Serveur\Exceptions\Exceptions\RestRequeteException;
 
 	class RestRequete {
-		private $methode;
+		private $methode = 'GET';
 		private $formatsDemandes;
 		private $dataUri;
 		private $parametres;

@@ -17,3 +17,9 @@
 	$classLoader->ajouterNamespace('Conteneur', BASE_PATH . 'src');
 	$classLoader->ajouterNamespace('Tests', BASE_PATH . 'tests', '.php');
 	$classLoader->register();
+
+
+	$GLOBALS['global_function_appli_error'] = 'vide';
+	function vide() {
+		return;
+	}

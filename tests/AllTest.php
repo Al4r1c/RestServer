@@ -11,9 +11,10 @@
 		}
 
 		public static function suite() {
-			$suite = new \PHPUnit_Framework_TestSuite('Most Tests');
+			$suite = new \PHPUnit_Framework_TestSuite('Server Tests');
 
 			$suite->addTest(Tests\ApplicationTest::suite());
+			$suite->addTest(Tests\RestTest::suite());
 
 			return $suite;
 		}
