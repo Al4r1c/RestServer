@@ -26,8 +26,14 @@
 	    <message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 	    <message code="20001">Aucun format de retour valide trouvé.</message>
 	    <message code="20002">Données serveur invalides.</message>
-	    <message code="20100">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
-	    <message code="20101">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
+	    <message code="20100">Données de la réponse invalides.</message>
+	    <message code="20101">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
+	    <message code="20102">Le format de retour configuré (%s) n'existe pas dans les rendus disponibles.</message>
+	    <message code="20103">Le format de retour par défaut est invalide.</message>
+	    <message code="20104">Les formats de retour acceptés sont invalides.</message>
+	    <message code="20105">Charset %s invalide.</message>
+	    <message code="20106">Le format de sortie par défaut "%s" n'a pas été trouvé dans la configuration.</message>
+	    <message code="20107">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
 	    <message code="30000">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
 	    <message code="40000">La langue "%s" n'est associée à aucune traduction. Langue utilisée à la place: %s.</message>
 	    <message code="40001">Fichier pour la langue "%s" définie par défaut (%s) non trouvé. Langue chargée à la place: %s.</message>

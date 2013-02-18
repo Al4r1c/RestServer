@@ -10,13 +10,13 @@ Displayers:
   LOG: logger
 
 Render:
+  JSON: json
+  XML: xml
   PLAIN: txt
   HTML:
     -html
     -htm
     -xhtml
-  JSON: json
-  XML: xml
 
 Languages:
   FRENCH: fr

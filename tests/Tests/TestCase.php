@@ -10,20 +10,23 @@
 			$mock = null;
 			$static = false;
 
-			switch($type) {
-				case 'Constante':
+			switch(strtolower($type)) {
+				case 'config':
+					$mock = $this->getMockConfig();
+					break;
+				case 'constante':
 					$static = true;
 					$mock = $this->getMockConstante();
 					break;
-				case 'Server':
-					$mock = $this->getMockServer();
-					break;
-				case 'RestRequete':
+				case 'restrequete':
 					$mock = $this->getMockRestRequete();
 					break;
-				case 'RestReponse':
+				case 'restreponse':
 					$mock = $this->getMockRestReponse();
 				break;
+				case 'server':
+					$mock = $this->getMockServer();
+					break;
 				default:
 					new \Exception('Mock type not found.');
 					break;
@@ -39,29 +42,19 @@
 			foreach(array_slice(func_get_args(), 1) as $uneMethode) {
 				$methode = "->method(\"".$uneMethode[0]."\")";
 
-				if (!isNull($uneMethode[2])) {
-					if(is_bool($uneMethode[2])) {
-						$var = self::$boolArray[$uneMethode[2]];
-					} elseif(is_array($uneMethode[2])) {
-						$var = $this->arrayToStringPhp($uneMethode[2]);
-					} else {
-						$var = '"'.$uneMethode[2].'"';
-					}
-
-					$will = "->will(\$this->returnValue(".$var."));";
-				} else {
-					$will = ";";
-				}
-
 				if(!isNull($uneMethode[1])) {
 					if(is_array($uneMethode[1])) {
-						eval("$enteteMock(\$this->exactly(".count($uneMethode[1])."))$methode;");
+						//eval("$enteteMock(\$this->exactly(".count($uneMethode[1])."))$methode;");
+						$i = 0;
+
 						foreach($uneMethode[1] as $unParametre) {
 							$with = "->with(\"".$unParametre."\")";
+							$will = $this->makeWill($uneMethode[2][$i]);
 
 							eval("$enteteMock(\$this->at($cptAt))$methode$with$will");
 
 							$cptAt++;
+							$i++;
 						}
 					} else {
 						if (!isNull($uneMethode[1])) {
@@ -70,15 +63,36 @@
 							$with = "";
 						}
 
+						$will = $this->makeWill($uneMethode[2]);
+
 						eval("$enteteMock(\$this->once())$methode$with$will");
 					}
 				} else {
+					$will = $this->makeWill($uneMethode[2]);
 					eval("$enteteMock(\$this->once())$methode$will");
 				}
 				$cptAt++;
 			}
 
 			return $mock;
+		}
+
+		private function makeWill($element) {
+			if (!isNull($element)) {
+				if(is_bool($element)) {
+					$var = self::$boolArray[$element];
+				} elseif(is_array($element)) {
+					$var = $this->arrayToStringPhp($element);
+				} else {
+					$var = '"'.$element.'"';
+				}
+
+				$will = "->will(\$this->returnValue(".$var."));";
+			} else {
+				$will = ";";
+			}
+
+			return $will;
 		}
 
 		private function arrayToStringPhp(array $array) {
@@ -94,12 +108,12 @@
 			return substr($string, 0, -1).')';
 		}
 
-		protected function getMockConstante() {
-			return $this->getMock('Serveur\Utils\Constante');
+		protected function getMockConfig() {
+			return $this->getMock('Serveur\Config\Config');
 		}
 
-		protected function getMockServer() {
-			return $this->getMock('Serveur\Rest\Server');
+		protected function getMockConstante() {
+			return $this->getMock('Serveur\Utils\Constante');
 		}
 
 		protected function getMockRestRequete() {
@@ -108,5 +122,9 @@
 
 		protected function getMockRestReponse() {
 			return $this->getMock('Serveur\Rest\RestReponse');
+		}
+
+		protected function getMockServer() {
+			return $this->getMock('Serveur\Rest\Server');
 		}
 	}

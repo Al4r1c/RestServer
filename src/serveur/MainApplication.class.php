@@ -19,8 +19,6 @@
 				$this->setErrorManagerDisplayer($this->conteneur->getConfigManager()->getConfigValeur('config.log_class'));
 
 				$this->conteneur->getRestManager()->setVariablesReponse(200, $this->conteneur->getRestManager()->getParametres());
-
-
 			} catch(MainException $e) {
 				$this->leverException($e->getStatus());
 			} catch(\Exception $e) {
@@ -30,18 +28,12 @@
 
 		public function recupererResultat() {
 			try {
-				return $this->retournerReponse();
+				return $this->conteneur->getRestManager()->fabriquerReponse();
 			} catch(MainException $e) {
 				return $this->leverException($e->getStatus());
 			} catch(\Exception $e) {
 				return $this->leverException();
 			}
-		}
-
-		private function retournerReponse() {
-			$this->conteneur->getRestManager()->fabriquerReponse();
-
-			return $this->conteneur->getRestManager()->recupererReponse();
 		}
 
 		private function setErrorManagerDisplayer($nomClasseDisplayer) {
@@ -57,7 +49,7 @@
 
 			$this->conteneur->getRestManager()->setVariablesReponse($code, array('Code' => $code, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1]));
 
-			return $this->retournerReponse();
+			return $this->conteneur->getRestManager()->fabriquerReponse();
 		}
 
 		public function __destruct() {

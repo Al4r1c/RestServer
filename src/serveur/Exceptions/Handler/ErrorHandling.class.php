@@ -38,12 +38,11 @@
 
 			switch($errno) {
 				case E_USER_WARNING:
-				case E_WARNING:
-					new Error($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
+				case E_USER_NOTICE:
 					break;
 
-				case E_USER_NOTICE:
-					new Notice($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
+				case E_WARNING:
+					new Error($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
 					break;
 
 				case E_NOTICE:

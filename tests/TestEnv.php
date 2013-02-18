@@ -19,7 +19,7 @@
 	$classLoader->register();
 
 
-	$GLOBALS['global_function_appli_error'] = 'vide';
-	function vide() {
+	$GLOBALS['global_function_appli_error'] = 'throwExceptionEnvTest';
+	function throwExceptionEnvTest() {
 		return;
 	}

@@ -16,12 +16,8 @@
 			$this->restResponse = $restReponseObject;
 		}
 
-		public function recupererReponse() {
-			return $this->restResponse->getContenu();
-		}
-
 		public function fabriquerReponse() {
-			$this->restResponse->fabriquerReponse($this->restRequest->getFormatsDemandes());
+			return $this->restResponse->fabriquerReponse($this->restRequest->getFormatsDemandes());
 		}
 
 		public function getUriVariable($clef) {

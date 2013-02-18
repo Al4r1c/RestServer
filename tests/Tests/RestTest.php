@@ -17,6 +17,7 @@
 			$suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
 			$suite->addTestSuite('Tests\Rest\RestRequeteTest');
+			$suite->addTestSuite('Tests\Rest\RestReponseTest');
 
 			return $suite;
 		}
