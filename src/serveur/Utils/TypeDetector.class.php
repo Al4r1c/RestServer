@@ -15,7 +15,7 @@
 			if(!isNull($this->constanteMimes[$mimeExtension])) {
 				return $this->constanteMimes[$mimeExtension];
 			} else {
-				return array('*/*');
+				return '*/*';
 			}
 		}
 

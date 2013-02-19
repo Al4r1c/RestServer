@@ -14,6 +14,7 @@
 			$suite = new \PHPUnit_Framework_TestSuite('Server Tests');
 
 			$suite->addTest(Tests\ApplicationTest::suite());
+			$suite->addTest(Tests\UtilsTest::suite());
 			$suite->addTest(Tests\RestTest::suite());
 
 			return $suite;
