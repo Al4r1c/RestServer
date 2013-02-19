@@ -59,7 +59,7 @@
 			$this->restRequete->setVariableUri('/mon/uri/');
 			$this->restRequete->setVariableUri('');
 
-			$this->assertEquals(2, count($this->restRequete->getUriVariables()));
+			$this->assertCount(2, $this->restRequete->getUriVariables());
 		}
 
 		public function testRestUriRecupererVariable() {
@@ -91,7 +91,7 @@
 
 		public function testParametreSauvegardes() {
 			$this->restRequete->setParametres(array("param1" => "valeur1", "data" => 1));
-			$this->assertEquals(2, sizeof($this->restRequete->getParametres()));
+			$this->assertCount(2, $this->restRequete->getParametres());
 		}
 
 		public function testRecupererParametre() {

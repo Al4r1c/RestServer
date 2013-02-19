@@ -14,6 +14,7 @@
 	    <message code="fileError">Fichier</message>
         <message code="restReqError">Request</message>
         <message code="restResError">Response</message>
+        <message code="headManError">Header Manager</message>
         <message code="confError">Configuration file</message>
         <message code="dataError">Data error</message>
     </trad>
@@ -36,6 +37,7 @@
 	    <message code="20107">Specified output rendering class (%s) not found.</message>
 	    <message code="20200">Key %s does not exist in the URI.</message>
 	    <message code="20201">Requested parameter %s does not exist.</message>
+	    <message code="20300">Response header "%s" is invalid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html for more informations about headers.</message>
 		<message code="30000">Framework's configuration file not found. (Should be located: %s)</message>
 	    <message code="40000">Language "%s" is not associated with any translation. Language used instead: %s.</message>
 	    <message code="40001">Default language "%s" file (%s) not found. Language loaded instead: %s.</message>

@@ -122,6 +122,12 @@
 			$restReponse = new \Serveur\Rest\RestReponse();
 			$restReponse->setContenu(array('param1' => 'var1'));
 			$restReponse->setFormats('JSON', array('JSON' => 'json'));
+			$headerManager = $this->createMock('HeaderManager',
+				array('ajouterHeader'),
+				array('envoyerHeaders')
+			);
+
+			$restReponse->setHeaderManager($headerManager);
 
 			$restManager = new RestManager();
 			$restManager->setRequete($restRequete);

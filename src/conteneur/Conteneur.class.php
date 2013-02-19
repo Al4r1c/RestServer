@@ -27,6 +27,10 @@
 				return $server;
 			};
 
+			$conteneur['headerManager'] = function() {
+				return new \Serveur\Rest\HeaderManager();
+			};
+
 			$conteneur['restRequest'] = function($c) {
 				$restRequete = new \Serveur\Rest\RestRequete();
 				$restRequete->setServer($c['server']);
@@ -36,6 +40,7 @@
 			$conteneur['restReponse'] = function($c) {
 				$restReponse = new \Serveur\Rest\RestReponse();
 				$restReponse->setConfig($c['configManager']);
+				$restReponse->setHeaderManager($c['headerManager']);
 				return $restReponse;
 			};
 

@@ -18,6 +18,9 @@
 					$static = true;
 					$mock = $this->getMockConstante();
 					break;
+				case 'headermanager':
+					$mock = $this->getMockHeadersManager();
+					break;
 				case 'restrequete':
 					$mock = $this->getMockRestRequete();
 					break;
@@ -44,7 +47,6 @@
 
 				if(!isNull($uneMethode[1])) {
 					if(is_array($uneMethode[1])) {
-						//eval("$enteteMock(\$this->exactly(".count($uneMethode[1])."))$methode;");
 						$i = 0;
 
 						foreach($uneMethode[1] as $unParametre) {
@@ -114,6 +116,10 @@
 
 		protected function getMockConstante() {
 			return $this->getMock('Serveur\Utils\Constante');
+		}
+
+		protected function getMockHeadersManager() {
+			return $this->getMock('Serveur\Rest\HeaderManager');
 		}
 
 		protected function getMockRestRequete() {

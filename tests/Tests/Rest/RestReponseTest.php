@@ -17,9 +17,16 @@
 			$this->restReponse = new RestReponse();
 		}
 
+		/**
+		 * @expectedException     \PHPUnit_Framework_Error
+		 */
+		public function testRestSetHeaderManager() {
+			$this->restReponse->setHeaderManager(null);
+		}
+
 		public function testRestContenu() {
 			$this->restReponse->setContenu(array('param' => 'variable', 'param2' => 'var2'));
-			$this->assertEquals(2, count($this->restReponse->getContenu()));
+			$this->assertCount(2, $this->restReponse->getContenu());
 		}
 
 		/**
@@ -58,7 +65,7 @@
 
 		public function testRestSetFormatAcceptes() {
 			$this->restReponse->setFormatsAcceptes(array('JSON' => 'json', 'TEXT' => 'txt'));
-			$this->assertEquals(2, count($this->restReponse->getFormatsAcceptes()));
+			$this->assertCount(2, $this->restReponse->getFormatsAcceptes());
 		}
 
 		/**
@@ -72,7 +79,7 @@
 		public function testRestSetFormat() {
 			$this->restReponse->setFormats('PLAIN', array('PLAIN' => 'txt'));
 			$this->assertEquals('PLAIN', $this->restReponse->getFormatRetourDefaut());
-			$this->assertEquals(1, count($this->restReponse->getFormatsAcceptes()));
+			$this->assertCount(1, $this->restReponse->getFormatsAcceptes());
 		}
 
 		public function testRestSetFormatDefautInexistant() {
@@ -109,10 +116,17 @@
 			$this->restReponse->setConfig($config);
 			$this->assertEquals('utf-8', $this->restReponse->getCharset());
 			$this->assertEquals('JSON', $this->restReponse->getFormatRetourDefaut());
-			$this->assertEquals(2, count($this->restReponse->getFormatsAcceptes()));
+			$this->assertCount(2, $this->restReponse->getFormatsAcceptes());
 		}
 
 		public function testRestRender() {
+			$headerManager = $this->createMock('HeaderManager',
+				array('ajouterHeader'),
+				array('envoyerHeaders')
+			);
+
+			$this->restReponse->setHeaderManager($headerManager);
+
 			$this->restReponse->setContenu(array('param1' => 'var1'));
 			$this->restReponse->setFormats('JSON', array('JSON' => 'json'));
 
@@ -120,6 +134,13 @@
 		}
 
 		public function testRestRenderNonTrouveUtiliseAutre() {
+			$headerManager = $this->createMock('HeaderManager',
+				array('ajouterHeader'),
+				array('envoyerHeaders')
+			);
+
+			$this->restReponse->setHeaderManager($headerManager);
+
 			$this->restReponse->setContenu(array('param1' => 'var1'));
 			$this->restReponse->setFormats('JSON', array('JSON' => 'json'));
 

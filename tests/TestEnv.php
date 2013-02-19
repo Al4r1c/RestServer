@@ -1,9 +1,13 @@
 <?php
-	error_reporting(E_ALL);
+	error_reporting(E_ALL^E_NOTICE);
 
-	define('BASE_PATH', __DIR__ . '/../');
+	if(!defined ('BASE_PATH')) {
+		define('BASE_PATH', __DIR__ . '/../');
+	}
 
-	define('SERVER_NAMESPACE', 'Serveur');
+	if(!defined ('SERVER_NAMESPACE')) {
+		define('SERVER_NAMESPACE', 'Serveur');
+	}
 
 	include_once(BASE_PATH . 'functions/functions.php');
 
@@ -13,9 +17,9 @@
 
 
 	$classLoader = new \ClassLoader\ClassLoader();
-	$classLoader->ajouterNamespace('Serveur', BASE_PATH . 'src');
-	$classLoader->ajouterNamespace('Conteneur', BASE_PATH . 'src');
-	$classLoader->ajouterNamespace('Tests', BASE_PATH . 'tests', '.php');
+	$classLoader->ajouterNamespace('Serveur', __DIR__ . '/../src');
+	$classLoader->ajouterNamespace('Conteneur', __DIR__ . '/../src');
+	$classLoader->ajouterNamespace('Tests', __DIR__, '.php');
 	$classLoader->register();
 
 

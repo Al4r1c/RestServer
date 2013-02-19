@@ -6,11 +6,17 @@
 	use Serveur\Exceptions\Exceptions\RestReponseException;
 
 	class RestReponse {
+		/** @var HeaderManager */
+		private $headerManager;
 		private $status = 500;
 		private $formatRetourDefaut;
 		private $formatsAcceptes;
 		private $charset;
 		private $contenu = '';
+
+		public function setHeaderManager(HeaderManager $headerManager) {
+			$this->headerManager = $headerManager;
+		}
 
 		public function setConfig(\Serveur\Config\Config $configuration) {
 			$this->setFormats($configuration->getConfigValeur('config.default_render'), $configuration->getConfigValeur('render'));
@@ -89,8 +95,9 @@
 		}
 
 		private function envoyerHeaders($formatRetour) {
-			header('HTTP/1.1 ' . $this->status . ' ' . Constante::chargerConfig('httpcode')[$this->status][0]);
-			header('Content-type: ' . Constante::chargerConfig('mimes')[strtolower($formatRetour)].'; charset='.strtolower($this->charset));
+			http_response_code($this->status);
+			$this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($formatRetour)].'; charset='.strtolower($this->charset));
+			$this->headerManager->envoyerHeaders();
 		}
 
 		private function getFormatRetour(array $formatsDemandes, array $formatsAcceptes, $formatDefaut) {
