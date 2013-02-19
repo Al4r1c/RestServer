@@ -130,7 +130,6 @@
 			}
 		}
 
-		/* @var $view \Serveur\Renderers\AbstractRenderer */
 		public function fabriquerReponse(array $formatsDemandes) {
 			$formatRetour = $this->getFormatRetour($formatsDemandes, $this->formatsAcceptes, $this->formatRetourDefaut);
 
