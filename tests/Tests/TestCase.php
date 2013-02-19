@@ -77,7 +77,7 @@
 			return $mock;
 		}
 
-		private function makeWill($element) {
+		private function makeWill(&$element) {
 			if (!isNull($element)) {
 				if(is_bool($element)) {
 					$var = self::$boolArray[$element];

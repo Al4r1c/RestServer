@@ -18,6 +18,7 @@
 
 			$suite->addTestSuite('Tests\Rest\RestRequeteTest');
 			$suite->addTestSuite('Tests\Rest\RestReponseTest');
+			$suite->addTestSuite('Tests\Rest\RestManagerTest');
 
 			return $suite;
 		}

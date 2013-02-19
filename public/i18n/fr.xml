@@ -34,6 +34,8 @@
 	    <message code="20105">Charset %s invalide.</message>
 	    <message code="20106">Le format de sortie par défaut "%s" n'a pas été trouvé dans la configuration.</message>
 	    <message code="20107">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
+	    <message code="20200">La clef %s n'existe pas dans l'URI.</message>
+	    <message code="20201">Le paramètre demandé %s n'existe pas.</message>
 	    <message code="30000">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
 	    <message code="40000">La langue "%s" n'est associée à aucune traduction. Langue utilisée à la place: %s.</message>
 	    <message code="40001">Fichier pour la langue "%s" définie par défaut (%s) non trouvé. Langue chargée à la place: %s.</message>
