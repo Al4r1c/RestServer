@@ -29,9 +29,9 @@
 					$traductionDisponible = $this->chargerFichier($classeLangue);
 
 					if(is_null($traductionDisponible)) {
-						trigger_notice_apps(40003, $uneLangueDispo, BASE_PATH . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
+						trigger_notice_apps(40003, $uneLangueDispo, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
 					} elseif($traductionDisponible === false) {
-						trigger_notice_apps(40004, $uneLangueDispo, BASE_PATH . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
+						trigger_notice_apps(40004, $uneLangueDispo, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
 					} else {
 						$defaultTraductionObject = $traductionDisponible;
 						break;
@@ -40,9 +40,9 @@
 
 				if(isset($defaultTraductionObject)) {
 					if(is_null($traductionObjetDefaut)) {
-						trigger_notice_apps(40001, $langueDefautUtilisee, BASE_PATH . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
+						trigger_notice_apps(40001, $langueDefautUtilisee, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
 					} else {
-						trigger_notice_apps(40002, $langueDefautUtilisee, BASE_PATH . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
+						trigger_notice_apps(40002, $langueDefautUtilisee, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
 					}
 				} else {
 					trigger_notice_apps(40005, $this->langueDefaut, $langueDefautUtilisee = key($this->languesDisponibles));
@@ -58,7 +58,7 @@
 
 		private function chargerFichier($nomFichier) {
 			$fichier = new Fichier();
-			$fichier->setFichierConfig($nomFichier.'.xml', 'public/i18n');
+			$fichier->setFichierConfig($nomFichier.'.xml', '/public/i18n');
 			if(!$fichier->existe()) {
 				return null;
 			} elseif(($defaultTraductionObject = $fichier->charger()) === false) {

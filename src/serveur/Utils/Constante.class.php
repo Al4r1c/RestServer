@@ -9,7 +9,7 @@
 
 		public static function chargerConfig($nomConfig) {
 			$fichier = new Fichier();
-			$fichier->setFichierConfig($nomConfig . '.' .  self::$extension, 'public/constantes');
+			$fichier->setFichierConfig($nomConfig . '.' .  self::$extension, '/public/constantes');
 
 			return $fichier->charger();
 		}

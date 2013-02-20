@@ -16,7 +16,7 @@
 
 		private function creerFichierSiNexistePas($nomFichier) {
 			$fichier = new Fichier();
-			$fichier->setFichierConfig($nomFichier, 'log', getFichierExtension($nomFichier));
+			$fichier->setFichierConfig($nomFichier, '/log', getFichierExtension($nomFichier));
 			$fichier->creer('0777');
 			return $fichier;
 		}

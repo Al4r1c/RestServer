@@ -16,8 +16,8 @@
 			$conteneur = new \Pimple();
 
 			$conteneur['configManager'] = $conteneur->share(function() {
-				$fichier = new \Serveur\Lib\Fichier('config.yaml', 'config');
-				$fichier->setFichierConfig('config.yaml', 'config');
+				$fichier = new \Serveur\Lib\Fichier();
+				$fichier->setFichierConfig('config.yaml', '/config');
 				$configurationManager = new \Serveur\Config\Config();
 				$configurationManager->chargerConfiguration($fichier);
 				return $configurationManager;

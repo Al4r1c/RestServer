@@ -32,6 +32,9 @@
 				case 'abstractrenderer':
 					$mock = $this->getMockAbstractRenderer($tabMethode);
 					break;
+				case 'abstractchargeurfichier':
+					$mock = $this->getMockAbstractChargeur($tabMethode);
+					break;
 				case 'config':
 					$mock = $this->getMockConfig($tabMethode);
 					break;
@@ -106,6 +109,10 @@
 
 		protected function getMockAbstractRenderer($methodes = array()) {
 			return $this->getMockForAbstractClass('Serveur\Renderers\AbstractRenderer');
+		}
+
+		private function getMockAbstractChargeur($tabMethode) {
+			return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier');
 		}
 
 		protected function getMockConfig($methodes = array()) {

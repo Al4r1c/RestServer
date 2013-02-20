@@ -121,20 +121,6 @@
 			$this->assertCount(2, $this->restReponse->getFormatsAcceptes());
 		}
 
-		public function testRestRenderAvecExempleJson() {
-			$headerManager = $this->createMock('HeaderManager',
-				array('ajouterHeader'),
-				array('envoyerHeaders')
-			);
-
-			$this->restReponse->setHeaderManager($headerManager);
-
-			$this->restReponse->setContenu(array('param1' => 'var1'));
-			$this->restReponse->setFormats('JSON', array('JSON' => 'json'));
-
-			$this->assertEquals('{"param1":"var1"}', $this->restReponse->fabriquerReponse(array('json')));
-		}
-
 		public function testRestRenderAbstract() {
 			$abstractrender = $this->createMock('AbstractRenderer',
 				array('render', array('getKey' => 'getVar'), '{"getKey":"getVar"}')
