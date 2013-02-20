@@ -1,3 +1,5 @@
 .idea/
 /packages/.composer/
 packages/
+tests/report/
+composer.lock
