@@ -7,7 +7,13 @@
 		return (!isset($donnee) || is_null($donnee) || (!is_array($donnee) && trim($donnee) == '') || (is_array($donnee) && empty($donnee)));
 	}
 
-	function array_search_recursif($needle, $haystack) {
+	function array_keys_exist(array $keys, array $array) {
+		if (count(array_intersect($keys, array_keys($array))) == count($keys)) {
+			return true;
+		}
+	}
+
+	function array_search_recursif($needle, array $haystack) {
 		foreach($haystack as $key => $value) {
 			$current_key = $key;
 			if($needle === $value OR (is_array($value) && array_search_recursif($needle, $value) !== false)) {

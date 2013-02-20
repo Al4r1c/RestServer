@@ -9,7 +9,7 @@
 
 		public function ajouterHeader($champ, $valeur) {
 			if(!Tools::isValideHeader($champ)) {
-				throw new HeaderManagerException(20300, 500);
+				throw new HeaderManagerException(20400, 500);
 			}
 
 			$this->headers[$champ] = $valeur;

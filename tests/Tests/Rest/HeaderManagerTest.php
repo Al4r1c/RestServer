@@ -27,7 +27,7 @@
 
 		/**
 		 * @expectedException     \Serveur\Exceptions\Exceptions\HeaderManagerException
-		 * @expectedExceptionCode 20300
+		 * @expectedExceptionCode 20400
 		 */
 		public function testAjouterHeaderSiValide() {
 			$this->headerManager->ajouterHeader('WRONG', 'FAKE');
