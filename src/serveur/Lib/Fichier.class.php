@@ -9,7 +9,7 @@
 		private $cheminAcces;
 		private $extension;
 
-		public function __construct($nom, $cheminAcces) {
+		public function setFichierConfig($nom, $cheminAcces) {
 			$this->setNom($nom);
 			$this->setCheminAcces($cheminAcces);
 			$this->setExtension($nom);

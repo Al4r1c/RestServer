@@ -42,6 +42,8 @@
 	    <message code="20301">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 	    <message code="20400">Response header "%s" is invalid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html for more informations about headers.</message>
 		<message code="30000">Framework's configuration file not found. (Should be located: %s)</message>
+	    <message code="30001">Key %s must be present but does not exist in the configuration.</message>
+	    <message code="30002">Key %s does not exist in the configuration.</message>
 	    <message code="40000">Language "%s" is not associated with any translation. Language used instead: %s.</message>
 	    <message code="40001">Default language "%s" file (%s) not found. Language loaded instead: %s.</message>
 	    <message code="40002">Default language "%s" file (%s) invalid. Language loaded instead: %s.</message>

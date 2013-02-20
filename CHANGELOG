@@ -4,6 +4,8 @@ v0.2
 Ajout des test:
 -MainApplication
 -RestRequete, RestReponse, RestManager, HeaderManager, Server
+-Config
+-TypeDetector
 
 v0.1 - 14/02/2013
 .htaccess fonctionnel.

@@ -16,7 +16,7 @@
 
 		public function run() {
 			try {
-				$this->setErrorManagerDisplayer($this->conteneur->getConfigManager()->getConfigValeur('config.log_class'));
+				$this->setErrorManagerDisplayer($this->conteneur->getConfigManager()->getConfigValeur('displayers.'. $this->conteneur->getConfigManager()->getConfigValeur('config.default_displayer')));
 
 				$this->conteneur->getRestManager()->setVariablesReponse(200, $this->conteneur->getRestManager()->getParametres());
 			} catch(MainException $e) {

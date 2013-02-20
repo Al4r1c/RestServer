@@ -18,6 +18,9 @@
 					$static = true;
 					$mock = $this->getMockConstante();
 					break;
+				case 'fichier':
+					$mock = $this->getMockFichier();
+					break;
 				case 'headermanager':
 					$mock = $this->getMockHeadersManager();
 					break;
@@ -116,6 +119,10 @@
 
 		protected function getMockConstante() {
 			return $this->getMock('Serveur\Utils\Constante');
+		}
+
+		protected function getMockFichier() {
+			return $this->getMock('Serveur\Lib\Fichier');
 		}
 
 		protected function getMockHeadersManager() {
