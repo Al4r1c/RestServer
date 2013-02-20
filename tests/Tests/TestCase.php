@@ -9,29 +9,50 @@
 			/** @var $mock \PHPUnit_Framework_MockObject_MockObject */
 			$mock = null;
 			$static = false;
+			$tabMethode = array();
+			$tabEvals = array();
 
+			foreach(array_slice(func_get_args(), 1) as $uneMethode) {
+				$tabMethode[] = $uneMethode[0];
+				$methode = "->method(\"".$uneMethode[0]."\")";
+
+				if (!isNull($uneMethode[1])) {
+					$with = "->with(".$this->getPlainVar($uneMethode[1], '$uneMethode[1]').")";
+				} else {
+					$with = "";
+				}
+
+				$will = $this->makeWill($uneMethode[2], '$uneMethode[2]');
+
+				$tabEvals[] = $methode.$with.$will;
+			}
+
+			$tabMethode = array_unique($tabMethode);
 			switch(strtolower($type)) {
+				case 'abstractrenderer':
+					$mock = $this->getMockAbstractRenderer($tabMethode);
+					break;
 				case 'config':
-					$mock = $this->getMockConfig();
+					$mock = $this->getMockConfig($tabMethode);
 					break;
 				case 'constante':
 					$static = true;
-					$mock = $this->getMockConstante();
+					$mock = $this->getMockConstante($tabMethode);
 					break;
 				case 'fichier':
-					$mock = $this->getMockFichier();
+					$mock = $this->getMockFichier($tabMethode);
 					break;
 				case 'headermanager':
-					$mock = $this->getMockHeadersManager();
+					$mock = $this->getMockHeadersManager($tabMethode);
 					break;
 				case 'restrequete':
-					$mock = $this->getMockRestRequete();
+					$mock = $this->getMockRestRequete($tabMethode);
 					break;
 				case 'restreponse':
-					$mock = $this->getMockRestReponse();
-				break;
+					$mock = $this->getMockRestReponse($tabMethode);
+					break;
 				case 'server':
-					$mock = $this->getMockServer();
+					$mock = $this->getMockServer($tabMethode);
 					break;
 				default:
 					new \Exception('Mock type not found.');
@@ -44,100 +65,74 @@
 				$enteteMock = "\$mock::staticExpects";
 			}
 
-			$cptAt = 0;
-			foreach(array_slice(func_get_args(), 1) as $uneMethode) {
-				$methode = "->method(\"".$uneMethode[0]."\")";
-
-				if(!isNull($uneMethode[1])) {
-					if(is_array($uneMethode[1])) {
-						$i = 0;
-
-						foreach($uneMethode[1] as $unParametre) {
-							$with = "->with(\"".$unParametre."\")";
-							$will = $this->makeWill($uneMethode[2][$i]);
-
-							eval("$enteteMock(\$this->at($cptAt))$methode$with$will");
-
-							$cptAt++;
-							$i++;
-						}
-					} else {
-						if (!isNull($uneMethode[1])) {
-							$with = "->with(\"".$uneMethode[1]."\")";
-						} else {
-							$with = "";
-						}
-
-						$will = $this->makeWill($uneMethode[2]);
-
-						eval("$enteteMock(\$this->once())$methode$with$will");
-					}
-				} else {
-					$will = $this->makeWill($uneMethode[2]);
-					eval("$enteteMock(\$this->once())$methode$will");
-				}
-				$cptAt++;
+			foreach($tabEvals as $clef => $unEvalAEffectuer) {
+				eval("$enteteMock(\$this->at($clef))$unEvalAEffectuer");
 			}
 
 			return $mock;
 		}
 
-		private function makeWill(&$element) {
-			if (!isNull($element)) {
-				if(is_bool($element)) {
-					$var = self::$boolArray[$element];
-				} elseif(is_array($element)) {
-					$var = $this->arrayToStringPhp($element);
-				} else {
-					$var = '"'.$element.'"';
-				}
-
-				$will = "->will(\$this->returnValue(".$var."));";
+		private function getPlainVar(&$element, $plainName) {
+			if(is_bool($element)) {
+				$var = self::$boolArray[$element];
+			} elseif(is_array($element)) {
+				$var = $this->arrayToStringPhp($element, $plainName);
+			} elseif(is_object($element)) {
+				$var = $plainName;
 			} else {
-				$will = ";";
+				$var = '"'.addslashes($element).'"';
+			}
+
+			return $var;
+		}
+
+		private function makeWill($element, $plainName) {
+			$will = ";";
+
+			if (!isNull($element)) {
+				$will = "->will(\$this->returnValue(".$this->getPlainVar($element, $plainName)."))".$will;
 			}
 
 			return $will;
 		}
 
-		private function arrayToStringPhp(array $array) {
+		private function arrayToStringPhp(array $array, $plainName) {
 			$string = 'array(';
 			foreach($array as $clef => $valeur) {
-				if(is_array($valeur)) {
-					$valeur = $this->arrayToStringPhp($valeur);
-				} else {
-					$valeur = '"'.$valeur.'"';
-				}
-				$string .= '"'.$clef.'" => '.$valeur.',';
+				$string .= '"'.$clef.'" => '.$this->getPlainVar($valeur, $plainName.'['.$clef.']').',';
 			}
 			return substr($string, 0, -1).')';
 		}
 
-		protected function getMockConfig() {
-			return $this->getMock('Serveur\Config\Config');
+		protected function getMockAbstractRenderer($methodes = array()) {
+			return $this->getMockForAbstractClass('Serveur\Renderers\AbstractRenderer');
 		}
 
-		protected function getMockConstante() {
-			return $this->getMock('Serveur\Utils\Constante');
+		protected function getMockConfig($methodes = array()) {
+			return $this->getMock('Serveur\Config\Config', $methodes);
 		}
 
-		protected function getMockFichier() {
-			return $this->getMock('Serveur\Lib\Fichier');
+		protected function getMockConstante($methodes = array()) {
+			return $this->getMock('Serveur\Utils\Constante', $methodes);
 		}
 
-		protected function getMockHeadersManager() {
-			return $this->getMock('Serveur\Rest\HeaderManager');
+		protected function getMockFichier($methodes = array()) {
+			return $this->getMock('Serveur\Lib\Fichier', $methodes);
 		}
 
-		protected function getMockRestRequete() {
-			return $this->getMock('Serveur\Rest\RestRequete');
+		protected function getMockHeadersManager($methodes = array()) {
+			return $this->getMock('Serveur\Rest\HeaderManager', $methodes);
 		}
 
-		protected function getMockRestReponse() {
-			return $this->getMock('Serveur\Rest\RestReponse');
+		protected function getMockRestRequete($methodes = array()) {
+			return $this->getMock('Serveur\Rest\RestRequete', $methodes);
 		}
 
-		protected function getMockServer() {
-			return $this->getMock('Serveur\Rest\Server');
+		protected function getMockRestReponse($methodes = array()) {
+			return $this->getMock('Serveur\Rest\RestReponse', $methodes);
+		}
+
+		protected function getMockServer($methodes = array()) {
+			return $this->getMock('Serveur\Rest\Server', $methodes);
 		}
 	}

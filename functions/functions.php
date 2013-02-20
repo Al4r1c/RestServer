@@ -4,7 +4,7 @@
 	}
 
 	function isNull(&$donnee) {
-		return (!isset($donnee) || is_null($donnee) || (!is_array($donnee) && trim($donnee) == '') || (is_array($donnee) && empty($donnee)));
+		return (!isset($donnee) || is_null($donnee) || ((is_string($donnee)) && trim($donnee) == '') || ((is_array($donnee) || is_object($donnee)) && empty($donnee)));
 	}
 
 	function array_keys_exist(array $keys, array $array) {

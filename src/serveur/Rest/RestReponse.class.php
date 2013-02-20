@@ -122,7 +122,7 @@
 		}
 
 
-		private function getRenderClass($renderClassName) {
+		protected function getRenderClass($renderClassName) {
 			if(class_exists($view_name = '\\'.SERVER_NAMESPACE.'\Renderers\\'.$renderClassName)) {
 				return new $view_name();
 			} else {
