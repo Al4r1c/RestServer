@@ -82,7 +82,7 @@
 		}
 
 		protected function creer($urlFichier, $droit) {
-			if($leFichier = fopen($this->getLocationFichier(), "wb")) {
+			if($leFichier = fopen($urlFichier, "wb")) {
 				fclose($leFichier);
 
 				chmod($urlFichier, intval($droit, 8));
