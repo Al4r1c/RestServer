@@ -1,7 +1,8 @@
 {
 	"require": {
 		"pimple/pimple": "v1.0.1",
-		"lespoilus/spyc": "dev-master"
+		"lespoilus/spyc": "dev-master",
+		"mikey179/vfsStream": "dev-master"
 	},
 	"config" : {
         "vendor-dir" : "packages"

@@ -1,10 +1,12 @@
 ==CHANGELOG==
 
 v0.2
+Passage en realpath pour l'acheminement.
 Ajout des test:
 -MainApplication
 -RestRequete, RestReponse, RestManager, HeaderManager, Server
 -Config
+-Fichier (utilisation de vfsStream)
 -TypeDetector
 
 v0.1 - 14/02/2013

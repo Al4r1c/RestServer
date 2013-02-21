@@ -35,9 +35,9 @@
 		}
 
 		public function testChargerFichier() {
+			/** @var $fichier \Serveur\Lib\Fichier */
 			$fichier = $this->createMock('Fichier',
-				array('existe','', true),
-				array('charger','', self::$donneesConfig)
+				array('chargerFichier', '', self::$donneesConfig)
 			);
 
 			$this->configuration->chargerConfiguration($fichier);
@@ -55,7 +55,7 @@
 		 */
 		public function testChargerFichierInexistant() {
 			$fichier = $this->createMock('Fichier',
-				array('existe','', false)
+				array('fichierExiste', '', false)
 			);
 
 			$this->configuration->chargerConfiguration($fichier);
@@ -69,8 +69,7 @@
 			$donnees = self::$donneesConfig;
 			unset($donnees['Languages']);
 			$fichier = $this->createMock('Fichier',
-				array('existe','', true),
-				array('charger','', $donnees)
+				array('chargerFichier','', $donnees)
 			);
 
 			$this->configuration->chargerConfiguration($fichier);
@@ -78,8 +77,7 @@
 
 		public function testGetValeur() {
 			$fichier = $this->createMock('Fichier',
-				array('existe','', true),
-				array('charger','', self::$donneesConfig)
+				array('chargerFichier','', self::$donneesConfig)
 			);
 
 			$this->configuration->chargerConfiguration($fichier);

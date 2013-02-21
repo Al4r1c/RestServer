@@ -9,8 +9,9 @@
 
 		public static function chargerConfig($nomConfig) {
 			$fichier = new Fichier();
+			$fichier->setBasePath(BASE_PATH);
 			$fichier->setFichierConfig($nomConfig . '.' .  self::$extension, '/public/constantes');
 
-			return $fichier->charger();
+			return $fichier->chargerFichier();
 		}
 	}

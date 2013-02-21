@@ -22,9 +22,13 @@
 
     <errorMessage>
 	    <message code="10000">Error displaying class "%s" does not exist.</message>
-	    <message code="10100">File "%s" not found.</message>
-	    <message code="10101">File "%s" could not be created.</message>
-	    <message code="10102">File with extension "%s" can't be loaded. (File: %s)</message>
+	    <message code="10100">Empty base path.</message>
+	    <message code="10101">Empty filename.</message>
+	    <message code="10102">The file %s has no extension.</message>
+	    <message code="10103">File "%s" does not exist.</message>
+	    <message code="10104">File with extension "%s" can't be loaded. (File: %s)</message>
+	    <message code="10105">Destination folder "%s" does not exist.</message>
+	    <message code="10106">File "%s" could not be created.</message>
 	    <message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 	    <message code="20001">No valid return format found.</message>
 	    <message code="20002">Invalid server data.</message>

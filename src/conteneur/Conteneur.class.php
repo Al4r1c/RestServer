@@ -17,6 +17,7 @@
 
 			$conteneur['configManager'] = $conteneur->share(function() {
 				$fichier = new \Serveur\Lib\Fichier();
+				$fichier->setBasePath(BASE_PATH);
 				$fichier->setFichierConfig('config.yaml', '/config');
 				$configurationManager = new \Serveur\Config\Config();
 				$configurationManager->chargerConfiguration($fichier);

@@ -9,10 +9,10 @@
 		private static $clefMinimales = array('config', 'config.default_lang', 'config.default_render', 'config.default_displayer', 'displayers', 'render', 'languages');
 
 		public function chargerConfiguration(\Serveur\Lib\Fichier $fichierFramework) {
-			if($fichierFramework->existe()) {
-				$this->applicationConfiguration = array_change_key_case($fichierFramework->charger(), CASE_UPPER);
+			try {
+				$this->applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
 				$this->valider();
-			} else {
+			} catch(\Serveur\Exceptions\Exceptions\FichierException $fe) {
 				throw new ConfigException(30000, 500, $fichierFramework->getLocationFichier());
 			}
 		}

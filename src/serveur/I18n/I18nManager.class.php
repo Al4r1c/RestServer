@@ -58,10 +58,11 @@
 
 		private function chargerFichier($nomFichier) {
 			$fichier = new Fichier();
+			$fichier->setBasePath(BASE_PATH);
 			$fichier->setFichierConfig($nomFichier.'.xml', '/public/i18n');
-			if(!$fichier->existe()) {
+			if(!$fichier->fichierExiste()) {
 				return null;
-			} elseif(($defaultTraductionObject = $fichier->charger()) === false) {
+			} elseif(($defaultTraductionObject = $fichier->chargerFichier()) === false) {
 				return false;
 			} else {
 				return $defaultTraductionObject;
