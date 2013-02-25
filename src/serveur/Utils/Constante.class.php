@@ -8,9 +8,8 @@
 		private static $extension = 'php';
 
 		public static function chargerConfig($nomConfig) {
-			$fichier = new Fichier();
-			$fichier->setBasePath(BASE_PATH);
-			$fichier->setFichierConfig($nomConfig . '.' .  self::$extension, '/public/constantes');
+			$fichier = \Serveur\Utils\FileManager::getFichier();
+			$fichier->setFichierParametres($nomConfig . '.' .  self::$extension, '/public/constantes');
 
 			return $fichier->chargerFichier();
 		}

@@ -15,9 +15,8 @@
 		}
 
 		private function creerFichierSiNexistePas($nomFichier) {
-			$fichier = new Fichier();
-			$fichier->setBasePath(BASE_PATH);
-			$fichier->setFichierConfig($nomFichier, '/log', getFichierExtension($nomFichier));
+			$fichier = \Serveur\Utils\FileManager::getFichier();
+			$fichier->setFichierParametres($nomFichier, BASE_PATH.'/log');
 			$fichier->creerFichier('0700');
 			return $fichier;
 		}
@@ -25,7 +24,7 @@
 
 		/** @param \Serveur\Exceptions\Types\AbstractTypeErreur[] $tabErreurs */
 		protected function envoyerVersDestination(array $tabErreurs) {
-			$fp = fopen($this->fichierLogDestination->getLocationFichier(), 'a+');
+			$fp = fopen($this->fichierLogDestination->getCheminCompletFichier(), 'a+');
 			fseek($fp, SEEK_END);
 
 			foreach($tabErreurs as $uneErreur) {

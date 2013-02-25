@@ -11,7 +11,8 @@
         <message code="file">File</message>
         <message code="line">Line</message>
 	    <message code="appliError">Application</message>
-	    <message code="fileError">Fichier</message>
+	    <message code="fileSysError">File system</message>
+	    <message code="fileError">File</message>
         <message code="restReqError">Request</message>
         <message code="restResError">Response</message>
         <message code="serverError">Server and execution environment information</message>
@@ -22,13 +23,19 @@
 
     <errorMessage>
 	    <message code="10000">Error displaying class "%s" does not exist.</message>
-	    <message code="10100">Empty base path.</message>
-	    <message code="10101">Empty filename.</message>
-	    <message code="10102">The file %s has no extension.</message>
-	    <message code="10103">File "%s" does not exist.</message>
-	    <message code="10104">File with extension "%s" can't be loaded. (File: %s)</message>
-	    <message code="10105">Destination folder "%s" does not exist.</message>
-	    <message code="10106">File "%s" could not be created.</message>
+	    <message code="10100">OS "%s" is not suported or is not valid.</message>
+	    <message code="10101">Base path "%s" is not absolute.</message>
+	    <message code="10102">Base path "%s" does not exist.</message>
+	    <message code="10103">File "%s" does not exist, unable to get file perms.</message>
+	    <message code="10104">File "%s" could not be created (permissions problem ?).</message>
+	    <message code="10105">File "%s" does not exist and nothing got charged.</message>
+	    <message code="10106">File with extension "%s" can't be loaded. (File: %s)</message>
+	    <message code="10200">Empty filename.</message>
+	    <message code="10201">The file %s has no extension.</message>
+	    <message code="10202">Empty directory name.</message>
+	    <message code="10203">File "%s" does not exist.</message>
+	    <message code="10204">Destination folder "%s" does not exist.</message>
+	    <message code="10205">Error while trying to create file "%s".</message>
 	    <message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 	    <message code="20001">No valid return format found.</message>
 	    <message code="20002">Invalid server data.</message>

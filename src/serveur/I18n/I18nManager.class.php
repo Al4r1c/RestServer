@@ -1,8 +1,6 @@
 <?php
 	namespace Serveur\I18n;
 
-	use Serveur\Lib\Fichier;
-
 	class I18nManager {
 
 		private $langueDefaut;
@@ -57,9 +55,8 @@
 		}
 
 		private function chargerFichier($nomFichier) {
-			$fichier = new Fichier();
-			$fichier->setBasePath(BASE_PATH);
-			$fichier->setFichierConfig($nomFichier.'.xml', '/public/i18n');
+			$fichier = \Serveur\Utils\FileManager::getFichier();
+			$fichier->setFichierParametres($nomFichier.'.xml', '/public/i18n');
 			if(!$fichier->fichierExiste()) {
 				return null;
 			} elseif(($defaultTraductionObject = $fichier->chargerFichier()) === false) {

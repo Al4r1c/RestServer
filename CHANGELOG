@@ -2,11 +2,13 @@
 
 v0.2
 Passage en realpath pour l'acheminement.
+Création de la classe FileSystem.
+Appel de nouveaux fichiers grâce à la classe statique FileManager.
 Ajout des test:
 -MainApplication
 -RestRequete, RestReponse, RestManager, HeaderManager, Server
 -Config
--Fichier (utilisation de vfsStream)
+-Fichier, FileSystem (utilisation de vfsStream)
 -TypeDetector
 
 v0.1 - 14/02/2013

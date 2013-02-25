@@ -24,7 +24,7 @@
 
 				$will = $this->makeWill($uneMethode[2], '$uneMethode[2]');
 
-				$tabEvals[] = $methode.$with.$will;
+				$tabEvals[$methode][] = $methode.$with.$will;
 			}
 
 			$tabMethode = array_unique($tabMethode);
@@ -44,6 +44,9 @@
 					break;
 				case 'fichier':
 					$mock = $this->getMockFichier($tabMethode);
+					break;
+				case ('filesystem'):
+					$mock = $this->getMockFileSystem($tabMethode);
 					break;
 				case 'headermanager':
 					$mock = $this->getMockHeadersManager($tabMethode);
@@ -68,8 +71,14 @@
 				$enteteMock = "\$mock::staticExpects";
 			}
 
-			foreach($tabEvals as $clef => $unEvalAEffectuer) {
-				eval("$enteteMock(\$this->at($clef))$unEvalAEffectuer");
+			foreach($tabEvals as $methodeEval) {
+				if(count($methodeEval) == 1) {
+					eval("$enteteMock(\$this->atLeastOnce())$methodeEval[0]");
+				} else {
+					foreach($methodeEval as $at => $evalAEffectuer) {
+						eval("$enteteMock(\$this->at($at))$evalAEffectuer");
+					}
+				}
 			}
 
 			return $mock;
@@ -125,6 +134,10 @@
 
 		protected function getMockFichier($methodes = array()) {
 			return $this->getMock('Serveur\Lib\Fichier', $methodes);
+		}
+
+		protected function getMockFileSystem($methodes = array()) {
+			return $this->getMock('Serveur\Lib\FileSystem', $methodes);
 		}
 
 		protected function getMockHeadersManager($methodes = array()) {

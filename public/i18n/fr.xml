@@ -11,6 +11,7 @@
         <message code="file">Fichier</message>
         <message code="line">Ligne</message>
         <message code="appliError">Application</message>
+        <message code="fileSysError">Système de fichier</message>
         <message code="fileError">Fichier</message>
         <message code="restReqError">Requête</message>
         <message code="restResError">Réponse</message>
@@ -22,13 +23,19 @@
 
     <errorMessage>
 	    <message code="10000">La classe d'affichage des erreurs "%s" n'existe pas.</message>
-	    <message code="10100">Le chemin de base est vide.</message>
-	    <message code="10101">Le nom du fichier est vide.</message>
-	    <message code="10102">Le fichier %s est dépourvue d'extension.</message>
-	    <message code="10103">Le fichier "%s" n'existe pas.</message>
-	    <message code="10104">Les fichiers avec l'extension "%s" ne peuvent être chargés. (Fichier: %s)</message>
-	    <message code="10105">Le dossier de destination "%s" n'existe pas?</message>
-	    <message code="10106">Le fichier "%s" n'a pas pu être créé.</message>
+	    <message code="10100">L'OS "%s" n'est pas supporté ou est invalide.</message>
+	    <message code="10101">Le chemin de base "%s" n'est pas absolu.</message>
+	    <message code="10102">Le chemin de base "%s" n'existe pas.</message>
+	    <message code="10103">Le fichier "%s" n'existe pas, impossible d'en récupérer les droits.</message>
+	    <message code="10104">Le fichier "%s" n'a pas pu être créé (problème de permission ?).</message>
+	    <message code="10105">Le fichier "%s" n'existe pas et rien n'a été chargé.</message>
+	    <message code="10106">Les fichiers avec l'extension "%s" ne peuvent être chargés. (Fichier: %s)</message>
+	    <message code="10200">Le nom du fichier est vide.</message>
+	    <message code="10201">Le fichier %s est dépourvue d'extension.</message>
+	    <message code="10202">Le nom du répertoire est vide.</message>
+	    <message code="10203">Le fichier "%s" n'existe pas.</message>
+	    <message code="10204">Le dossier de destination "%s" n'existe pas.</message>
+	    <message code="10205">Erreur lors de la tentative de créer le fichier "%s".</message>
 	    <message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 	    <message code="20001">Aucun format de retour valide trouvé.</message>
 	    <message code="20002">Données serveur invalides.</message>

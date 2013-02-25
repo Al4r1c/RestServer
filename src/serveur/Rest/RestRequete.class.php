@@ -1,7 +1,7 @@
 <?php
 	namespace Serveur\Rest;
 
-	use Serveur\Utils\TypeDetector;
+	use Serveur\Lib\TypeDetector;
 	use Serveur\Exceptions\Exceptions\RestRequeteException;
 
 	class RestRequete {

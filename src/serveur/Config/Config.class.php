@@ -13,7 +13,7 @@
 				$this->applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
 				$this->valider();
 			} catch(\Serveur\Exceptions\Exceptions\FichierException $fe) {
-				throw new ConfigException(30000, 500, $fichierFramework->getLocationFichier());
+				throw new ConfigException(30000, 500, $fichierFramework->getCheminCompletFichier());
 			}
 		}
 

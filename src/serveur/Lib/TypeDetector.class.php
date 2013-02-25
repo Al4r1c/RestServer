@@ -1,5 +1,5 @@
 <?php
-	namespace Serveur\Utils;
+	namespace Serveur\Lib;
 
 	use Serveur\Utils\Constante;
 

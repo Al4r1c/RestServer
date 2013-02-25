@@ -7,10 +7,16 @@
 		return (!isset($donnee) || is_null($donnee) || ((is_string($donnee)) && trim($donnee) == '') || ((is_array($donnee) || is_object($donnee)) && empty($donnee)));
 	}
 
+	function startsWith($haystack, $needle) {
+		return !strncmp($haystack, $needle, strlen($needle));
+	}
+
 	function array_keys_exist(array $keys, array $array) {
 		if (count(array_intersect($keys, array_keys($array))) == count($keys)) {
 			return true;
 		}
+
+		return false;
 	}
 
 	function array_search_recursif($needle, array $haystack) {
@@ -35,12 +41,4 @@
 				return false;
 			}
 		}
-	}
-
-	function getFichierExtension($unFichier) {
-		$positionPoint = strrpos($unFichier, '.');
-		if (!$positionPoint) {
-			return false;
-		}
-		return strtolower(substr($unFichier, $positionPoint+1));
 	}

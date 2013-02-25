@@ -4,109 +4,83 @@
 	use Serveur\Exceptions\Exceptions\FichierException;
 
 	class Fichier {
-		private $nom;
-		private $cheminAcces;
-		private $extension;
-		private $basePath;
+		/** @var \Serveur\Lib\FileSystem */
+		private $fileSystemInstance;
+		private $nomFichier;
+		private $repertoireFichier;
 
-		public function getNom() {
-			return $this->nom;
+		public function getFileSystem() {
+			return $this->fileSystemInstance;
 		}
 
-		public function getCheminAcces() {
-			return $this->cheminAcces;
+		public function setFileSystem(\Serveur\Lib\FileSystem $fileSystem) {
+			$this->fileSystemInstance = $fileSystem;
 		}
 
-		public function getLocationFichier() {
-			return $this->cheminAcces . '/' . $this->nom;
+		public function getNomFichier() {
+			return $this->nomFichier;
 		}
 
-		public function getExtension() {
-			return $this->extension;
+		public function getRepertoireFichier() {
+			return $this->repertoireFichier;
 		}
 
-		public function getDroits() {
-			if ($this->fichierExiste()) {
-				return substr(sprintf('%o', fileperms($this->getLocationFichier())), -4);
-			} else {
-				throw new FichierException(10103, 50, $this->getLocationFichier());
-			}
+		public function getCheminCompletFichier() {
+			return $this->repertoireFichier . $this->nomFichier;
 		}
 
-		public function setBasePath($basePath) {
-			if (isNull($basePath)) {
-				throw new FichierException(10100, 500);
-			}
-
-			$this->basePath = rtrim($basePath, '/');
-		}
-
-		public function setFichierConfig($nom, $cheminAcces, $isCheminRelatif = true) {
-			$this->setNom($nom);
-			$this->setCheminAcces($cheminAcces, $isCheminRelatif);
-		}
-
-		public function setNom($nom) {
+		public function setNomFichier($nom) {
 			if (isNull($nom)) {
-				throw new FichierException(10101, 500);
+				throw new FichierException(10200, 500);
 			}
 
 			if (substr_count($nom, '.') < 1) {
-				throw new FichierException(10102, 500, $nom);
+				throw new FichierException(10201, 500, $nom);
 			}
 
-			$this->nom = $nom;
-			$this->extension = getFichierExtension($nom);
+			$this->nomFichier = $nom;
 		}
 
-		public function setCheminAcces($chemin, $isCheminRelatif = true) {
-			$this->cheminAcces = ($isCheminRelatif ? $this->basePath . '/' . trim($chemin, '/') : rtrim($chemin, '/'));
+		public function setRepertoireFichier($chemin) {
+			if (isNull($chemin)) {
+				throw new FichierException(10202, 500);
+			}
+
+			$this->repertoireFichier = $this->fileSystemInstance->relatifToAbsolu($chemin);
+		}
+
+		public function setFichierParametres($nomFichier, $cheminAcces) {
+			$this->setNomFichier($nomFichier);
+			$this->setRepertoireFichier($cheminAcces);
 		}
 
 		public function fichierExiste() {
-			return file_exists($this->getLocationFichier());
+			return $this->fileSystemInstance->fichierExiste($this->getCheminCompletFichier());
 		}
 
 		public function dossierExiste() {
-			return is_dir($this->cheminAcces);
+			return $this->fileSystemInstance->dossierExiste($this->getRepertoireFichier());
 		}
 
 		public function creerFichier($droit = '0777') {
-			if ($this->dossierExiste()) {
-				if (!$this->fichierExiste()) {
-					$this->creer($this->getLocationFichier(), $droit);
-				}
-			} else {
-				throw new FichierException(10105, 500, $this->cheminAcces);
+			if (!$this->dossierExiste()) {
+				throw new FichierException(10204, 500, $this->repertoireFichier);
 			}
-		}
 
-		protected function creer($urlFichier, $droit) {
-			if($leFichier = fopen($urlFichier, "wb")) {
-				fclose($leFichier);
-
-				chmod($urlFichier, intval($droit, 8));
+			if ($this->fichierExiste()) {
+				return true;
+			} elseif($this->fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
+				return true;
 			} else {
-				throw new FichierException(10106, 500, $urlFichier);
+				throw new FichierException(10205, 500, $this->getCheminCompletFichier());
 			}
 		}
 
 		public function chargerFichier() {
 			if ($this->fichierExiste()) {
-				/** @var $chargeur \Serveur\Lib\FichierChargement\AbstractChargeurFichier */
-				$chargeur = $this->getChargeurClass(ucfirst($this->extension));
-
-				return $chargeur->chargerFichier($this->getLocationFichier());
+				return $this->fileSystemInstance->chargerFichier($this->getCheminCompletFichier());
 			} else {
-				throw new FichierException(10103, 50, $this->getLocationFichier());
-			}
-		}
-
-		protected function getChargeurClass($className) {
-			if(class_exists($nomChargeur = '\\'.SERVER_NAMESPACE.'\Lib\\FichierChargement\\'.$className)) {
-				return new $nomChargeur();
-			} else {
-				throw new FichierException(10104, 500, $this->extension, $this->getLocationFichier());
+				throw new FichierException(10203, 50, $this->getCheminCompletFichier());
 			}
 		}
 	}

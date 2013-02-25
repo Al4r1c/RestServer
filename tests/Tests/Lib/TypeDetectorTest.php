@@ -1,10 +1,10 @@
 <?php
-	namespace Tests\Utils;
+	namespace Tests\Lib;
 
 	include_once(__DIR__ . '/../../TestEnv.php');
 
 	use Tests\TestCase;
-	use Serveur\Utils\TypeDetector;
+	use Serveur\Lib\TypeDetector;
 
 	class TypeDetectorTest extends TestCase {
 

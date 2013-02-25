@@ -16,7 +16,6 @@
 			$suite->addTest(Tests\ApplicationTest::suite());
 			$suite->addTest(Tests\ConfigTest::suite());
 			$suite->addTest(Tests\LibTest::suite());
-			$suite->addTest(Tests\UtilsTest::suite());
 			$suite->addTest(Tests\RestTest::suite());
 
 			return $suite;

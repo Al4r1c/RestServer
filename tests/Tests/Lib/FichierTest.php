@@ -5,8 +5,6 @@
 
 	use Tests\TestCase;
 	use Serveur\Lib\Fichier;
-	use org\bovigo\vfs\vfsStreamWrapper;
-	use org\bovigo\vfs\vfsStream;
 
 	class FichierTest extends TestCase {
 
@@ -14,202 +12,210 @@
 		private $fichier;
 
 		public function setUp() {
-			vfsStreamWrapper::register();
-			vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
-			$this->fichier = new Fichier();
-			$this->fichier->setBasePath(vfsStream::url('testPath'));
+			$this->fichier = \Serveur\Utils\FileManager::getFichier();
 		}
 
-		public function testBasePath() {
-			$this->fichier->setBasePath(vfsStream::url('testPath'));
-			$this->assertAttributeEquals(
-				vfsStream::url('testPath'),
-				'basePath',
-				$this->fichier
-			);
-		}
+		public function testFileSystem() {
+			$fileSystem = $this->getMockFileSystem();
 
-		/**
-		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
-		 * @expectedExceptionCode 10100
-		 */
-		public function testBasePathVide() {
-			$this->fichier->setBasePath('');
+			$this->fichier->setFileSystem($fileSystem);
+
+			$this->assertEquals($fileSystem, $this->fichier->getFileSystem());
 		}
 
 		public function testNomFichier() {
-			$this->fichier->setNom('monFichier.txt');
+			$this->fichier->setNomFichier('monFichier.txt');
 
-			$this->assertEquals('monFichier.txt', $this->fichier->getNom());
+			$this->assertEquals('monFichier.txt', $this->fichier->getNomFichier());
 		}
 
 		/**
 		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
-		 * @expectedExceptionCode 10101
+		 * @expectedExceptionCode 10200
 		 */
 		public function testNomFichierNonNull() {
-			$this->fichier->setNom(' ');
-		}
-
-		public function testGetExtension() {
-			$this->fichier->setNom('monFichier.mOnExT');
-
-			$this->assertEquals(strtolower('mOnExT'), $this->fichier->getExtension());
+			$this->fichier->setNomFichier(' ');
 		}
 
 		/**
 		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
-		 * @expectedExceptionCode 10102
+		 * @expectedExceptionCode 10201
 		 */
 		public function testNomFichierInvalid() {
-			$this->fichier->setNom('monFichierSansExtension');
+			$this->fichier->setNomFichier('monFichierSansExtension');
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
+		 * @expectedExceptionCode 10202
+		 */
 		public function testCheminDaccesNull() {
-			$this->fichier->setCheminAcces(null);
-			$this->assertEquals(vfsStream::url('testPath/'), $this->fichier->getCheminAcces());
+			$this->fichier->setRepertoireFichier(null);
 		}
 
 		public function testCheminDacces() {
-			$this->fichier->setCheminAcces('path/to/fichier/', true);
+			$this->fichier->setRepertoireFichier('/path\\\\to///fichier////');
 
-			$this->assertEquals(vfsStream::url('testPath/path/to/fichier'), $this->fichier->getCheminAcces());
+			$this->assertEquals(BASE_PATH. DIRECTORY_SEPARATOR .'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
 		}
 
 		public function testCheminDaccesAbsolue() {
-			$this->fichier->setCheminAcces('/path/to/fichier/', false);
+			$this->fichier->setRepertoireFichier(BASE_PATH.'/path/to/fichier/');
 
-			$this->assertEquals('/path/to/fichier', $this->fichier->getCheminAcces());
+			$this->assertEquals(BASE_PATH. DIRECTORY_SEPARATOR .'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
 		}
 
-		public function testGetLocationFichier() {
-			$this->fichier->setCheminAcces('/path/to/fichier/', false);
-			$this->fichier->setNom('comeatme.log');
+		public function testGetCheminComplet() {
+			$this->fichier->setRepertoireFichier('/path/');
+			$this->fichier->setNomFichier('comeatme.log');
 
-			$this->assertEquals('/path/to/fichier/comeatme.log', $this->fichier->getLocationFichier());
+			$this->assertEquals(BASE_PATH. DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'comeatme.log', $this->fichier->getCheminCompletFichier());
 		}
 
 		public function testSetFichierConfig() {
-			$this->fichier->setFichierConfig('monFichier.txt', '/chemin/daccess/');
+			$this->fichier->setFichierParametres('monFichier.txt', '/chemin\\dacces/');
 
-			$this->assertEquals('monFichier.txt', $this->fichier->getNom());
-			$this->assertEquals(strtolower('txt'), $this->fichier->getExtension());
-			$this->assertEquals(vfsStream::url('testPath/chemin/daccess'), $this->fichier->getCheminAcces());
-			$this->assertEquals(vfsStream::url('testPath/chemin/daccess/monFichier.txt'), $this->fichier->getLocationFichier());
-		}
-
-		public function testGetDroits() {
-			file_put_contents(vfsStream::url('testPath/page.html'), 'some content');
-			chmod(vfsStream::url('testPath/page.html'), 0124);
-
-			$this->fichier->setFichierConfig('page.html', '');
-
-			$this->assertEquals('0124', $this->fichier->getDroits());
-		}
-
-		/**
-		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
-		 * @expectedExceptionCode 10103
-		 */
-		public function testGetDroitsFichierInexistant() {
-			$this->fichier->setFichierConfig('page.html', '');
-
-			$this->fichier->getDroits();
+			$this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'chemin' . DIRECTORY_SEPARATOR . 'dacces' . DIRECTORY_SEPARATOR . 'monFichier.txt', $this->fichier->getCheminCompletFichier());
 		}
 
 		public function testVerifierExistence() {
-			file_put_contents(vfsStream::url('testPath/page.html'), 'some content');
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', 'c:\\wwww\\', true),
+				array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', true)
+			);
 
-			$this->fichier->setFichierConfig('page.html', vfsStream::url('testPath'), false);
+			$fileSystem->initialiser('Windows', 'c:\\wwww\\');
+
+			$this->fichier->setFileSystem($fileSystem);
+
+			$this->fichier->setFichierParametres('monFichier.png', '/chemin/');
+
 			$this->assertTrue($this->fichier->fichierExiste());
 		}
 
 		public function testVerifierExistenceFalse() {
-			$this->fichier->setFichierConfig('monFichier.txt', '/chemin/daccess/');
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', 'c:\\wwww\\', true),
+				array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', false)
+			);
+
+			$fileSystem->initialiser('Windows', 'c:\\wwww\\');
+
+			$this->fichier->setFileSystem($fileSystem);
+
+			$this->fichier->setFichierParametres('monFichier.png', '/chemin/');
+
 			$this->assertFalse($this->fichier->fichierExiste());
 		}
 
-		public function testVerifierExistenceDossier() {
-			mkdir(vfsStream::url('testPath/nouveauDossier'));
-			$this->fichier->setCheminAcces('nouveauDossier/');
-			$this->assertTrue($this->fichier->dossierExiste());
-		}
+		public function testChargerFichier() {
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', '/data/www/', true),
+				array('fichierExiste', '/data/www/chemin/variables.php', true),
+				array('chargerFichier', '/data/www/chemin/variables.php', array('VAR1' => 'PARAM1'))
+			);
 
-		public function testVerifierExistenceDossierFalse() {
-			$this->fichier->setCheminAcces('path/fake/');
-			$this->assertFalse($this->fichier->dossierExiste());
+			$fileSystem->initialiser('Linux', '/data/www/');
+
+			$this->fichier->setFileSystem($fileSystem);
+
+			$this->fichier->setFichierParametres('variables.php', '/chemin/');
+
+			$this->assertEquals(array('VAR1' => 'PARAM1'), $this->fichier->chargerFichier());
 		}
 
 		/**
 		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
-		 * @expectedExceptionCode 10103
+		 * @expectedExceptionCode 10203
 		 */
 		public function testChargerFichierInexistant() {
-			$this->fichier->setFichierConfig('monFichier.txt', '/chemin/daccess/');
-
-			$this->fichier->chargerFichier();
-		}
-
-		/**
-		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
-		 * @expectedExceptionCode 10104
-		 */
-		public function testChargerExtensionInconnu() {
-			file_put_contents(vfsStream::url('testPath/fichier.fake'), 'some content');
-
-			$this->fichier->setFichierConfig('fichier.fake', '');
-
-			$this->fichier->chargerFichier();
-		}
-
-		public function testCharger() {
-			$abstractChargeur = $this->createMock('AbstractChargeurFichier',
-				array('chargerFichier', vfsStream::url('testPath/fichier.php'),  array('paris' => 'yeah'))
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', '/data/www/', true),
+				array('fichierExiste', '/data/www/chemin/monFichierFAke.php', false)
 			);
 
-			/** @var $fichier Fichier */
-			$fichier = $this->createMock('Fichier',
-				array('fichierExiste', '', true),
-				array('getChargeurClass', '', $abstractChargeur)
-			);
+			$fileSystem->initialiser('Linux', '/data/www/');
 
-			$fichier->setFichierConfig('fichier.php', vfsStream::url('testPath'), false);
+			$this->fichier->setFileSystem($fileSystem);
 
-			$this->assertEquals(array('paris' => 'yeah'), $fichier->chargerFichier());
+			$this->fichier->setFichierParametres('monFichierFAke.php', '/chemin/');
+
+			$this->fichier->chargerFichier();
 		}
 
 		public function testCreerFichier() {
-			$this->fichier->setFichierConfig('party.png', '');
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', '', true),
+				array('creerFichier', '/data/www/chemin/party.png', true)
+			);
 
-			$this->assertFalse($this->fichier->fichierExiste());
+			$fileSystem->initialiser('Linux', '/data/www/');
 
-			$this->fichier->creerFichier();
+			$this->fichier->setFileSystem($fileSystem);
 
-			$this->assertTrue($this->fichier->fichierExiste());
+			$this->fichier->setFichierParametres('party.png', 'chemin/');
+
+			$this->assertTrue($this->fichier->creerFichier());
 		}
 
-		public function testCreerFichierDroitsDefaut0777() {
-			$this->fichier->setFichierConfig('party.png', '');
+		public function testNeRecreerPasFichierExisteDeja() {
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', '', true),
+				array('fichierExiste', '/data/www/chemin/party.png', true)
+			);
 
-			$this->fichier->creerFichier();
+			$fileSystem->initialiser('Linux', '/data/www/');
 
-			$this->assertEquals('0777', $this->fichier->getDroits());
+			$this->fichier->setFileSystem($fileSystem);
+
+			$this->fichier->setFichierParametres('party.png', 'chemin/');
+
+			$this->assertTrue($this->fichier->creerFichier());
 		}
 
-		public function testCreerFichierAvecDroits() {
-			$this->fichier->setFichierConfig('party.png', '');
 
-			$this->fichier->creerFichier('0421');
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
+		 * @expectedExceptionCode 10204
+		 */
+		public function testCreerDansDossierInexistant() {
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', 'c:\\www\\', true),
+				array('dossierExiste', 'c:\\www\\path\\', false)
+			);
 
-			$this->assertEquals('0421', $this->fichier->getDroits());
+			$fileSystem->initialiser('Windows', 'c:\\www\\');
+
+			$this->fichier->setFileSystem($fileSystem);
+
+			$this->fichier->setFichierParametres('party.png', '/path/');
+
+			$this->fichier->creerFichier();
 		}
 
 		/**
 		 * @expectedException     \Serveur\Exceptions\Exceptions\FichierException
-		 * @expectedExceptionCode 10105
+		 * @expectedExceptionCode 10205
 		 */
-		public function testCreerDansDossierInexistant() {
-			$this->fichier->setFichierConfig('party.png', '/path/');
+		public function testCreerBug() {
+			/** @var $fileSystem \Serveur\Lib\FileSystem */
+			$fileSystem = $this->createMock('FileSystem',
+				array('dossierExiste', '', true),
+				array('creerFichier', 'c:\\www\\path\\heya.log', false)
+			);
+
+			$fileSystem->initialiser('Windows', 'c:\\www\\');
+
+			$this->fichier->setFileSystem($fileSystem);
+
+			$this->fichier->setFichierParametres('heya.log', '/path/');
 
 			$this->fichier->creerFichier();
 		}
