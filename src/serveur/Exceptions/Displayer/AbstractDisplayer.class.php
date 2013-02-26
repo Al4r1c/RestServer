@@ -15,7 +15,7 @@
 		}
 
 		protected function traduireMessageEtRemplacerVariables($message, array $arguments = array()) {
-			return vsprintf($this->tradManager->recupererChaine($message), $arguments);
+			return vsprintf($this->tradManager->recupererChaineTraduite($message), $arguments);
 		}
 
 		abstract protected function envoyerVersDestination(array $tabErreurs);

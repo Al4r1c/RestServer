@@ -19,6 +19,7 @@
         <message code="headManError">Header Manager</message>
         <message code="confError">Configuration file</message>
         <message code="dataError">Data error</message>
+        <message code="tradManager">Traduction Manager</message>
     </trad>
 
     <errorMessage>
@@ -61,7 +62,9 @@
 	    <message code="40003">Language file for %s not found. (Should be: %s)</message>
 	    <message code="40004">Language file for %s invalid (%s). (%s)</message>
 	    <message code="40005">No valid translation file set or found.</message>
-        <message code="40006">Translation for the entity "%s.%s" not found.</message>
+        <message code="40100">Traduction object is invalid.</message>
+	    <message code="40101">Translation for the entity "%s.%s" not found.</message>
+	    <message code="40102">No traduction object set.</message>
     </errorMessage>
 
 </language>
