@@ -36,7 +36,6 @@
 			color: #000;
 			padding: 5px;
 	    }
-
 	    ul {
 			padding-bottom: 15px;
 			padding-left: 20px;

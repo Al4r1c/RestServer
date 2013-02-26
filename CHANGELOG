@@ -7,7 +7,7 @@ Appel de nouveaux fichiers grâce à la classe statique FileManager.
 Nouvelle classe XMLParser à la place de DOMDocument.
 Ajout des test:
 -MainApplication
--RestRequete, RestReponse, RestManager, HeaderManager, Server
+-RestRequete, RestReponse, RestManager, HeaderManager, Server, Renderers
 -Config
 -Fichier, FileSystem (utilisation de vfsStream), Chargement de fichiers (Php, Xml & Yaml).
 -TypeDetector
