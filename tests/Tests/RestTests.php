@@ -4,10 +4,10 @@
 	include_once(__DIR__ . '/../TestEnv.php');
 
 	if (!defined('PHPUnit_MAIN_METHOD')) {
-		define('PHPUnit_MAIN_METHOD', 'RestTest::main');
+		define('PHPUnit_MAIN_METHOD', 'RestTests::main');
 	}
 
-	class RestTest {
+	class RestTests {
 
 		public static function main() {
 			\PHPUnit_TextUI_TestRunner::run(self::suite());
@@ -27,7 +27,7 @@
 		}
 	}
 
-	if (PHPUnit_MAIN_METHOD == 'RestTest::main') {
-		RestTest::main();
+	if (PHPUnit_MAIN_METHOD == 'RestTests::main') {
+		RestTests::main();
 	}
 ?>

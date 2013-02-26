@@ -13,10 +13,10 @@
 		public static function suite() {
 			$suite = new \PHPUnit_Framework_TestSuite('Server Tests');
 
-			$suite->addTest(Tests\ApplicationTest::suite());
-			$suite->addTest(Tests\ConfigTest::suite());
-			$suite->addTest(Tests\LibTest::suite());
-			$suite->addTest(Tests\RestTest::suite());
+			$suite->addTest(Tests\ApplicationTests::suite());
+			$suite->addTest(Tests\ConfigTests::suite());
+			$suite->addTest(Tests\LibTests::suite());
+			$suite->addTest(Tests\RestTests::suite());
 
 			return $suite;
 		}
