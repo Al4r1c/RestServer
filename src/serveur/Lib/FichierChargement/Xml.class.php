@@ -7,7 +7,8 @@
 		public function chargerFichier($locationFichier) {
 			$donneesXml = file_get_contents($locationFichier);
 
-			$xmlParsee = new XMLParser($donneesXml);
+			$xmlParsee = new XMLParser();
+			$xmlParsee->setContenu($donneesXml);
 
 			return $xmlParsee;
 		}

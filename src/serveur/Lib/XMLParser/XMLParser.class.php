@@ -10,7 +10,7 @@
 		private $donneesParsees;
 		private $erreur;
 
-		public function __construct($contenuXml) {
+		public function setContenu($contenuXml) {
 			$this->donneesSourcedata = $contenuXml;
 			$this->parse($contenuXml);
 		}
@@ -69,7 +69,8 @@
 
 				$nouveauLast = end($temporaire);
 
-				$nouvelElement = new XMLElement($this->donneesParsees[$tempName]);
+				$nouvelElement = new XMLElement();
+				$nouvelElement->setDonnees($this->donneesParsees[$tempName]);
 
 				if(count($temporaire) > 0) {
 					$this->donneesParsees[$nouveauLast]['children'][] = $nouvelElement;

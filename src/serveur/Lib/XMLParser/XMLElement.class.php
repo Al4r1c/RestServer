@@ -8,7 +8,7 @@
 		private $children;
 		private $valeur;
 
-		public function __construct(array $donnees) {
+		public function setDonnees(array $donnees) {
 			$this->setNom($donnees['element']);
 			$this->setAttributs($donnees['attr']);
 			$this->setChildren($donnees['children']);
