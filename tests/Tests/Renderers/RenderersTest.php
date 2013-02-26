@@ -1,5 +1,5 @@
 <?php
-	namespace Tests\Lib;
+	namespace Tests\Renderers;
 
 	include_once(__DIR__ . '/../../TestEnv.php');
 
