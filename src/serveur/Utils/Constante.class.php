@@ -1,8 +1,6 @@
 <?php
 	namespace Serveur\Utils;
 
-	use Serveur\Lib\Fichier;
-
 	class Constante {
 
 		private static $extension = 'php';

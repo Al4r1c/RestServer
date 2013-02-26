@@ -14,7 +14,7 @@ GOTO alltest
 
 
 :alltest
-CALL phpunit %var% %~dp0\AllTest.php
+CALL phpunit %var% %~dp0\AllTests.php
 GOTO fin
 
 :fin

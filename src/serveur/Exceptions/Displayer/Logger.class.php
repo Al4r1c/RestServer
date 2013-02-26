@@ -2,7 +2,6 @@
 	namespace Serveur\Exceptions\Displayer;
 
 	use Serveur\Exceptions\Displayer\AbstractDisplayer;
-	use Serveur\Lib\Fichier;
 
 	class Logger extends AbstractDisplayer {
 
