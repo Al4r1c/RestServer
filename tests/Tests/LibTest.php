@@ -18,6 +18,7 @@
 
 			$suite->addTestSuite('Tests\Lib\FichierTest');
 			$suite->addTestSuite('Tests\Lib\FileSystemTest');
+			$suite->addTestSuite('Tests\Lib\FichierChargementTest');
 			$suite->addTestSuite('Tests\Lib\TypeDetectorTest');
 
 			return $suite;

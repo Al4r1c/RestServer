@@ -4,11 +4,12 @@ v0.2
 Passage en realpath pour l'acheminement.
 Création de la classe FileSystem.
 Appel de nouveaux fichiers grâce à la classe statique FileManager.
+Nouvelle classe XMLParser à la place de DOMDocument.
 Ajout des test:
 -MainApplication
 -RestRequete, RestReponse, RestManager, HeaderManager, Server
 -Config
--Fichier, FileSystem (utilisation de vfsStream)
+-Fichier, FileSystem (utilisation de vfsStream), Chargement de fichiers (Php, Xml & Yaml).
 -TypeDetector
 
 v0.1 - 14/02/2013

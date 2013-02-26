@@ -1,24 +1,21 @@
 <?php
 	namespace Serveur\I18n;
 
-	use DOMXPath;
+	use Serveur\Lib\XMLParser\XMLParser;
 
 	class TradManager {
+		/** @var XMLParser */
 		private $fichierTraductionDefaut;
 
-		public function setFichierTraduction(\DOMDocument $fichierTradDef) {
+		public function setFichierTraduction(XMLParser $fichierTradDef) {
 			$this->fichierTraductionDefaut = $fichierTradDef;
 		}
 
 		private function getTraduction($section, $identifier) {
-			$xpath = new DomXpath($this->fichierTraductionDefaut);
+			$xmlElementsCorrespondants = $this->fichierTraductionDefaut->getConfigValeur($section.'.message[code='.$identifier.']');
 
-			foreach($xpath->query('//' . $section . '/message[@code="' . $identifier . '"]') as $unMessage) {
-				$message = $unMessage->nodeValue;
-			}
-
-			if(isset($message)) {
-				return $message;
+			if(isset($xmlElementsCorrespondants)) {
+				return $xmlElementsCorrespondants[0]->getValeur();
 			} else {
 				trigger_notice_apps(40006, $section, $identifier);
 

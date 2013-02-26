@@ -57,9 +57,9 @@
 	    <message code="30002">Key %s does not exist in the configuration.</message>
 	    <message code="40000">Language "%s" is not associated with any translation. Language used instead: %s.</message>
 	    <message code="40001">Default language "%s" file (%s) not found. Language loaded instead: %s.</message>
-	    <message code="40002">Default language "%s" file (%s) invalid. Language loaded instead: %s.</message>
-	    <message code="40003">Language "%s" file not found. (Should be: %s)</message>
-	    <message code="40004">Language "%s" file invalid. (%s)</message>
+	    <message code="40002">Default language "%s" file (%s) invalid (%s). Language loaded instead: %s.</message>
+	    <message code="40003">Language file for %s not found. (Should be: %s)</message>
+	    <message code="40004">Language file for %s invalid (%s). (%s)</message>
 	    <message code="40005">No valid translation file set or found.</message>
         <message code="40006">Translation for the entity "%s.%s" not found.</message>
     </errorMessage>

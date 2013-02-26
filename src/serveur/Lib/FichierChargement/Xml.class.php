@@ -1,21 +1,14 @@
 <?php
 	namespace Serveur\Lib\FichierChargement;
 
-	use DOMDocument;
+	use Serveur\Lib\XMLParser\XMLParser;
 
 	class Xml extends AbstractChargeurFichier {
 		public function chargerFichier($locationFichier) {
-			$valeurBufferPrecedente = libxml_use_internal_errors(true);
-			$domObjet = new DomDocument();
+			$donneesXml = file_get_contents($locationFichier);
 
-			$domObjet->load($locationFichier);
-			if(!$domObjet->validate()) {
-				$domObjet = false;
-			}
+			$xmlParsee = new XMLParser($donneesXml);
 
-			libxml_clear_errors();
-			libxml_use_internal_errors($valeurBufferPrecedente);
-
-			return $domObjet;
+			return $xmlParsee;
 		}
 	}

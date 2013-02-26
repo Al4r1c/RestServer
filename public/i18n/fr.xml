@@ -57,9 +57,9 @@
 	    <message code="30002">La clef %s n'existe pas dans la configuration.</message>
 	    <message code="40000">La langue "%s" n'est associée à aucune traduction. Langue utilisée à la place: %s.</message>
 	    <message code="40001">Fichier pour la langue "%s" définie par défaut (%s) non trouvé. Langue chargée à la place: %s.</message>
-	    <message code="40002">Fichier pour la langue "%s" définie par défaut (%s) invalide. Langue chargée à la place: %s.</message>
+	    <message code="40002">Fichier pour la langue "%s" définie par défaut (%s) invalide (%s). Langue chargée à la place: %s.</message>
 	    <message code="40003">Fichier pour la langue "%s" non trouvé. (Devrait être: %s)</message>
-	    <message code="40004">Fichier pour la langue "%s" invalide. (%s)</message>
+	    <message code="40004">Fichier pour la langue "%s" invalide (%s). (%s)</message>
 	    <message code="40005">Aucun fichier de traduction valide n'a été définie ou trouvé.</message>
 	    <message code="40006">Traduction pour l'entité "%s.%s" non trouvée.</message>
     </errorMessage>

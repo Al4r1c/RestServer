@@ -22,14 +22,14 @@
 
 			$traductionObjetDefaut = $this->chargerFichier($langueDefautClasse);
 
-			if(is_null($traductionObjetDefaut) || $traductionObjetDefaut === false) {
+			if(is_null($traductionObjetDefaut) || $traductionObjetDefaut->isValide() === false) {
 				foreach($this->languesDisponibles as $uneLangueDispo => $classeLangue) {
 					$traductionDisponible = $this->chargerFichier($classeLangue);
 
 					if(is_null($traductionDisponible)) {
 						trigger_notice_apps(40003, $uneLangueDispo, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
-					} elseif($traductionDisponible === false) {
-						trigger_notice_apps(40004, $uneLangueDispo, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
+					} elseif($traductionDisponible->isValide() === false) {
+						trigger_notice_apps(40004, $uneLangueDispo, $traductionDisponible->getErreurMessage(), BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
 					} else {
 						$defaultTraductionObject = $traductionDisponible;
 						break;
@@ -40,12 +40,11 @@
 					if(is_null($traductionObjetDefaut)) {
 						trigger_notice_apps(40001, $langueDefautUtilisee, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
 					} else {
-						trigger_notice_apps(40002, $langueDefautUtilisee, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
+						trigger_notice_apps(40002, $langueDefautUtilisee, $traductionObjetDefaut->getErreurMessage(), BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
 					}
 				} else {
 					trigger_notice_apps(40005, $this->langueDefaut, $langueDefautUtilisee = key($this->languesDisponibles));
-					$defaultTraductionObject = new \DOMDocument();
-					$defaultTraductionObject->loadXML(self::$defaultXml);
+					$defaultTraductionObject = new \Serveur\Lib\XMLParser\XMLParser(self::$defaultXml);
 				}
 			} else {
 				$defaultTraductionObject = $traductionObjetDefaut;
@@ -54,15 +53,15 @@
 			return $defaultTraductionObject;
 		}
 
+		/** @return \Serveur\Lib\XMLParser\XMLParser */
 		private function chargerFichier($nomFichier) {
 			$fichier = \Serveur\Utils\FileManager::getFichier();
 			$fichier->setFichierParametres($nomFichier.'.xml', '/public/i18n');
+
 			if(!$fichier->fichierExiste()) {
 				return null;
-			} elseif(($defaultTraductionObject = $fichier->chargerFichier()) === false) {
-				return false;
 			} else {
-				return $defaultTraductionObject;
+				return $fichier->chargerFichier();
 			}
 		}
 	}
