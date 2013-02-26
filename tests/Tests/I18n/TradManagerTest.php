@@ -15,12 +15,14 @@
 		}
 
 		public function testSetXmlObjet() {
-			$XMLParser = new \Serveur\Lib\XMLParser\XMLParser("<root></root>");
+			$xmlParser = $this->createMock('XMLParser',
+				array('isValide', '', true)
+			);
 
-			$this->tradManager->setFichierTraduction($XMLParser);
+			$this->tradManager->setFichierTraduction($xmlParser);
 
 			$this->assertAttributeEquals(
-				$XMLParser,
+				$xmlParser,
 				'fichierTraductionDefaut',
 				$this->tradManager
 			);
