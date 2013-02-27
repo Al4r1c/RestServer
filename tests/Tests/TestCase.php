@@ -178,7 +178,7 @@
 
 		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\I18n\I18nManager */
 		protected function getMockI18nManager($methodes = array()) {
-			return $this->getMock('Serveur\Rest\HeaderManager', $methodes);
+			return $this->getMock('Serveur\I18n\I18nManager', $methodes);
 		}
 
 		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestRequete */
