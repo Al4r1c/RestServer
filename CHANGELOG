@@ -1,6 +1,7 @@
 ==CHANGELOG==
 
 v0.21
+Nouvelle branche GitHub "dev". Le developpement sera push dans cette branche, les versions finales en master.
 Corrections de divers bug.
 Ajout des tests:
 -TradManager, I18nManager
