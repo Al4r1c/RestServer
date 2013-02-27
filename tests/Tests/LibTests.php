@@ -3,7 +3,7 @@
 
 	include_once(__DIR__ . '/../TestEnv.php');
 
-	if (!defined('PHPUnit_MAIN_METHOD')) {
+	if(!defined('PHPUnit_MAIN_METHOD')) {
 		define('PHPUnit_MAIN_METHOD', 'LibTests::main');
 	}
 
@@ -25,6 +25,6 @@
 		}
 	}
 
-	if (PHPUnit_MAIN_METHOD == 'LibTests::main') {
+	if(PHPUnit_MAIN_METHOD == 'LibTests::main') {
 		ConfigTests::main();
 	}

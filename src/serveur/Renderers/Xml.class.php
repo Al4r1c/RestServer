@@ -13,14 +13,14 @@
 		private function array_to_xml($content, \SimpleXMLElement &$simpleXmlObject) {
 			foreach($content as $key => $value) {
 				if(is_array($value)) {
-					if(!is_numeric($key)){
+					if(!is_numeric($key)) {
 						$subnode = $simpleXmlObject->addChild("$key");
 						$this->array_to_xml($value, $subnode);
-					} else{
+					} else {
 						$this->array_to_xml($value, $simpleXmlObject);
 					}
 				} else {
-					$simpleXmlObject->addChild("$key","$value");
+					$simpleXmlObject->addChild("$key", "$value");
 				}
 			}
 		}

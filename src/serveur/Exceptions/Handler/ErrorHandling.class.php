@@ -24,6 +24,7 @@
 		public function getErreursEtFlush() {
 			$tabErreurs = $this->erreurs;
 			$this->erreurs = array();
+
 			return $tabErreurs;
 		}
 

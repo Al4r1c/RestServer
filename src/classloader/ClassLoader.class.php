@@ -13,11 +13,11 @@
 		}
 
 		public function unregister($namespace = '') {
-			if (!isNull($namespace)) {
+			if(!isNull($namespace)) {
 				if(array_key_exists(strtolower($namespace), $this->namespaces)) {
 					unset($this->namespaces[strtolower($namespace)]);
 				} else {
-					echo 'Namespace '.$namespace.' not found';
+					echo 'Namespace ' . $namespace . ' not found';
 				}
 			} else {
 				spl_autoload_unregister(array($this, 'loaderFunction'));

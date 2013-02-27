@@ -17,14 +17,14 @@
 		}
 
 		private function getTraduction($section, $identifier) {
-			$xmlElementsCorrespondants = $this->fichierTraductionDefaut->getConfigValeur($section.'.message[code='.$identifier.']');
+			$xmlElementsCorrespondants = $this->fichierTraductionDefaut->getConfigValeur($section . '.message[code=' . $identifier . ']');
 
 			if(isset($xmlElementsCorrespondants)) {
 				return $xmlElementsCorrespondants[0]->getValeur();
 			} else {
 				trigger_notice_apps(40101, $section, $identifier);
 
-				return '{'.$section.'.'.$identifier.'}';
+				return '{' . $section . '.' . $identifier . '}';
 			}
 		}
 

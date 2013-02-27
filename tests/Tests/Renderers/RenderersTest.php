@@ -33,7 +33,9 @@
 		public function testXml() {
 			$renderer = new \Serveur\Renderers\Xml();
 
-			$this->assertEquals('<?xml version="1.0"?>'."\n".'<root><param1>1</param1><param2><one>onevar2</one></param2><0>yosh</0><1>yosh2</1></root>'."\n",
-			$renderer->render(self::$donnee));
+			$this->assertEquals(
+				'<?xml version="1.0"?>' . "\n" . '<root><param1>1</param1><param2><one>onevar2</one></param2><0>yosh</0><1>yosh2</1></root>' . "\n",
+				$renderer->render(self::$donnee)
+			);
 		}
 	}

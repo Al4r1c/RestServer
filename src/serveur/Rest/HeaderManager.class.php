@@ -17,7 +17,7 @@
 
 		public function envoyerHeaders() {
 			foreach($this->headers as $champHeader => $valeurHeader) {
-				header($champHeader.': ' . $valeurHeader, true);
+				header($champHeader . ': ' . $valeurHeader, true);
 			}
 		}
 	}

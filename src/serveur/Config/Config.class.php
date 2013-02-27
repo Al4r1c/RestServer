@@ -19,7 +19,7 @@
 
 		private function valider() {
 			foreach(self::$clefMinimales as $uneClefQuiDoitExister) {
-				if (is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
+				if(is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
 					throw new ConfigException(30001, 500, $uneClefQuiDoitExister);
 				}
 			}
@@ -30,6 +30,7 @@
 				return $valeur;
 			} else {
 				trigger_notice_apps(30002, $clefConfig);
+
 				return null;
 			}
 		}

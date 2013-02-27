@@ -47,7 +47,7 @@
 			$typeDetector = new TypeDetector(\Serveur\Utils\Constante::chargerConfig('mimes'));
 			$formatsTrouves = $typeDetector->extraireMimesTypeHeader($format);
 
-			if (isNull($formatsTrouves)) {
+			if(isNull($formatsTrouves)) {
 				throw new RestRequeteException(20001, 400);
 			}
 
@@ -61,7 +61,7 @@
 		}
 
 		public function setParametres($donnee) {
-			if (!is_array($donnee)) {
+			if(!is_array($donnee)) {
 				throw new RestRequeteException(20002, 400);
 			}
 

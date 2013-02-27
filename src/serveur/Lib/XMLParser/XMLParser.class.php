@@ -100,7 +100,7 @@
 
 		/** @param $arrayValues XMLElement[] */
 		public function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues) {
-			if (count($tabKey) == 1) {
+			if(count($tabKey) == 1) {
 				$tabResult = array();
 
 				if(preg_match_all('#^[a-z]+(\[[a-z]+=[a-z0-9]+\]){1}$#', $tabKey[0])) {
@@ -127,6 +127,7 @@
 				foreach($arrayValues as $unElement) {
 					if($unElement->getNom() === $tabKey[0]) {
 						array_shift($tabKey);
+
 						return $this->rechercheValeurTableauMultidim($tabKey, $unElement->getChildren());
 					}
 				}

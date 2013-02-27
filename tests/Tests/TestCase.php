@@ -14,10 +14,10 @@
 
 			foreach(array_slice(func_get_args(), 1) as $uneMethode) {
 				$tabMethode[] = $uneMethode[0];
-				$methode = "->method(\"".$uneMethode[0]."\")";
+				$methode = "->method(\"" . $uneMethode[0] . "\")";
 
-				if (!isNull($uneMethode[1])) {
-					$with = "->with(".$this->getPlainVar($uneMethode[1]).")";
+				if(!isNull($uneMethode[1])) {
+					$with = "->with(" . $this->getPlainVar($uneMethode[1]) . ")";
 				} else {
 					$with = "";
 				}
@@ -70,7 +70,7 @@
 					break;
 			}
 
-			if (!$static) {
+			if(!$static) {
 				$enteteMock = "\$mock->expects";
 			} else {
 				$enteteMock = "\$mock::staticExpects";
@@ -111,9 +111,9 @@
 			} elseif(is_object($element)) {
 				$this->tabTricks[] = $element;
 				end($this->tabTricks);
-				$var = "\$this->tabTricks[".key($this->tabTricks)."]";
+				$var = "\$this->tabTricks[" . key($this->tabTricks) . "]";
 			} else {
-				$var = '"'.addslashes($element).'"';
+				$var = '"' . addslashes($element) . '"';
 			}
 
 			return $var;
@@ -122,8 +122,8 @@
 		private function makeWill($element) {
 			$will = ";";
 
-			if (!isNull($element)) {
-				$will = "->will(\$this->returnValue(".$this->getPlainVar($element)."))".$will;
+			if(!isNull($element)) {
+				$will = "->will(\$this->returnValue(" . $this->getPlainVar($element) . "))" . $will;
 			}
 
 			return $will;
@@ -132,9 +132,10 @@
 		private function arrayToStringPhp(array $array) {
 			$string = 'array(';
 			foreach($array as $clef => $valeur) {
-				$string .= '"'.$clef.'" => '.$this->getPlainVar($valeur).',';
+				$string .= '"' . $clef . '" => ' . $this->getPlainVar($valeur) . ',';
 			}
-			return substr($string, 0, -1).')';
+
+			return substr($string, 0, -1) . ')';
 		}
 
 		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Renderers\AbstractRenderer */

@@ -10,14 +10,14 @@
 			$valeurs = '';
 
 			foreach($donnees as $clef => $valeur) {
-				for($i = 0; $i<$level; $i++) {
+				for($i = 0; $i < $level; $i++) {
 					$valeurs .= "\t";
 				}
 
 				if(is_array($valeur)) {
-					$valeurs .= $clef ." => \n". $this->arrayToString($valeur, ($level+1));
+					$valeurs .= $clef . " => \n" . $this->arrayToString($valeur, ($level + 1));
 				} else {
-					$valeurs .= $clef ." => ". $valeur."\n";
+					$valeurs .= $clef . " => " . $valeur . "\n";
 				}
 			}
 

@@ -16,10 +16,11 @@
 		}
 
 		public function getUriVariable($clef) {
-			if (array_key_exists($clef, $tabVarUri = $this->restRequest->getUriVariables())) {
+			if(array_key_exists($clef, $tabVarUri = $this->restRequest->getUriVariables())) {
 				return $tabVarUri[$clef];
 			} else {
 				trigger_notice_apps(20200, $clef);
+
 				return null;
 			}
 		}
@@ -29,10 +30,11 @@
 		}
 
 		public function getParametre($clef) {
-			if (array_key_exists($clef, $tabParam = $this->restRequest->getParametres())) {
+			if(array_key_exists($clef, $tabParam = $this->restRequest->getParametres())) {
 				return $tabParam[$clef];
 			} else {
 				trigger_notice_apps(20201, $clef);
+
 				return null;
 			}
 		}

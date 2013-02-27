@@ -16,7 +16,7 @@
 
 		public function run() {
 			try {
-				$this->setErrorManagerDisplayer($this->conteneur->getConfigManager()->getConfigValeur('displayers.'. $this->conteneur->getConfigManager()->getConfigValeur('config.default_displayer')));
+				$this->setErrorManagerDisplayer($this->conteneur->getConfigManager()->getConfigValeur('displayers.' . $this->conteneur->getConfigManager()->getConfigValeur('config.default_displayer')));
 
 				$this->conteneur->getRestManager()->setVariablesReponse(200, $this->conteneur->getRestManager()->getParametres());
 			} catch(MainException $e) {
@@ -37,7 +37,7 @@
 		}
 
 		private function setErrorManagerDisplayer($nomClasseDisplayer) {
-			if(class_exists($displayerName = '\\'.SERVER_NAMESPACE.'\Exceptions\Displayer\\'.ucfirst(strtolower($nomClasseDisplayer)))) {
+			if(class_exists($displayerName = '\\' . SERVER_NAMESPACE . '\Exceptions\Displayer\\' . ucfirst(strtolower($nomClasseDisplayer)))) {
 				$this->conteneur->getErrorManager()->setDisplayer(new $displayerName($this->conteneur->getTradManager()));
 			} else {
 				throw new \Serveur\Exceptions\Exceptions\ApplicationException(10000, 500, $displayerName);

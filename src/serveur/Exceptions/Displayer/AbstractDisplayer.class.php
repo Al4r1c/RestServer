@@ -9,7 +9,7 @@
 		}
 
 		public function ecrireMessages(array $tabErreurs) {
-			if (!isNull($tabErreurs)) {
+			if(!isNull($tabErreurs)) {
 				$this->envoyerVersDestination($tabErreurs);
 			}
 		}

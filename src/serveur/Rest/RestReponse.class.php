@@ -71,7 +71,7 @@
 		}
 
 		public function setFormatRetourDefaut($formatRetourDefaut) {
-			if (!is_string($formatRetourDefaut)) {
+			if(!is_string($formatRetourDefaut)) {
 				throw new RestReponseException(20103, 500);
 			}
 
@@ -79,7 +79,7 @@
 		}
 
 		public function setFormatsAcceptes($formatsAcceptes) {
-			if (!is_array($formatsAcceptes) || isNull($formatsAcceptes)) {
+			if(!is_array($formatsAcceptes) || isNull($formatsAcceptes)) {
 				throw new RestReponseException(20104, 400);
 			}
 
@@ -96,7 +96,7 @@
 
 		private function envoyerHeaders($formatRetour) {
 			http_response_code($this->status);
-			$this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($formatRetour)].'; charset='.strtolower($this->charset));
+			$this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($formatRetour)] . '; charset=' . strtolower($this->charset));
 			$this->headerManager->envoyerHeaders();
 		}
 
@@ -110,7 +110,7 @@
 				}
 			}
 
-			if (isNull($formatRetour)) {
+			if(isNull($formatRetour)) {
 				if(!isNull($formatDefaut) && array_key_exists($formatDefaut, $formatsAcceptes)) {
 					$formatRetour = array(ucfirst(strtolower($formatDefaut)) => $formatsAcceptes[$formatDefaut]);
 				} else {
@@ -123,7 +123,7 @@
 
 
 		protected function getRenderClass($renderClassName) {
-			if(class_exists($view_name = '\\'.SERVER_NAMESPACE.'\Renderers\\'.$renderClassName)) {
+			if(class_exists($view_name = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
 				return new $view_name();
 			} else {
 				throw new RestReponseException(20107, 415, $renderClassName);

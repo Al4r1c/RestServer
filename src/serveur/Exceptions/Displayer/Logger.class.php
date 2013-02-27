@@ -15,8 +15,9 @@
 
 		private function creerFichierSiNexistePas($nomFichier) {
 			$fichier = \Serveur\Utils\FileManager::getFichier();
-			$fichier->setFichierParametres($nomFichier, BASE_PATH.'/log');
+			$fichier->setFichierParametres($nomFichier, BASE_PATH . '/log');
 			$fichier->creerFichier('0700');
+
 			return $fichier;
 		}
 
@@ -35,9 +36,9 @@
 					throw new \Exception();
 				}
 
-				fputs($fp, $uneErreur->getDate()->format('d-m-Y H:i:s').": \r\n");
-				fputs($fp, "\t".$this->traduireMessageEtRemplacerVariables("{trad.error}")." n°".$uneErreur->getCode().":\r\n");
-				fputs($fp, "\t".$this->traduireMessageEtRemplacerVariables($message , $uneErreur->getArguments())."\r\n");
+				fputs($fp, $uneErreur->getDate()->format('d-m-Y H:i:s') . ": \r\n");
+				fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.error}") . " n°" . $uneErreur->getCode() . ":\r\n");
+				fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\r\n");
 			}
 
 			fclose($fp);

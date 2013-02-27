@@ -7,7 +7,7 @@
 
 		public static function chargerConfig($nomConfig) {
 			$fichier = \Serveur\Utils\FileManager::getFichier();
-			$fichier->setFichierParametres($nomConfig . '.' .  self::$extension, '/public/constantes');
+			$fichier->setFichierParametres($nomConfig . '.' . self::$extension, '/public/constantes');
 
 			return $fichier->chargerFichier();
 		}

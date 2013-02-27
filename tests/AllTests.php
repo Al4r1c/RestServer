@@ -1,7 +1,7 @@
 <?php
 	include_once('TestEnv.php');
 
-	if (!defined('PHPUnit_MAIN_METHOD')) {
+	if(!defined('PHPUnit_MAIN_METHOD')) {
 		define('PHPUnit_MAIN_METHOD', 'AllTests::main');
 	}
 

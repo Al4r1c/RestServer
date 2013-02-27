@@ -56,20 +56,20 @@
 		public function testCheminDacces() {
 			$this->fichier->setRepertoireFichier('/path\\\\to///fichier////');
 
-			$this->assertEquals(BASE_PATH. DIRECTORY_SEPARATOR .'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
+			$this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
 		}
 
 		public function testCheminDaccesAbsolue() {
-			$this->fichier->setRepertoireFichier(BASE_PATH.'/path/to/fichier/');
+			$this->fichier->setRepertoireFichier(BASE_PATH . '/path/to/fichier/');
 
-			$this->assertEquals(BASE_PATH. DIRECTORY_SEPARATOR .'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
+			$this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
 		}
 
 		public function testGetCheminComplet() {
 			$this->fichier->setRepertoireFichier('/path/');
 			$this->fichier->setNomFichier('comeatme.log');
 
-			$this->assertEquals(BASE_PATH. DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'comeatme.log', $this->fichier->getCheminCompletFichier());
+			$this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'comeatme.log', $this->fichier->getCheminCompletFichier());
 		}
 
 		public function testSetFichierConfig() {

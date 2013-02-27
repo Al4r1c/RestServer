@@ -62,11 +62,11 @@
 			'REQUEST_TIME' => 1361285069,
 			'PHP_INPUT' => ''
 		);
-		
+
 		public function setUp() {
 			$this->server = new Server();
 		}
-		
+
 		public function testSetServeurVariable() {
 			$this->server->setServeurVariable(self::$donneesServer);
 
