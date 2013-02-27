@@ -1,8 +1,9 @@
 ==CHANGELOG==
 
-v0.3
+v0.21
+Corrections de divers bug.
 Ajout des tests:
--TradManager
+-TradManager, I18nManager
 
 v0.2 - 26/02/2013
 Passage en realpath pour l'acheminement.
