@@ -84,7 +84,11 @@
 		private function valeurXML($parser, $valeur) {
 			if(trim($valeur) != '') {
 				end($this->donneesParsees);
-				$this->donneesParsees[key($this->donneesParsees)]['data'] = trim(str_replace("\n", '', $valeur));
+				if(!isset($this->donneesParsees[key($this->donneesParsees)]['data'])) {
+					$this->donneesParsees[key($this->donneesParsees)]['data'] = trim(str_replace("\n", '', $valeur));
+				} else {
+					$this->donneesParsees[key($this->donneesParsees)]['data'] .= trim(str_replace("\n", '', $valeur));
+				}
 				$this->donneesParsees[key($this->donneesParsees)]['children'] = false;
 			}
 		}
