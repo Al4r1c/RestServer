@@ -31,7 +31,11 @@
 
 	function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues) {
 		if (count($tabKey) == 1) {
-			return $arrayValues[$tabKey[0]];
+			if(array_key_exists($tabKey[0], $arrayValues)) {
+				return $arrayValues[$tabKey[0]];
+			} else {
+				return false;
+			}
 		} else {
 			if(array_key_exists($tabKey[0], $arrayValues)) {
 				$arrayValues = $arrayValues[$tabKey[0]];
