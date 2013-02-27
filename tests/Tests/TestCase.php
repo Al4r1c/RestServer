@@ -29,10 +29,10 @@
 
 			switch(strtolower($type)) {
 				case 'abstractrenderer':
-					$mock = $this->getMockAbstractRenderer(array_unique(array_keys($tabEvals)));
+					$mock = $this->getMockAbstractRenderer();
 					break;
 				case 'abstractchargeurfichier':
-					$mock = $this->getMockAbstractChargeur(array_unique(array_keys($tabEvals)));
+					$mock = $this->getMockAbstractChargeur();
 					break;
 				case 'config':
 					$mock = $this->getMockConfig(array_unique(array_keys($tabEvals)));
@@ -44,11 +44,14 @@
 				case 'fichier':
 					$mock = $this->getMockFichier(array_unique(array_keys($tabEvals)));
 					break;
-				case ('filesystem'):
+				case 'filesystem':
 					$mock = $this->getMockFileSystem(array_unique(array_keys($tabEvals)));
 					break;
 				case 'headermanager':
 					$mock = $this->getMockHeadersManager(array_unique(array_keys($tabEvals)));
+					break;
+				case 'i18nmanager':
+					$mock = $this->getMockI18nManager(array_unique(array_keys($tabEvals)));
 					break;
 				case 'restrequete':
 					$mock = $this->getMockRestRequete(array_unique(array_keys($tabEvals)));
@@ -139,13 +142,13 @@
 		}
 
 		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Renderers\AbstractRenderer */
-		protected function getMockAbstractRenderer($methodes = array()) {
-			return $this->getMockForAbstractClass('Serveur\Renderers\AbstractRenderer', $methodes);
+		protected function getMockAbstractRenderer() {
+			return $this->getMockForAbstractClass('Serveur\Renderers\AbstractRenderer');
 		}
 
 		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FichierChargement\AbstractChargeurFichier */
-		private function getMockAbstractChargeur($methodes = array()) {
-			return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier', $methodes);
+		private function getMockAbstractChargeur() {
+			return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier');
 		}
 
 		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Config\Config */
@@ -168,8 +171,13 @@
 			return $this->getMock('Serveur\Lib\FileSystem', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestManager */
+		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\HeaderManager */
 		protected function getMockHeadersManager($methodes = array()) {
+			return $this->getMock('Serveur\Rest\HeaderManager', $methodes);
+		}
+
+		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\I18n\I18nManager */
+		protected function getMockI18nManager($methodes = array()) {
 			return $this->getMock('Serveur\Rest\HeaderManager', $methodes);
 		}
 
