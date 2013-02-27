@@ -19,6 +19,7 @@
         <message code="headManError">Header Manager</message>
         <message code="confError">Configuration file</message>
         <message code="dataError">Data error</message>
+        <message code="i18nManager">Internationalization Manager</message>
         <message code="tradManager">Traduction Manager</message>
     </trad>
 
@@ -56,12 +57,14 @@
 		<message code="30000">Framework's configuration file not found. (Should be located: %s)</message>
 	    <message code="30001">Key %s must be present but does not exist in the configuration.</message>
 	    <message code="30002">Key %s does not exist in the configuration.</message>
-	    <message code="40000">Language "%s" is not associated with any translation. Language used instead: %s.</message>
-	    <message code="40001">Default language "%s" file (%s) not found. Language loaded instead: %s.</message>
-	    <message code="40002">Default language "%s" file (%s) invalid (%s). Language loaded instead: %s.</message>
-	    <message code="40003">Language file for %s not found. (Should be: %s)</message>
-	    <message code="40004">Language file for %s invalid (%s). (%s)</message>
-	    <message code="40005">No valid translation file set or found.</message>
+	    <message code="40000">Default language is not set properly.</message>
+	    <message code="40001">No available language set in the configuration.</message>
+	    <message code="40002">Language "%s" is not associated with any translation. Language used instead: %s.</message>
+	    <message code="40003">Default language "%s" file (%s) does not exist. Language loaded instead: %s.</message>
+	    <message code="40004">Default language "%s" file (%s) invalid (%s). Language loaded instead: %s.</message>
+	    <message code="40005">Language file for %s not found. (Should be: %s)</message>
+	    <message code="40006">Language file for %s invalid (%s). (%s)</message>
+	    <message code="40007">No valid translation file set or found.</message>
         <message code="40100">Traduction object is invalid.</message>
 	    <message code="40101">Translation for the entity "%s.%s" not found.</message>
 	    <message code="40102">No traduction object set.</message>

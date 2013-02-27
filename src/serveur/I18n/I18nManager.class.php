@@ -1,67 +1,94 @@
 <?php
 	namespace Serveur\I18n;
 
+	use Serveur\Exceptions\Exceptions\I18nManagerException;
+
 	class I18nManager {
 
 		private $langueDefaut;
 		private $languesDisponibles;
-		private static $defaultXml = '<?xml version="1.0" encoding="UTF-8"?><language lang="en"><trad><message code="notice">Notice</message><message code="warning">Warning</message><message code="error">Error</message></trad><errorMessage><message code="40005">No valid translation file set/found.</message><message code="40006">Translation for the entity "%s.%s" not found.</message></errorMessage></language>';
+		private static $defaultXml = '<?xml version="1.0" encoding="UTF-8"?><language lang="en"><trad><message code="notice">Notice</message><message code="warning">Warning</message><message code="error">Error</message><message code="i18nManager">Internationalization Manager</message><message code="tradManager">Gestionnaire de traduction</message></trad><errorMessage><message code="40007">No valid translation file set or found.</message><message code="40101">Translation for the entity "%s.%s" not found.</message></errorMessage></language>';
 
 		public function setConfig(\Serveur\Config\Config $configuration) {
-			$this->langueDefaut = $configuration->getConfigValeur('config.default_lang');
-			$this->languesDisponibles = $configuration->getConfigValeur('languages');
+			$this->setLangueDefaut($configuration->getConfigValeur('config.default_lang'));
+			$this->setLangueDispo($configuration->getConfigValeur('languages'));
 		}
 
-		public function getTradFileDefaut() {
-			if (array_key_exists(strtoupper($this->langueDefaut), $this->languesDisponibles) !== false) {
-				$langueDefautClasse = $this->languesDisponibles[strtoupper($langueDefautUtilisee = $this->langueDefaut)];
-			} else {
-				$langueDefautClasse = reset($this->languesDisponibles);
-				trigger_notice_apps(40000, $this->langueDefaut, $langueDefautUtilisee = key($this->languesDisponibles));
+		public function setLangueDefaut($langueDefaut) {
+			if(isNull($langueDefaut)) {
+				throw new I18nManagerException(40000, 500);
 			}
 
-			$traductionObjetDefaut = $this->chargerFichier($langueDefautClasse);
+			$this->langueDefaut = $langueDefaut;
+		}
 
-			if(is_null($traductionObjetDefaut) || $traductionObjetDefaut->isValide() === false) {
-				foreach($this->languesDisponibles as $uneLangueDispo => $classeLangue) {
-					$traductionDisponible = $this->chargerFichier($classeLangue);
-
-					if(is_null($traductionDisponible)) {
-						trigger_notice_apps(40003, $uneLangueDispo, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
-					} elseif($traductionDisponible->isValide() === false) {
-						trigger_notice_apps(40004, $uneLangueDispo, $traductionDisponible->getErreurMessage(), BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $classeLangue . '.xml');
-					} else {
-						$defaultTraductionObject = $traductionDisponible;
-						break;
-					}
-				}
-
-				if(isset($defaultTraductionObject)) {
-					if(is_null($traductionObjetDefaut)) {
-						trigger_notice_apps(40001, $langueDefautUtilisee, BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
-					} else {
-						trigger_notice_apps(40002, $langueDefautUtilisee, $traductionObjetDefaut->getErreurMessage(), BASE_PATH . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'i18n' . DIRECTORY_SEPARATOR . $langueDefautClasse . '.xml', $uneLangueDispo);
-					}
-				} else {
-					trigger_notice_apps(40005, $this->langueDefaut, $langueDefautUtilisee = key($this->languesDisponibles));
-					$defaultTraductionObject = new \Serveur\Lib\XMLParser\XMLParser(self::$defaultXml);
-				}
-			} else {
-				$defaultTraductionObject = $traductionObjetDefaut;
+		public function setLangueDispo(array $languesDispo) {
+			if(isNull($languesDispo)) {
+				throw new I18nManagerException(40001, 500);
 			}
 
-			return $defaultTraductionObject;
+			$this->languesDisponibles = $languesDispo;
 		}
 
 		/** @return \Serveur\Lib\XMLParser\XMLParser */
-		private function chargerFichier($nomFichier) {
-			$fichier = \Serveur\Utils\FileManager::getFichier();
-			$fichier->setFichierParametres($nomFichier.'.xml', '/public/i18n');
-
-			if(!$fichier->fichierExiste()) {
-				return null;
+		public function getFichierTraduction() {
+			if(array_key_exists(strtoupper($this->langueDefaut), $this->languesDisponibles)) {
+				$nomFichierLangueDefaut = $this->languesDisponibles[strtoupper($langueDefautUtilisee = $this->langueDefaut)];
 			} else {
-				return $fichier->chargerFichier();
+				$nomFichierLangueDefaut = reset($this->languesDisponibles);
+				trigger_notice_apps(40002, $this->langueDefaut, $langueDefautUtilisee = key($this->languesDisponibles));
 			}
+
+			$fichierTraductionParDefaut = $this->getFichier($nomFichierLangueDefaut);
+
+			if($fichierTraductionParDefaut->fichierExiste() && $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValide()) {
+				return $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut);
+			} else {
+				if(($langueChoisiAleatoirement = $this->getUneTraductionAleatoire()) !== false) {
+					if(!$fichierTraductionParDefaut->fichierExiste()) {
+						trigger_notice_apps(40003, $langueDefautUtilisee, $fichierTraductionParDefaut->getCheminCompletFichier(), key($langueChoisiAleatoirement));
+					} else {
+						trigger_notice_apps(40004, $langueDefautUtilisee, $fichierTraductionParDefaut->getCheminCompletFichier(), $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->getErreurMessage(), key($langueChoisiAleatoirement));
+					}
+
+					return $this->recupererXmlParserDepuisFichier(reset($langueChoisiAleatoirement));
+				} else {
+					trigger_notice_apps(40007);
+
+					$newXmlParser =  new \Serveur\Lib\XMLParser\XMLParser();
+					$newXmlParser->setContenu(self::$defaultXml);
+
+					return $newXmlParser;
+				}
+			}
+		}
+
+		/** @return \Serveur\Lib\Fichier */
+		protected function getFichier($nomFichier) {
+			$fichier = \Serveur\Utils\FileManager::getFichier();
+			$fichier->setFichierParametres($nomFichier . '.xml', '/public/i18n');
+
+			return $fichier;
+		}
+
+		private function getUneTraductionAleatoire() {
+			foreach($this->languesDisponibles as $uneLangueDispo => $classeLangue) {
+				$traductionDisponible = $this->getFichier($classeLangue);
+
+				if(!$traductionDisponible->fichierExiste()) {
+					trigger_notice_apps(40005, $uneLangueDispo, $traductionDisponible->getCheminCompletFichier());
+				} elseif(!$this->recupererXmlParserDepuisFichier($traductionDisponible)->isValide()) {
+					trigger_notice_apps(40006, $uneLangueDispo, $this->recupererXmlParserDepuisFichier($traductionDisponible)->getErreurMessage(), $traductionDisponible->getCheminCompletFichier());
+				} else {
+					return array($uneLangueDispo => $traductionDisponible);
+				}
+			}
+
+			return false;
+		}
+
+		/** @return \Serveur\Lib\XMLParser\XMLParser */
+		private function recupererXmlParserDepuisFichier(\Serveur\Lib\Fichier $fichier) {
+			return $fichier->chargerFichier();
 		}
 	}
