@@ -66,7 +66,7 @@
 			};
 
 			$conteneur['tradManager'] = function ($c) {
-				$traductionManager = new \Serveur\I18n\TradManager($c['i18nManager']->getTradFileDefaut());
+				$traductionManager = new \Serveur\I18n\TradManager();
 				$traductionManager->setFichierTraduction($c['i18nManager']->getTradFileDefaut());
 
 				return $traductionManager;
