@@ -1,7 +1,6 @@
 <?php
 	namespace Serveur\Exceptions\Exceptions;
 
-	use Exception;
 	use Serveur\Utils\Tools;
 
 	class MainException extends \Exception {

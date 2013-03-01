@@ -22,11 +22,10 @@
 		<message code="203">Server and execution environment information</message>
 		<message code="204">Header Manager</message>
 		<message code="300">Configuration file</message>
-		<message code="">Data error</message>
 	</errorType>
 
     <errorMessage>
-	    <message code="1000">Argument passed to %s::%s() must be an instance of %s, %s given.</message>
+	    <message code="1000">Argument passed to %s() must be an instance of %s, %s given.</message>
 	    <message code="10100">OS "%s" is not suported or is not valid.</message>
 	    <message code="10101">Base path "%s" is not absolute.</message>
 	    <message code="10102">Base path "%s" does not exist.</message>

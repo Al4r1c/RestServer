@@ -6,7 +6,16 @@
 		private $applicationConfiguration = array();
 		private static $clefMinimales = array('config', 'config.default_render', 'config.default_displayer', 'displayers', 'render');
 
+		/**
+		 * @param \Serveur\Lib\Fichier $fichierFramework
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
 		public function chargerConfiguration(\Serveur\Lib\Fichier $fichierFramework) {
+			if(!$fichierFramework instanceof \Serveur\Lib\Fichier) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', get_class($fichierFramework));
+			}
+
 			try {
 				$this->applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
 			} catch(\Exception $fe) {
@@ -16,6 +25,9 @@
 			$this->validerFichierConfiguration();
 		}
 
+		/**
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
 		private function validerFichierConfiguration() {
 			foreach(self::$clefMinimales as $uneClefQuiDoitExister) {
 				if(is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
@@ -24,7 +36,10 @@
 			}
 		}
 
-		/** @return array|bool|null */
+		/**
+		 * @param string $clefConfig
+		 * @return array|bool|null
+		 */
 		public function getConfigValeur($clefConfig) {
 			if($valeur = rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->applicationConfiguration)) {
 				return $valeur;

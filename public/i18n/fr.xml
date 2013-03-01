@@ -22,11 +22,10 @@
 		<message code="203">Variables de serveur et d'exécution</message>
 		<message code="204">Gestionnaire des entêtes</message>
 		<message code="300">Fichier de configuration</message>
-		<message code="">Erreur de donnée</message>
 	</errorType>
 
     <errorMessage>
-	    <message code="1000">Paramètre de la fonction %s::%s() doit être du type %s, %s obtenu.</message>
+	    <message code="1000">Paramètre de la fonction %s() doit être du type %s, %s obtenu.</message>
 	    <message code="10100">L'OS "%s" n'est pas supporté ou est invalide.</message>
 	    <message code="10101">Le chemin de base "%s" n'est pas absolu.</message>
 	    <message code="10102">Le chemin de base "%s" n'existe pas.</message>
