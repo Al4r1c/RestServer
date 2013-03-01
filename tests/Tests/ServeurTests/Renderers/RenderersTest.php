@@ -9,6 +9,16 @@
 
 		private static $donnee = array('param1' => 1, 'param2' => array('one' => 'onevar2'), array('yosh', 'yosh2'));
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRenderNonArrayDonnees() {
+			$renderer = new \Serveur\Renderers\Html();
+
+			$renderer->render('string');
+		}
+
 		public function testRenderHtml() {
 			$renderer = new \Serveur\Renderers\Html();
 

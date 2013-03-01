@@ -6,7 +6,7 @@
 		 * @param array $donnees
 		 * @return string
 		 */
-		public function render(array $donnees) {
+		protected function genererRendu(array $donnees) {
 			$simpleXmlObject = new \SimpleXMLElement("<?xml version=\"1.0\"?><root></root>");
 
 			$this->arrayToXml($donnees, $simpleXmlObject);

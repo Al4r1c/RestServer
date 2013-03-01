@@ -32,6 +32,14 @@
 			$this->typeDetector = new TypeDetector($constantes::chargerConfig('mimes'));
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testNewTypeDetectorArgumentNonArray() {
+			new TypeDetector(null);
+		}
+
 		public function testRecupererMimeTypeViaExtension() {
 			$this->assertEquals('application/javascript', $this->typeDetector->getMimeType('js'));
 		}

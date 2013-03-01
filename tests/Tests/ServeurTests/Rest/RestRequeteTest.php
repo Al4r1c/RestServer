@@ -42,6 +42,14 @@
 		}
 
 		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestAcceptFormatInvalide() {
+			$this->restRequete->setFormat(5);
+		}
+
+		/**
 		 * @expectedException     \Exception
 		 * @expectedExceptionCode 20001
 		 */
@@ -51,6 +59,16 @@
 
 		public function testRestUri() {
 			$this->restRequete->setVariableUri('/mon/uri/');
+
+			$this->assertInternalType('array', $this->restRequete->getUriVariables());
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestUriErronee() {
+			$this->restRequete->setVariableUri(20.2);
 
 			$this->assertInternalType('array', $this->restRequete->getUriVariables());
 		}
@@ -82,8 +100,8 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20002
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
 		public function testRestDonneeSeulementTableau() {
 			$this->restRequete->setParametres('GO_GO_ERREUR');
@@ -112,5 +130,13 @@
 			$this->assertContains('xml', $this->restRequete->getFormatsDemandes());
 			$this->assertEquals('uri', $this->restRequete->getUriVariables()[1]);
 			$this->assertEquals('var2', $this->restRequete->getParametres()['param2']);
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestSetServerEronnee() {
+			$this->restRequete->setServer(null);
 		}
 	}

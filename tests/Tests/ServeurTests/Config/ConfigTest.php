@@ -89,4 +89,12 @@
 			$this->assertEquals('xml', $this->configuration->getConfigValeur('render.xml'));
 			$this->assertNull($this->configuration->getConfigValeur('render.existepas'));
 		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testGetValeurNonString() {
+			$this->configuration->getConfigValeur(3);
+		}
 	}

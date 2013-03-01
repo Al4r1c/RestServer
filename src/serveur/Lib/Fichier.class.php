@@ -24,7 +24,11 @@
 		/**
 		 * @param \Serveur\Lib\FileSystem $fileSystem
 		 */
-		public function setFileSystem(\Serveur\Lib\FileSystem $fileSystem) {
+		public function setFileSystem($fileSystem) {
+			if(!$fileSystem instanceof \Serveur\Lib\FileSystem) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
+			}
+
 			$this->fileSystemInstance = $fileSystem;
 		}
 
@@ -42,9 +46,14 @@
 
 		/**
 		 * @param string $nom
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 */
 		public function setNomFichier($nom) {
+			if(!is_string($nom)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
+			}
+
 			if(isNull($nom)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10200, 500);
 			}
@@ -58,9 +67,14 @@
 
 		/**
 		 * @param string $chemin
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 */
 		public function setRepertoireFichier($chemin) {
+			if(!is_string($chemin)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
+			}
+
 			if(isNull($chemin)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10202, 500);
 			}

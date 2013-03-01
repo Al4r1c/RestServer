@@ -14,8 +14,13 @@
 
 		/**
 		 * @param array $varServeur
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 */
-		public function setVarServeur(array $varServeur) {
+		public function setVarServeur($varServeur) {
+			if(!is_array($varServeur)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $varServeur);
+			}
+
 			$this->setServeurVariable($varServeur);
 			$this->setServeurDonnees($varServeur['REQUEST_METHOD']);
 		}
@@ -43,9 +48,14 @@
 
 		/**
 		 * @param array $serverVar
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 */
-		public function setServeurVariable(array $serverVar) {
+		public function setServeurVariable($serverVar) {
+			if(!is_array($serverVar)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
+			}
+
 			if(!array_keys_exist(array('HTTP_ACCEPT', 'PHP_INPUT', 'QUERY_STRING', 'REQUEST_METHOD', 'REQUEST_URI'), $serverVar)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(20300, 500);
 			}

@@ -1,17 +1,21 @@
 ==CHANGELOG==
 
-v0.3 - 01/03/2013
+[01/03/13]
+Uniformisation des restrictions, egalement plus strict, sur les types + tests associés.
+PHPDoc.
+
+[01/03/2013]
 Error logging: Passage en observeur. Fonctionnement complètement détaché de l'application.
 Uniformisation du système d'erreurs.
 Suppression du typage par exceptions, utilisation du code pour identifier le type.
 
-v0.21 - 28/02/2013
+[28/02/2013]
 Nouvelle branche GitHub "dev". Le developpement sera push dans cette branche, les versions finales en master.
 Corrections de divers bug.
 Ajout des tests:
 -TradManager, I18nManager
 
-v0.2 - 26/02/2013
+[26/02/2013]
 Passage en realpath pour l'acheminement.
 Création de la classe FileSystem.
 Appel de nouveaux fichiers grâce à la classe statique FileManager.
@@ -23,7 +27,7 @@ Ajout des tests:
 -Fichier, FileSystem (utilisation de vfsStream), Chargement de fichiers (Php, Xml & Yaml).
 -TypeDetector
 
-v0.1 - 14/02/2013
+[14/02/2013]
 .htaccess fonctionnel.
 ClassLoader acceptant plusieurs namespace.
 Utilisation d'un composer.

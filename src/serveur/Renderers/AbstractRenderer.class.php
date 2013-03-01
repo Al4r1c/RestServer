@@ -4,7 +4,20 @@
 	abstract class AbstractRenderer {
 		/**
 		 * @param array $donnees
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return string
 		 */
-		abstract public function render(array $donnees);
+		public function render($donnees) {
+			if(!is_array($donnees)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $donnees);
+			}
+
+			return $this->genererRendu($donnees);
+		}
+
+		/**
+		 * @param array $donnees
+		 * @return string
+		 */
+		abstract protected function genererRendu(array $donnees);
 	}

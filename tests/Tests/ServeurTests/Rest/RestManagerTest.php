@@ -20,7 +20,8 @@
 		}
 
 		/**
-		 * @expectedException     \PHPUnit_Framework_Error
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
 		public function testRestSetRequeteNull() {
 			$restManager = new RestManager();
@@ -40,7 +41,8 @@
 		}
 
 		/**
-		 * @expectedException     \PHPUnit_Framework_Error
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
 		public function testRestSetReponseNull() {
 			$restManager = new RestManager();
@@ -56,6 +58,15 @@
 			$restManager->setRequete($restRequete);
 
 			$this->assertEquals('monuri', $restManager->getUriVariable(0));
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestUriVariableNonInt() {
+			$restManager = new RestManager();
+			$restManager->getUriVariable('clef');
 		}
 
 		public function testRestUriVariableNull() {
@@ -78,6 +89,15 @@
 			$restManager->setRequete($restRequete);
 
 			$this->assertEquals('donnee1', $restManager->getParametre('param1'));
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestRecupererDonneeClefNonString() {
+			$restManager = new RestManager();
+			$restManager->getParametre(50);
 		}
 
 		public function testRestRenvoieDonneeNull() {

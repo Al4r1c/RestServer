@@ -11,8 +11,13 @@
 
 		/**
 		 * @param array $mimesTypes
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 */
-		public function __construct(array $mimesTypes) {
+		public function __construct($mimesTypes) {
+			if(!is_array($mimesTypes)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $mimesTypes);
+			}
+
 			$this->constanteMimes = $mimesTypes;
 		}
 
@@ -29,11 +34,11 @@
 		}
 
 		/**
-		 * @param string $header
+		 * @param string $enteteHttpAccept
 		 * @return array
 		 */
-		public function extraireMimesTypeHeader($header) {
-			$allType = explode(',', $header);
+		public function extraireMimesTypeHeader($enteteHttpAccept) {
+			$allType = explode(',', $enteteHttpAccept);
 			$tabTypesTrouves = array();
 
 			foreach($allType as $unType) {

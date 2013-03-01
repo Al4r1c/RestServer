@@ -7,7 +7,6 @@
 	use Serveur\Rest\RestReponse;
 
 	class RestReponseTest extends TestCase {
-
 		/**
 		 * @var RestReponse $restRequete
 		 */
@@ -18,7 +17,8 @@
 		}
 
 		/**
-		 * @expectedException     \PHPUnit_Framework_Error
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
 		public function testRestSetHeaderManager() {
 			$this->restReponse->setHeaderManager(null);
@@ -30,8 +30,8 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20100
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
 		public function testRestContenuArray() {
 			$this->restReponse->setContenu('INVALID');
@@ -43,10 +43,18 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20101
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
-		public function testRestStatusValide() {
+		public function testRestStatusNonInt() {
+			$this->restReponse->setStatus('500');
+		}
+
+		/**
+		 * @expectedException     \Exception
+		 * @expectedExceptionCode 20100
+		 */
+		public function testRestStatusInvalide() {
 			$this->restReponse->setStatus(999);
 		}
 
@@ -56,11 +64,11 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20103
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
-		public function testRestSetFormatDefautInvalide() {
-			$this->restReponse->setFormatRetourDefaut(array());
+		public function testRestSetFormatDefautErronee() {
+			$this->restReponse->setFormatRetourDefaut(null);
 		}
 
 		public function testRestSetFormatAcceptes() {
@@ -69,11 +77,19 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20104
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
 		 */
 		public function testRestSetFormatAcceptesInvalid() {
 			$this->restReponse->setFormatsAcceptes('ERROR');
+		}
+
+		/**
+		 * @expectedException     \Exception
+		 * @expectedExceptionCode 20102
+		 */
+		public function testRestSetFormatAcceptesVide() {
+			$this->restReponse->setFormatsAcceptes(array());
 		}
 
 		public function testRestSetFormat() {
@@ -89,7 +105,7 @@
 
 		/**
 		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20104
+		 * @expectedExceptionCode 20102
 		 */
 		public function testRestFormatDefaut() {
 			$this->restReponse->setFormats('PLAIN', array());
@@ -101,11 +117,27 @@
 		}
 
 		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestSetCharsetInvalide() {
+			$this->restReponse->setCharset(9);
+		}
+
+		/**
 		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20105
+		 * @expectedExceptionCode 20103
 		 */
 		public function testRestSetCharsetInvalid() {
 			$this->restReponse->setCharset('UTF-9999999999');
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestSetConfigInvalide() {
+			$this->restReponse->setConfig(null);
 		}
 
 		public function testRestSetConfig() {
@@ -121,9 +153,17 @@
 			$this->assertCount(2, $this->restReponse->getFormatsAcceptes());
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestRenderBug() {
+			$this->restReponse->fabriquerReponse('boum');
+		}
+
 		public function testRestRenderAbstract() {
 			$abstractrender = $this->createMock('AbstractRenderer',
-				array('render', array('getKey' => 'getVar'), '{"getKey":"getVar"}')
+				array('genererRendu', array('getKey' => 'getVar'), '{"getKey":"getVar"}')
 			);
 
 			/** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
@@ -145,7 +185,7 @@
 
 		public function testRestRenderNonTrouveUtiliseAutre() {
 			$abstractrender = $this->createMock('AbstractRenderer',
-				array('render', array('param1' => 'var1'), '{"param1":"var1"}')
+				array('genererRendu', array('param1' => 'var1'), '{"param1":"var1"}')
 			);
 
 			/** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
@@ -167,7 +207,7 @@
 
 		/**
 		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20106
+		 * @expectedExceptionCode 20104
 		 */
 		public function testRestRenderNonTrouveDefautNonPlus() {
 			$this->restReponse->setFormatRetourDefaut('HTML');
@@ -178,7 +218,7 @@
 
 		/**
 		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20107
+		 * @expectedExceptionCode 20105
 		 */
 		public function testRestRenderNonTrouve() {
 			$this->restReponse->setFormats('FAKE', array('FAKE' => 'fake'));

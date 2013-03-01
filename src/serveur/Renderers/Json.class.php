@@ -6,7 +6,7 @@
 		 * @param array $donnees
 		 * @return string
 		 */
-		public function render(array $donnees) {
+		protected function genererRendu(array $donnees) {
 			return json_encode($donnees);
 		}
 	}

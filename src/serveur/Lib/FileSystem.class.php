@@ -23,9 +23,14 @@
 
 		/**
 		 * @param string $os
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 */
 		public function setOs($os) {
+			if(!is_string($os)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $os);
+			}
+
 			$os = strtolower($os);
 
 			if(substr($os, 0, 7) == 'windows') {
@@ -46,6 +51,10 @@
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 */
 		public function setBasePath($basePath) {
+			if(!is_string($basePath)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $basePath);
+			}
+
 			if(!$this->isAbsolutePath($basePath)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10101, 500, $basePath);
 			}
@@ -59,36 +68,60 @@
 
 		/**
 		 * @param string $cheminVersFichier
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return bool
 		 */
 		public function fichierExiste($cheminVersFichier) {
+			if(!is_string($cheminVersFichier)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminVersFichier);
+			}
+
 			return file_exists($cheminVersFichier);
 		}
 
 		/**
 		 * @param string $cheminDossier
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return bool
 		 */
 		public function dossierExiste($cheminDossier) {
+			if(!is_string($cheminDossier)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminDossier);
+			}
+
 			return is_dir($cheminDossier);
 		}
 
 		/**
 		 * @param string $nomFichier
-		 * @return string
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @return string|null
 		 */
 		public function getExtension($nomFichier) {
-			$fichierDecoupe = explode(".", $nomFichier);
+			if(!is_string($nomFichier)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $nomFichier);
+			}
 
-			return end($fichierDecoupe);
+			if(substr_count($nomFichier, '.') < 1) {
+				return null;
+			} else {
+				$fichierDecoupe = explode(".", $nomFichier);
+
+				return end($fichierDecoupe);
+			}
 		}
 
 		/**
 		 * @param string $cheminDemande
-		 * @return string
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 * @return string
 		 */
 		public function getDroits($cheminDemande) {
+			if(!is_string($cheminDemande)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminDemande);
+			}
+
 			if(!$this->fichierExiste($cheminDemande) && !$this->dossierExiste($cheminDemande)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10103, 500, $cheminDemande);
 			}
@@ -99,9 +132,18 @@
 		/**
 		 * @param string $urlFichier
 		 * @param string $droit
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return bool
 		 */
 		public function creerFichier($urlFichier, $droit = '0777') {
+			if(!is_string($urlFichier)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $urlFichier);
+			}
+
+			if(!is_string($droit) && !is_int($droit)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string|int', $droit);
+			}
+
 			if(!$leFichier = @fopen($urlFichier, 'wb')) {
 				trigger_error_app(E_USER_NOTICE, 10104, $urlFichier);
 
@@ -117,10 +159,15 @@
 
 		/**
 		 * @param string $cheminVersFichier
-		 * @return mixed
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 * @return mixed
 		 */
 		public function chargerFichier($cheminVersFichier) {
+			if(!is_string($cheminVersFichier)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminVersFichier);
+			}
+
 			if(!$this->fichierExiste($cheminVersFichier)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10105, 50, $cheminVersFichier);
 			}
@@ -135,6 +182,7 @@
 
 		/**
 		 * @param string $className
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return bool
 		 */
 		protected function getChargeurClass($className) {
@@ -160,9 +208,14 @@
 
 		/**
 		 * @param string $chemin
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return string
 		 */
 		public function relatifToAbsolu($chemin) {
+			if(!is_string($chemin)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
+			}
+
 			$separateurChemin = $this->getDirectorySeparateur();
 			$chemin = $this->ajouterBaseSiBesoin($chemin, $separateurChemin);
 
@@ -187,6 +240,7 @@
 		/**
 		 * @param string $chemin
 		 * @param string $separateurChemin
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 * @return string
 		 */
 		protected function ajouterBaseSiBesoin($chemin, $separateurChemin) {
@@ -199,9 +253,14 @@
 
 		/**
 		 * @param string $chemin
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return bool
 		 */
 		protected function isAbsolutePath($chemin) {
+			if(!is_string($chemin)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
+			}
+
 			if(preg_match('(^[a-z]{3,}://)S', $chemin)) {
 				return true;
 			}

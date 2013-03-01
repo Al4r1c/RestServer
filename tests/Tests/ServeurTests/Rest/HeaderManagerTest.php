@@ -26,6 +26,22 @@
 		}
 
 		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testAjouterHeaderChampNonString() {
+			$this->headerManager->ajouterHeader(null, 'application/pdf');
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testAjouterHeaderValeurNonString() {
+			$this->headerManager->ajouterHeader('Content-type', 5);
+		}
+
+		/**
 		 * @expectedException     \Exception
 		 * @expectedExceptionCode 20400
 		 */

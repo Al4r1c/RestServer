@@ -23,10 +23,26 @@
 			$this->assertEquals($fileSystem, $this->fichier->getFileSystem());
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testSetNotFileSystem() {
+			$this->fichier->setFileSystem('should be object');
+		}
+
 		public function testNomFichier() {
 			$this->fichier->setNomFichier('monFichier.txt');
 
 			$this->assertEquals('monFichier.txt', $this->fichier->getNomFichier());
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testNomFichierNotString() {
+			$this->fichier->setNomFichier(5);
 		}
 
 		/**
@@ -46,11 +62,19 @@
 		}
 
 		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testCheminDaccesNonString() {
+			$this->fichier->setRepertoireFichier(23.3);
+		}
+
+		/**
 		 * @expectedException     \Exception
 		 * @expectedExceptionCode 10202
 		 */
 		public function testCheminDaccesNull() {
-			$this->fichier->setRepertoireFichier(null);
+			$this->fichier->setRepertoireFichier(' ');
 		}
 
 		public function testCheminDacces() {

@@ -87,6 +87,22 @@
 			$this->server->setServeurVariable($donnees);
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testSetServeurDonneesErronee() {
+			$this->server->setVarServeur(null);
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testSetServeurVariableErronee() {
+			$this->server->setServeurVariable(null);
+		}
+
 		public function testSetServeurDonnees() {
 			$this->server->setServeurVariable(self::$donneesServer);
 			$this->server->setServeurDonnees('GET');

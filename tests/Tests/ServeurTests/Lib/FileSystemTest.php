@@ -36,6 +36,14 @@
 		}
 
 		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testSetOsNonString() {
+			$this->fileSystem->setOs(3);
+		}
+
+		/**
 		 * @expectedException     \Exception
 		 * @expectedExceptionCode 10100
 		 */
@@ -65,6 +73,14 @@
 		}
 
 		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testSetBasePathNonString() {
+			$this->fileSystem->setBasePath(new \StdClass());
+		}
+
+		/**
 		 * @expectedException     \Exception
 		 * @expectedExceptionCode 10102
 		 */
@@ -84,6 +100,14 @@
 			$this->assertTrue($this->fileSystem->fichierExiste(vfsStream::url('testPath/fichier.fake')));
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testFichierExisteString() {
+			$this->fileSystem->fichierExiste(400);
+		}
+
 		public function testDossierExiste() {
 			$this->activerFakeFileSystem();
 
@@ -94,8 +118,28 @@
 			$this->assertTrue($this->fileSystem->dossierExiste(vfsStream::url('testPath/newDossier')));
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testDossierExisteString() {
+			$this->fileSystem->dossierExiste(null);
+		}
+
 		public function testGetExtension() {
 			$this->assertEquals('jpeg', $this->fileSystem->getExtension('unFichier.jpeg'));
+		}
+
+		public function testGetExtensionFichierDepouvue() {
+			$this->assertNull($this->fileSystem->getExtension('unFichier'));
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testGetExtensionString() {
+			$this->fileSystem->getExtension(null);
 		}
 
 		public function testGetDroits() {
@@ -106,6 +150,14 @@
 			chmod(vfsStream::url('testPath/page.html'), 0174);
 
 			$this->assertEquals('0174', $this->fileSystem->getDroits(vfsStream::url('testPath/page.html')));
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testGetDroitsStringNomFichier() {
+			$this->fileSystem->getDroits(null);
 		}
 
 		/**
@@ -124,6 +176,22 @@
 			$this->fileSystem->creerFichier(vfsStream::url('testPath/nouveauFichier.fake'));
 
 			$this->assertTrue($this->fileSystem->fichierExiste(vfsStream::url('testPath/nouveauFichier.fake')));
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testCreerFichierNomNonString() {
+			$this->fileSystem->creerFichier(3);
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testCreerFichierDroitIncorrecte() {
+			$this->fileSystem->creerFichier('myFile', null);
 		}
 
 		public function testCreerFichierProbleme() {
@@ -148,6 +216,29 @@
 			$fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));
 
 			$this->assertEquals(array('paris' => 'yeah'), $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php')));
+		}
+
+		public function testChargerFichierClassImpossi() {
+			vfsStreamWrapper::register();
+			vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
+
+			$abstractChargeur = $this->createMock('AbstractChargeurFichier', array('chargerFichier', vfsStream::url('testPath/fichier.php'), array('paris' => 'yeah')));
+
+			/** @var $fileSystem FileSystem */
+			$fileSystem = $this->createMock('FileSystem', array('getChargeurClass', 'Php', $abstractChargeur));
+
+			$fileSystem->setBasePath(vfsStream::url('testPath'));
+			$fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));
+
+			$this->assertEquals(array('paris' => 'yeah'), $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php')));
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testChargerFichierNomDoitString() {
+			$this->fileSystem->chargerFichier(5);
 		}
 
 		/**
@@ -178,6 +269,14 @@
 			$this->assertEquals('/home/ok/', $this->fileSystem->relatifToAbsolu('/home/ok/'));
 		}
 
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRelatifToAbsoluString() {
+			$this->fileSystem->relatifToAbsolu(5);
+		}
+
 		public function testRelatifToAbsoluPoint() {
 			$this->assertEquals('/home/cheminsupp/ok/', $this->fileSystem->relatifToAbsolu('/home//cheminsupp/./ok/'));
 		}
@@ -196,6 +295,18 @@
 			$this->fileSystem->setOs('Mac');
 
 			$this->assertEquals('/', $this->fileSystem->getDirectorySeparateur());
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testIsAbsoluteStringChemin() {
+			$class = new \ReflectionClass('Serveur\Lib\FileSystem');
+			$method = $class->getMethod('isAbsolutePath');
+			$method->setAccessible(true);
+
+			$method->invokeArgs($this->fileSystem, array(15));
 		}
 
 		public function testIsAbsoluteWindows() {

@@ -45,9 +45,14 @@
 
 		/**
 		 * @param string $clefConfig
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @return array|bool|null
 		 */
 		public function getConfigValeur($clefConfig) {
+			if(!is_string($clefConfig)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
+			}
+
 			if($valeur = rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->applicationConfiguration)) {
 				return $valeur;
 			} else {
