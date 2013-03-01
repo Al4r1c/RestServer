@@ -5,6 +5,10 @@
 	use Serveur\Exceptions\Types\Error;
 
 	class ErrorHandling {
+
+		/**
+		 * @var string[]
+		 */
 		private $erreurs = array();
 
 		public function setHandlers() {
@@ -13,17 +17,18 @@
 			$GLOBALS['global_function_appli_error'] = array($this, 'global_ajouterErreur');
 		}
 
+		/**
+		 * @return \string[]
+		 */
 		public function getErreurs() {
 			return $this->erreurs;
 		}
 
-		public function getErreursEtFlush() {
-			$tabErreurs = $this->erreurs;
-			$this->erreurs = array();
-
-			return $tabErreurs;
-		}
-
+		/**
+		 * @param int $erreurNumber
+		 * @param int $codeErreur
+		 * @param array $arguments
+		 */
 		public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments) {
 			switch($erreurNumber) {
 				case E_USER_ERROR:
@@ -40,22 +45,33 @@
 			}
 		}
 
+		/**
+		 * @param \Exception $exception
+		 */
 		public function exceptionHandler(\Exception $exception) {
 
 		}
 
-		public function errorHandler($errno, $errstr, $errfile, $errline) {
-			if(!(error_reporting() & $errno)) {
+		/**
+		 * @param int $codeErreur
+		 * @param string $messageErreur
+		 * @param string $fichierErreur
+		 * @param int $ligneErreur
+		 * @return bool|null
+		 * @throws \Exception
+		 */
+		public function errorHandler($codeErreur, $messageErreur, $fichierErreur, $ligneErreur) {
+			if(!(error_reporting() & $codeErreur)) {
 				return null;
 			}
 
-			switch($errno) {
+			switch($codeErreur) {
 				case E_COMPILE_ERROR:
 				case E_ERROR:
 				case E_CORE_ERROR:
 				case E_USER_ERROR:
 				case E_PARSE:
-					$this->erreurs[] = new Error($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
+					$this->erreurs[] = new Error($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
 					throw new \Exception();
 					break;
 
@@ -69,11 +85,11 @@
 				case E_DEPRECATED:
 				case E_USER_DEPRECATED:
 				case E_RECOVERABLE_ERROR:
-					$this->erreurs[] = new Notice($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
+					$this->erreurs[] = new Notice($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
 					break;
 
 				default:
-					echo "Type d'erreur inconnu : [$errno] $errstr<br />\n";
+					echo "Type d'erreur inconnu : [$codeErreur] $messageErreur<br />\n";
 					break;
 			}
 

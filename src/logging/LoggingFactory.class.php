@@ -9,6 +9,11 @@
 			'English' => 'en'
 		);
 
+		/**
+		 * @param string $loggingMethode
+		 * @return Displayer\AbstractDisplayer
+		 * @throws \Exception
+		 */
 		public static function getLogger($loggingMethode) {
 			if(class_exists($displayerName = '\\' . __NAMESPACE__ . '\Displayer\\' . ucfirst(strtolower($loggingMethode)))) {
 				/** @var $logger \Logging\Displayer\AbstractDisplayer */
@@ -21,6 +26,9 @@
 			}
 		}
 
+		/**
+		 * @return I18n\TradManager
+		 */
 		private static function getI18n() {
 			$I18nManager = new \Logging\I18n\I18nManager();
 			$I18nManager->setConfig(self::$langueDefaut, self::$langueDispo);

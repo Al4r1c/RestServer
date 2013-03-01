@@ -4,21 +4,34 @@
 	use Serveur\Utils\Constante;
 
 	class TypeDetector {
-
+		/**
+		 * @var array
+		 */
 		private $constanteMimes;
 
+		/**
+		 * @param array $mimesTypes
+		 */
 		public function __construct(array $mimesTypes) {
 			$this->constanteMimes = $mimesTypes;
 		}
 
-		public function getMimeType($mimeExtension) {
-			if(!isNull($this->constanteMimes[$mimeExtension])) {
-				return $this->constanteMimes[$mimeExtension];
+		/**
+		 * @param string $clefMimeExtension
+		 * @return string
+		 */
+		public function getMimeType($clefMimeExtension) {
+			if(!isNull($this->constanteMimes[$clefMimeExtension])) {
+				return $this->constanteMimes[$clefMimeExtension];
 			} else {
 				return '*/*';
 			}
 		}
 
+		/**
+		 * @param string $header
+		 * @return array
+		 */
 		public function extraireMimesTypeHeader($header) {
 			$allType = explode(',', $header);
 			$tabTypesTrouves = array();

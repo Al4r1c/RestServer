@@ -4,14 +4,24 @@
 	use Logging\Displayer\AbstractDisplayer;
 
 	class Logger extends AbstractDisplayer {
-
+		/**
+		 * @var string
+		 */
 		private static $nomFichier = 'errors.log';
+
+		/**
+		 * @var \Serveur\Lib\Fichier
+		 */
 		private $fichierLogDestination;
 
 		public function __construct() {
 			$this->fichierLogDestination = $this->creerFichierSiNexistePas(self::$nomFichier);
 		}
 
+		/**
+		 * @param string $nomFichier
+		 * @return \Serveur\Lib\Fichier
+		 */
 		private function creerFichierSiNexistePas($nomFichier) {
 			$fichier = \Serveur\Utils\FileManager::getFichier();
 			$fichier->setFichierParametres($nomFichier, BASE_PATH . '/log');

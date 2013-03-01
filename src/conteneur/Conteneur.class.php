@@ -2,12 +2,18 @@
 	namespace Conteneur;
 
 	class Conteneur {
+		/**
+		 * @var string[]
+		 */
 		protected $conteneur;
 
 		public function __construct() {
 			$this->buildConteneur();
 		}
 
+		/**
+		 * @return string[]
+		 */
 		public function getConteneur() {
 			return $this->conteneur;
 		}

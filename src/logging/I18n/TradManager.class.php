@@ -4,9 +4,15 @@
 	use Serveur\Lib\XMLParser\XMLParser;
 
 	class TradManager {
-		/** @var XMLParser */
+		/**
+		 * @var XMLParser
+		 */
 		private $fichierTraductionDefaut;
 
+		/**
+		 * @param \Serveur\Lib\XMLParser\XMLParser $fichierTradDef
+		 * @throws \Exception
+		 */
 		public function setFichierTraduction(XMLParser $fichierTradDef) {
 			if(!$fichierTradDef->isValide()) {
 				throw new \Exception('Traduction object is invalid.');
@@ -15,6 +21,11 @@
 			$this->fichierTraductionDefaut = $fichierTradDef;
 		}
 
+		/**
+		 * @param string $section
+		 * @param string $identifier
+		 * @return string
+		 */
 		private function getTraduction($section, $identifier) {
 			$xmlElementsCorrespondants = $this->fichierTraductionDefaut->getConfigValeur($section . '.message[code=' . $identifier . ']');
 
@@ -25,6 +36,11 @@
 			}
 		}
 
+		/**
+		 * @param string $contenu
+		 * @return string
+		 * @throws \Exception
+		 */
 		public function recupererChaineTraduite($contenu) {
 			if(isNull($this->fichierTraductionDefaut)) {
 				throw new \Exception('No traduction object set.');

@@ -2,15 +2,29 @@
 	namespace Logging\I18n;
 
 	class I18nManager {
-
+		/**
+		 * @var string
+		 */
 		private $langueDefaut;
+
+		/**
+		 * @var string[]
+		 */
 		private $languesDisponibles;
 
+		/**
+		 * @param string $langueDefaut
+		 * @param array $languesDispo
+		 */
 		public function setConfig($langueDefaut, array $languesDispo) {
 			$this->setLangueDefaut($langueDefaut);
 			$this->setLangueDispo($languesDispo);
 		}
 
+		/**
+		 * @param string $langueDefaut
+		 * @throws \Exception
+		 */
 		public function setLangueDefaut($langueDefaut) {
 			if(isNull($langueDefaut)) {
 				throw new \Exception('Default language is not set properly.');
@@ -19,6 +33,10 @@
 			$this->langueDefaut = $langueDefaut;
 		}
 
+		/**
+		 * @param array $languesDispo
+		 * @throws \Exception
+		 */
 		public function setLangueDispo(array $languesDispo) {
 			if(isNull($languesDispo)) {
 				throw new \Exception('No available language set.');
@@ -51,7 +69,9 @@
 			}
 		}
 
-		/** @return \Serveur\Lib\Fichier */
+		/**
+		 * @return \Serveur\Lib\Fichier
+		 */
 		protected function getFichier($nomFichier) {
 			$fichier = \Serveur\Utils\FileManager::getFichier();
 			$fichier->setFichierParametres($nomFichier . '.xml', '/public/i18n');
@@ -59,6 +79,9 @@
 			return $fichier;
 		}
 
+		/**
+		 * @return array|bool
+		 */
 		private function getUneTraductionAleatoire() {
 			foreach($this->languesDisponibles as $uneLangueDispo => $classeLangue) {
 				$traductionDisponible = $this->getFichier($classeLangue);
@@ -71,7 +94,9 @@
 			return false;
 		}
 
-		/** @return \Serveur\Lib\XMLParser\XMLParser */
+		/**
+		 * @return \Serveur\Lib\XMLParser\XMLParser
+		 */
 		private function recupererXmlParserDepuisFichier(\Serveur\Lib\Fichier $fichier) {
 			return $fichier->chargerFichier();
 		}

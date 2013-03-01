@@ -3,7 +3,14 @@
 
 	class Config {
 
+		/**
+		 * @var array
+		 */
 		private $applicationConfiguration = array();
+
+		/**
+		 * @var array
+		 */
 		private static $clefMinimales = array('config', 'config.default_render', 'config.default_displayer', 'displayers', 'render');
 
 		/**

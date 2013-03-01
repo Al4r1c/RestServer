@@ -2,25 +2,33 @@
 	namespace Serveur\Renderers;
 
 	class Xml extends \Serveur\Renderers\AbstractRenderer {
+		/**
+		 * @param array $donnees
+		 * @return string
+		 */
 		public function render(array $donnees) {
 			$simpleXmlObject = new \SimpleXMLElement("<?xml version=\"1.0\"?><root></root>");
 
-			$this->array_to_xml($donnees, $simpleXmlObject);
+			$this->arrayToXml($donnees, $simpleXmlObject);
 
 			return $simpleXmlObject->asXML();
 		}
 
-		private function array_to_xml($content, \SimpleXMLElement &$simpleXmlObject) {
-			foreach($content as $key => $value) {
+		/**
+		 * @param array $contenu
+		 * @param \SimpleXMLElement $simpleXmlObject
+		 */
+		private function arrayToXml($contenu, \SimpleXMLElement &$simpleXmlObject) {
+			foreach($contenu as $clef => $value) {
 				if(is_array($value)) {
-					if(!is_numeric($key)) {
-						$subnode = $simpleXmlObject->addChild("$key");
-						$this->array_to_xml($value, $subnode);
+					if(!is_numeric($clef)) {
+						$subnode = $simpleXmlObject->addChild("$clef");
+						$this->arrayToXml($value, $subnode);
 					} else {
-						$this->array_to_xml($value, $simpleXmlObject);
+						$this->arrayToXml($value, $simpleXmlObject);
 					}
 				} else {
-					$simpleXmlObject->addChild("$key", "$value");
+					$simpleXmlObject->addChild("$clef", "$value");
 				}
 			}
 		}

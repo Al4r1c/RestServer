@@ -2,10 +2,19 @@
 	namespace Serveur\Renderers;
 
 	class Plain extends \Serveur\Renderers\AbstractRenderer {
+		/**
+		 * @param array $donnees
+		 * @return string
+		 */
 		public function render(array $donnees) {
 			return $this->arrayToString($donnees);
 		}
 
+		/**
+		 * @param array $donnees
+		 * @param int $level
+		 * @return string
+		 */
 		private function arrayToString(array $donnees, $level = 0) {
 			$valeurs = '';
 

@@ -4,25 +4,46 @@
 	use Serveur\Lib\XMLParser\XMLElement;
 
 	class XMLParser {
-
+		/**
+		 * @var string
+		 */
 		private $donneesSourcedata;
-		/** @var array|XMLElement */
+
+		/**
+		 * @var array|XMLElement
+		 */
 		private $donneesParsees;
+
+		/**
+		 * @var string[]
+		 */
 		private $erreur;
 
+		/**
+		 * @param string $contenuXml
+		 */
 		public function setContenu($contenuXml) {
 			$this->donneesSourcedata = $contenuXml;
 			$this->parse($contenuXml);
 		}
 
+		/**
+		 * @return bool
+		 */
 		public function isValide() {
 			return empty($this->erreur);
 		}
 
+		/**
+		 * @return string
+		 */
 		public function getErreurMessage() {
 			return sprintf('XML error at line %d column %d: %s', $this->erreur['line'], $this->erreur['column'], $this->erreur['message']);
 		}
 
+		/**
+		 * @param string $contenuXml
+		 */
 		private function parse($contenuXml) {
 			$parser = xml_parser_create();
 
@@ -51,6 +72,11 @@
 			unset($GLOBALS['temporaire']);
 		}
 
+		/**
+		 * @param $parser
+		 * @param string $nom
+		 * @param string[] $attributs
+		 */
 		private function tagDebutXML($parser, $nom, $attributs) {
 			$GLOBALS['temporaire'][] = $nom;
 
@@ -59,6 +85,10 @@
 			$this->donneesParsees[$nom]['children'] = array();
 		}
 
+		/**
+		 * @param $parser
+		 * @param string $nom
+		 */
 		private function tagFinXML($parser, $nom) {
 			global $temporaire;
 
@@ -81,6 +111,10 @@
 			}
 		}
 
+		/**
+		 * @param $parser
+		 * @param string $valeur
+		 */
 		private function valeurXML($parser, $valeur) {
 			if(trim($valeur) != '') {
 				end($this->donneesParsees);
@@ -93,7 +127,9 @@
 			}
 		}
 
-		/** @return XMLElement[] */
+		/**
+		 * @return XMLElement[]
+		 */
 		public function getConfigValeur($clefConfig) {
 			if($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)), $this->donneesParsees->getChildren())) {
 				return $valeur;

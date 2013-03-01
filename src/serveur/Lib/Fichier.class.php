@@ -2,15 +2,28 @@
 	namespace Serveur\Lib;
 
 	class Fichier {
-		/** @var \Serveur\Lib\FileSystem */
+		/**
+		 * @var \Serveur\Lib\FileSystem
+		 */
 		private $fileSystemInstance;
+
+		/*
+		 * var string
+		 */
 		private $nomFichier;
+
+		/**
+		 * @var string
+		 */
 		private $repertoireFichier;
 
 		public function getFileSystem() {
 			return $this->fileSystemInstance;
 		}
 
+		/**
+		 * @param \Serveur\Lib\FileSystem $fileSystem
+		 */
 		public function setFileSystem(\Serveur\Lib\FileSystem $fileSystem) {
 			$this->fileSystemInstance = $fileSystem;
 		}
@@ -27,6 +40,10 @@
 			return $this->repertoireFichier . $this->nomFichier;
 		}
 
+		/**
+		 * @param string $nom
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
 		public function setNomFichier($nom) {
 			if(isNull($nom)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10200, 500);
@@ -39,6 +56,10 @@
 			$this->nomFichier = $nom;
 		}
 
+		/**
+		 * @param string $chemin
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
 		public function setRepertoireFichier($chemin) {
 			if(isNull($chemin)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10202, 500);
@@ -47,19 +68,34 @@
 			$this->repertoireFichier = $this->fileSystemInstance->relatifToAbsolu($chemin);
 		}
 
+		/**
+		 * @param string $nomFichier
+		 * @param string $cheminAcces
+		 */
 		public function setFichierParametres($nomFichier, $cheminAcces) {
 			$this->setNomFichier($nomFichier);
 			$this->setRepertoireFichier($cheminAcces);
 		}
 
+		/**
+		 * @return bool
+		 */
 		public function fichierExiste() {
 			return $this->fileSystemInstance->fichierExiste($this->getCheminCompletFichier());
 		}
 
+		/**
+		 * @return bool
+		 */
 		public function dossierExiste() {
 			return $this->fileSystemInstance->dossierExiste($this->getRepertoireFichier());
 		}
 
+		/**
+		 * @param string $droit
+		 * @return bool
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
 		public function creerFichier($droit = '0777') {
 			if(!$this->dossierExiste()) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10204, 500, $this->repertoireFichier);
@@ -74,6 +110,10 @@
 			return true;
 		}
 
+		/**
+		 * @return mixed
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
 		public function chargerFichier() {
 			if(!$this->fichierExiste()) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(10203, 50, $this->getCheminCompletFichier());

@@ -2,10 +2,18 @@
 	namespace Serveur\Renderers;
 
 	class Html extends \Serveur\Renderers\AbstractRenderer {
+		/**
+		 * @param array $donnees
+		 * @return string
+		 */
 		public function render(array $donnees) {
 			return $this->templateHtml($this->convertTableauToListeHtml($donnees));
 		}
 
+		/**
+		 * @param array $array
+		 * @return string
+		 */
 		private function convertTableauToListeHtml(array $array) {
 			$list = "<ul>\n";
 
@@ -22,7 +30,11 @@
 			return $list . "</ul>\n";
 		}
 
-		private function templateHtml($list) {
+		/**
+		 * @param string $DonneesFormatListeHtml
+		 * @return string
+		 */
+		private function templateHtml($DonneesFormatListeHtml) {
 			return <<<EOT
 <!DOCTYPE html>
 <html>
@@ -43,7 +55,7 @@
     </style>
 </head>
 <body>
-$list
+$DonneesFormatListeHtml
 </body>
 </html>
 EOT;

@@ -4,8 +4,16 @@
 	use Serveur\Utils\Tools;
 
 	class HeaderManager {
+		/**
+		 * @var array
+		 */
 		private $headers = array();
 
+		/**
+		 * @param string $champ
+		 * @param string $valeur
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
 		public function ajouterHeader($champ, $valeur) {
 			if(!Tools::isValideHeader($champ)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(20400, 500);

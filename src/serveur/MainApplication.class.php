@@ -5,20 +5,34 @@
 	use Serveur\Exceptions\Exceptions\MainException;
 
 	class MainApplication {
-
+		/**
+		 * @var \Conteneur\MonConteneur
+		 */
 		private $conteneur;
-		/** @var \Logging\Displayer\AbstractDisplayer[] */
+
+		/**
+		 * @var \Logging\Displayer\AbstractDisplayer[]
+		 */
 		private $observeurs = array();
 
+		/**
+		 * @param \Conteneur\MonConteneur $nouveauConteneur
+		 */
 		public function __construct(\Conteneur\MonConteneur $nouveauConteneur) {
 			$this->conteneur = $nouveauConteneur;
 			$this->conteneur->getErrorManager()->setHandlers();
 		}
 
+		/**
+		 * @param \Logging\Displayer\AbstractDisplayer $observeur
+		 */
 		public function ajouterObserveur(\Logging\Displayer\AbstractDisplayer $observeur) {
 			$this->observeurs[] = $observeur;
 		}
 
+		/**
+		 * @return string
+		 */
 		public function run() {
 			try {
 				$this->conteneur->getRestManager()->setVariablesReponse(200, $this->conteneur->getRestManager()->getParametres());
@@ -29,6 +43,10 @@
 			}
 		}
 
+		/**
+		 * @param \Exception $uneException
+		 * @return string
+		 */
 		private function leverException(\Exception $uneException) {
 			if($uneException instanceof MainException) {
 				$statusHttp = $uneException->getStatus();
