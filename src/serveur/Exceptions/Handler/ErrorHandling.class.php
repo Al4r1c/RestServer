@@ -41,7 +41,7 @@
 		}
 
 		public function exceptionHandler(\Exception $exception) {
-			echo 'exception :)';
+
 		}
 
 		public function errorHandler($errno, $errstr, $errfile, $errline) {
