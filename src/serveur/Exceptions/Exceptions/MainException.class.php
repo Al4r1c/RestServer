@@ -11,7 +11,7 @@
 		public function __construct($code, $codeStatus) {
 			parent::__construct('', $code);
 			$this->setStatus($codeStatus);
-			trigger_error_app(E_USER_ERROR, $code);
+			trigger_error_app(E_USER_ERROR, $code, array_slice(func_get_args(), 2));
 		}
 
 		public function getStatus() {

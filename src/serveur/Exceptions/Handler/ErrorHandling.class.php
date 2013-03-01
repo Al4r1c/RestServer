@@ -24,14 +24,14 @@
 			return $tabErreurs;
 		}
 
-		public function global_ajouterErreur($erreurNumber, $codeErreur) {
+		public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments) {
 			switch($erreurNumber) {
 				case E_USER_ERROR:
-					$this->erreurs[] = new Error($codeErreur, null, array_slice(func_get_args(), 2));
+					$this->erreurs[] = new Error($codeErreur, null, $arguments);
 					break;
 
 				case E_USER_NOTICE:
-					$this->erreurs[] = new Notice($codeErreur, null, array_slice(func_get_args(), 2));
+					$this->erreurs[] = new Notice($codeErreur, null, $arguments);
 					break;
 
 				default:
