@@ -11,7 +11,7 @@
 		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 */
-		public function chargerConfiguration(\Serveur\Lib\Fichier $fichierFramework) {
+		public function chargerConfiguration($fichierFramework) {
 			if(!$fichierFramework instanceof \Serveur\Lib\Fichier) {
 				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', get_class($fichierFramework));
 			}

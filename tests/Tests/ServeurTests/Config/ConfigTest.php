@@ -45,6 +45,14 @@
 		}
 
 		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testChargerConfigurationArgumentDoitEtreFichier() {
+			$this->configuration->chargerConfiguration(null);
+		}
+
+		/**
 		 * @expectedException     \Exception
 		 * @expectedExceptionCode 30000
 		 */
