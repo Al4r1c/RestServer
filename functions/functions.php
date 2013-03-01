@@ -1,6 +1,6 @@
 <?php
-	function trigger_notice_apps($code) {
-		new \Serveur\Exceptions\Types\Notice($code, null, array_slice(func_get_args(), 1));
+	function  trigger_error_app($erreurNumber, $codeErreur) {
+		call_user_func_array($GLOBALS['global_function_appli_error'], func_get_args());
 	}
 
 	function isNull(&$donnee) {

@@ -19,7 +19,7 @@
 			if(array_key_exists($clef, $tabVarUri = $this->restRequest->getUriVariables())) {
 				return $tabVarUri[$clef];
 			} else {
-				trigger_notice_apps(20200, $clef);
+				trigger_error_app(E_USER_NOTICE, 20200, $clef);
 
 				return null;
 			}
@@ -33,7 +33,7 @@
 			if(array_key_exists($clef, $tabParam = $this->restRequest->getParametres())) {
 				return $tabParam[$clef];
 			} else {
-				trigger_notice_apps(20201, $clef);
+				trigger_error_app(E_USER_NOTICE, 20201, $clef);
 
 				return null;
 			}

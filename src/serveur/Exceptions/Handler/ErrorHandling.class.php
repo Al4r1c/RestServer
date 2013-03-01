@@ -13,10 +13,6 @@
 			$GLOBALS['global_function_appli_error'] = array($this, 'global_ajouterErreur');
 		}
 
-		public function global_ajouterErreur() {
-			$this->erreurs[] = func_get_arg(0);
-		}
-
 		public function getErreurs() {
 			return $this->erreurs;
 		}
@@ -28,8 +24,24 @@
 			return $tabErreurs;
 		}
 
+		public function global_ajouterErreur($erreurNumber, $codeErreur) {
+			switch($erreurNumber) {
+				case E_USER_ERROR:
+					$this->erreurs[] = new Error($codeErreur, null, array_slice(func_get_args(), 2));
+					break;
+
+				case E_USER_NOTICE:
+					$this->erreurs[] = new Notice($codeErreur, null, array_slice(func_get_args(), 2));
+					break;
+
+				default:
+					die('Error type not supported.');
+					break;
+			}
+		}
+
 		public function exceptionHandler(\Exception $exception) {
-			new Error($exception->getCode(), $exception->getMessage());
+			echo 'exception :)';
 		}
 
 		public function errorHandler($errno, $errstr, $errfile, $errline) {
@@ -38,18 +50,26 @@
 			}
 
 			switch($errno) {
-				case E_USER_WARNING:
-				case E_USER_NOTICE:
+				case E_COMPILE_ERROR:
+				case E_ERROR:
+				case E_CORE_ERROR:
+				case E_USER_ERROR:
+				case E_PARSE:
+					$this->erreurs[] = new Error($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
+					throw new \Exception();
 					break;
 
 				case E_WARNING:
-					new Error($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
-					break;
-
+				case E_CORE_WARNING:
+				case E_COMPILE_WARNING:
+				case E_USER_WARNING:
 				case E_NOTICE:
-				case E_RECOVERABLE_ERROR:
+				case E_USER_NOTICE:
 				case E_STRICT:
-					new Notice($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
+				case E_DEPRECATED:
+				case E_USER_DEPRECATED:
+				case E_RECOVERABLE_ERROR:
+					$this->erreurs[] = new Notice($errno, '{trad.file}: ' . $errfile . ', {trad.line}: ' . $errline . ' | {trad.warning}: ' . $errstr);
 					break;
 
 				default:

@@ -3,7 +3,6 @@ Config:
   DEBUG_FRAMEWORK: true
   CHARSET: utf-8
   DEFAULT_DISPLAYER: LOG
-  DEFAULT_LANG: French
   DEFAULT_RENDER: JSON
 
 Displayers:
@@ -17,7 +16,3 @@ Render:
     -html
     -htm
     -xhtml
-
-Languages:
-  FRENCH: fr
-  ENGLISH: en

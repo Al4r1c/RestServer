@@ -6,7 +6,7 @@
 	class XMLParser {
 
 		private $donneesSourcedata;
-		/** @var XMLElement */
+		/** @var array|XMLElement */
 		private $donneesParsees;
 		private $erreur;
 
@@ -102,7 +102,11 @@
 			}
 		}
 
-		/** @param $arrayValues XMLElement[] */
+		/**
+		 * @param $tabKey string[]
+		 * @param $arrayValues XMLElement[]
+		 * @return string|bool
+		 * */
 		public function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues) {
 			if(count($tabKey) == 1) {
 				$tabResult = array();

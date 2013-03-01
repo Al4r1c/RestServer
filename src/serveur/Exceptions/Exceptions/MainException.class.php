@@ -8,14 +8,10 @@
 
 		private $codeRetourHttp = 500;
 
-		public function __construct($code, $codeStatus, $message, $arguments = array()) {
-			parent::__construct($message . $this->recupererMessage($code), $code);
+		public function __construct($code, $codeStatus) {
+			parent::__construct('', $code);
 			$this->setStatus($codeStatus);
-			new \Serveur\Exceptions\Types\Error($this->getCode(), $this->getMessage(), $arguments);
-		}
-
-		protected function recupererMessage($code) {
-			return '{errorMessage.' . $code . '}';
+			trigger_error_app(E_USER_ERROR, $code);
 		}
 
 		public function getStatus() {

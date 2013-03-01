@@ -2,14 +2,13 @@
 	namespace Serveur\Rest;
 
 	use Serveur\Utils\Tools;
-	use Serveur\Exceptions\Exceptions\HeaderManagerException;
 
 	class HeaderManager {
 		private $headers = array();
 
 		public function ajouterHeader($champ, $valeur) {
 			if(!Tools::isValideHeader($champ)) {
-				throw new HeaderManagerException(20400, 500);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20400, 500);
 			}
 
 			$this->headers[$champ] = $valeur;

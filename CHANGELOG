@@ -1,6 +1,11 @@
 ==CHANGELOG==
 
-v0.21
+v0.3
+Error logging: Passage en observeur. Fonctionnement complètement détaché de l'application.
+Uniformisation du système d'erreurs.
+Suppression du typage par exceptions, utilisation du code pour identifier le type.
+
+v0.21 - 28/02/2013
 Nouvelle branche GitHub "dev". Le developpement sera push dans cette branche, les versions finales en master.
 Corrections de divers bug.
 Ajout des tests:

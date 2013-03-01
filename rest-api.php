@@ -11,9 +11,11 @@
 	$classLoader = new \ClassLoader\ClassLoader();
 	$classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src');
 	$classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src');
+	$classLoader->ajouterNamespace('Logging', BASE_PATH . '/src');
 	$classLoader->register();
 
-	$main = new \Serveur\MainApplication(new \Conteneur\MonConteneur());
-	$main->run();
 
-	echo $main->recupererResultat();
+	$main = new \Serveur\MainApplication(new \Conteneur\MonConteneur());
+	$main->ajouterObserveur(\Logging\LoggingFactory::getLogger('logger'));
+
+	echo $main->run();

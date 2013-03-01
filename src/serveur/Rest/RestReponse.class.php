@@ -3,7 +3,6 @@
 
 	use Serveur\Utils\Constante;
 	use Serveur\Utils\Tools;
-	use Serveur\Exceptions\Exceptions\RestReponseException;
 
 	class RestReponse {
 		/** @var HeaderManager */
@@ -45,7 +44,7 @@
 
 		public function setContenu($contenu) {
 			if(!is_array($contenu)) {
-				throw new RestReponseException(20100, 500);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20100, 500);
 			}
 
 			$this->contenu = $contenu;
@@ -53,7 +52,7 @@
 
 		public function setStatus($nouveauStatus) {
 			if(!Tools::isValideHttpCode($nouveauStatus)) {
-				throw new RestReponseException(20101, 500, $nouveauStatus);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20101, 500, $nouveauStatus);
 			}
 
 			$this->status = $nouveauStatus;
@@ -66,13 +65,13 @@
 				$this->setFormatRetourDefaut($formatRetourDefaut);
 			} else {
 				$this->setFormatRetourDefaut(key($formatsAcceptes));
-				trigger_notice_apps(20102, $formatRetourDefaut);
+				trigger_error_app(20102, $formatRetourDefaut);
 			}
 		}
 
 		public function setFormatRetourDefaut($formatRetourDefaut) {
 			if(!is_string($formatRetourDefaut)) {
-				throw new RestReponseException(20103, 500);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20103, 500);
 			}
 
 			$this->formatRetourDefaut = $formatRetourDefaut;
@@ -80,7 +79,7 @@
 
 		public function setFormatsAcceptes($formatsAcceptes) {
 			if(!is_array($formatsAcceptes) || isNull($formatsAcceptes)) {
-				throw new RestReponseException(20104, 400);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20104, 400);
 			}
 
 			$this->formatsAcceptes = $formatsAcceptes;
@@ -88,7 +87,7 @@
 
 		public function setCharset($charset) {
 			if(!in_array(strtoupper($charset), array_map('strtoupper', mb_list_encodings()))) {
-				throw new RestReponseException(20105, 500, $charset);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20105, 500, $charset);
 			}
 
 			$this->charset = strtolower($charset);
@@ -114,7 +113,7 @@
 				if(!isNull($formatDefaut) && array_key_exists($formatDefaut, $formatsAcceptes)) {
 					$formatRetour = array(ucfirst(strtolower($formatDefaut)) => $formatsAcceptes[$formatDefaut]);
 				} else {
-					throw new RestReponseException(20106, 500, $formatDefaut);
+					throw new \Serveur\Exceptions\Exceptions\MainException(20106, 500, $formatDefaut);
 				}
 			}
 
@@ -123,11 +122,11 @@
 
 
 		protected function getRenderClass($renderClassName) {
-			if(class_exists($view_name = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
-				return new $view_name();
-			} else {
-				throw new RestReponseException(20107, 415, $renderClassName);
+			if(!class_exists($view_name = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
+				throw new \Serveur\Exceptions\Exceptions\MainException(20107, 415, $renderClassName);
 			}
+
+			return new $view_name();
 		}
 
 		public function fabriquerReponse(array $formatsDemandes) {

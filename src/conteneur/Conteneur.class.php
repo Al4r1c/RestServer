@@ -58,20 +58,6 @@
 				return $restManager;
 			});
 
-			$conteneur['i18nManager'] = function ($c) {
-				$I18nManager = new \Serveur\I18n\I18nManager();
-				$I18nManager->setConfig($c['configManager']);
-
-				return $I18nManager;
-			};
-
-			$conteneur['tradManager'] = function ($c) {
-				$traductionManager = new \Serveur\I18n\TradManager();
-				$traductionManager->setFichierTraduction($c['i18nManager']->getFichierTraduction());
-
-				return $traductionManager;
-			};
-
 			$conteneur['errorManager'] = $conteneur->share(function ($c) {
 				$errorManager = new \Serveur\Exceptions\ErrorManager();
 				$errorManager->setErrorHandler($c['errorHandler']);

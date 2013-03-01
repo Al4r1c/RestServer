@@ -14,7 +14,6 @@
 			$this->recupererMessage($message);
 			$this->setDate(time());
 			$this->arguments = $arguments;
-			call_user_func_array($GLOBALS['global_function_appli_error'], array($this));
 		}
 
 		public function getCode() {

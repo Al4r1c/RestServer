@@ -1,8 +1,6 @@
 <?php
 	namespace Serveur\Rest;
 
-	use Serveur\Exceptions\Exceptions\ServerException;
-
 	class Server {
 
 		private $serveurVariable;
@@ -27,7 +25,7 @@
 
 		public function setServeurVariable(array $serverVar) {
 			if(!array_keys_exist(array('HTTP_ACCEPT', 'PHP_INPUT', 'QUERY_STRING', 'REQUEST_METHOD', 'REQUEST_URI'), $serverVar)) {
-				throw new ServerException(20300, 500);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20300, 500);
 			}
 
 			$this->serveurVariable = $serverVar;
@@ -40,17 +38,15 @@
 		public function setServeurDonnees($methode) {
 			switch(strtoupper($methode)) {
 				case 'GET':
-					parse_str($this->serveurVariable['QUERY_STRING'], $arguments);
+					parse_str($this->serveurVariable['QUERY_STRING'], $this->serveurDonnees);
 					break;
 				case 'POST':
 				case 'PUT':
 				case 'DELETE':
-					parse_str($this->serveurVariable['PHP_INPUT'], $arguments);
+					parse_str($this->serveurVariable['PHP_INPUT'], $this->serveurDonnees);
 					break;
 				default:
-					throw new ServerException(20301, 405, $methode);
+					throw new \Serveur\Exceptions\Exceptions\MainException(20301, 405, $methode);
 			}
-
-			$this->serveurDonnees = $arguments;
 		}
 	}

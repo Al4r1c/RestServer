@@ -10,21 +10,23 @@
         <message code="fatalerror">Fatal error</message>
         <message code="file">File</message>
         <message code="line">Line</message>
-	    <message code="appliError">Application</message>
-	    <message code="fileSysError">File system</message>
-	    <message code="fileError">File</message>
-        <message code="restReqError">Request</message>
-        <message code="restResError">Response</message>
-        <message code="serverError">Server and execution environment information</message>
-        <message code="headManError">Header Manager</message>
-        <message code="confError">Configuration file</message>
-        <message code="dataError">Data error</message>
-        <message code="i18nManager">Internationalization Manager</message>
-        <message code="tradManager">Traduction Manager</message>
     </trad>
 
+	<errorType>
+		<message code="10">Invalid Argument</message>
+		<message code="101">File system</message>
+		<message code="102">File</message>
+		<message code="200">Request</message>
+		<message code="201">Response</message>
+		<message code="202">Rest Manager</message>
+		<message code="203">Server and execution environment information</message>
+		<message code="204">Header Manager</message>
+		<message code="300">Configuration file</message>
+		<message code="">Data error</message>
+	</errorType>
+
     <errorMessage>
-	    <message code="10000">Error displaying class "%s" does not exist.</message>
+	    <message code="1000">Argument passed to %s::%s() must be an instance of %s, %s given.</message>
 	    <message code="10100">OS "%s" is not suported or is not valid.</message>
 	    <message code="10101">Base path "%s" is not absolute.</message>
 	    <message code="10102">Base path "%s" does not exist.</message>
@@ -57,17 +59,6 @@
 		<message code="30000">Framework's configuration file not found. (Should be located: %s)</message>
 	    <message code="30001">Key %s must be present but does not exist in the configuration.</message>
 	    <message code="30002">Key %s does not exist in the configuration.</message>
-	    <message code="40000">Default language is not set properly.</message>
-	    <message code="40001">No available language set in the configuration.</message>
-	    <message code="40002">Language "%s" is not associated with any translation. Language used instead: %s.</message>
-	    <message code="40003">Default language "%s" file (%s) does not exist. Language loaded instead: %s.</message>
-	    <message code="40004">Default language "%s" file (%s) invalid (%s). Language loaded instead: %s.</message>
-	    <message code="40005">Language file for %s not found. (Should be: %s)</message>
-	    <message code="40006">Language file for %s invalid (%s). (%s)</message>
-	    <message code="40007">No valid translation file set or found.</message>
-        <message code="40100">Traduction object is invalid.</message>
-	    <message code="40101">Translation for the entity "%s.%s" not found.</message>
-	    <message code="40102">No traduction object set.</message>
     </errorMessage>
 
 </language>

@@ -1,8 +1,6 @@
 <?php
 	namespace Serveur\Lib;
 
-	use Serveur\Exceptions\Exceptions\FileSystemException;
-
 	class FileSystem {
 
 		private $basePath;
@@ -25,17 +23,17 @@
 			} elseif(substr($os, 0, 7) == 'freebsd') {
 				$this->os = 'FreeBSD';
 			} else {
-				throw new FileSystemException(10100, 500, $os);
+				throw new \Serveur\Exceptions\Exceptions\MainException(10100, 500, $os);
 			}
 		}
 
 		public function setBasePath($basePath) {
 			if(!$this->isAbsolutePath($basePath)) {
-				throw new FileSystemException(10101, 500, $basePath);
+				throw new \Serveur\Exceptions\Exceptions\MainException(10101, 500, $basePath);
 			}
 
 			if(!$this->dossierExiste($basePath)) {
-				throw new FileSystemException(10102, 500, $basePath);
+				throw new \Serveur\Exceptions\Exceptions\MainException(10102, 500, $basePath);
 			}
 
 			$this->basePath = $basePath;
@@ -56,33 +54,35 @@
 		}
 
 		public function getDroits($cheminDemande) {
-			if($this->fichierExiste($cheminDemande) || $this->dossierExiste($cheminDemande)) {
-				return substr(sprintf('%o', fileperms($cheminDemande)), -4);
-			} else {
-				throw new FileSystemException(10103, 500, $cheminDemande);
+			if(!$this->fichierExiste($cheminDemande) && !$this->dossierExiste($cheminDemande)) {
+				throw new \Serveur\Exceptions\Exceptions\MainException(10103, 500, $cheminDemande);
 			}
+
+			return substr(sprintf('%o', fileperms($cheminDemande)), -4);
 		}
 
 		public function creerFichier($urlFichier, $droit = '0777') {
-			if($leFichier = @fopen($urlFichier, 'wb')) {
-				fclose($leFichier);
+			if(!$leFichier = @fopen($urlFichier, 'wb')) {
+				trigger_error_app(E_USER_NOTICE, 10104, $urlFichier);
 
-				chmod($urlFichier, intval($droit, 8));
-
-				return true;
-			} else {
-				throw new FileSystemException(10104, 500, $urlFichier);
+				return false;
 			}
+
+			fclose($leFichier);
+
+			chmod($urlFichier, intval($droit, 8));
+
+			return true;
 		}
 
 		public function chargerFichier($cheminVersFichier) {
 			if(!$this->fichierExiste($cheminVersFichier)) {
-				throw new FileSystemException(10105, 50, $cheminVersFichier);
+				throw new \Serveur\Exceptions\Exceptions\MainException(10105, 50, $cheminVersFichier);
 			}
 
 			/** @var $chargeur \Serveur\Lib\FichierChargement\AbstractChargeurFichier */
 			if(false === $chargeur = $this->getChargeurClass(ucfirst($this->getExtension($cheminVersFichier)))) {
-				throw new FileSystemException(10106, 500, $this->getExtension($cheminVersFichier), $cheminVersFichier);
+				throw new \Serveur\Exceptions\Exceptions\MainException(10106, 500, $this->getExtension($cheminVersFichier), $cheminVersFichier);
 			}
 
 			return $chargeur->chargerFichier($cheminVersFichier);

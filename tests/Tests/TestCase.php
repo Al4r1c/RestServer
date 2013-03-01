@@ -151,57 +151,90 @@
 			return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier');
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Config\Config */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Config\Config
+		 */
 		protected function getMockConfig($methodes = array()) {
 			return $this->getMock('Serveur\Config\Config', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Utils\Constante */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Utils\Constante
+		 */
 		protected function getMockConstante($methodes = array()) {
 			return $this->getMock('Serveur\Utils\Constante', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\Fichier */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\Fichier
+		 */
 		protected function getMockFichier($methodes = array()) {
 			return $this->getMock('Serveur\Lib\Fichier', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FileSystem */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FileSystem
+		 */
 		protected function getMockFileSystem($methodes = array()) {
 			return $this->getMock('Serveur\Lib\FileSystem', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\HeaderManager */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\HeaderManager
+		 */
 		protected function getMockHeadersManager($methodes = array()) {
 			return $this->getMock('Serveur\Rest\HeaderManager', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\I18n\I18nManager */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Logging\I18n\I18nManager
+		 */
 		protected function getMockI18nManager($methodes = array()) {
-			return $this->getMock('Serveur\I18n\I18nManager', $methodes);
+			return $this->getMock('Logging\I18n\I18nManager', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestRequete */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestRequete
+		 */
 		protected function getMockRestRequete($methodes = array()) {
 			return $this->getMock('Serveur\Rest\RestRequete', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestReponse */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestReponse
+		 */
 		protected function getMockRestReponse($methodes = array()) {
 			return $this->getMock('Serveur\Rest\RestReponse', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\Server */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\Server
+		 */
 		protected function getMockServer($methodes = array()) {
 			return $this->getMock('Serveur\Rest\Server', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLElement */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLElement
+		 */
 		protected function getMockXmlElement($methodes = array()) {
 			return $this->getMock('Serveur\Lib\XMLParser\XMLElement', $methodes);
 		}
 
-		/** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLParser */
+		/**
+		 * @param array $methodes
+		 * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLParser
+		 */
 		protected function getMockXmlParser($methodes = array()) {
 			return $this->getMock('Serveur\Lib\XMLParser\XMLParser', $methodes);
 		}

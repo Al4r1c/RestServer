@@ -2,7 +2,6 @@
 	namespace Serveur\Rest;
 
 	use Serveur\Lib\TypeDetector;
-	use Serveur\Exceptions\Exceptions\RestRequeteException;
 
 	class RestRequete {
 		private $methode = 'GET';
@@ -37,7 +36,7 @@
 			$method = strtoupper(trim($method));
 
 			if(!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
-				throw new RestRequeteException(20000, 400, $method);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20000, 400, $method);
 			}
 
 			$this->methode = $method;
@@ -48,7 +47,7 @@
 			$formatsTrouves = $typeDetector->extraireMimesTypeHeader($format);
 
 			if(isNull($formatsTrouves)) {
-				throw new RestRequeteException(20001, 400);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20001, 400);
 			}
 
 			$this->formatsDemandes = $formatsTrouves;
@@ -62,7 +61,7 @@
 
 		public function setParametres($donnee) {
 			if(!is_array($donnee)) {
-				throw new RestRequeteException(20002, 400);
+				throw new \Serveur\Exceptions\Exceptions\MainException(20002, 400);
 			}
 
 			$this->parametres = $donnee;

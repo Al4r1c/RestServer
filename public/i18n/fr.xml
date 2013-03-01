@@ -10,21 +10,23 @@
         <message code="fatalerror">Erreur critique</message>
         <message code="file">Fichier</message>
         <message code="line">Ligne</message>
-        <message code="appliError">Application</message>
-        <message code="fileSysError">Système de fichier</message>
-        <message code="fileError">Fichier</message>
-        <message code="restReqError">Requête</message>
-        <message code="restResError">Réponse</message>
-        <message code="serverError">Variables de serveur et d'exécution</message>
-        <message code="headManError">Gestionnaire des entêtes</message>
-        <message code="confError">Fichier de configuration</message>
-        <message code="dataError">Erreur de donnée</message>
-        <message code="i18nManager">Gestionnaire de l'internationalisation</message>
-        <message code="tradManager">Gestionnaire de traduction</message>
     </trad>
 
+	<errorType>
+		<message code="10">Paramètre invalide</message>
+		<message code="101">Système de fichier</message>
+		<message code="102">Fichier</message>
+		<message code="200">Requête</message>
+		<message code="201">Réponse</message>
+		<message code="202">Gestionnaire Rest</message>
+		<message code="203">Variables de serveur et d'exécution</message>
+		<message code="204">Gestionnaire des entêtes</message>
+		<message code="300">Fichier de configuration</message>
+		<message code="">Erreur de donnée</message>
+	</errorType>
+
     <errorMessage>
-	    <message code="10000">La classe d'affichage des erreurs "%s" n'existe pas.</message>
+	    <message code="1000">Paramètre de la fonction %s::%s() doit être du type %s, %s obtenu.</message>
 	    <message code="10100">L'OS "%s" n'est pas supporté ou est invalide.</message>
 	    <message code="10101">Le chemin de base "%s" n'est pas absolu.</message>
 	    <message code="10102">Le chemin de base "%s" n'existe pas.</message>
@@ -53,21 +55,10 @@
 	    <message code="20201">Le paramètre demandé %s n'existe pas.</message>
 	    <message code="20300">Des variables serveurs manquent.</message>
 	    <message code="20301">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
-	    <message code="20400">L'entête HTTP "%s" pour la réponse est invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html pour lus d'information sur les entêtes.</message>
+	    <message code="20400">L'entête HTTP "%s" pour la réponse est invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html pour plus d'information sur les entêtes.</message>
 	    <message code="30000">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
 	    <message code="30001">La clef %s est obligatoire dans la configuration mais n'existe pas.</message>
 	    <message code="30002">La clef %s n'existe pas dans la configuration.</message>
-	    <message code="40000">La langue par défaut n'est pas paramétrée correctement.</message>
-	    <message code="40001">Aucune langues disponibles n'ont été paramétrées dans la configuration.</message>
-	    <message code="40002">La langue "%s" n'est associée à aucune traduction. Langue utilisée à la place: %s.</message>
-	    <message code="40003">Le fichier pour la langue "%s" définie par défaut (%s) n'existe pas. Langue chargée à la place: %s.</message>
-	    <message code="40004">Le fichier pour la langue "%s" définie par défaut (%s) invalide (%s). Langue chargée à la place: %s.</message>
-	    <message code="40005">Le fichier pour la langue "%s" non trouvé. (Devrait être: %s)</message>
-	    <message code="40006">Le fichier pour la langue "%s" invalide (%s). (%s)</message>
-	    <message code="40007">Aucun fichier de traduction valide n'a été définie ou trouvé.</message>
-	    <message code="40100">Objet contenant les traductions invalide.</message>
-	    <message code="40101">Traduction pour l'entité "%s.%s" non trouvée.</message>
-	    <message code="40102">Aucun objet de traduction n'a été configuré.</message>
     </errorMessage>
 
 </language>
