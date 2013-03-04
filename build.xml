@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 
-<project name="RestServer" default="build">
-	<property name="source" value="build-test" />
+<project name="RestServer" default="build" basedir=".">
+	<property name="repertoireBuild" value="${project.basedir}/build" />
 
 	<target name="clean" description="Nettoie" >
-		<delete file="composer.phar" />
-		<delete dir="build"/>
+		<delete file="${project.basedir}/composer.phar" />
+		<delete dir="${repertoireBuild}"/>
 	</target>
 
 	<target name="prepare" description="Prepare" >
-		<mkdir dir="build/logs"/>
+		<mkdir dir="${repertoireBuild}"/>
+		<mkdir dir="${repertoireBuild}/logs"/>
+		<mkdir dir="${repertoireBuild}/phpcs/"/>
 
 		<exec executable="bash">
 			<arg value="-c" />
@@ -22,9 +24,43 @@
 		</exec>
 	</target>
 
-	<target name="phpunit" description="Lance les tests" >
+	<target name="qa" description="Lance les outils d'analyse">
+		<phingcall target="phpmd" />
+		<phingcall target="phpcpd" />
+		<phingcall target="phploc" />
+		<phingcall target="phpcs" />
+		<phingcall target="phpunit" />
+		<phingcall target="phpcb" />
+	</target>
+
+	<target name="phpmd">
+		<phpmd file="${repertoireBuild}/src">
+			<formatter type="xml" outfile="${repertoireBuild}/phpmd.xml" />
+		</phpmd>
+	</target>
+
+	<target name="phpcpd">
+		<phpcpd file="${repertoireBuild}/src">
+			<formatter type="pmd" outfile="${repertoireBuild}/logs/pmd-cpd.xml"/>
+		</phpcpd>
+	</target>
+
+	<target name="phploc">
+		<exec logoutput="true" dir="${project.basedir}" command="phploc --log-csv '${repertoireBuild}/logs/phploc.csv' '${project.basedir}/src'" escape="false" />
+	</target>
+
+	<target name="phpcs">
+		<phpcodesniffer standard="Zend">
+			<fileset dir="${project.basedir}/src">
+				<include name="**/*.php"/>
+			</fileset>
+			<formatter type="checkstyle" outfile="${repertoireBuild}/logs/checkstyle.xml"/>
+		</phpcodesniffer>
+	</target>
+
+	<target name="phpunit" description="Lance les tests">
 		<phpunit printsummary="true" haltonfailure="true">
-			<formatter todir="build/logs" type="xml"/>
+			<formatter todir="${repertoireBuild}/logs" type="xml"/>
 			<batchtest>
 				<fileset dir="./tests/">
 					<include name="*/*/*/*.php"/>
@@ -33,5 +69,9 @@
 		</phpunit>
 	</target>
 
-	<target name="build" depends="clean,prepare,phpunit" description="Tâche principale d'intégration continue" />
+	<target name="phpcb">
+		<exec logoutput="true" command="phpcb --log '${repertoireBuild}/logs' --source '${repertoireBuild}/src' --output '${repertoireBuild}/code-browser'" escape="false" />
+	</target>
+
+	<target name="build" depends="clean, prepare, qa" description="Tâche principale d'intégration continue" />
 </project>
