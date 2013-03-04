@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="RestServer" default="build" basedir="../">
+<project name="RestServer" default="build" basedir=".">
 	<property name="sources" value="${project.basedir}/sources" />
 	<property name="buildRepertory" value="${project.basedir}/build" />
 	<property name="sourceRepertory" value="${sources}/src" />
