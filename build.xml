@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
 
-<project name="RestServer" default="build" basedir="../">
+<project name="RestServer" default="build" basedir=".">
 	<property name="sources" value="${project.basedir}/sources" />
 	<property name="buildRepertory" value="${project.basedir}/build" />
 	<property name="sourceRepertory" value="${sources}/src" />
+	<property name="testsRepository" value="${sources}/tests" />
 
 	<target name="clean" description="Nettoie" >
 		<delete file="${project.basedir}/composer.phar" />
@@ -76,7 +77,7 @@
 		<phpunit printsummary="true" haltonfailure="true">
 			<formatter todir="${buildRepertory}/logs" type="xml"/>
 			<batchtest>
-				<fileset dir="./tests/">
+				<fileset dir="$[testsRepository}">
 					<include name="*/*/*/*.php"/>
 				</fileset>
 			</batchtest>
