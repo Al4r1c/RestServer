@@ -4,11 +4,22 @@
 	<property name="source" value="build-test" />
 
 	<target name="clean" description="Nettoie" >
+		<delete file="composer.phar" />
 		<delete dir="build"/>
 	</target>
 
 	<target name="prepare" description="Prepare" >
 		<mkdir dir="build/logs"/>
+
+		<exec executable="bash">
+			<arg value="-c" />
+			<arg value="curl -s http://getcomposer.org/installer | php" />
+		</exec>
+
+		<exec executable="php">
+			<arg value="composer.phar" />
+			<arg value="install" />
+		</exec>
 	</target>
 
 	<target name="phpunit" description="Lance les tests" >
