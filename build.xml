@@ -1,17 +1,22 @@
 <?xml version="1.0"?>
 
-<project name="RestServer" default="build" basedir=".">
-	<property name="repertoireBuild" value="${project.basedir}/build" />
+<project name="RestServer" default="build" basedir="../">
+	<property name="sources" value="${project.basedir}/sources" />
+	<property name="buildRepertory" value="${project.basedir}/build" />
+	<property name="sourceRepertory" value="${sources}/src" />
 
 	<target name="clean" description="Nettoie" >
 		<delete file="${project.basedir}/composer.phar" />
-		<delete dir="${repertoireBuild}"/>
+		<delete dir="${buildRepertory}"/>
 	</target>
 
 	<target name="prepare" description="Prepare" >
-		<mkdir dir="${repertoireBuild}"/>
-		<mkdir dir="${repertoireBuild}/logs"/>
-		<mkdir dir="${repertoireBuild}/phpcs/"/>
+		<mkdir dir="${buildRepertory}" />
+		<mkdir dir="${buildRepertory}/logs" />
+		<mkdir dir="${buildRepertory}/phpcs" />
+		<mkdir dir="${buildRepertory}/code-browser" />
+		<mkdir dir="${buildRepertory}/coverage" />
+		<mkdir dir="${buildRepertory}/pdepend" />
 
 		<exec executable="bash">
 			<arg value="-c" />
@@ -25,6 +30,7 @@
 	</target>
 
 	<target name="qa" description="Lance les outils d'analyse">
+		<phingcall target="pdepend" />
 		<phingcall target="phpmd" />
 		<phingcall target="phpcpd" />
 		<phingcall target="phploc" />
@@ -33,34 +39,42 @@
 		<phingcall target="phpcb" />
 	</target>
 
+	<target name="pdepend">
+		<phpdepend file="${sourceRepertory}">
+			<logger type="jdepend-xml" outfile="${buildRepertory}/logs/jdepend.xml" />
+			<logger type="jdepend-chart" outfile="${buildRepertory}/pdepend/dependencies.svg" />
+			<logger type="overview-pyramid" outfile="${buildRepertory}/pdepend/overview-pyramid.svg" />
+		</phpdepend>
+	</target>
+
 	<target name="phpmd">
-		<phpmd file="${repertoireBuild}/src">
-			<formatter type="xml" outfile="${repertoireBuild}/phpmd.xml" />
+		<phpmd file="${sourceRepertory}">
+			<formatter type="xml" outfile="${buildRepertory}/phpmd.xml" />
 		</phpmd>
 	</target>
 
 	<target name="phpcpd">
-		<phpcpd file="${repertoireBuild}/src">
-			<formatter type="pmd" outfile="${repertoireBuild}/logs/pmd-cpd.xml"/>
+		<phpcpd file="${sourceRepertory}">
+			<formatter type="pmd" outfile="${buildRepertory}/logs/pmd-cpd.xml"/>
 		</phpcpd>
 	</target>
 
 	<target name="phploc">
-		<exec logoutput="true" dir="${project.basedir}" command="phploc --log-csv '${repertoireBuild}/logs/phploc.csv' '${project.basedir}/src'" escape="false" />
+		<exec logoutput="true" dir="${project.basedir}" command="phploc --log-csv '${buildRepertory}/logs/phploc.csv' '${sourceRepertory}'" escape="false" />
 	</target>
 
 	<target name="phpcs">
 		<phpcodesniffer standard="Zend">
-			<fileset dir="${project.basedir}/src">
+			<fileset dir="${sourceRepertory}">
 				<include name="**/*.php"/>
 			</fileset>
-			<formatter type="checkstyle" outfile="${repertoireBuild}/logs/checkstyle.xml"/>
+			<formatter type="checkstyle" outfile="${buildRepertory}/logs/checkstyle.xml"/>
 		</phpcodesniffer>
 	</target>
 
 	<target name="phpunit" description="Lance les tests">
 		<phpunit printsummary="true" haltonfailure="true">
-			<formatter todir="${repertoireBuild}/logs" type="xml"/>
+			<formatter todir="${buildRepertory}/logs" type="xml"/>
 			<batchtest>
 				<fileset dir="./tests/">
 					<include name="*/*/*/*.php"/>
@@ -70,7 +84,7 @@
 	</target>
 
 	<target name="phpcb">
-		<exec logoutput="true" command="phpcb --log '${repertoireBuild}/logs' --source '${repertoireBuild}/src' --output '${repertoireBuild}/code-browser'" escape="false" />
+		<exec logoutput="true" command="phpcb --log '${buildRepertory}/logs' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'" escape="false" />
 	</target>
 
 	<target name="build" depends="clean, prepare, qa" description="Tâche principale d'intégration continue" />
