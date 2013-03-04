@@ -7,7 +7,6 @@
 	<property name="testsRepository" value="${sources}/tests" />
 
 	<target name="clean" description="Nettoie" >
-		<delete file="${project.basedir}/composer.phar" />
 		<delete dir="${buildRepertory}"/>
 	</target>
 
@@ -30,6 +29,10 @@
 			<arg value="-d" />
 			<arg value="${sources}" />
 		</exec>
+	</target>
+
+	<target name="end" description="Nettoie" >
+		<delete file="${project.basedir}/composer.phar" />
 	</target>
 
 	<target name="qa" description="Lance les outils d'analyse">
@@ -76,19 +79,12 @@
 	</target>
 
 	<target name="phpunit" description="Lance les tests">
-		<phpunit printsummary="true" haltonfailure="true">
-			<formatter todir="${buildRepertory}/logs" type="xml"/>
-			<batchtest>
-				<fileset dir="${testsRepository}">
-					<include name="*/*/*/*.php"/>
-				</fileset>
-			</batchtest>
-		</phpunit>
+		<exec logoutput="true" dir="${testsRepository}" command="phpunit" escape="false" />
 	</target>
 
 	<target name="phpcb">
 		<exec logoutput="true" command="phpcb --log '${buildRepertory}/logs' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'" escape="false" />
 	</target>
 
-	<target name="build" depends="clean, prepare, qa" description="Tâche principale d'intégration continue" />
+	<target name="build" depends="clean, prepare, qa, end" description="Tâche principale d'intégration continue" />
 </project>
