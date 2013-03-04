@@ -123,17 +123,6 @@
 			$restManager->setVariablesReponse(500, "<html></html>");
 		}
 
-		/**
-		 * @expectedException     \Exception
-		 * @expectedExceptionCode 20101
-		 */
-		public function testRestSetVariableReponseErreur() {
-			$restManager = new RestManager();
-			$restManager->setReponse(new \Serveur\Rest\RestReponse());
-
-			$restManager->setVariablesReponse(900);
-		}
-
 		public function testRestFabriquerReponse() {
 			$restRequete = $this->createMock('RestRequete',
 				array('getFormatsDemandes', '', array('json'))
