@@ -44,7 +44,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10100
 		 */
 		public function testSetWrongOs() {
@@ -64,7 +64,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10101
 		 */
 		public function testSetBasePathWrong() {
@@ -81,7 +81,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10102
 		 */
 		public function testSetBasePathInexistant() {
@@ -161,7 +161,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10103
 		 */
 		public function testGetDroitsFichierInexistant() {
@@ -242,7 +242,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10105
 		 */
 		public function testChargerFichierInexistant() {
@@ -252,7 +252,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10106
 		 */
 		public function testChargerFichierChargeurNonPresent() {

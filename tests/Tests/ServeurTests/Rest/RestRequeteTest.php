@@ -18,7 +18,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20000
 		 */
 		public function testRestMethodeValide() {
@@ -50,7 +50,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20001
 		 */
 		public function testRestFormatValide() {

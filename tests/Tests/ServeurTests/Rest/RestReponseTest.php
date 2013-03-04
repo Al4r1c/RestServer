@@ -51,7 +51,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20100
 		 */
 		public function testRestStatusInvalide() {
@@ -85,7 +85,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20102
 		 */
 		public function testRestSetFormatAcceptesVide() {
@@ -104,7 +104,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20102
 		 */
 		public function testRestFormatDefaut() {
@@ -125,7 +125,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20103
 		 */
 		public function testRestSetCharsetInvalid() {
@@ -207,7 +207,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20104
 		 */
 		public function testRestRenderNonTrouveDefautNonPlus() {
@@ -218,7 +218,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20105
 		 */
 		public function testRestRenderNonTrouve() {

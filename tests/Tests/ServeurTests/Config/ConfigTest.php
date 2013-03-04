@@ -53,7 +53,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 30000
 		 */
 		public function testChargerFichierInexistant() {
@@ -65,7 +65,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 30001
 		 */
 		public function testChargerFichierInvalide() {

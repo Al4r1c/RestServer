@@ -46,7 +46,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10200
 		 */
 		public function testNomFichierNonNull() {
@@ -54,7 +54,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10201
 		 */
 		public function testNomFichierInvalid() {
@@ -70,7 +70,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10202
 		 */
 		public function testCheminDaccesNull() {
@@ -152,7 +152,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10203
 		 */
 		public function testChargerFichierInexistant() {
@@ -205,7 +205,7 @@
 
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10204
 		 */
 		public function testCreerDansDossierInexistant() {
@@ -225,7 +225,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 10205
 		 */
 		public function testCreerBug() {

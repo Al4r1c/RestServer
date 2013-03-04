@@ -78,7 +78,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20300
 		 */
 		public function testWhiteList() {
@@ -130,7 +130,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20301
 		 */
 		public function testSetServeurDonneesMethodeInvalide() {

@@ -42,7 +42,7 @@
 		}
 
 		/**
-		 * @expectedException     \Exception
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
 		 * @expectedExceptionCode 20400
 		 */
 		public function testAjouterHeaderSiValide() {
