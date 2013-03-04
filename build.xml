@@ -24,11 +24,11 @@
 			<arg value="curl -s http://getcomposer.org/installer | php" />
 		</exec>
 
-		<echo msg="${sources}" />
-		<exec executable="php" passthru="true">
+		<exec executable="php">
 			<arg value="composer.phar" />
 			<arg value="install" />
-			<arg value="-d ${sources}" />
+			<arg value="-d" />
+			<arg value="${sources}" />
 		</exec>
 	</target>
 
