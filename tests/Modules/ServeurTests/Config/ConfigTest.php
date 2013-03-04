@@ -1,9 +1,9 @@
 <?php
-	namespace Tests\ServeurTests\Config;
+	namespace Modules\ServeurTests\Config;
 
 	include_once(__DIR__ . '/../../../TestEnv.php');
 
-	use Tests\TestCase;
+	use Modules\TestCase;
 	use Serveur\Config\Config;
 
 	class ConfigTest extends TestCase {

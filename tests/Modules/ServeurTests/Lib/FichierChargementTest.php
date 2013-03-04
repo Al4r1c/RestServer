@@ -1,9 +1,9 @@
 <?php
-	namespace Tests\ServeurTests\Lib;
+	namespace Modules\ServeurTests\Lib;
 
 	include_once(__DIR__ . '/../../../TestEnv.php');
 
-	use Tests\TestCase;
+	use Modules\TestCase;
 	use org\bovigo\vfs\vfsStreamWrapper;
 	use org\bovigo\vfs\vfsStream;
 

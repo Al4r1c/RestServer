@@ -26,5 +26,5 @@
 	$classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src');
 	$classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src');
 	$classLoader->ajouterNamespace('Logging', BASE_PATH . '/src');
-	$classLoader->ajouterNamespace('Tests', realpath(__DIR__) . DIRECTORY_SEPARATOR, '.php');
+	$classLoader->ajouterNamespace('Modules', realpath(__DIR__) . DIRECTORY_SEPARATOR, '.php');
 	$classLoader->register();

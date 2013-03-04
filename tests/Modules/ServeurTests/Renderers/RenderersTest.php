@@ -1,9 +1,9 @@
 <?php
-	namespace Tests\ServeurTests\Renderers;
+	namespace Modules\ServeurTests\Renderers;
 
 	include_once(__DIR__ . '/../../../TestEnv.php');
 
-	use Tests\TestCase;
+	use Modules\TestCase;
 
 	class RenderersTest extends TestCase {
 

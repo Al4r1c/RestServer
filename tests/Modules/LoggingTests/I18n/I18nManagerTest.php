@@ -1,9 +1,9 @@
 <?php
-	namespace Tests\LoggingTests\I18n;
+	namespace Modules\LoggingTests\I18n;
 
 	include_once(__DIR__ . '/../../../TestEnv.php');
 
-	use Tests\TestCase;
+	use Modules\TestCase;
 
 	class I18nManagerTest extends TestCase {
 

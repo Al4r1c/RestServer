@@ -1,5 +1,5 @@
 <?php
-	namespace Tests\ServeurTests\Application;
+	namespace Modules\ServeurTests\Application;
 
 	include_once(__DIR__ . '/../../../TestEnv.php');
 

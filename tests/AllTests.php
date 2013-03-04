@@ -13,11 +13,11 @@
 		public static function suite() {
 			$suite = new \PHPUnit_Framework_TestSuite('Server Tests');
 
-			$suite->addTest(Tests\LoggingTests\I18nTests::suite());
-			$suite->addTest(Tests\ServeurTests\ApplicationTests::suite());
-			$suite->addTest(Tests\ServeurTests\ConfigTests::suite());
-			$suite->addTest(Tests\ServeurTests\LibTests::suite());
-			$suite->addTest(Tests\ServeurTests\RestTests::suite());
+			$suite->addTest(Modules\LoggingTests\I18nTests::suite());
+			$suite->addTest(Modules\ServeurTests\ApplicationTests::suite());
+			$suite->addTest(Modules\ServeurTests\ConfigTests::suite());
+			$suite->addTest(Modules\ServeurTests\LibTests::suite());
+			$suite->addTest(Modules\ServeurTests\RestTests::suite());
 
 			return $suite;
 		}

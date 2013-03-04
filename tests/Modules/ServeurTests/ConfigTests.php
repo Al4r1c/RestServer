@@ -1,13 +1,13 @@
 <?php
-	namespace Tests\LoggingTests;
+	namespace Modules\ServeurTests;
 
 	include_once(__DIR__ . '/../../TestEnv.php');
 
 	if(!defined('PHPUnit_MAIN_METHOD')) {
-		define('PHPUnit_MAIN_METHOD', 'I18nTests::main');
+		define('PHPUnit_MAIN_METHOD', 'ConfigTests::main');
 	}
 
-	class I18nTests {
+	class ConfigTests {
 
 		public static function main() {
 			\PHPUnit_TextUI_TestRunner::run(self::suite());
@@ -16,13 +16,12 @@
 		public static function suite() {
 			$suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-			$suite->addTestSuite('Tests\LoggingTests\I18n\TradManagerTest');
-			$suite->addTestSuite('Tests\LoggingTests\I18n\I18nManagerTest');
+			$suite->addTestSuite('Modules\ServeurTests\Config\ConfigTest');
 
 			return $suite;
 		}
 	}
 
-	if(PHPUnit_MAIN_METHOD == 'I18nTests::main') {
-		I18nTests::main();
+	if(PHPUnit_MAIN_METHOD == 'ConfigTests::main') {
+		ConfigTests::main();
 	}

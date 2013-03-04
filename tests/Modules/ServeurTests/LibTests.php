@@ -1,5 +1,5 @@
 <?php
-	namespace Tests\ServeurTests;
+	namespace Modules\ServeurTests;
 
 	include_once(__DIR__ . '/../../TestEnv.php');
 
@@ -16,10 +16,10 @@
 		public static function suite() {
 			$suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-			$suite->addTestSuite('Tests\ServeurTests\Lib\FichierTest');
-			$suite->addTestSuite('Tests\ServeurTests\Lib\FileSystemTest');
-			$suite->addTestSuite('Tests\ServeurTests\Lib\FichierChargementTest');
-			$suite->addTestSuite('Tests\ServeurTests\Lib\TypeDetectorTest');
+			$suite->addTestSuite('Modules\ServeurTests\Lib\FichierTest');
+			$suite->addTestSuite('Modules\ServeurTests\Lib\FileSystemTest');
+			$suite->addTestSuite('Modules\ServeurTests\Lib\FichierChargementTest');
+			$suite->addTestSuite('Modules\ServeurTests\Lib\TypeDetectorTest');
 
 			return $suite;
 		}

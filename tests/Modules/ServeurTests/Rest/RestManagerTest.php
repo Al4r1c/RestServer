@@ -1,9 +1,9 @@
 <?php
-	namespace Tests\ServeurTests\Rest;
+	namespace Modules\ServeurTests\Rest;
 
 	include_once(__DIR__ . '/../../../TestEnv.php');
 
-	use Tests\TestCase;
+	use Modules\TestCase;
 	use Serveur\Rest\RestManager;
 
 	class RestManagerTest extends TestCase {
