@@ -48,7 +48,7 @@
 				}
 
 				fputs($fp, $uneErreur->getDate()->format('d-m-Y H:i:s') . ": \r\n");
-				fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.error}" . " n°" . $uneErreur->getCode() . ": {errorType.".substr($uneErreur->getCode(), 0, -2)."}\r\n"));
+				fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.error}" . " n°" . $uneErreur->getCode() . ": {errorType." . substr($uneErreur->getCode(), 0, -2) . "}\r\n"));
 				fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\r\n");
 			}
 

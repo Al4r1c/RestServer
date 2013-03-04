@@ -7,15 +7,23 @@
 	use Serveur\Rest\RestManager;
 
 	class RestManagerTest extends TestCase {
+		/**
+		 * @var RestManager
+		 */
+		private $restManager;
+		
+		public function setUp() {
+			$this->restManager = new RestManager();
+		}
+		
 		public function testRestSetRequete() {
 			$restRequete = $this->getMockRestRequete();
-			$restManager = new RestManager();
-			$restManager->setRequete($restRequete);
+			$this->restManager->setRequete($restRequete);
 
 			$this->assertAttributeSame(
 				$restRequete,
 				'restRequest',
-				$restManager
+				$this->restManager
 			);
 		}
 
@@ -24,19 +32,18 @@
 		 * @expectedExceptionCode 1000
 		 */
 		public function testRestSetRequeteNull() {
-			$restManager = new RestManager();
-			$restManager->setRequete(null);
+			$this->restManager->setRequete(null);
 		}
 
 		public function testRestSetReponse() {
 			$restReponse = $this->getMockRestReponse();
-			$restManager = new RestManager();
-			$restManager->setReponse($restReponse);
+
+			$this->restManager->setReponse($restReponse);
 
 			$this->assertAttributeSame(
 				$restReponse,
 				'restResponse',
-				$restManager
+				$this->restManager
 			);
 		}
 
@@ -45,8 +52,7 @@
 		 * @expectedExceptionCode 1000
 		 */
 		public function testRestSetReponseNull() {
-			$restManager = new RestManager();
-			$restManager->setReponse(null);
+			$this->restManager->setReponse(null);
 		}
 
 		public function testRestRecupererUriParam() {
@@ -54,10 +60,9 @@
 				array('getUriVariables', '', array('0' => 'monuri'))
 			);
 
-			$restManager = new RestManager();
-			$restManager->setRequete($restRequete);
+			$this->restManager->setRequete($restRequete);
 
-			$this->assertEquals('monuri', $restManager->getUriVariable(0));
+			$this->assertEquals('monuri', $this->restManager->getUriVariable(0));
 		}
 
 		/**
@@ -65,30 +70,27 @@
 		 * @expectedExceptionCode 1000
 		 */
 		public function testRestUriVariableNonInt() {
-			$restManager = new RestManager();
-			$restManager->getUriVariable('clef');
+			$this->restManager->getUriVariable('clef');
 		}
 
 		public function testRestUriVariableNull() {
 			$restRequete = $this->createMock('RestRequete',
 				array('getUriVariables', '', array('0' => 'monuri'))
 			);
+			
+			$this->restManager->setRequete($restRequete);
 
-			$restManager = new RestManager();
-			$restManager->setRequete($restRequete);
-
-			$this->assertNull($restManager->getUriVariable(1));
+			$this->assertNull($this->restManager->getUriVariable(1));
 		}
 
 		public function testRestRecupererDonnee() {
 			$restRequete = $this->createMock('RestRequete',
 				array('getParametres', '', array('param1' => 'donnee1'))
 			);
+			
+			$this->restManager->setRequete($restRequete);
 
-			$restManager = new RestManager();
-			$restManager->setRequete($restRequete);
-
-			$this->assertEquals('donnee1', $restManager->getParametre('param1'));
+			$this->assertEquals('donnee1', $this->restManager->getParametre('param1'));
 		}
 
 		/**
@@ -96,8 +98,7 @@
 		 * @expectedExceptionCode 1000
 		 */
 		public function testRestRecupererDonneeClefNonString() {
-			$restManager = new RestManager();
-			$restManager->getParametre(50);
+			$this->restManager->getParametre(50);
 		}
 
 		public function testRestRenvoieDonneeNull() {
@@ -105,10 +106,10 @@
 				array('getParametres', '', array('param1' => 'donnee1'))
 			);
 
-			$restManager = new RestManager();
-			$restManager->setRequete($restRequete);
+			
+			$this->restManager->setRequete($restRequete);
 
-			$this->assertNull($restManager->getParametre('param2'));
+			$this->assertNull($this->restManager->getParametre('param2'));
 		}
 
 		public function testRestSetVariableReponse() {
@@ -117,10 +118,10 @@
 				array('setContenu', "<html></html>")
 			);
 
-			$restManager = new RestManager();
-			$restManager->setReponse($restReponse);
+			
+			$this->restManager->setReponse($restReponse);
 
-			$restManager->setVariablesReponse(500, "<html></html>");
+			$this->restManager->setVariablesReponse(500, "<html></html>");
 		}
 
 		public function testRestFabriquerReponse() {
@@ -138,10 +139,10 @@
 
 			$restReponse->setHeaderManager($headerManager);
 
-			$restManager = new RestManager();
-			$restManager->setRequete($restRequete);
-			$restManager->setReponse($restReponse);
+			
+			$this->restManager->setRequete($restRequete);
+			$this->restManager->setReponse($restReponse);
 
-			$this->assertEquals('{"param1":"var1"}', $restManager->fabriquerReponse(array('json')));
+			$this->assertEquals('{"param1":"var1"}', $this->restManager->fabriquerReponse(array('json')));
 		}
 	}
