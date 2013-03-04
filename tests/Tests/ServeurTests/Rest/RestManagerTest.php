@@ -20,11 +20,7 @@
 			$restRequete = $this->getMockRestRequete();
 			$this->restManager->setRequete($restRequete);
 
-			$this->assertAttributeSame(
-				$restRequete,
-				'restRequest',
-				$this->restManager
-			);
+			$this->assertEquals($restRequete, $this->restManager->getRestRequest());
 		}
 
 		/**
@@ -40,11 +36,7 @@
 
 			$this->restManager->setReponse($restReponse);
 
-			$this->assertAttributeSame(
-				$restReponse,
-				'restResponse',
-				$this->restManager
-			);
+			$this->assertEquals($restReponse, $this->restManager->getRestResponse());
 		}
 
 		/**

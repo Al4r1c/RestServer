@@ -13,6 +13,20 @@
 		private $restResponse;
 
 		/**
+		 * @return \Serveur\Rest\RestRequete
+		 */
+		public function getRestRequest() {
+			return $this->restRequest;
+		}
+
+		/**
+		 * @return \Serveur\Rest\RestReponse
+		 */
+		public function getRestResponse() {
+			return $this->restResponse;
+		}
+
+		/**
 		 * @param \Serveur\Rest\RestRequete $restRequestObject
 		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 */
