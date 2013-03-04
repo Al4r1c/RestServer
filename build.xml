@@ -11,7 +11,7 @@
 		<delete dir="${buildRepertory}"/>
 	</target>
 
-	<target name="prepare" description="Prepare" >
+	<target name="prepare" description="Prepare">
 		<mkdir dir="${buildRepertory}" />
 		<mkdir dir="${buildRepertory}/logs" />
 		<mkdir dir="${buildRepertory}/phpcs" />
@@ -24,7 +24,8 @@
 			<arg value="curl -s http://getcomposer.org/installer | php" />
 		</exec>
 
-		<exec executable="php">
+		<echo msg="${sources}" />
+		<exec executable="php" passthru="true">
 			<arg value="composer.phar" />
 			<arg value="install" />
 			<arg value="-d ${sources}" />
