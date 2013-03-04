@@ -18,7 +18,7 @@
 		/**
 		 * @var string
 		 */
-		private $formatRetourDefaut;
+		private $formatRetour;
 
 		/**
 		 * @var string[]
@@ -84,8 +84,8 @@
 		/**
 		 * @return string
 		 */
-		public function getFormatRetourDefaut() {
-			return $this->formatRetourDefaut;
+		public function getFormatRetour() {
+			return $this->formatRetour;
 		}
 
 		/**
@@ -132,9 +132,9 @@
 			$this->setFormatsAcceptes($formatsAcceptes);
 
 			if(array_key_exists(strtoupper($formatRetourDefaut), $formatsAcceptes)) {
-				$this->setFormatRetourDefaut($formatRetourDefaut);
+				$this->setFormatRetour($formatRetourDefaut);
 			} else {
-				$this->setFormatRetourDefaut(key($formatsAcceptes));
+				$this->setFormatRetour(key($formatsAcceptes));
 				trigger_error_app(20101, $formatRetourDefaut);
 			}
 		}
@@ -144,12 +144,12 @@
 		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
 		 * @throws \Serveur\Exceptions\Exceptions\MainException
 		 */
-		public function setFormatRetourDefaut($formatRetourDefaut) {
+		public function setFormatRetour($formatRetourDefaut) {
 			if(!is_string($formatRetourDefaut)) {
 				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $formatRetourDefaut);
 			}
 
-			$this->formatRetourDefaut = $formatRetourDefaut;
+			$this->formatRetour = $formatRetourDefaut;
 		}
 
 		/**
@@ -186,34 +186,33 @@
 			$this->charset = strtolower($charset);
 		}
 
-		/**
-		 * @param string $formatRetour
-		 */
-		private function envoyerHeaders($formatRetour) {
+		private function envoyerHeaders() {
 			http_response_code($this->status);
-			$this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($formatRetour)] . '; charset=' . strtolower($this->charset));
+			$this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($this->formatRetour)] . '; charset=' . strtolower($this->charset));
 			$this->headerManager->envoyerHeaders();
 		}
 
-		private function getFormatRetour(array $formatsDemandes, array $formatsAcceptes, $formatDefaut) {
-			$formatRetour = null;
+		private function trouverFormatRetourCorrect(array $formatsDemandes, array $formatsAcceptes, $formatDefaut) {
+			$nomClassFormatRetour = null;
 
 			foreach($formatsDemandes as $unFormatDemande) {
 				if(false !== $temp = array_search_recursif($unFormatDemande, $formatsAcceptes)) {
-					$formatRetour = array(ucfirst(strtolower($temp)) => $unFormatDemande);
+					$this->formatRetour = $unFormatDemande;
+					$nomClassFormatRetour = ucfirst(strtolower($temp));
 					break;
 				}
 			}
 
-			if(isNull($formatRetour)) {
+			if(isNull($nomClassFormatRetour)) {
 				if(!isNull($formatDefaut) && array_key_exists($formatDefaut, $formatsAcceptes)) {
-					$formatRetour = array(ucfirst(strtolower($formatDefaut)) => $formatsAcceptes[$formatDefaut]);
+					$this->formatRetour = $formatsAcceptes[$formatDefaut];
+					$nomClassFormatRetour = ucfirst(strtolower($formatDefaut));
 				} else {
 					throw new \Serveur\Exceptions\Exceptions\MainException(20104, 500, $formatDefaut);
 				}
 			}
 
-			return $formatRetour;
+			return $nomClassFormatRetour;
 		}
 
 		/**
@@ -239,12 +238,10 @@
 				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
 			}
 
-			$formatRetour = $this->getFormatRetour($formatsDemandes, $this->formatsAcceptes, $this->formatRetourDefaut);
-
 			/* @var $view \Serveur\Renderers\AbstractRenderer */
-			$view = $this->getRenderClass(key($formatRetour));
+			$view = $this->getRenderClass($this->trouverFormatRetourCorrect($formatsDemandes, $this->formatsAcceptes, $this->formatRetour));
 
-			$this->envoyerHeaders(reset($formatRetour));
+			$this->envoyerHeaders();
 
 			return $view->render($this->contenu);
 		}

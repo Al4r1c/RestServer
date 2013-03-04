@@ -59,8 +59,8 @@
 		}
 
 		public function testRestSetFormatDefaut() {
-			$this->restReponse->setFormatRetourDefaut('JSON');
-			$this->assertEquals('JSON', $this->restReponse->getFormatRetourDefaut());
+			$this->restReponse->setFormatRetour('JSON');
+			$this->assertEquals('JSON', $this->restReponse->getFormatRetour());
 		}
 
 		/**
@@ -68,7 +68,7 @@
 		 * @expectedExceptionCode 1000
 		 */
 		public function testRestSetFormatDefautErronee() {
-			$this->restReponse->setFormatRetourDefaut(null);
+			$this->restReponse->setFormatRetour(null);
 		}
 
 		public function testRestSetFormatAcceptes() {
@@ -94,13 +94,13 @@
 
 		public function testRestSetFormat() {
 			$this->restReponse->setFormats('PLAIN', array('PLAIN' => 'txt'));
-			$this->assertEquals('PLAIN', $this->restReponse->getFormatRetourDefaut());
+			$this->assertEquals('PLAIN', $this->restReponse->getFormatRetour());
 			$this->assertCount(1, $this->restReponse->getFormatsAcceptes());
 		}
 
 		public function testRestSetFormatDefautInexistant() {
 			$this->restReponse->setFormats('PLAIN', array('HTML' => 'html'));
-			$this->assertEquals('HTML', $this->restReponse->getFormatRetourDefaut());
+			$this->assertEquals('HTML', $this->restReponse->getFormatRetour());
 		}
 
 		/**
@@ -149,7 +149,7 @@
 
 			$this->restReponse->setConfig($config);
 			$this->assertEquals('utf-8', $this->restReponse->getCharset());
-			$this->assertEquals('JSON', $this->restReponse->getFormatRetourDefaut());
+			$this->assertEquals('JSON', $this->restReponse->getFormatRetour());
 			$this->assertCount(2, $this->restReponse->getFormatsAcceptes());
 		}
 
@@ -181,6 +181,7 @@
 			$restReponse->setFormats('JSON', array('JSON' => 'json'));
 
 			$this->assertEquals('{"getKey":"getVar"}', $restReponse->fabriquerReponse(array('json')));
+			$this->assertEquals('json', $restReponse->getFormatRetour());
 		}
 
 		public function testRestRenderNonTrouveUtiliseAutre() {
@@ -210,7 +211,7 @@
 		 * @expectedExceptionCode 20104
 		 */
 		public function testRestRenderNonTrouveDefautNonPlus() {
-			$this->restReponse->setFormatRetourDefaut('HTML');
+			$this->restReponse->setFormatRetour('HTML');
 			$this->restReponse->setFormatsAcceptes(array('JSON' => 'json'));
 
 			$this->restReponse->fabriquerReponse(array('fake'));
