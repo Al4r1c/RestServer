@@ -35,13 +35,6 @@
 		/**
 		 * @return string
 		 */
-		public function getUserAgent() {
-			return $this->serveurVariable['HTTP_USER_AGENT'];
-		}
-
-		/**
-		 * @return string
-		 */
 		public function getRemoteIp() {
 			return $this->serveurVariable['REMOTE_ADDR'];
 		}
@@ -77,7 +70,7 @@
 				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
 			}
 
-			if(!array_keys_exist(array('HTTP_ACCEPT', 'HTTP_USER_AGENT', 'PHP_INPUT', 'QUERY_STRING', 'REMOTE_ADDR', 'REQUEST_METHOD', 'REQUEST_TIME', 'REQUEST_URI'), $serverVar)) {
+			if(!array_keys_exist(array('HTTP_ACCEPT', 'PHP_INPUT', 'QUERY_STRING', 'REMOTE_ADDR', 'REQUEST_METHOD', 'REQUEST_TIME', 'REQUEST_URI'), $serverVar)) {
 				throw new \Serveur\Exceptions\Exceptions\MainException(20300, 500);
 			}
 

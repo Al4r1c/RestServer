@@ -30,10 +30,6 @@
 		private $ip;
 
 		/**
-		 * @var string
-		 */
-		private $userAgent;
-		/**
 		 * @var \DateTime
 		 */
 		private $dateRequete;
@@ -53,7 +49,6 @@
 			$this->setParametres($server->getServeurDonnees());
 			$this->setIp($server->getRemoteIp());
 			$this->setDateRequete($server->getRequestTime());
-			$this->setUserAgent($server->getUserAgent());
 		}
 
 		/**
@@ -96,13 +91,6 @@
 		 */
 		public function getIp() {
 			return $this->ip;
-		}
-
-		/**
-		 * @return string
-		 */
-		public function getUserAgent() {
-			return $this->userAgent;
 		}
 
 		/**
@@ -199,17 +187,5 @@
 			}
 
 			$this->ip = $ip;
-		}
-
-		/**
-		 * @param string $userAgent
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 */
-		public function setUserAgent($userAgent) {
-			if(!is_string($userAgent)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 400, __METHOD__, 'string', $userAgent);
-			}
-
-			$this->userAgent = $userAgent;
 		}
 	}

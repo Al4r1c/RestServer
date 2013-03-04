@@ -128,8 +128,7 @@
 				array('getServeurUri', '', '/mon/uri/'),
 				array('getServeurDonnees', '', array('param1' => 'var1', 'param2' => 'var2')),
 				array('getRemoteIp', '', '127.0.0.1'),
-				array('getRequestTime', '', 1362000000),
-				array('getUserAgent', '', 'USER_AGENT')
+				array('getRequestTime', '', 1362000000)
 			);
 
 			$this->restRequete->setServer($serveur);
@@ -188,19 +187,5 @@
 			$this->restRequete->setIp('8000::123:4567:89AB:CDEF');
 
 			$this->assertEquals('8000::123:4567:89AB:CDEF', $this->restRequete->getIp());
-		}
-
-		public function testRestUserAgent() {
-			$this->restRequete->setUserAgent('USER AGENT');
-
-			$this->assertEquals('USER AGENT', $this->restRequete->getUserAgent());
-		}
-
-		/**
-		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @expectedExceptionCode 1000
-		 */
-		public function testRestUserAgentErrone() {
-			$this->restRequete->setUserAgent(null);
 		}
 	}
