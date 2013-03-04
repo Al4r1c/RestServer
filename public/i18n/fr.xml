@@ -10,6 +10,11 @@
         <message code="fatalerror">Erreur critique</message>
         <message code="file">Fichier</message>
         <message code="line">Ligne</message>
+        <message code="remoteIp">Ip client distant</message>
+        <message code="method">Méthode</message>
+        <message code="arguments">Paramètres</message>
+        <message code="reponseCode">Code retour</message>
+        <message code="reponseFormat">Format retour</message>
     </trad>
 
 	<errorType>

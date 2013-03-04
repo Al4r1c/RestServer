@@ -66,6 +66,7 @@
 		public function __destruct() {
 			foreach($this->observeurs as $unObserveur) {
 				$unObserveur->ecrireMessages($this->conteneur->getErrorManager()->getErreurs());
+				$unObserveur->ecrireAcessLog($this->conteneur->getRestManager()->getRestRequest(), $this->conteneur->getRestManager()->getRestResponse());
 			}
 		}
 	}

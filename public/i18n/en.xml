@@ -10,6 +10,11 @@
         <message code="fatalerror">Fatal error</message>
         <message code="file">File</message>
         <message code="line">Line</message>
+	    <message code="remoteIp">Remote IP</message>
+	    <message code="method">Method</message>
+	    <message code="arguments">Arguments</message>
+	    <message code="reponseCode">Response code</message>
+	    <message code="reponseFormat">Response format</message>
     </trad>
 
 	<errorType>

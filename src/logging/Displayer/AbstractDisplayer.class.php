@@ -11,13 +11,18 @@
 
 		public function ecrireMessages(array $tabErreurs) {
 			if(!isNull($tabErreurs)) {
-				$this->envoyerVersDestination($tabErreurs);
+				$this->ecrireMessageErreur($tabErreurs);
 			}
+		}
+
+		public function ecrireAcessLog($restRequete, $restReponse) {
+			$this->ecrireMessageAcces($restRequete, $restReponse);
 		}
 
 		protected function traduireMessageEtRemplacerVariables($codeMessage, array $arguments = array()) {
 			return vsprintf($this->tradManager->recupererChaineTraduite($codeMessage), $arguments);
 		}
 
-		abstract protected function envoyerVersDestination(array $tabErreurs);
+		abstract protected function ecrireMessageErreur(array $tabErreurs);
+		abstract protected function ecrireMessageAcces($restRequete, $restReponse);
 	}
