@@ -115,6 +115,8 @@
 				$this->tabTricks[] = $element;
 				end($this->tabTricks);
 				$var = "\$this->tabTricks[" . key($this->tabTricks) . "]";
+			} elseif(is_numeric($element)) {
+				$var = $element;
 			} else {
 				$var = '"' . addslashes($element) . '"';
 			}
