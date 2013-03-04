@@ -77,7 +77,7 @@
 		<phpunit printsummary="true" haltonfailure="true">
 			<formatter todir="${buildRepertory}/logs" type="xml"/>
 			<batchtest>
-				<fileset dir="$[testsRepository}">
+				<fileset dir="${testsRepository}">
 					<include name="*/*/*/*.php"/>
 				</fileset>
 			</batchtest>
