@@ -43,6 +43,7 @@
 
 		/**
 		 * @param \Serveur\Exceptions\Types\AbstractTypeErreur[] $tabErreurs
+		 * @return void
 		 * @throws \Exception
 		 * */
 		protected function ecrireMessageErreur(array $tabErreurs) {
@@ -69,6 +70,7 @@
 		/**
 		 * @param \Serveur\Rest\RestRequete $restRequete
 		 * @param \Serveur\Rest\RestReponse $restReponse
+		 * @return void
 		 * @throws \Exception
 		 */
 		protected function ecrireMessageAcces($restRequete, $restReponse) {
