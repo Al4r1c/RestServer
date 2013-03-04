@@ -122,7 +122,10 @@
 				array('getServeurMethode', '', 'PUT'),
 				array('getServeurHttpAccept', '', 'text/html,application/xhtml+xml,application/xml;q=0.9'),
 				array('getServeurUri', '', '/mon/uri/'),
-				array('getServeurDonnees', '', array('param1' => 'var1', 'param2' => 'var2'))
+				array('getServeurDonnees', '', array('param1' => 'var1', 'param2' => 'var2')),
+				array('getRemoteIp', '', '127.0.0.1'),
+				array('getRequestTime', '', 1362000000),
+				array('getUserAgent', '', 'USER_AGENT')
 			);
 
 			$this->restRequete->setServer($serveur);
@@ -138,5 +141,62 @@
 		 */
 		public function testRestSetServerEronnee() {
 			$this->restRequete->setServer(null);
+		}
+
+		public function testRestDateRequete() {
+			$this->restRequete->setDateRequete(1362000000);
+
+			$this->assertInstanceOf('DateTime', $this->restRequete->getDateRequete());
+			$this->assertEquals($this->restRequete->getDateRequete()->getTimestamp(), 1362000000);
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestDateRequeteErrone() {
+			$this->restRequete->setDateRequete('oops');
+		}
+
+		public function testRestIp() {
+			$this->restRequete->setIp('192.168.0.250');
+
+			$this->assertEquals('192.168.0.250', $this->restRequete->getIp());
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestIpErrone() {
+			$this->restRequete->setIp(500);
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+		 * @expectedExceptionCode 20002
+		 */
+		public function testRestIpFake() {
+			$this->restRequete->setIp('WRONG_IP');
+		}
+
+		public function testRestIpV6() {
+			$this->restRequete->setIp('8000::123:4567:89AB:CDEF');
+
+			$this->assertEquals('8000::123:4567:89AB:CDEF', $this->restRequete->getIp());
+		}
+
+		public function testRestUserAgent() {
+			$this->restRequete->setUserAgent('USER AGENT');
+
+			$this->assertEquals('USER AGENT', $this->restRequete->getUserAgent());
+		}
+
+		/**
+		 * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @expectedExceptionCode 1000
+		 */
+		public function testRestUserAgentErrone() {
+			$this->restRequete->setUserAgent(null);
 		}
 	}

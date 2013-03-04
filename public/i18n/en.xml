@@ -41,6 +41,7 @@
 	    <message code="10205">Error while trying to create file "%s".</message>
 	    <message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 	    <message code="20001">No valid return format found.</message>
+	    <message code="20002">Remote client ip is not valid.</message>
 	    <message code="20100">HTTP code "%s" is not valid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html for more informations about HTTP code.</message>
 	    <message code="20101">Output format set (%s) does not exist in available outputs.</message>
 	    <message code="20102">Accepted output format are invalid.</message>

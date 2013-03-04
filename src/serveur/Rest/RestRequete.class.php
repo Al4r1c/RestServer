@@ -24,6 +24,19 @@
 		 */
 		private $parametres;
 
+		/**
+		 * @var string
+		 */
+		private $ip;
+
+		/**
+		 * @var string
+		 */
+		private $userAgent;
+		/**
+		 * @var \DateTime
+		 */
+		private $dateRequete;
 
 		/**
 		 * @param Server $server
@@ -38,6 +51,9 @@
 			$this->setFormat($server->getServeurHttpAccept());
 			$this->setVariableUri($server->getServeurUri());
 			$this->setParametres($server->getServeurDonnees());
+			$this->setIp($server->getRemoteIp());
+			$this->setDateRequete($server->getRequestTime());
+			$this->setUserAgent($server->getUserAgent());
 		}
 
 		/**
@@ -66,6 +82,27 @@
 		 */
 		public function getParametres() {
 			return $this->parametres;
+		}
+
+		/**
+		 * @return \DateTime
+		 */
+		public function getDateRequete() {
+			return $this->dateRequete;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getIp() {
+			return $this->ip;
+		}
+
+		/**
+		 * @return string
+		 */
+		public function getUserAgent() {
+			return $this->userAgent;
 		}
 
 		/**
@@ -122,9 +159,53 @@
 		 */
 		public function setParametres($donnee) {
 			if(!is_array($donnee)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 400, __METHOD__, 'string', $donnee);
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 400, __METHOD__, 'array', $donnee);
 			}
 
 			$this->parametres = $donnee;
+		}
+
+		/**
+		 * @param int $dateRequeteTimestamp
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @internal param \DateTime $dateRequete
+		 */
+		public function setDateRequete($dateRequeteTimestamp) {
+			if(!is_int($dateRequeteTimestamp)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 400, __METHOD__, 'int', $dateRequeteTimestamp);
+			}
+
+			$datetime = new \DateTime();
+			$datetime->setTimestamp($dateRequeteTimestamp);
+			$this->dateRequete = $datetime;
+		}
+
+		/**
+		 * @param string $ip
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 * @throws \Serveur\Exceptions\Exceptions\MainException
+		 */
+		public function setIp($ip) {
+			if(!is_string($ip)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 400, __METHOD__, 'string', $ip);
+			}
+
+			if(!filter_var($ip, FILTER_VALIDATE_IP)) {
+				throw new \Serveur\Exceptions\Exceptions\MainException(20002, 400);
+			}
+
+			$this->ip = $ip;
+		}
+
+		/**
+		 * @param string $userAgent
+		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+		 */
+		public function setUserAgent($userAgent) {
+			if(!is_string($userAgent)) {
+				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 400, __METHOD__, 'string', $userAgent);
+			}
+
+			$this->userAgent = $userAgent;
 		}
 	}
