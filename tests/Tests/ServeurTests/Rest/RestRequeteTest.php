@@ -69,8 +69,6 @@
 		 */
 		public function testRestUriErronee() {
 			$this->restRequete->setVariableUri(20.2);
-
-			$this->assertInternalType('array', $this->restRequete->getUriVariables());
 		}
 
 		public function testRestUriVideNonGeree() {
@@ -91,6 +89,12 @@
 			$this->restRequete->setVariableUri('/rés%s"ou#rce<////');
 
 			$this->assertEquals(rawurlencode('rés%s"ou#rce<'), $this->restRequete->getUriVariables()[0]);
+		}
+
+		public function testRestRessourceNoVariable() {
+			$this->restRequete->setVariableUri('/var1?id=3');
+
+			$this->assertEquals(rawurlencode('var1'), $this->restRequete->getUriVariables()[0]);
 		}
 
 		public function testRestDonnee() {

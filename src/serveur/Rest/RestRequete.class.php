@@ -149,6 +149,10 @@
 					throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 400, __METHOD__, 'string', $uri);
 				}
 
+				if(($pos = strpos($uri, '?')) !== false) {
+					$uri = substr($uri, 0, $pos);
+				}
+
 				$this->dataUri = array_map('rawurlencode', explode('/', trim(preg_replace('%([^:])([/]{2,})%', '\\1/', $uri), '/')));
 			}
 		}
