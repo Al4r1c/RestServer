@@ -26,8 +26,8 @@
 
 		<exec executable="php">
 			<arg value="composer.phar" />
-			<arg value="--working-dir ${sources}" />
 			<arg value="install" />
+			<arg value="-d ${sources}" />
 		</exec>
 	</target>
 
