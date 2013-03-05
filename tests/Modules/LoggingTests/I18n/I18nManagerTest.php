@@ -11,7 +11,7 @@
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setLangueDefaut('Mexicain');
 
-            $this->assertAttributeEquals('Mexicain', 'langueDefaut', $i18nManager);
+            $this->assertAttributeEquals('Mexicain', '_langueDefaut', $i18nManager);
         }
 
         /**
@@ -27,7 +27,7 @@
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setLangueDispo(array('Allemand' => 'al', 'Kosovar' => 'ksv'));
 
-            $this->assertAttributeEquals(array('Allemand' => 'al', 'Kosovar' => 'ksv'), 'languesDisponibles', $i18nManager);
+            $this->assertAttributeEquals(array('Allemand' => 'al', 'Kosovar' => 'ksv'), '_languesDisponibles', $i18nManager);
         }
 
         /**
@@ -43,9 +43,9 @@
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setConfig('French', array('French' => 'fr', 'English' => 'en'));
 
-            $this->assertAttributeEquals('French', 'langueDefaut', $i18nManager);
+            $this->assertAttributeEquals('French', '_langueDefaut', $i18nManager);
 
-            $this->assertAttributeEquals(array('French' => 'fr', 'English' => 'en'), 'languesDisponibles', $i18nManager);
+            $this->assertAttributeEquals(array('French' => 'fr', 'English' => 'en'), '_languesDisponibles', $i18nManager);
         }
 
         public function testGetFichierTraduction() {

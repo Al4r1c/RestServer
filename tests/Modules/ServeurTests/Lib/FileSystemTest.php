@@ -27,7 +27,7 @@
             foreach (array('Windows', 'Mac', 'Linux', 'FreeBSD') as $unOsValide) {
                 $this->fileSystem->setOs($unOsValide);
 
-                $this->assertAttributeEquals($unOsValide, 'os', $this->fileSystem);
+                $this->assertAttributeEquals($unOsValide, '_os', $this->fileSystem);
             }
         }
 
@@ -52,7 +52,7 @@
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
             $this->fileSystem->setBasePath(vfsStream::url('testPath'));
 
-            $this->assertAttributeEquals(vfsStream::url('testPath'), 'basePath', $this->fileSystem);
+            $this->assertAttributeEquals(vfsStream::url('testPath'), '_basePath', $this->fileSystem);
         }
 
         /**

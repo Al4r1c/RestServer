@@ -21,7 +21,7 @@
 
             $this->configuration->chargerConfiguration($fichier);
 
-            $this->assertAttributeEquals(array_change_key_case(self::$donneesConfig, CASE_UPPER), 'applicationConfiguration', $this->configuration);
+            $this->assertAttributeEquals(array_change_key_case(self::$donneesConfig, CASE_UPPER), '_applicationConfiguration', $this->configuration);
         }
 
         /**

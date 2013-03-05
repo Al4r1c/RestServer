@@ -19,7 +19,7 @@
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
-            $this->assertAttributeEquals($xmlParser, 'fichierTraductionDefaut', $this->tradManager);
+            $this->assertAttributeEquals($xmlParser, '_fichierTraductionDefaut', $this->tradManager);
         }
 
         /**
