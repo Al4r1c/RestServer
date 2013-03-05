@@ -5,7 +5,7 @@
         /**
          * @var array
          */
-        private $namespaces = array();
+        private $_namespaces = array();
 
         /**
          * @param string $namespace
@@ -13,7 +13,7 @@
          * @param string $extension
          */
         public function ajouterNamespace($namespace, $includePath, $extension = '.class.php') {
-            $this->namespaces[strtolower($namespace)] = array('path' => $includePath, 'extension' => $extension);
+            $this->_namespaces[strtolower($namespace)] = array('path' => $includePath, 'extension' => $extension);
         }
 
         public function register() {
@@ -25,8 +25,8 @@
          */
         public function unregister($namespace = '') {
             if (!isNull($namespace)) {
-                if (array_key_exists(strtolower($namespace), $this->namespaces)) {
-                    unset($this->namespaces[strtolower($namespace)]);
+                if (array_key_exists(strtolower($namespace), $this->_namespaces)) {
+                    unset($this->_namespaces[strtolower($namespace)]);
                 } else {
                     echo 'Namespace ' . $namespace . ' not found';
                 }
@@ -40,7 +40,7 @@
          * @return bool
          */
         public function loaderFunction($className) {
-            foreach ($this->namespaces as $unNamespace => $configNamespace) {
+            foreach ($this->_namespaces as $unNamespace => $configNamespace) {
                 if (!isNull($unNamespace) && substr_count(strtolower($className), $unNamespace) > 0 && file_exists($configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension'])) {
                     include_once($configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension']);
 

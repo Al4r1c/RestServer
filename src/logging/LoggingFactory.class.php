@@ -3,8 +3,8 @@
 
     class LoggingFactory {
 
-        private static $langueDefaut = 'French';
-        private static $langueDispo = array('French' => 'fr', 'English' => 'en');
+        private static $_langueDefaut = 'French';
+        private static $_langueDispo = array('French' => 'fr', 'English' => 'en');
 
         /**
          * @param string $loggingMethode
@@ -27,11 +27,11 @@
          * @return I18n\TradManager
          */
         private static function getI18n() {
-            $I18nManager = new \Logging\I18n\I18nManager();
-            $I18nManager->setConfig(self::$langueDefaut, self::$langueDispo);
+            $i18nManager = new \Logging\I18n\I18nManager();
+            $i18nManager->setConfig(self::$_langueDefaut, self::$_langueDispo);
 
             $tradManager = new \Logging\I18n\TradManager();
-            $tradManager->setFichierTraduction($I18nManager->getFichierTraduction());
+            $tradManager->setFichierTraduction($i18nManager->getFichierTraduction());
 
             return $tradManager;
         }

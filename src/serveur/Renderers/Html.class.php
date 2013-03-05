@@ -31,10 +31,10 @@
         }
 
         /**
-         * @param string $DonneesFormatListeHtml
+         * @param string $donneesFormatListeHtml
          * @return string
          */
-        private function templateHtml($DonneesFormatListeHtml) {
+        private function templateHtml($donneesFormatListeHtml) {
             return <<<EOT
 <!DOCTYPE html>
 <html>
@@ -55,7 +55,7 @@
     </style>
 </head>
 <body>
-$DonneesFormatListeHtml
+$donneesFormatListeHtml
 </body>
 </html>
 EOT;

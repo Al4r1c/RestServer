@@ -223,11 +223,11 @@
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
         protected function getRenderClass($renderClassName) {
-            if (!class_exists($view_name = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
+            if (!class_exists($nomVue = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
                 throw new MainException(20105, 415, $renderClassName);
             }
 
-            return new $view_name();
+            return new $nomVue();
         }
 
         /**
