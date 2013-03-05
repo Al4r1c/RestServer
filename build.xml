@@ -3,6 +3,7 @@
 <project name="RestServer" default="build" basedir=".">
 	<property name="sources" value="${project.basedir}/sources" />
 	<property name="buildRepertory" value="${project.basedir}/build" />
+	<property name="logRepertory" value="${buildRepertory}/logs" />
 	<property name="sourceRepertory" value="${sources}/src" />
 	<property name="testsRepository" value="${sources}/tests" />
 
@@ -52,7 +53,7 @@
 
 	<target name="pdepend">
 		<phpdepend file="${sourceRepertory}">
-			<logger type="jdepend-xml" outfile="${buildRepertory}/logs/jdepend.xml" />
+			<logger type="jdepend-xml" outfile="${logRepertory}/jdepend.xml" />
 			<logger type="jdepend-chart" outfile="${buildRepertory}/pdepend/dependencies.svg" />
 			<logger type="overview-pyramid" outfile="${buildRepertory}/pdepend/overview-pyramid.svg" />
 		</phpdepend>
@@ -66,12 +67,16 @@
 
 	<target name="phpcpd">
 		<phpcpd file="${sourceRepertory}">
-			<formatter type="pmd" outfile="${buildRepertory}/logs/pmd-cpd.xml"/>
+			<formatter type="pmd" outfile="${logRepertory}/pmd-cpd.xml"/>
 		</phpcpd>
 	</target>
 
 	<target name="phploc">
-		<exec logoutput="true" dir="${project.basedir}" command="phploc --log-csv '${buildRepertory}/logs/phploc.csv' '${sourceRepertory}'" escape="false" />
+		<phploc reportType="csv" reportDirectory="${logRepertory}">
+			<fileset dir="${sourceRepertory}">
+				<include name="**/*.php"/>
+			</fileset>
+		</phploc>
 	</target>
 
 	<target name="phpcs">
@@ -79,7 +84,7 @@
 			<fileset dir="${sourceRepertory}">
 				<include name="**/*.php"/>
 			</fileset>
-			<formatter type="checkstyle" outfile="${buildRepertory}/logs/checkstyle.xml"/>
+			<formatter type="checkstyle" outfile="${logRepertory}/checkstyle.xml"/>
 		</phpcodesniffer>
 	</target>
 
@@ -88,7 +93,7 @@
 	</target>
 
 	<target name="phpcb">
-		<exec logoutput="true" command="phpcb --log '${buildRepertory}/logs' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'" escape="false" />
+		<exec logoutput="true" command="phpcb --log '${logRepertory}' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'" escape="false" />
 	</target>
 
 	<target name="build" depends="clean, prepare, qa, end" description="Tâche principale d'intégration continue" />
