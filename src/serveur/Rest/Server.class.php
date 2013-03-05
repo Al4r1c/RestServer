@@ -8,12 +8,12 @@
         /**
          * @var array
          */
-        private $serveurVariable;
+        private $_serveurVariable;
 
         /**
          * @var array
          */
-        private $serveurDonnees;
+        private $_serveurDonnees;
 
         /**
          * @param array $varServeur
@@ -32,35 +32,35 @@
          * @return string
          */
         public function getServeurHttpAccept() {
-            return $this->serveurVariable['HTTP_ACCEPT'];
+            return $this->_serveurVariable['HTTP_ACCEPT'];
         }
 
         /**
          * @return string
          */
         public function getRemoteIp() {
-            return $this->serveurVariable['REMOTE_ADDR'];
+            return $this->_serveurVariable['REMOTE_ADDR'];
         }
 
         /**
          * @return string
          */
         public function getServeurMethode() {
-            return $this->serveurVariable['REQUEST_METHOD'];
+            return $this->_serveurVariable['REQUEST_METHOD'];
         }
 
         /**
          * @return int
          */
         public function getRequestTime() {
-            return $this->serveurVariable['REQUEST_TIME'];
+            return $this->_serveurVariable['REQUEST_TIME'];
         }
 
         /**
          * @return string
          */
         public function getServeurUri() {
-            return $this->serveurVariable['REQUEST_URI'];
+            return $this->_serveurVariable['REQUEST_URI'];
         }
 
         /**
@@ -77,14 +77,14 @@
                 throw new MainException(20300, 500);
             }
 
-            $this->serveurVariable = $serverVar;
+            $this->_serveurVariable = $serverVar;
         }
 
         /**
          * @return array
          */
         public function getServeurDonnees() {
-            return $this->serveurDonnees;
+            return $this->_serveurDonnees;
         }
 
         /**
@@ -94,12 +94,12 @@
         public function setServeurDonnees($methode) {
             switch (strtoupper($methode)) {
                 case 'GET':
-                    parse_str($this->serveurVariable['QUERY_STRING'], $this->serveurDonnees);
+                    parse_str($this->_serveurVariable['QUERY_STRING'], $this->_serveurDonnees);
                     break;
                 case 'POST':
                 case 'PUT':
                 case 'DELETE':
-                    parse_str($this->serveurVariable['PHP_INPUT'], $this->serveurDonnees);
+                    parse_str($this->_serveurVariable['PHP_INPUT'], $this->_serveurDonnees);
                     break;
                 default:
                     throw new MainException(20301, 405, $methode);

@@ -3,13 +3,13 @@
 
     abstract class AbstractDisplayer {
         /** @var \Logging\I18n\TradManager */
-        protected $tradManager;
+        protected $_tradManager;
 
         /**
          * @param \Logging\I18n\TradManager $tradManager
          */
         public function setTradManager($tradManager) {
-            $this->tradManager = $tradManager;
+            $this->_tradManager = $tradManager;
         }
 
         /**
@@ -36,7 +36,7 @@
          * @return string
          */
         protected function traduireMessageEtRemplacerVariables($codeMessage, array $arguments = array()) {
-            return vsprintf($this->tradManager->recupererChaineTraduite($codeMessage), $arguments);
+            return vsprintf($this->_tradManager->recupererChaineTraduite($codeMessage), $arguments);
         }
 
         /**

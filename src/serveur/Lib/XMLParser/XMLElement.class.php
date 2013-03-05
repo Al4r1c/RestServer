@@ -6,22 +6,22 @@
         /**
          * @var string
          */
-        private $nom;
+        private $_nom;
 
         /**
          * @var string[]
          */
-        private $attributs;
+        private $_attributs;
 
         /**
          * @var XMLElement[]|bool
          */
-        private $children;
+        private $_children;
 
         /**
          * @var string
          */
-        private $valeur;
+        private $_valeur;
 
         /**
          * @param array $donnees
@@ -39,14 +39,14 @@
          * @return string
          */
         public function getNom() {
-            return $this->nom;
+            return $this->_nom;
         }
 
         /**
          * @return \string[]
          */
         public function getAttributs() {
-            return $this->attributs;
+            return $this->_attributs;
         }
 
         /**
@@ -54,8 +54,8 @@
          * @return null|string
          */
         public function getAttribut($attribut) {
-            if (array_key_exists(strtolower($attribut), $this->attributs)) {
-                return $this->attributs[strtolower($attribut)];
+            if (array_key_exists(strtolower($attribut), $this->_attributs)) {
+                return $this->_attributs[strtolower($attribut)];
             } else {
                 return null;
             }
@@ -65,45 +65,45 @@
          * @return bool|XMLElement[]
          */
         public function getChildren() {
-            if ($this->children === false) {
+            if ($this->_children === false) {
                 return array();
             }
 
-            return $this->children;
+            return $this->_children;
         }
 
         /**
          * @return string
          */
         public function getValeur() {
-            return $this->valeur;
+            return $this->_valeur;
         }
 
         /**
          * @param string $nom
          */
         public function setNom($nom) {
-            $this->nom = $nom;
+            $this->_nom = $nom;
         }
 
         /**
          * @param string[] $attributs
          */
         public function setAttributs($attributs) {
-            $this->attributs = $attributs;
+            $this->_attributs = $attributs;
         }
 
         /**
          * @param XMLElement[]|bool $children
          */
         public function setChildren($children) {
-            $this->children = $children;
+            $this->_children = $children;
         }
 
         /**
          * @param string $valeur
          */
         public function setValeur($valeur) {
-            $this->valeur = $valeur;
+            $this->_valeur = $valeur;
         }
     }

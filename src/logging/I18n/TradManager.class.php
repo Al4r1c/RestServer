@@ -7,7 +7,7 @@
         /**
          * @var XMLParser
          */
-        private $fichierTraductionDefaut;
+        private $_fichierTraductionDefaut;
 
         /**
          * @param \Serveur\Lib\XMLParser\XMLParser $fichierTradDef
@@ -18,7 +18,7 @@
                 throw new \Exception('Traduction object is invalid.');
             }
 
-            $this->fichierTraductionDefaut = $fichierTradDef;
+            $this->_fichierTraductionDefaut = $fichierTradDef;
         }
 
         /**
@@ -27,7 +27,7 @@
          * @return string
          */
         private function getTraduction($section, $identifier) {
-            $xmlElementsCorrespondants = $this->fichierTraductionDefaut->getConfigValeur($section . '.message[code=' . $identifier . ']');
+            $xmlElementsCorrespondants = $this->_fichierTraductionDefaut->getConfigValeur($section . '.message[code=' . $identifier . ']');
 
             if (isset($xmlElementsCorrespondants)) {
                 return $xmlElementsCorrespondants[0]->getValeur();
@@ -42,7 +42,7 @@
          * @throws \Exception
          */
         public function recupererChaineTraduite($contenu) {
-            if (isNull($this->fichierTraductionDefaut)) {
+            if (isNull($this->_fichierTraductionDefaut)) {
                 throw new \Exception('No traduction object set.');
             }
 

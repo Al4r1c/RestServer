@@ -8,7 +8,7 @@
         /**
          * @var \Serveur\Lib\FileSystem
          */
-        private $çfileSystemInstance;
+        private $_fileSystemInstance;
 
         /*
          * var string
@@ -21,7 +21,7 @@
         private $_repertoireFichier;
 
         public function getFileSystem() {
-            return $this->çfileSystemInstance;
+            return $this->_fileSystemInstance;
         }
 
         /**
@@ -32,7 +32,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
             }
 
-            $this->çfileSystemInstance = $fileSystem;
+            $this->_fileSystemInstance = $fileSystem;
         }
 
         public function getNomFichier() {
@@ -82,7 +82,7 @@
                 throw new MainException(10202, 500);
             }
 
-            $this->_repertoireFichier = $this->çfileSystemInstance->relatifToAbsolu($chemin);
+            $this->_repertoireFichier = $this->_fileSystemInstance->relatifToAbsolu($chemin);
         }
 
         /**
@@ -98,14 +98,14 @@
          * @return bool
          */
         public function fichierExiste() {
-            return $this->çfileSystemInstance->fichierExiste($this->getCheminCompletFichier());
+            return $this->_fileSystemInstance->fichierExiste($this->getCheminCompletFichier());
         }
 
         /**
          * @return bool
          */
         public function dossierExiste() {
-            return $this->çfileSystemInstance->dossierExiste($this->getRepertoireFichier());
+            return $this->_fileSystemInstance->dossierExiste($this->getRepertoireFichier());
         }
 
         /**
@@ -119,7 +119,7 @@
             }
 
             if (!$this->fichierExiste()) {
-                if (!$this->çfileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
+                if (!$this->_fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
                     throw new MainException(10205, 500, $this->getCheminCompletFichier());
                 }
             }
@@ -136,6 +136,6 @@
                 throw new MainException(10203, 50, $this->getCheminCompletFichier());
             }
 
-            return $this->çfileSystemInstance->chargerFichier($this->getCheminCompletFichier());
+            return $this->_fileSystemInstance->chargerFichier($this->getCheminCompletFichier());
         }
     }

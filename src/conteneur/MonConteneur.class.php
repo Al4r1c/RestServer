@@ -6,13 +6,13 @@
          * @return \Serveur\Rest\RestManager
          */
         public function getRestManager() {
-            return $this->conteneur['restManager'];
+            return $this->_conteneur['restManager'];
         }
 
         /**
          * @return \Serveur\Exceptions\ErrorManager
          */
         public function getErrorManager() {
-            return $this->conteneur['errorManager'];
+            return $this->_conteneur['errorManager'];
         }
     }

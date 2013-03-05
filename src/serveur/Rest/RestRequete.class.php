@@ -24,7 +24,7 @@
         /**
          * @var string[]
          */
-        private $parametres;
+        private $_parametres;
 
         /**
          * @var string
@@ -78,7 +78,7 @@
          * @return string[]
          */
         public function getParametres() {
-            return $this->parametres;
+            return $this->_parametres;
         }
 
         /**
@@ -156,7 +156,7 @@
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'array', $donnee);
             }
 
-            $this->parametres = $donnee;
+            $this->_parametres = $donnee;
         }
 
         /**

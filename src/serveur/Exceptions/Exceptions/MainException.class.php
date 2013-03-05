@@ -7,7 +7,7 @@
         /**
          * @var int
          */
-        private $codeRetourHttp = 500;
+        private $_codeRetourHttp = 500;
 
         /**
          * @param string $code
@@ -23,7 +23,7 @@
          * @return int
          */
         public function getStatus() {
-            return $this->codeRetourHttp;
+            return $this->_codeRetourHttp;
         }
 
         /**
@@ -35,7 +35,7 @@
             }
 
             if (Tools::isValideHttpCode($codeHttp)) {
-                $this->codeRetourHttp = $codeHttp;
+                $this->_codeRetourHttp = $codeHttp;
             }
         }
     }

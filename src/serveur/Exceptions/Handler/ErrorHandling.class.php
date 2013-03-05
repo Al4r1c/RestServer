@@ -9,7 +9,7 @@
         /**
          * @var string[]
          */
-        private $erreurs = array();
+        private $_erreurs = array();
 
         public function setHandlers() {
             set_error_handler(array($this, 'errorHandler'));
@@ -21,7 +21,7 @@
          * @return \string[]
          */
         public function getErreurs() {
-            return $this->erreurs;
+            return $this->_erreurs;
         }
 
         /**
@@ -32,11 +32,11 @@
         public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments) {
             switch ($erreurNumber) {
                 case E_USER_ERROR:
-                    $this->erreurs[] = new Error($codeErreur, null, $arguments);
+                    $this->_erreurs[] = new Error($codeErreur, null, $arguments);
                     break;
 
                 case E_USER_NOTICE:
-                    $this->erreurs[] = new Notice($codeErreur, null, $arguments);
+                    $this->_erreurs[] = new Notice($codeErreur, null, $arguments);
                     break;
 
                 default:
@@ -71,7 +71,7 @@
                 case E_CORE_ERROR:
                 case E_USER_ERROR:
                 case E_PARSE:
-                    $this->erreurs[] = new Error($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
+                    $this->_erreurs[] = new Error($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
                     throw new \Exception();
                     break;
 
@@ -85,7 +85,7 @@
                 case E_DEPRECATED:
                 case E_USER_DEPRECATED:
                 case E_RECOVERABLE_ERROR:
-                    $this->erreurs[] = new Notice($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
+                    $this->_erreurs[] = new Notice($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
                     break;
 
                 default:

@@ -5,12 +5,12 @@
         /**
          * @var string
          */
-        private $langueDefaut;
+        private $_langueDefaut;
 
         /**
          * @var string[]
          */
-        private $languesDisponibles;
+        private $_languesDisponibles;
 
         /**
          * @param string $langueDefaut
@@ -30,7 +30,7 @@
                 throw new \Exception('Default language is not set properly.');
             }
 
-            $this->langueDefaut = $langueDefaut;
+            $this->_langueDefaut = $langueDefaut;
         }
 
         /**
@@ -42,7 +42,7 @@
                 throw new \Exception('No available language set.');
             }
 
-            $this->languesDisponibles = $languesDispo;
+            $this->_languesDisponibles = $languesDispo;
         }
 
         /**
@@ -50,10 +50,10 @@
          * @throws \Exception
          * */
         public function getFichierTraduction() {
-            if (array_key_exists(strtoupper($this->langueDefaut), $this->languesDisponibles)) {
-                $nomFichierLangueDefaut = $this->languesDisponibles[strtoupper($langueDefautUtilisee = $this->langueDefaut)];
+            if (array_key_exists(strtoupper($this->_langueDefaut), $this->_languesDisponibles)) {
+                $nomFichierLangueDefaut = $this->_languesDisponibles[strtoupper($langueDefautUtilisee = $this->_langueDefaut)];
             } else {
-                $nomFichierLangueDefaut = reset($this->languesDisponibles);
+                $nomFichierLangueDefaut = reset($this->_languesDisponibles);
             }
 
             $fichierTraductionParDefaut = $this->getFichier($nomFichierLangueDefaut);
@@ -83,7 +83,7 @@
          * @return array|bool
          */
         private function getUneTraductionAleatoire() {
-            foreach ($this->languesDisponibles as $uneLangueDispo => $classeLangue) {
+            foreach ($this->_languesDisponibles as $uneLangueDispo => $classeLangue) {
                 $traductionDisponible = $this->getFichier($classeLangue);
 
                 if ($traductionDisponible->fichierExiste() && $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValide()) {

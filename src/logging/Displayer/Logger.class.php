@@ -7,26 +7,26 @@
         /**
          * @var string
          */
-        private static $nomFichierErreurs = 'errors.log';
+        private static $_nomFichierErreurs = 'errors.log';
 
         /**
          * @var string
          */
-        private static $nomFichierAcces = 'access.log';
+        private static $_nomFichierAcces = 'access.log';
 
         /**
          * @var \Serveur\Lib\Fichier
          */
-        private $fichierLogErreur;
+        private $_fichierLogErreur;
 
         /**
          * @var \Serveur\Lib\Fichier
          */
-        private $fichierLogAcces;
+        private $_fichierLogAcces;
 
         public function __construct() {
-            $this->fichierLogErreur = $this->creerFichierSiNexistePas(self::$nomFichierErreurs);
-            $this->fichierLogAcces = $this->creerFichierSiNexistePas(self::$nomFichierAcces);
+            $this->_fichierLogErreur = $this->creerFichierSiNexistePas(self::$_nomFichierErreurs);
+            $this->_fichierLogAcces = $this->creerFichierSiNexistePas(self::$_nomFichierAcces);
         }
 
         /**
@@ -47,7 +47,7 @@
          * @throws \Exception
          * */
         protected function ecrireMessageErreur(array $tabErreurs) {
-            $fp = fopen($this->fichierLogErreur->getCheminCompletFichier(), 'a+');
+            $fp = fopen($this->_fichierLogErreur->getCheminCompletFichier(), 'a+');
             fseek($fp, SEEK_END);
 
             foreach ($tabErreurs as $uneErreur) {
@@ -74,7 +74,7 @@
          * @throws \Exception
          */
         protected function ecrireMessageAcces($restRequete, $restReponse) {
-            $fp = fopen($this->fichierLogAcces->getCheminCompletFichier(), 'a+');
+            $fp = fopen($this->_fichierLogAcces->getCheminCompletFichier(), 'a+');
             fseek($fp, SEEK_END);
 
             fputs($fp, $restRequete->getDateRequete()->format('d-m-Y H:i:s') . ": \r\n");

@@ -5,22 +5,22 @@
         /**
          * @var string
          */
-        protected $message;
+        protected $_message;
 
         /**
          * @var int
          */
-        protected $codeErreur;
+        protected $_codeErreur;
 
         /**
          * @var \DateTime
          */
-        protected $date;
+        protected $_date;
 
         /**
          * @var array
          */
-        protected $arguments;
+        protected $_arguments;
 
         /**
          * @param int $erreurNum
@@ -31,49 +31,49 @@
             $this->setCode($erreurNum);
             $this->recupererMessage($message);
             $this->setDate(time());
-            $this->arguments = $arguments;
+            $this->_arguments = $arguments;
         }
 
         /**
          * @return int
          */
         public function getCode() {
-            return $this->codeErreur;
+            return $this->_codeErreur;
         }
 
         /**
          * @return string
          */
         public function getMessage() {
-            return $this->message;
+            return $this->_message;
         }
 
         /**
          * @return array
          */
         public function getArguments() {
-            return $this->arguments;
+            return $this->_arguments;
         }
 
         /**
          * @return \DateTime
          */
         public function getDate() {
-            return $this->date;
+            return $this->_date;
         }
 
         /**
          * @param int $erreurNum
          */
         public function setCode($erreurNum) {
-            $this->codeErreur = $erreurNum;
+            $this->_codeErreur = $erreurNum;
         }
 
         /**
          * @param string $nouveauMessage
          */
         public function setMessage($nouveauMessage) {
-            $this->message = $nouveauMessage;
+            $this->_message = $nouveauMessage;
         }
 
         /**
@@ -81,17 +81,17 @@
          */
         public function recupererMessage($message) {
             if (isNull($message)) {
-                $message = '{errorMessage.' . $this->codeErreur . '}';
+                $message = '{errorMessage.' . $this->_codeErreur . '}';
             }
 
-            $this->message = $message;
+            $this->_message = $message;
         }
 
         /**
          * @param int $timestamp
          */
         public function setDate($timestamp) {
-            $this->date = new \DateTime();
-            $this->date->setTimestamp($timestamp);
+            $this->_date = new \DateTime();
+            $this->_date->setTimestamp($timestamp);
         }
     }

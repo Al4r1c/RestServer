@@ -5,7 +5,7 @@
         /**
          * @var string[]
          */
-        protected $conteneur;
+        protected $_conteneur;
 
         public function __construct() {
             $this->buildConteneur();
@@ -15,7 +15,7 @@
          * @return string[]
          */
         public function getConteneur() {
-            return $this->conteneur;
+            return $this->_conteneur;
         }
 
         private function buildConteneur() {
@@ -75,6 +75,6 @@
                 return new \Serveur\Exceptions\Handler\ErrorHandling();
             };
 
-            $this->conteneur = $conteneur;
+            $this->_conteneur = $conteneur;
         }
     }
