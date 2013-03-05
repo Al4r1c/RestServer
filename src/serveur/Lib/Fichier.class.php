@@ -26,6 +26,7 @@
 
         /**
          * @param \Serveur\Lib\FileSystem $fileSystem
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
         public function setFileSystem($fileSystem) {
             if (!$fileSystem instanceof \Serveur\Lib\FileSystem) {

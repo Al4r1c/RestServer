@@ -20,6 +20,7 @@
             $suite->addTestSuite('Modules\ServeurTests\Lib\FileSystemTest');
             $suite->addTestSuite('Modules\ServeurTests\Lib\FichierChargementTest');
             $suite->addTestSuite('Modules\ServeurTests\Lib\TypeDetectorTest');
+            $suite->addTestSuite('Modules\ServeurTests\XMLParser\XMLParserTest');
 
             return $suite;
         }

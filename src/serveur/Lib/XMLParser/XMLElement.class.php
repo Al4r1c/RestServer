@@ -11,12 +11,12 @@
         /**
          * @var string[]
          */
-        private $_attributs;
+        private $_attributs = array();
 
         /**
          * @var XMLElement[]|bool
          */
-        private $_children;
+        private $_children = array();
 
         /**
          * @var string

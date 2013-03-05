@@ -12,7 +12,8 @@
             $donneesXml = file_get_contents($locationFichier);
 
             $xmlParsee = new XMLParser();
-            $xmlParsee->setContenu($donneesXml);
+            $xmlParsee->setContenuInitial($donneesXml);
+            $xmlParsee->parse();
 
             return $xmlParsee;
         }

@@ -2,12 +2,13 @@
     namespace Serveur\Lib\XMLParser;
 
     use Serveur\Lib\XMLParser\XMLElement;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
     class XMLParser {
         /**
          * @var string
          */
-        private $_donneesSourcedata;
+        private $_contenuInitial;
 
         /**
          * @var array|XMLElement
@@ -20,11 +21,52 @@
         private $_erreur;
 
         /**
-         * @param string $contenuXml
+         * @return string
          */
-        public function setContenu($contenuXml) {
-            $this->_donneesSourcedata = $contenuXml;
-            $this->parse($contenuXml);
+        public function getContenuInitial() {
+            return $this->_contenuInitial;
+        }
+
+        /**
+         * @return \Serveur\Lib\XMLParser\XMLElement
+         */
+        public function getDonneesParsees() {
+            return $this->_donneesParsees;
+        }
+
+        /**
+         * @return string
+         */
+        public function getErreurMessage() {
+            if($this->isValide()) {
+                return null;
+            } else {
+                return sprintf('XML error at line %d column %d: %s', $this->_erreur['line'], $this->_erreur['column'], $this->_erreur['message']);
+            }
+        }
+
+        /**
+         * @param $clefConfig
+         * @return XMLElement[]
+         */
+        public function getConfigValeur($clefConfig) {
+            if ($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)), $this->_donneesParsees->getChildren())) {
+                return $valeur;
+            } else {
+                return null;
+            }
+        }
+
+        /**
+         * @param string $contenuXml
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         */
+        public function setContenuInitial($contenuXml) {
+            if (!is_string($contenuXml)) {
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $contenuXml);
+            }
+
+            $this->_contenuInitial = $contenuXml;
         }
 
         /**
@@ -34,17 +76,7 @@
             return empty($this->_erreur);
         }
 
-        /**
-         * @return string
-         */
-        public function getErreurMessage() {
-            return sprintf('XML error at line %d column %d: %s', $this->_erreur['line'], $this->_erreur['column'], $this->_erreur['message']);
-        }
-
-        /**
-         * @param string $contenuXml
-         */
-        private function parse($contenuXml) {
+        public function parse() {
             $parser = xml_parser_create();
 
             xml_set_object($parser, $this);
@@ -52,7 +84,7 @@
             xml_set_character_data_handler($parser, 'valeurXML');
             xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, false);
 
-            $lignes = explode("\n", $contenuXml);
+            $lignes = explode("\n", $this->_contenuInitial);
             foreach ($lignes as $uneLigne) {
                 if (trim($uneLigne) == '') {
                     continue;
@@ -124,22 +156,11 @@
         }
 
         /**
-         * @return XMLElement[]
-         */
-        public function getConfigValeur($clefConfig) {
-            if ($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)), $this->_donneesParsees->getChildren())) {
-                return $valeur;
-            } else {
-                return null;
-            }
-        }
-
-        /**
          * @param $tabKey string[]
          * @param $arrayValues XMLElement[]
          * @return string|bool
          * */
-        public function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues) {
+        private function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues) {
             if (count($tabKey) == 1) {
                 $tabResult = array();
 
