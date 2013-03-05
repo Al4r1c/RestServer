@@ -21,7 +21,8 @@
         private function buildConteneur() {
             $conteneur = new \Pimple();
 
-            $conteneur['configManager'] = $conteneur->share(function () {
+            $conteneur['configManager'] = $conteneur->share(
+                function () {
                     $fichier = \Serveur\Utils\FileManager::getFichier();
                     $fichier->setFichierParametres('config.yaml', '/config');
                     $configurationManager = new \Serveur\Config\Config();
@@ -57,7 +58,8 @@
                 return $restReponse;
             };
 
-            $conteneur['restManager'] = $conteneur->share(function ($c) {
+            $conteneur['restManager'] = $conteneur->share(
+                function ($c) {
                     $restManager = new \Serveur\Rest\RestManager();
                     $restManager->setRequete($c['restRequest']);
                     $restManager->setReponse($c['restReponse']);
@@ -66,7 +68,8 @@
                 }
             );
 
-            $conteneur['errorManager'] = $conteneur->share(function ($c) {
+            $conteneur['errorManager'] = $conteneur->share(
+                function ($c) {
                     $errorManager = new \Serveur\Exceptions\ErrorManager();
                     $errorManager->setErrorHandler($c['errorHandler']);
 
