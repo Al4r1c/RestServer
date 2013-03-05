@@ -18,7 +18,7 @@
             $this->headerManager->ajouterHeader('Content-type', 'application/pdf');
             $this->headerManager->ajouterHeader('Expires', '0');
 
-            $this->assertAttributeCount(2, 'headers', $this->headerManager);
+            $this->assertAttributeCount(2, '_headers', $this->headerManager);
         }
 
         /**

@@ -19,7 +19,7 @@
         public function testSetServeurVariable() {
             $this->server->setServeurVariable(self::$donneesServer);
 
-            $this->assertAttributeEquals(self::$donneesServer, 'serveurVariable', $this->server);
+            $this->assertAttributeEquals(self::$donneesServer, '_serveurVariable', $this->server);
         }
 
         /**
@@ -52,8 +52,8 @@
             $this->server->setServeurVariable(self::$donneesServer);
             $this->server->setServeurDonnees('GET');
 
-            $this->assertAttributeCount(2, 'serveurDonnees', $this->server);
-            $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'), 'serveurDonnees', $this->server);
+            $this->assertAttributeCount(2, '_serveurDonnees', $this->server);
+            $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server);
         }
 
         public function testSetServeurDonneesPutPostDelete() {
@@ -78,9 +78,9 @@
         public function testSetVarServeur() {
             $this->server->setVarServeur(self::$donneesServer);
 
-            $this->assertAttributeEquals(self::$donneesServer, 'serveurVariable', $this->server);
+            $this->assertAttributeEquals(self::$donneesServer, '_serveurVariable', $this->server);
 
-            $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'), 'serveurDonnees', $this->server);
+            $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server);
         }
 
         public function testGetServeurMethode() {
