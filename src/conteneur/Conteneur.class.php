@@ -28,7 +28,8 @@
                     $configurationManager->chargerConfiguration($fichier);
 
                     return $configurationManager;
-                });
+                }
+            );
 
             $conteneur['server'] = function () {
                 $server = new \Serveur\Rest\Server();
@@ -62,14 +63,16 @@
                     $restManager->setReponse($c['restReponse']);
 
                     return $restManager;
-                });
+                }
+            );
 
             $conteneur['errorManager'] = $conteneur->share(function ($c) {
                     $errorManager = new \Serveur\Exceptions\ErrorManager();
                     $errorManager->setErrorHandler($c['errorHandler']);
 
                     return $errorManager;
-                });
+                }
+            );
 
             $conteneur['errorHandler'] = function () {
                 return new \Serveur\Exceptions\Handler\ErrorHandling();
