@@ -1,6 +1,8 @@
 <?php
     namespace Serveur\Renderers;
 
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+
     abstract class AbstractRenderer {
         /**
          * @param array $donnees
@@ -9,7 +11,7 @@
          */
         public function render($donnees) {
             if(!is_array($donnees)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $donnees);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $donnees);
             }
 
             return $this->genererRendu($donnees);

@@ -3,6 +3,8 @@
 
     use Serveur\Utils\Constante;
     use Serveur\Utils\Tools;
+    use Serveur\Exceptions\Exceptions\MainException;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
     class RestReponse {
         /**
@@ -41,7 +43,7 @@
          */
         public function setHeaderManager($headerManager) {
             if(!$headerManager instanceof HeaderManager) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\HeaderManager', $headerManager);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\HeaderManager', $headerManager);
             }
 
             $this->headerManager = $headerManager;
@@ -53,7 +55,7 @@
          */
         public function setConfig($configuration) {
             if(!$configuration instanceof \Serveur\Config\Config) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Config\Config', $configuration);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Config\Config', $configuration);
             }
 
             $this->setFormats($configuration->getConfigValeur('config.default_render'), $configuration->getConfigValeur('render'));
@@ -101,7 +103,7 @@
          */
         public function setContenu($contenu) {
             if(!is_array($contenu)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $contenu);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $contenu);
             }
 
             $this->contenu = $contenu;
@@ -114,11 +116,11 @@
          */
         public function setStatus($nouveauStatus) {
             if(!is_int($nouveauStatus)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'int', $nouveauStatus);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $nouveauStatus);
             }
 
             if(!Tools::isValideHttpCode($nouveauStatus)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(20100, 500, $nouveauStatus);
+                throw new MainException(20100, 500, $nouveauStatus);
             }
 
             $this->status = $nouveauStatus;
@@ -146,7 +148,7 @@
          */
         public function setFormatRetour($formatRetourDefaut) {
             if(!is_string($formatRetourDefaut)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $formatRetourDefaut);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $formatRetourDefaut);
             }
 
             $this->formatRetour = $formatRetourDefaut;
@@ -159,11 +161,11 @@
          */
         public function setFormatsAcceptes($formatsAcceptes) {
             if(!is_array($formatsAcceptes)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsAcceptes);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsAcceptes);
             }
 
             if(isNull($formatsAcceptes)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(20102, 400);
+                throw new MainException(20102, 400);
             }
 
             $this->formatsAcceptes = $formatsAcceptes;
@@ -176,11 +178,11 @@
          */
         public function setCharset($charset) {
             if(!is_string($charset)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $charset);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $charset);
             }
 
             if(!in_array(strtoupper($charset), array_map('strtoupper', mb_list_encodings()))) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(20103, 500, $charset);
+                throw new MainException(20103, 500, $charset);
             }
 
             $this->charset = strtolower($charset);
@@ -208,7 +210,7 @@
                     $this->formatRetour = $formatsAcceptes[$formatDefaut];
                     $nomClassFormatRetour = ucfirst(strtolower($formatDefaut));
                 } else {
-                    throw new \Serveur\Exceptions\Exceptions\MainException(20104, 500, $formatDefaut);
+                    throw new MainException(20104, 500, $formatDefaut);
                 }
             }
 
@@ -222,7 +224,7 @@
          */
         protected function getRenderClass($renderClassName) {
             if(!class_exists($view_name = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(20105, 415, $renderClassName);
+                throw new MainException(20105, 415, $renderClassName);
             }
 
             return new $view_name();
@@ -235,7 +237,7 @@
          */
         public function fabriquerReponse($formatsDemandes) {
             if(!is_array($formatsDemandes)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
             }
 
             /* @var $view \Serveur\Renderers\AbstractRenderer */

@@ -1,6 +1,9 @@
 <?php
     namespace Serveur\Rest;
 
+    use Serveur\Exceptions\Exceptions\MainException;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+
     class Server {
         /**
          * @var array
@@ -14,11 +17,11 @@
 
         /**
          * @param array $varServeur
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setVarServeur($varServeur) {
             if(!is_array($varServeur)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $varServeur);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $varServeur);
             }
 
             $this->setServeurVariable($varServeur);
@@ -62,16 +65,16 @@
 
         /**
          * @param array $serverVar
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws ArgumentTypeException
+         * @throws MainException
          */
         public function setServeurVariable($serverVar) {
             if(!is_array($serverVar)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
             }
 
             if(!array_keys_exist(array('HTTP_ACCEPT', 'PHP_INPUT', 'QUERY_STRING', 'REMOTE_ADDR', 'REQUEST_METHOD', 'REQUEST_TIME', 'REQUEST_URI'), $serverVar)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(20300, 500);
+                throw new MainException(20300, 500);
             }
 
             $this->serveurVariable = $serverVar;
@@ -86,7 +89,7 @@
 
         /**
          * @param string $methode
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws MainException
          */
         public function setServeurDonnees($methode) {
             switch(strtoupper($methode)) {
@@ -99,7 +102,7 @@
                     parse_str($this->serveurVariable['PHP_INPUT'], $this->serveurDonnees);
                     break;
                 default:
-                    throw new \Serveur\Exceptions\Exceptions\MainException(20301, 405, $methode);
+                    throw new MainException(20301, 405, $methode);
             }
         }
     }

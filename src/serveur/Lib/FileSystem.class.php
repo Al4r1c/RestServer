@@ -1,5 +1,8 @@
 <?php
     namespace Serveur\Lib;
+    
+    use Serveur\Exceptions\Exceptions\MainException;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
     class FileSystem {
         /**
@@ -28,7 +31,7 @@
          */
         public function setOs($os) {
             if(!is_string($os)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $os);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $os);
             }
 
             $os = strtolower($os);
@@ -42,7 +45,7 @@
             } elseif(substr($os, 0, 7) == 'freebsd') {
                 $this->os = 'FreeBSD';
             } else {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10100, 500, $os);
+                throw new MainException(10100, 500, $os);
             }
         }
 
@@ -52,15 +55,15 @@
          */
         public function setBasePath($basePath) {
             if(!is_string($basePath)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $basePath);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $basePath);
             }
 
             if(!$this->isAbsolutePath($basePath)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10101, 500, $basePath);
+                throw new MainException(10101, 500, $basePath);
             }
 
             if(!$this->dossierExiste($basePath)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10102, 500, $basePath);
+                throw new MainException(10102, 500, $basePath);
             }
 
             $this->basePath = $basePath;
@@ -73,7 +76,7 @@
          */
         public function fichierExiste($cheminVersFichier) {
             if(!is_string($cheminVersFichier)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminVersFichier);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminVersFichier);
             }
 
             return file_exists($cheminVersFichier);
@@ -86,7 +89,7 @@
          */
         public function dossierExiste($cheminDossier) {
             if(!is_string($cheminDossier)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminDossier);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminDossier);
             }
 
             return is_dir($cheminDossier);
@@ -99,7 +102,7 @@
          */
         public function getExtension($nomFichier) {
             if(!is_string($nomFichier)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $nomFichier);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $nomFichier);
             }
 
             if(substr_count($nomFichier, '.') < 1) {
@@ -119,11 +122,11 @@
          */
         public function getDroits($cheminDemande) {
             if(!is_string($cheminDemande)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminDemande);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminDemande);
             }
 
             if(!$this->fichierExiste($cheminDemande) && !$this->dossierExiste($cheminDemande)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10103, 500, $cheminDemande);
+                throw new MainException(10103, 500, $cheminDemande);
             }
 
             return substr(sprintf('%o', fileperms($cheminDemande)), -4);
@@ -137,11 +140,11 @@
          */
         public function creerFichier($urlFichier, $droit = '0777') {
             if(!is_string($urlFichier)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $urlFichier);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $urlFichier);
             }
 
             if(!is_string($droit) && !is_int($droit)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string|int', $droit);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string|int', $droit);
             }
 
             if(!$leFichier = @fopen($urlFichier, 'wb')) {
@@ -165,16 +168,16 @@
          */
         public function chargerFichier($cheminVersFichier) {
             if(!is_string($cheminVersFichier)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminVersFichier);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $cheminVersFichier);
             }
 
             if(!$this->fichierExiste($cheminVersFichier)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10105, 50, $cheminVersFichier);
+                throw new MainException(10105, 50, $cheminVersFichier);
             }
 
             /** @var $chargeur \Serveur\Lib\FichierChargement\AbstractChargeurFichier */
             if(false === $chargeur = $this->getChargeurClass(ucfirst($this->getExtension($cheminVersFichier)))) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10106, 500, $this->getExtension($cheminVersFichier), $cheminVersFichier);
+                throw new MainException(10106, 500, $this->getExtension($cheminVersFichier), $cheminVersFichier);
             }
 
             return $chargeur->chargerFichier($cheminVersFichier);
@@ -213,7 +216,7 @@
          */
         public function relatifToAbsolu($chemin) {
             if(!is_string($chemin)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
             }
 
             $separateurChemin = $this->getDirectorySeparateur();
@@ -258,7 +261,7 @@
          */
         protected function isAbsolutePath($chemin) {
             if(!is_string($chemin)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
             }
 
             if(preg_match('(^[a-z]{3,}://)S', $chemin)) {

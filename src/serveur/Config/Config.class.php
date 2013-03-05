@@ -1,6 +1,9 @@
 <?php
     namespace Serveur\Config;
 
+    use Serveur\Exceptions\Exceptions\MainException;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+
     class Config {
 
         /**
@@ -20,13 +23,13 @@
          */
         public function chargerConfiguration($fichierFramework) {
             if(!$fichierFramework instanceof \Serveur\Lib\Fichier) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
             }
 
             try {
                 $this->applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
             } catch(\Exception $fe) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(30000, 500, $fichierFramework->getCheminCompletFichier());
+                throw new MainException(30000, 500, $fichierFramework->getCheminCompletFichier());
             }
 
             $this->validerFichierConfiguration();
@@ -38,7 +41,7 @@
         private function validerFichierConfiguration() {
             foreach(self::$clefMinimales as $uneClefQuiDoitExister) {
                 if(is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
-                    throw new \Serveur\Exceptions\Exceptions\MainException(30001, 500, $uneClefQuiDoitExister);
+                    throw new MainException(30001, 500, $uneClefQuiDoitExister);
                 }
             }
         }
@@ -50,7 +53,7 @@
          */
         public function getConfigValeur($clefConfig) {
             if(!is_string($clefConfig)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
             }
 
             if($valeur = rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->applicationConfiguration)) {

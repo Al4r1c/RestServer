@@ -2,6 +2,7 @@
     namespace Serveur\Lib;
 
     use Serveur\Utils\Constante;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
     class TypeDetector {
         /**
@@ -15,7 +16,7 @@
          */
         public function __construct($mimesTypes) {
             if(!is_array($mimesTypes)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $mimesTypes);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $mimesTypes);
             }
 
             $this->constanteMimes = $mimesTypes;

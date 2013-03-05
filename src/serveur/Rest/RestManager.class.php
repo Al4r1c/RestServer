@@ -1,6 +1,8 @@
 <?php
     namespace Serveur\Rest;
 
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+
     class RestManager {
         /**
          * @var \Serveur\Rest\RestRequete
@@ -28,11 +30,11 @@
 
         /**
          * @param \Serveur\Rest\RestRequete $restRequestObject
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setRequete($restRequestObject) {
             if(!$restRequestObject instanceof \Serveur\Rest\RestRequete) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestRequete', $restRequestObject);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestRequete', $restRequestObject);
             }
 
             $this->restRequest = $restRequestObject;
@@ -40,11 +42,11 @@
 
         /**
          * @param \Serveur\Rest\RestReponse $restReponseObject
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setReponse($restReponseObject) {
             if(!$restReponseObject instanceof \Serveur\Rest\RestReponse) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestReponse', $restReponseObject);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestReponse', $restReponseObject);
             }
 
             $this->restResponse = $restReponseObject;
@@ -52,12 +54,12 @@
 
         /**
          * @param int $clef
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return mixed|null
          */
         public function getUriVariable($clef) {
             if(!is_int($clef)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'int', $clef);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $clef);
             }
 
             if(array_key_exists($clef, $tabVarUri = $this->restRequest->getUriVariables())) {
@@ -78,12 +80,12 @@
 
         /**
          * @param string $clef
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return mixed|null
          */
         public function getParametre($clef) {
             if(!is_string($clef)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $clef);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clef);
             }
 
             if(array_key_exists($clef, $tabParam = $this->restRequest->getParametres())) {

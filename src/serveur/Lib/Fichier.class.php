@@ -1,6 +1,9 @@
 <?php
     namespace Serveur\Lib;
 
+    use Serveur\Exceptions\Exceptions\MainException;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+
     class Fichier {
         /**
          * @var \Serveur\Lib\FileSystem
@@ -26,7 +29,7 @@
          */
         public function setFileSystem($fileSystem) {
             if(!$fileSystem instanceof \Serveur\Lib\FileSystem) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
             }
 
             $this->fileSystemInstance = $fileSystem;
@@ -51,15 +54,15 @@
          */
         public function setNomFichier($nom) {
             if(!is_string($nom)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
             }
 
             if(isNull($nom)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10200, 500);
+                throw new MainException(10200, 500);
             }
 
             if(substr_count($nom, '.') < 1) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10201, 500, $nom);
+                throw new MainException(10201, 500, $nom);
             }
 
             $this->nomFichier = $nom;
@@ -72,11 +75,11 @@
          */
         public function setRepertoireFichier($chemin) {
             if(!is_string($chemin)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
             }
 
             if(isNull($chemin)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10202, 500);
+                throw new MainException(10202, 500);
             }
 
             $this->repertoireFichier = $this->fileSystemInstance->relatifToAbsolu($chemin);
@@ -112,12 +115,12 @@
          */
         public function creerFichier($droit = '0777') {
             if(!$this->dossierExiste()) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10204, 500, $this->repertoireFichier);
+                throw new MainException(10204, 500, $this->repertoireFichier);
             }
 
             if(!$this->fichierExiste()) {
                 if(!$this->fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
-                    throw new \Serveur\Exceptions\Exceptions\MainException(10205, 500, $this->getCheminCompletFichier());
+                    throw new MainException(10205, 500, $this->getCheminCompletFichier());
                 }
             }
 
@@ -130,7 +133,7 @@
          */
         public function chargerFichier() {
             if(!$this->fichierExiste()) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(10203, 50, $this->getCheminCompletFichier());
+                throw new MainException(10203, 50, $this->getCheminCompletFichier());
             }
 
             return $this->fileSystemInstance->chargerFichier($this->getCheminCompletFichier());

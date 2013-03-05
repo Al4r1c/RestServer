@@ -2,6 +2,8 @@
     namespace Serveur\Rest;
 
     use Serveur\Utils\Tools;
+    use Serveur\Exceptions\Exceptions\MainException;
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
     class HeaderManager {
         /**
@@ -17,15 +19,15 @@
          */
         public function ajouterHeader($champ, $valeur) {
             if(!is_string($champ)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $champ);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $champ);
             }
 
             if(!is_string($valeur)) {
-                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
             }
 
             if(!Tools::isValideHeader($champ)) {
-                throw new \Serveur\Exceptions\Exceptions\MainException(20400, 500);
+                throw new MainException(20400, 500);
             }
 
             $this->headers[$champ] = $valeur;
