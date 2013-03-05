@@ -38,7 +38,7 @@
          * @return string
          */
         public function getErreurMessage() {
-            if($this->isValide()) {
+            if ($this->isValide()) {
                 return null;
             } else {
                 return sprintf('XML error at line %d column %d: %s', $this->_erreur['line'], $this->_erreur['column'], $this->_erreur['message']);

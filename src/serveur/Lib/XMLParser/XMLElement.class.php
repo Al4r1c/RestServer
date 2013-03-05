@@ -1,6 +1,8 @@
 <?php
     namespace Serveur\Lib\XMLParser;
 
+    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+
     class XMLElement {
 
         /**
@@ -22,18 +24,6 @@
          * @var string
          */
         private $_valeur;
-
-        /**
-         * @param array $donnees
-         */
-        public function setDonnees($donnees) {
-            $this->setNom($donnees['element']);
-            $this->setAttributs($donnees['attr']);
-            $this->setChildren($donnees['children']);
-            if (isset($donnees['data'])) {
-                $this->setValeur($donnees['data']);
-            }
-        }
 
         /**
          * @return string
@@ -62,7 +52,7 @@
         }
 
         /**
-         * @return bool|XMLElement[]
+         * @return array|XMLElement[]
          */
         public function getChildren() {
             if ($this->_children === false) {
@@ -81,29 +71,69 @@
 
         /**
          * @param string $nom
+         * @throws ArgumentTypeException
          */
         public function setNom($nom) {
+            if (!is_string($nom)) {
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
+            }
+
             $this->_nom = $nom;
         }
 
         /**
          * @param string[] $attributs
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
         public function setAttributs($attributs) {
+            if (!is_array($attributs)) {
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $attributs);
+            }
+
             $this->_attributs = $attributs;
         }
 
         /**
          * @param XMLElement[]|bool $children
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
         public function setChildren($children) {
+            if (!is_array($children) && !is_bool($children)) {
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array|bool', $children);
+            }
+
+            if (is_array($children)) {
+                foreach($children as $unFils) {
+                    if (!$unFils instanceof XMLElement) {
+                        throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\XMLParser\XMLElement', $unFils);
+                    }
+                }
+            }
+
             $this->_children = $children;
         }
 
         /**
          * @param string $valeur
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
         public function setValeur($valeur) {
+            if (!is_string($valeur)) {
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
+            }
+
             $this->_valeur = $valeur;
+        }
+
+        /**
+         * @param array $donnees
+         */
+        public function setDonnees($donnees) {
+            $this->setNom($donnees['element']);
+            $this->setAttributs($donnees['attr']);
+            $this->setChildren($donnees['children']);
+            if (isset($donnees['data'])) {
+                $this->setValeur($donnees['data']);
+            }
         }
     }
