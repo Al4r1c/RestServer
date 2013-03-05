@@ -51,7 +51,7 @@
          * */
         public function getFichierTraduction() {
             if (array_key_exists(strtoupper($this->_langueDefaut), $this->_languesDisponibles)) {
-                $nomFichierLangueDefaut = $this->_languesDisponibles[strtoupper($langueDefautUtilisee = $this->_langueDefaut)];
+                $nomFichierLangueDefaut = $this->_languesDisponibles[strtoupper($this->_langueDefaut)];
             } else {
                 $nomFichierLangueDefaut = reset($this->_languesDisponibles);
             }
