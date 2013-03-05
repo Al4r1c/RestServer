@@ -1,27 +1,21 @@
 <?php
-	namespace Modules\ServeurTests\Application;
+    namespace Modules\ServeurTests\Application;
 
-	include_once(__DIR__ . '/../../../TestEnv.php');
+    include_once(__DIR__ . '/../../../TestEnv.php');
 
-	use Serveur\MainApplication;
-	use Conteneur\MonConteneur;
+    use Serveur\MainApplication;
+    use Conteneur\MonConteneur;
 
-	class MainApplicationTest extends \PHPUnit_Framework_TestCase {
+    class MainApplicationTest extends \PHPUnit_Framework_TestCase {
 
-		protected $mainApp;
+        protected $mainApp;
 
-		protected function setUp() {
-			$conteneur = new MonConteneur();
-			$this->mainApp = new MainApplication($conteneur);
-		}
+        protected function setUp() {
+            $conteneur = new MonConteneur();
+            $this->mainApp = new MainApplication($conteneur);
+        }
 
-		public function testObjetCree() {
-			$this->assertThat(
-				$this->mainApp,
-				$this->logicalAnd(
-					$this->logicalNot($this->isNull()),
-					$this->isInstanceOf('Serveur\MainApplication')
-				)
-			);
-		}
-	}
+        public function testObjetCree() {
+            $this->assertThat($this->mainApp, $this->logicalAnd($this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\MainApplication')));
+        }
+    }

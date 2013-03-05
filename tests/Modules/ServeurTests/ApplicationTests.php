@@ -1,27 +1,27 @@
 <?php
-	namespace Modules\ServeurTests;
+    namespace Modules\ServeurTests;
 
-	include_once(__DIR__ . '/../../TestEnv.php');
+    include_once(__DIR__ . '/../../TestEnv.php');
 
-	if(!defined('PHPUnit_MAIN_METHOD')) {
-		define('PHPUnit_MAIN_METHOD', 'ApplicationTests::main');
-	}
+    if (!defined('PHPUnit_MAIN_METHOD')) {
+        define('PHPUnit_MAIN_METHOD', 'ApplicationTests::main');
+    }
 
-	class ApplicationTests {
+    class ApplicationTests {
 
-		public static function main() {
-			\PHPUnit_TextUI_TestRunner::run(self::suite());
-		}
+        public static function main() {
+            \PHPUnit_TextUI_TestRunner::run(self::suite());
+        }
 
-		public static function suite() {
-			$suite = new \PHPUnit_Framework_TestSuite('TestSuite');
+        public static function suite() {
+            $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-			$suite->addTestSuite('Modules\ServeurTests\Application\MainApplicationTest');
+            $suite->addTestSuite('Modules\ServeurTests\Application\MainApplicationTest');
 
-			return $suite;
-		}
-	}
+            return $suite;
+        }
+    }
 
-	if(PHPUnit_MAIN_METHOD == 'ApplicationTests::main') {
-		ApplicationTests::main();
-	}
+    if (PHPUnit_MAIN_METHOD == 'ApplicationTests::main') {
+        ApplicationTests::main();
+    }

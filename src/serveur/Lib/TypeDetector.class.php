@@ -15,7 +15,7 @@
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
         public function __construct($mimesTypes) {
-            if(!is_array($mimesTypes)) {
+            if (!is_array($mimesTypes)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $mimesTypes);
             }
 
@@ -27,7 +27,7 @@
          * @return string
          */
         public function getMimeType($clefMimeExtension) {
-            if(!isNull($this->constanteMimes[$clefMimeExtension])) {
+            if (!isNull($this->constanteMimes[$clefMimeExtension])) {
                 return $this->constanteMimes[$clefMimeExtension];
             } else {
                 return '*/*';
@@ -42,13 +42,13 @@
             $allType = explode(',', $enteteHttpAccept);
             $tabTypesTrouves = array();
 
-            foreach($allType as $unType) {
-                if(strpos($unType = strtolower($unType), ';') !== false) {
+            foreach ($allType as $unType) {
+                if (strpos($unType = strtolower($unType), ';') !== false) {
                     $unType = substr($unType, 0, strpos($unType, ';'));
                 }
 
-                foreach($this->constanteMimes as $uneExtension => $unFormatMime) {
-                    if(strcmp($unFormatMime, $unType) === 0) {
+                foreach ($this->constanteMimes as $uneExtension => $unFormatMime) {
+                    if (strcmp($unFormatMime, $unType) === 0) {
                         $tabTypesTrouves[] = $uneExtension;
                     }
                 }

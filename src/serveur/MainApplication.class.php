@@ -38,7 +38,7 @@
                 $this->conteneur->getRestManager()->setVariablesReponse(200, $this->conteneur->getRestManager()->getParametres());
 
                 return $this->conteneur->getRestManager()->fabriquerReponse();
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 return $this->leverException($e);
             }
         }
@@ -48,7 +48,7 @@
          * @return string
          */
         private function leverException(\Exception $uneException) {
-            if($uneException instanceof MainException) {
+            if ($uneException instanceof MainException) {
                 $statusHttp = $uneException->getStatus();
             } else {
                 $statusHttp = 500;
@@ -64,7 +64,7 @@
         }
 
         public function __destruct() {
-            foreach($this->observeurs as $unObserveur) {
+            foreach ($this->observeurs as $unObserveur) {
                 $unObserveur->ecrireMessages($this->conteneur->getErrorManager()->getErreurs());
                 $unObserveur->ecrireAcessLog($this->conteneur->getRestManager()->getRestRequest(), $this->conteneur->getRestManager()->getRestResponse());
             }

@@ -80,7 +80,7 @@
          * @param string $message
          */
         public function recupererMessage($message) {
-            if(isNull($message)) {
+            if (isNull($message)) {
                 $message = '{errorMessage.' . $this->codeErreur . '}';
             }
 

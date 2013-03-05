@@ -30,7 +30,7 @@
          * @param array $arguments
          */
         public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments) {
-            switch($erreurNumber) {
+            switch ($erreurNumber) {
                 case E_USER_ERROR:
                     $this->erreurs[] = new Error($codeErreur, null, $arguments);
                     break;
@@ -61,11 +61,11 @@
          * @throws \Exception
          */
         public function errorHandler($codeErreur, $messageErreur, $fichierErreur, $ligneErreur) {
-            if(!(error_reporting() & $codeErreur)) {
+            if (!(error_reporting() & $codeErreur)) {
                 return null;
             }
 
-            switch($codeErreur) {
+            switch ($codeErreur) {
                 case E_COMPILE_ERROR:
                 case E_ERROR:
                 case E_CORE_ERROR:

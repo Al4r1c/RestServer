@@ -19,9 +19,9 @@
          * @param \SimpleXMLElement $simpleXmlObject
          */
         private function arrayToXml($contenu, \SimpleXMLElement &$simpleXmlObject) {
-            foreach($contenu as $clef => $value) {
-                if(is_array($value)) {
-                    if(!is_numeric($clef)) {
+            foreach ($contenu as $clef => $value) {
+                if (is_array($value)) {
+                    if (!is_numeric($clef)) {
                         $subnode = $simpleXmlObject->addChild("$clef");
                         $this->arrayToXml($value, $subnode);
                     } else {

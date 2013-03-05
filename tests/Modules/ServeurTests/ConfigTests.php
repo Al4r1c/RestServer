@@ -1,27 +1,27 @@
 <?php
-	namespace Modules\ServeurTests;
+    namespace Modules\ServeurTests;
 
-	include_once(__DIR__ . '/../../TestEnv.php');
+    include_once(__DIR__ . '/../../TestEnv.php');
 
-	if(!defined('PHPUnit_MAIN_METHOD')) {
-		define('PHPUnit_MAIN_METHOD', 'ConfigTests::main');
-	}
+    if (!defined('PHPUnit_MAIN_METHOD')) {
+        define('PHPUnit_MAIN_METHOD', 'ConfigTests::main');
+    }
 
-	class ConfigTests {
+    class ConfigTests {
 
-		public static function main() {
-			\PHPUnit_TextUI_TestRunner::run(self::suite());
-		}
+        public static function main() {
+            \PHPUnit_TextUI_TestRunner::run(self::suite());
+        }
 
-		public static function suite() {
-			$suite = new \PHPUnit_Framework_TestSuite('TestSuite');
+        public static function suite() {
+            $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-			$suite->addTestSuite('Modules\ServeurTests\Config\ConfigTest');
+            $suite->addTestSuite('Modules\ServeurTests\Config\ConfigTest');
 
-			return $suite;
-		}
-	}
+            return $suite;
+        }
+    }
 
-	if(PHPUnit_MAIN_METHOD == 'ConfigTests::main') {
-		ConfigTests::main();
-	}
+    if (PHPUnit_MAIN_METHOD == 'ConfigTests::main') {
+        ConfigTests::main();
+    }

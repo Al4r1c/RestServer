@@ -12,7 +12,7 @@
          * @throws \Exception
          */
         public static function getLogger($loggingMethode) {
-            if(class_exists($displayerName = '\\' . __NAMESPACE__ . '\Displayer\\' . ucfirst(strtolower($loggingMethode)))) {
+            if (class_exists($displayerName = '\\' . __NAMESPACE__ . '\Displayer\\' . ucfirst(strtolower($loggingMethode)))) {
                 /** @var $logger \Logging\Displayer\AbstractDisplayer */
                 $logger = new $displayerName();
                 $logger->setTradManager(self::getI18n());

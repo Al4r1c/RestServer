@@ -33,7 +33,7 @@
          * @throws ArgumentTypeException
          */
         public function setRequete($restRequestObject) {
-            if(!$restRequestObject instanceof \Serveur\Rest\RestRequete) {
+            if (!$restRequestObject instanceof \Serveur\Rest\RestRequete) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestRequete', $restRequestObject);
             }
 
@@ -45,7 +45,7 @@
          * @throws ArgumentTypeException
          */
         public function setReponse($restReponseObject) {
-            if(!$restReponseObject instanceof \Serveur\Rest\RestReponse) {
+            if (!$restReponseObject instanceof \Serveur\Rest\RestReponse) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestReponse', $restReponseObject);
             }
 
@@ -58,11 +58,11 @@
          * @return mixed|null
          */
         public function getUriVariable($clef) {
-            if(!is_int($clef)) {
+            if (!is_int($clef)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $clef);
             }
 
-            if(array_key_exists($clef, $tabVarUri = $this->restRequest->getUriVariables())) {
+            if (array_key_exists($clef, $tabVarUri = $this->restRequest->getUriVariables())) {
                 return $tabVarUri[$clef];
             } else {
                 trigger_error_app(E_USER_NOTICE, 20200, $clef);
@@ -84,11 +84,11 @@
          * @return mixed|null
          */
         public function getParametre($clef) {
-            if(!is_string($clef)) {
+            if (!is_string($clef)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clef);
             }
 
-            if(array_key_exists($clef, $tabParam = $this->restRequest->getParametres())) {
+            if (array_key_exists($clef, $tabParam = $this->restRequest->getParametres())) {
                 return $tabParam[$clef];
             } else {
                 trigger_error_app(E_USER_NOTICE, 20201, $clef);

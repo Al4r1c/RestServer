@@ -22,13 +22,13 @@
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
         public function chargerConfiguration($fichierFramework) {
-            if(!$fichierFramework instanceof \Serveur\Lib\Fichier) {
+            if (!$fichierFramework instanceof \Serveur\Lib\Fichier) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
             }
 
             try {
                 $this->applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
-            } catch(\Exception $fe) {
+            } catch (\Exception $fe) {
                 throw new MainException(30000, 500, $fichierFramework->getCheminCompletFichier());
             }
 
@@ -39,8 +39,8 @@
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
         private function validerFichierConfiguration() {
-            foreach(self::$clefMinimales as $uneClefQuiDoitExister) {
-                if(is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
+            foreach (self::$clefMinimales as $uneClefQuiDoitExister) {
+                if (is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
                     throw new MainException(30001, 500, $uneClefQuiDoitExister);
                 }
             }
@@ -52,11 +52,11 @@
          * @return array|bool|null
          */
         public function getConfigValeur($clefConfig) {
-            if(!is_string($clefConfig)) {
+            if (!is_string($clefConfig)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
             }
 
-            if($valeur = rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->applicationConfiguration)) {
+            if ($valeur = rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->applicationConfiguration)) {
                 return $valeur;
             } else {
                 trigger_error_app(E_USER_NOTICE, 30002, $clefConfig);

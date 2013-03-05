@@ -50,10 +50,10 @@
             $fp = fopen($this->fichierLogErreur->getCheminCompletFichier(), 'a+');
             fseek($fp, SEEK_END);
 
-            foreach($tabErreurs as $uneErreur) {
-                if(substr_count(strtolower(get_class($uneErreur)), 'error') === 1) {
+            foreach ($tabErreurs as $uneErreur) {
+                if (substr_count(strtolower(get_class($uneErreur)), 'error') === 1) {
                     $message = '{trad.fatalerror}: ' . $uneErreur->getMessage();
-                } elseif(substr_count(strtolower(get_class($uneErreur)), 'notice') === 1) {
+                } elseif (substr_count(strtolower(get_class($uneErreur)), 'notice') === 1) {
                     $message = '{trad.notice}: ' . $uneErreur->getMessage();
                 } else {
                     throw new \Exception('Invalid error type');
@@ -81,7 +81,7 @@
             fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.remoteIp}: " . $restRequete->getIp()) . "\r\n");
             fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.method}: " . $restRequete->getMethode() . " -- URI: /" . implode('/', $restRequete->getUriVariables()) . "") . "\r\n");
             fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\r\n");
-            foreach($restRequete->getParametres() as $clefParam => $unParam) {
+            foreach ($restRequete->getParametres() as $clefParam => $unParam) {
                 fputs($fp, "\t\t" . $clefParam . " => " . $unParam . "\r\n");
             }
             fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " . $restReponse->getFormatRetour()) . "\r\n");

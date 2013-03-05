@@ -30,7 +30,7 @@
             $this->setNom($donnees['element']);
             $this->setAttributs($donnees['attr']);
             $this->setChildren($donnees['children']);
-            if(isset($donnees['data'])) {
+            if (isset($donnees['data'])) {
                 $this->setValeur($donnees['data']);
             }
         }
@@ -54,7 +54,7 @@
          * @return null|string
          */
         public function getAttribut($attribut) {
-            if(array_key_exists(strtolower($attribut), $this->attributs)) {
+            if (array_key_exists(strtolower($attribut), $this->attributs)) {
                 return $this->attributs[strtolower($attribut)];
             } else {
                 return null;
@@ -65,7 +65,7 @@
          * @return bool|XMLElement[]
          */
         public function getChildren() {
-            if($this->children === false) {
+            if ($this->children === false) {
                 return array();
             }
 

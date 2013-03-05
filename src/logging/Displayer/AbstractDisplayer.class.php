@@ -17,7 +17,7 @@
          * @return void
          */
         public function ecrireMessages(array $tabErreurs) {
-            if(!isNull($tabErreurs)) {
+            if (!isNull($tabErreurs)) {
                 $this->ecrireMessageErreur($tabErreurs);
             }
         }

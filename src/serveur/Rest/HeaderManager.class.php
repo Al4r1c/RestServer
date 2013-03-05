@@ -18,15 +18,15 @@
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
         public function ajouterHeader($champ, $valeur) {
-            if(!is_string($champ)) {
+            if (!is_string($champ)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $champ);
             }
 
-            if(!is_string($valeur)) {
+            if (!is_string($valeur)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
             }
 
-            if(!Tools::isValideHeader($champ)) {
+            if (!Tools::isValideHeader($champ)) {
                 throw new MainException(20400, 500);
             }
 
@@ -34,7 +34,7 @@
         }
 
         public function envoyerHeaders() {
-            foreach($this->headers as $champHeader => $valeurHeader) {
+            foreach ($this->headers as $champHeader => $valeurHeader) {
                 header($champHeader . ': ' . $valeurHeader, true);
             }
         }

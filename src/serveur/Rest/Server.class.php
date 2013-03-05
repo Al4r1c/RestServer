@@ -20,7 +20,7 @@
          * @throws ArgumentTypeException
          */
         public function setVarServeur($varServeur) {
-            if(!is_array($varServeur)) {
+            if (!is_array($varServeur)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $varServeur);
             }
 
@@ -69,11 +69,11 @@
          * @throws MainException
          */
         public function setServeurVariable($serverVar) {
-            if(!is_array($serverVar)) {
+            if (!is_array($serverVar)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
             }
 
-            if(!array_keys_exist(array('HTTP_ACCEPT', 'PHP_INPUT', 'QUERY_STRING', 'REMOTE_ADDR', 'REQUEST_METHOD', 'REQUEST_TIME', 'REQUEST_URI'), $serverVar)) {
+            if (!array_keys_exist(array('HTTP_ACCEPT', 'PHP_INPUT', 'QUERY_STRING', 'REMOTE_ADDR', 'REQUEST_METHOD', 'REQUEST_TIME', 'REQUEST_URI'), $serverVar)) {
                 throw new MainException(20300, 500);
             }
 
@@ -92,7 +92,7 @@
          * @throws MainException
          */
         public function setServeurDonnees($methode) {
-            switch(strtoupper($methode)) {
+            switch (strtoupper($methode)) {
                 case 'GET':
                     parse_str($this->serveurVariable['QUERY_STRING'], $this->serveurDonnees);
                     break;

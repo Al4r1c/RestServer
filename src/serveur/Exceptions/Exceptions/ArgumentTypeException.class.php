@@ -10,7 +10,7 @@
          * @param string $typeVariable
          */
         public function __construct($code, $codeStatus, $methode, $attendu, $typeVariable) {
-            if(!is_object($typeVariable)) {
+            if (!is_object($typeVariable)) {
                 $obtenu = gettype($typeVariable);
             } else {
                 $obtenu = get_class($typeVariable);
