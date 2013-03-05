@@ -9,7 +9,7 @@
         /**
          * @var array
          */
-        private $headers = array();
+        private $_headers = array();
 
         /**
          * @param string $champ
@@ -30,11 +30,11 @@
                 throw new MainException(20400, 500);
             }
 
-            $this->headers[$champ] = $valeur;
+            $this->_headers[$champ] = $valeur;
         }
 
         public function envoyerHeaders() {
-            foreach ($this->headers as $champHeader => $valeurHeader) {
+            foreach ($this->_headers as $champHeader => $valeurHeader) {
                 header($champHeader . ': ' . $valeurHeader, true);
             }
         }

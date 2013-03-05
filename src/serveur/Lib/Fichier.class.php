@@ -8,20 +8,20 @@
         /**
          * @var \Serveur\Lib\FileSystem
          */
-        private $fileSystemInstance;
+        private $çfileSystemInstance;
 
         /*
          * var string
          */
-        private $nomFichier;
+        private $_nomFichier;
 
         /**
          * @var string
          */
-        private $repertoireFichier;
+        private $_repertoireFichier;
 
         public function getFileSystem() {
-            return $this->fileSystemInstance;
+            return $this->çfileSystemInstance;
         }
 
         /**
@@ -32,19 +32,19 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
             }
 
-            $this->fileSystemInstance = $fileSystem;
+            $this->çfileSystemInstance = $fileSystem;
         }
 
         public function getNomFichier() {
-            return $this->nomFichier;
+            return $this->_nomFichier;
         }
 
         public function getRepertoireFichier() {
-            return $this->repertoireFichier;
+            return $this->_repertoireFichier;
         }
 
         public function getCheminCompletFichier() {
-            return $this->repertoireFichier . $this->nomFichier;
+            return $this->_repertoireFichier . $this->_nomFichier;
         }
 
         /**
@@ -65,7 +65,7 @@
                 throw new MainException(10201, 500, $nom);
             }
 
-            $this->nomFichier = $nom;
+            $this->_nomFichier = $nom;
         }
 
         /**
@@ -82,7 +82,7 @@
                 throw new MainException(10202, 500);
             }
 
-            $this->repertoireFichier = $this->fileSystemInstance->relatifToAbsolu($chemin);
+            $this->_repertoireFichier = $this->çfileSystemInstance->relatifToAbsolu($chemin);
         }
 
         /**
@@ -98,14 +98,14 @@
          * @return bool
          */
         public function fichierExiste() {
-            return $this->fileSystemInstance->fichierExiste($this->getCheminCompletFichier());
+            return $this->çfileSystemInstance->fichierExiste($this->getCheminCompletFichier());
         }
 
         /**
          * @return bool
          */
         public function dossierExiste() {
-            return $this->fileSystemInstance->dossierExiste($this->getRepertoireFichier());
+            return $this->çfileSystemInstance->dossierExiste($this->getRepertoireFichier());
         }
 
         /**
@@ -115,11 +115,11 @@
          */
         public function creerFichier($droit = '0777') {
             if (!$this->dossierExiste()) {
-                throw new MainException(10204, 500, $this->repertoireFichier);
+                throw new MainException(10204, 500, $this->_repertoireFichier);
             }
 
             if (!$this->fichierExiste()) {
-                if (!$this->fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
+                if (!$this->çfileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
                     throw new MainException(10205, 500, $this->getCheminCompletFichier());
                 }
             }
@@ -136,6 +136,6 @@
                 throw new MainException(10203, 50, $this->getCheminCompletFichier());
             }
 
-            return $this->fileSystemInstance->chargerFichier($this->getCheminCompletFichier());
+            return $this->çfileSystemInstance->chargerFichier($this->getCheminCompletFichier());
         }
     }

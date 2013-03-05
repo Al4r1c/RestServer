@@ -8,12 +8,12 @@
         /**
          * @var string
          */
-        private $basePath;
+        private $_basePath;
 
         /**
          * @var string
          */
-        private $os;
+        private $_os;
 
         /**
          * @param string $osName
@@ -37,13 +37,13 @@
             $os = strtolower($os);
 
             if (substr($os, 0, 7) == 'windows') {
-                $this->os = 'Windows';
+                $this->_os = 'Windows';
             } elseif (substr($os, 0, 3) == 'mac') {
-                $this->os = 'Mac';
+                $this->_os = 'Mac';
             } elseif ($os == 'linux') {
-                $this->os = 'Linux';
+                $this->_os = 'Linux';
             } elseif (substr($os, 0, 7) == 'freebsd') {
-                $this->os = 'FreeBSD';
+                $this->_os = 'FreeBSD';
             } else {
                 throw new MainException(10100, 500, $os);
             }
@@ -66,7 +66,7 @@
                 throw new MainException(10102, 500, $basePath);
             }
 
-            $this->basePath = $basePath;
+            $this->_basePath = $basePath;
         }
 
         /**
@@ -200,7 +200,7 @@
          * @return string
          */
         public function getDirectorySeparateur() {
-            if ($this->os == 'Windows') {
+            if ($this->_os == 'Windows') {
                 $separateurChemin = '\\';
             } else {
                 $separateurChemin = '/';
@@ -237,7 +237,7 @@
                 }
             }
 
-            return ($this->os == 'Windows' ? '' : '/') . implode($separateurChemin, $absolutes) . $separateurChemin;
+            return ($this->_os == 'Windows' ? '' : '/') . implode($separateurChemin, $absolutes) . $separateurChemin;
         }
 
         /**
@@ -247,8 +247,8 @@
          * @return string
          */
         protected function ajouterBaseSiBesoin($chemin, $separateurChemin) {
-            if (!startsWith($chemin, $this->basePath)) {
-                $chemin = $this->basePath . $separateurChemin . $chemin;
+            if (!startsWith($chemin, $this->_basePath)) {
+                $chemin = $this->_basePath . $separateurChemin . $chemin;
             }
 
             return $chemin;
@@ -268,7 +268,7 @@
                 return true;
             }
 
-            if ($this->os == 'Windows') {
+            if ($this->_os == 'Windows') {
                 if (preg_match('@^[A-Z]:\\\\@i', $chemin) || preg_match('@^\\\\\\\\[A-Z]+\\\\[^\\\\]@i', $chemin)) {
                     return true;
                 }

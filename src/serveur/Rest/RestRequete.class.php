@@ -9,17 +9,17 @@
         /**
          * @var string
          */
-        private $methode = 'GET';
+        private $_methode = 'GET';
 
         /**
          * @var string[]
          */
-        private $formatsDemandes;
+        private $_formatsDemandes;
 
         /**
          * @var string[]
          */
-        private $dataUri;
+        private $_dataUri;
 
         /**
          * @var string[]
@@ -29,12 +29,12 @@
         /**
          * @var string
          */
-        private $ip;
+        private $_ip;
 
         /**
          * @var \DateTime
          */
-        private $dateRequete;
+        private $_dateRequete;
 
         /**
          * @param Server $server
@@ -57,21 +57,21 @@
          * @return string
          */
         public function getMethode() {
-            return $this->methode;
+            return $this->_methode;
         }
 
         /**
          * @return string[]
          */
         public function getFormatsDemandes() {
-            return $this->formatsDemandes;
+            return $this->_formatsDemandes;
         }
 
         /**
          * @return string[]
          */
         public function getUriVariables() {
-            return $this->dataUri;
+            return $this->_dataUri;
         }
 
         /**
@@ -85,14 +85,14 @@
          * @return \DateTime
          */
         public function getDateRequete() {
-            return $this->dateRequete;
+            return $this->_dateRequete;
         }
 
         /**
          * @return string
          */
         public function getIp() {
-            return $this->ip;
+            return $this->_ip;
         }
 
         /**
@@ -106,7 +106,7 @@
                 throw new MainException(20000, 400, $method);
             }
 
-            $this->methode = $method;
+            $this->_methode = $method;
         }
 
         /**
@@ -126,7 +126,7 @@
                 throw new MainException(20001, 400);
             }
 
-            $this->formatsDemandes = $formatsTrouves;
+            $this->_formatsDemandes = $formatsTrouves;
         }
 
         /**
@@ -143,7 +143,7 @@
                     $uri = substr($uri, 0, $pos);
                 }
 
-                $this->dataUri = array_map('rawurlencode', explode('/', trim(preg_replace('%([^:])([/]{2,})%', '\\1/', $uri), '/')));
+                $this->_dataUri = array_map('rawurlencode', explode('/', trim(preg_replace('%([^:])([/]{2,})%', '\\1/', $uri), '/')));
             }
         }
 
@@ -171,7 +171,7 @@
 
             $datetime = new \DateTime();
             $datetime->setTimestamp($dateRequeteTimestamp);
-            $this->dateRequete = $datetime;
+            $this->_dateRequete = $datetime;
         }
 
         /**
@@ -188,6 +188,6 @@
                 throw new MainException(20002, 400);
             }
 
-            $this->ip = $ip;
+            $this->_ip = $ip;
         }
     }

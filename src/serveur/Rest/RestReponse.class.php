@@ -10,32 +10,32 @@
         /**
          * @var HeaderManager
          */
-        private $headerManager;
+        private $_headerManager;
 
         /**
          * @var int
          */
-        private $status = 500;
+        private $_status = 500;
 
         /**
          * @var string
          */
-        private $formatRetour;
+        private $_formatRetour;
 
         /**
          * @var string[]
          */
-        private $formatsAcceptes;
+        private $_formatsAcceptes;
 
         /**
          * @var string
          */
-        private $charset;
+        private $_charset;
 
         /**
          * @var string
          */
-        private $contenu = '';
+        private $_contenu = '';
 
         /**
          * @param HeaderManager $headerManager
@@ -46,7 +46,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\HeaderManager', $headerManager);
             }
 
-            $this->headerManager = $headerManager;
+            $this->_headerManager = $headerManager;
         }
 
         /**
@@ -66,35 +66,35 @@
          * @return int
          */
         public function getStatus() {
-            return $this->status;
+            return $this->_status;
         }
 
         /**
          * @return string
          */
         public function getContenu() {
-            return $this->contenu;
+            return $this->_contenu;
         }
 
         /**
          * @return \string[]
          */
         public function getFormatsAcceptes() {
-            return $this->formatsAcceptes;
+            return $this->_formatsAcceptes;
         }
 
         /**
          * @return string
          */
         public function getFormatRetour() {
-            return $this->formatRetour;
+            return $this->_formatRetour;
         }
 
         /**
          * @return string
          */
         public function getCharset() {
-            return $this->charset;
+            return $this->_charset;
         }
 
         /**
@@ -106,7 +106,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $contenu);
             }
 
-            $this->contenu = $contenu;
+            $this->_contenu = $contenu;
         }
 
         /**
@@ -123,7 +123,7 @@
                 throw new MainException(20100, 500, $nouveauStatus);
             }
 
-            $this->status = $nouveauStatus;
+            $this->_status = $nouveauStatus;
         }
 
         /**
@@ -151,7 +151,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $formatRetourDefaut);
             }
 
-            $this->formatRetour = $formatRetourDefaut;
+            $this->_formatRetour = $formatRetourDefaut;
         }
 
         /**
@@ -168,7 +168,7 @@
                 throw new MainException(20102, 400);
             }
 
-            $this->formatsAcceptes = $formatsAcceptes;
+            $this->_formatsAcceptes = $formatsAcceptes;
         }
 
         /**
@@ -185,13 +185,13 @@
                 throw new MainException(20103, 500, $charset);
             }
 
-            $this->charset = strtolower($charset);
+            $this->_charset = strtolower($charset);
         }
 
         private function envoyerHeaders() {
-            http_response_code($this->status);
-            $this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($this->formatRetour)] . '; charset=' . strtolower($this->charset));
-            $this->headerManager->envoyerHeaders();
+            http_response_code($this->_status);
+            $this->_headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' . strtolower($this->_charset));
+            $this->_headerManager->envoyerHeaders();
         }
 
         private function trouverFormatRetourCorrect(array $formatsDemandes, array $formatsAcceptes, $formatDefaut) {
@@ -199,7 +199,7 @@
 
             foreach ($formatsDemandes as $unFormatDemande) {
                 if (false !== $temp = array_search_recursif($unFormatDemande, $formatsAcceptes)) {
-                    $this->formatRetour = $unFormatDemande;
+                    $this->_formatRetour = $unFormatDemande;
                     $nomClassFormatRetour = ucfirst(strtolower($temp));
                     break;
                 }
@@ -207,7 +207,7 @@
 
             if (isNull($nomClassFormatRetour)) {
                 if (!isNull($formatDefaut) && array_key_exists($formatDefaut, $formatsAcceptes)) {
-                    $this->formatRetour = $formatsAcceptes[$formatDefaut];
+                    $this->_formatRetour = $formatsAcceptes[$formatDefaut];
                     $nomClassFormatRetour = ucfirst(strtolower($formatDefaut));
                 } else {
                     throw new MainException(20104, 500, $formatDefaut);
@@ -241,10 +241,10 @@
             }
 
             /* @var $view \Serveur\Renderers\AbstractRenderer */
-            $view = $this->getRenderClass($this->trouverFormatRetourCorrect($formatsDemandes, $this->formatsAcceptes, $this->formatRetour));
+            $view = $this->getRenderClass($this->trouverFormatRetourCorrect($formatsDemandes, $this->_formatsAcceptes, $this->_formatRetour));
 
             $this->envoyerHeaders();
 
-            return $view->render($this->contenu);
+            return $view->render($this->_contenu);
         }
     }

@@ -8,7 +8,7 @@
         /**
          * @var array
          */
-        private $constanteMimes;
+        private $_constanteMimes;
 
         /**
          * @param array $mimesTypes
@@ -19,7 +19,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $mimesTypes);
             }
 
-            $this->constanteMimes = $mimesTypes;
+            $this->_constanteMimes = $mimesTypes;
         }
 
         /**
@@ -27,8 +27,8 @@
          * @return string
          */
         public function getMimeType($clefMimeExtension) {
-            if (!isNull($this->constanteMimes[$clefMimeExtension])) {
-                return $this->constanteMimes[$clefMimeExtension];
+            if (!isNull($this->_constanteMimes[$clefMimeExtension])) {
+                return $this->_constanteMimes[$clefMimeExtension];
             } else {
                 return '*/*';
             }
@@ -47,7 +47,7 @@
                     $unType = substr($unType, 0, strpos($unType, ';'));
                 }
 
-                foreach ($this->constanteMimes as $uneExtension => $unFormatMime) {
+                foreach ($this->_constanteMimes as $uneExtension => $unFormatMime) {
                     if (strcmp($unFormatMime, $unType) === 0) {
                         $tabTypesTrouves[] = $uneExtension;
                     }

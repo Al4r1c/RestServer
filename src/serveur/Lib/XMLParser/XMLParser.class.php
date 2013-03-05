@@ -7,23 +7,23 @@
         /**
          * @var string
          */
-        private $donneesSourcedata;
+        private $_donneesSourcedata;
 
         /**
          * @var array|XMLElement
          */
-        private $donneesParsees;
+        private $_donneesParsees;
 
         /**
          * @var string[]
          */
-        private $erreur;
+        private $_erreur;
 
         /**
          * @param string $contenuXml
          */
         public function setContenu($contenuXml) {
-            $this->donneesSourcedata = $contenuXml;
+            $this->_donneesSourcedata = $contenuXml;
             $this->parse($contenuXml);
         }
 
@@ -31,14 +31,14 @@
          * @return bool
          */
         public function isValide() {
-            return empty($this->erreur);
+            return empty($this->_erreur);
         }
 
         /**
          * @return string
          */
         public function getErreurMessage() {
-            return sprintf('XML error at line %d column %d: %s', $this->erreur['line'], $this->erreur['column'], $this->erreur['message']);
+            return sprintf('XML error at line %d column %d: %s', $this->_erreur['line'], $this->_erreur['column'], $this->_erreur['message']);
         }
 
         /**
@@ -61,8 +61,8 @@
                 $donnee = $uneLigne . "\n";
 
                 if (!xml_parse($parser, $donnee)) {
-                    $this->donneesParsees = null;
-                    $this->erreur = array('line' => xml_get_current_line_number($parser), 'column' => xml_get_current_column_number($parser), 'message' => xml_error_string(xml_get_error_code($parser)));
+                    $this->_donneesParsees = null;
+                    $this->_erreur = array('line' => xml_get_current_line_number($parser), 'column' => xml_get_current_column_number($parser), 'message' => xml_error_string(xml_get_error_code($parser)));
                 }
             }
             unset($GLOBALS['temporaire']);
@@ -76,9 +76,9 @@
         private function tagDebutXML($parser, $nom, $attributs) {
             $GLOBALS['temporaire'][] = $nom;
 
-            $this->donneesParsees[$nom]['element'] = strtolower($nom);
-            $this->donneesParsees[$nom]['attr'] = array_map('strtolower', $attributs);
-            $this->donneesParsees[$nom]['children'] = array();
+            $this->_donneesParsees[$nom]['element'] = strtolower($nom);
+            $this->_donneesParsees[$nom]['attr'] = array_map('strtolower', $attributs);
+            $this->_donneesParsees[$nom]['children'] = array();
         }
 
         /**
@@ -96,13 +96,13 @@
                 $nouveauLast = end($temporaire);
 
                 $nouvelElement = new XMLElement();
-                $nouvelElement->setDonnees($this->donneesParsees[$tempName]);
+                $nouvelElement->setDonnees($this->_donneesParsees[$tempName]);
 
                 if (count($temporaire) > 0) {
-                    $this->donneesParsees[$nouveauLast]['children'][] = $nouvelElement;
-                    unset($this->donneesParsees[$tempName]);
+                    $this->_donneesParsees[$nouveauLast]['children'][] = $nouvelElement;
+                    unset($this->_donneesParsees[$tempName]);
                 } else {
-                    $this->donneesParsees = $nouvelElement;
+                    $this->_donneesParsees = $nouvelElement;
                 }
             }
         }
@@ -113,13 +113,13 @@
          */
         private function valeurXML($parser, $valeur) {
             if (trim($valeur) != '') {
-                end($this->donneesParsees);
-                if (!isset($this->donneesParsees[key($this->donneesParsees)]['data'])) {
-                    $this->donneesParsees[key($this->donneesParsees)]['data'] = trim(str_replace("\n", '', $valeur));
+                end($this->_donneesParsees);
+                if (!isset($this->_donneesParsees[key($this->_donneesParsees)]['data'])) {
+                    $this->_donneesParsees[key($this->_donneesParsees)]['data'] = trim(str_replace("\n", '', $valeur));
                 } else {
-                    $this->donneesParsees[key($this->donneesParsees)]['data'] .= trim(str_replace("\n", '', $valeur));
+                    $this->_donneesParsees[key($this->_donneesParsees)]['data'] .= trim(str_replace("\n", '', $valeur));
                 }
-                $this->donneesParsees[key($this->donneesParsees)]['children'] = false;
+                $this->_donneesParsees[key($this->_donneesParsees)]['children'] = false;
             }
         }
 
@@ -127,7 +127,7 @@
          * @return XMLElement[]
          */
         public function getConfigValeur($clefConfig) {
-            if ($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)), $this->donneesParsees->getChildren())) {
+            if ($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)), $this->_donneesParsees->getChildren())) {
                 return $valeur;
             } else {
                 return null;

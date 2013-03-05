@@ -7,25 +7,25 @@
         /**
          * @var \Serveur\Rest\RestRequete
          */
-        private $restRequest;
+        private $_restRequest;
 
         /**
          * @var \Serveur\Rest\RestReponse
          */
-        private $restResponse;
+        private $_restResponse;
 
         /**
          * @return \Serveur\Rest\RestRequete
          */
         public function getRestRequest() {
-            return $this->restRequest;
+            return $this->_restRequest;
         }
 
         /**
          * @return \Serveur\Rest\RestReponse
          */
         public function getRestResponse() {
-            return $this->restResponse;
+            return $this->_restResponse;
         }
 
         /**
@@ -37,7 +37,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestRequete', $restRequestObject);
             }
 
-            $this->restRequest = $restRequestObject;
+            $this->_restRequest = $restRequestObject;
         }
 
         /**
@@ -49,7 +49,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestReponse', $restReponseObject);
             }
 
-            $this->restResponse = $restReponseObject;
+            $this->_restResponse = $restReponseObject;
         }
 
         /**
@@ -62,7 +62,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $clef);
             }
 
-            if (array_key_exists($clef, $tabVarUri = $this->restRequest->getUriVariables())) {
+            if (array_key_exists($clef, $tabVarUri = $this->_restRequest->getUriVariables())) {
                 return $tabVarUri[$clef];
             } else {
                 trigger_error_app(E_USER_NOTICE, 20200, $clef);
@@ -75,7 +75,7 @@
          * @return array
          */
         public function getParametres() {
-            return $this->restRequest->getParametres();
+            return $this->_restRequest->getParametres();
         }
 
         /**
@@ -88,7 +88,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clef);
             }
 
-            if (array_key_exists($clef, $tabParam = $this->restRequest->getParametres())) {
+            if (array_key_exists($clef, $tabParam = $this->_restRequest->getParametres())) {
                 return $tabParam[$clef];
             } else {
                 trigger_error_app(E_USER_NOTICE, 20201, $clef);
@@ -102,14 +102,14 @@
          * @param string $contenu
          */
         public function setVariablesReponse($status, $contenu = '') {
-            $this->restResponse->setStatus($status);
-            $this->restResponse->setContenu($contenu);
+            $this->_restResponse->setStatus($status);
+            $this->_restResponse->setContenu($contenu);
         }
 
         /**
          * @return string
          */
         public function fabriquerReponse() {
-            return $this->restResponse->fabriquerReponse($this->restRequest->getFormatsDemandes());
+            return $this->_restResponse->fabriquerReponse($this->_restRequest->getFormatsDemandes());
         }
     }

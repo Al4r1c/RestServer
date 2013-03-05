@@ -8,26 +8,26 @@
         /**
          * @var \Conteneur\MonConteneur
          */
-        private $conteneur;
+        private $_conteneur;
 
         /**
          * @var \Logging\Displayer\AbstractDisplayer[]
          */
-        private $observeurs = array();
+        private $_observeurs = array();
 
         /**
          * @param \Conteneur\MonConteneur $nouveauConteneur
          */
         public function __construct(\Conteneur\MonConteneur $nouveauConteneur) {
-            $this->conteneur = $nouveauConteneur;
-            $this->conteneur->getErrorManager()->setHandlers();
+            $this->_conteneur = $nouveauConteneur;
+            $this->_conteneur->getErrorManager()->setHandlers();
         }
 
         /**
          * @param \Logging\Displayer\AbstractDisplayer $observeur
          */
         public function ajouterObserveur(\Logging\Displayer\AbstractDisplayer $observeur) {
-            $this->observeurs[] = $observeur;
+            $this->_observeurs[] = $observeur;
         }
 
         /**
@@ -35,9 +35,9 @@
          */
         public function run() {
             try {
-                $this->conteneur->getRestManager()->setVariablesReponse(200, $this->conteneur->getRestManager()->getParametres());
+                $this->_conteneur->getRestManager()->setVariablesReponse(200, $this->_conteneur->getRestManager()->getParametres());
 
-                return $this->conteneur->getRestManager()->fabriquerReponse();
+                return $this->_conteneur->getRestManager()->fabriquerReponse();
             } catch (\Exception $e) {
                 return $this->leverException($e);
             }
@@ -58,15 +58,15 @@
 
             $infoHttpCode = Constante::chargerConfig('httpcode')[$statusHttp];
 
-            $this->conteneur->getRestManager()->setVariablesReponse($statusHttp, array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1]));
+            $this->_conteneur->getRestManager()->setVariablesReponse($statusHttp, array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1]));
 
-            return $this->conteneur->getRestManager()->fabriquerReponse();
+            return $this->_conteneur->getRestManager()->fabriquerReponse();
         }
 
         public function __destruct() {
-            foreach ($this->observeurs as $unObserveur) {
-                $unObserveur->ecrireMessages($this->conteneur->getErrorManager()->getErreurs());
-                $unObserveur->ecrireAcessLog($this->conteneur->getRestManager()->getRestRequest(), $this->conteneur->getRestManager()->getRestResponse());
+            foreach ($this->_observeurs as $unObserveur) {
+                $unObserveur->ecrireMessages($this->_conteneur->getErrorManager()->getErreurs());
+                $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(), $this->_conteneur->getRestManager()->getRestResponse());
             }
         }
     }
