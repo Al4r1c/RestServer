@@ -1,248 +1,248 @@
 <?php
-	namespace Serveur\Rest;
+    namespace Serveur\Rest;
 
-	use Serveur\Utils\Constante;
-	use Serveur\Utils\Tools;
+    use Serveur\Utils\Constante;
+    use Serveur\Utils\Tools;
 
-	class RestReponse {
-		/**
-		 * @var HeaderManager
-		 */
-		private $headerManager;
+    class RestReponse {
+        /**
+         * @var HeaderManager
+         */
+        private $headerManager;
 
-		/**
-		 * @var int
-		 */
-		private $status = 500;
+        /**
+         * @var int
+         */
+        private $status = 500;
 
-		/**
-		 * @var string
-		 */
-		private $formatRetour;
+        /**
+         * @var string
+         */
+        private $formatRetour;
 
-		/**
-		 * @var string[]
-		 */
-		private $formatsAcceptes;
+        /**
+         * @var string[]
+         */
+        private $formatsAcceptes;
 
-		/**
-		 * @var string
-		 */
-		private $charset;
+        /**
+         * @var string
+         */
+        private $charset;
 
-		/**
-		 * @var string
-		 */
-		private $contenu = '';
+        /**
+         * @var string
+         */
+        private $contenu = '';
 
-		/**
-		 * @param HeaderManager $headerManager
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 */
-		public function setHeaderManager($headerManager) {
-			if(!$headerManager instanceof HeaderManager) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\HeaderManager', $headerManager);
-			}
+        /**
+         * @param HeaderManager $headerManager
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         */
+        public function setHeaderManager($headerManager) {
+            if(!$headerManager instanceof HeaderManager) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\HeaderManager', $headerManager);
+            }
 
-			$this->headerManager = $headerManager;
-		}
+            $this->headerManager = $headerManager;
+        }
 
-		/**
-		 * @param \Serveur\Config\Config $configuration
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 */
-		public function setConfig($configuration) {
-			if(!$configuration instanceof \Serveur\Config\Config) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Config\Config', $configuration);
-			}
+        /**
+         * @param \Serveur\Config\Config $configuration
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         */
+        public function setConfig($configuration) {
+            if(!$configuration instanceof \Serveur\Config\Config) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Config\Config', $configuration);
+            }
 
-			$this->setFormats($configuration->getConfigValeur('config.default_render'), $configuration->getConfigValeur('render'));
-			$this->setCharset($configuration->getConfigValeur('config.charset'));
-		}
+            $this->setFormats($configuration->getConfigValeur('config.default_render'), $configuration->getConfigValeur('render'));
+            $this->setCharset($configuration->getConfigValeur('config.charset'));
+        }
 
-		/**
-		 * @return int
-		 */
-		public function getStatus() {
-			return $this->status;
-		}
+        /**
+         * @return int
+         */
+        public function getStatus() {
+            return $this->status;
+        }
 
-		/**
-		 * @return string
-		 */
-		public function getContenu() {
-			return $this->contenu;
-		}
+        /**
+         * @return string
+         */
+        public function getContenu() {
+            return $this->contenu;
+        }
 
-		/**
-		 * @return \string[]
-		 */
-		public function getFormatsAcceptes() {
-			return $this->formatsAcceptes;
-		}
+        /**
+         * @return \string[]
+         */
+        public function getFormatsAcceptes() {
+            return $this->formatsAcceptes;
+        }
 
-		/**
-		 * @return string
-		 */
-		public function getFormatRetour() {
-			return $this->formatRetour;
-		}
+        /**
+         * @return string
+         */
+        public function getFormatRetour() {
+            return $this->formatRetour;
+        }
 
-		/**
-		 * @return string
-		 */
-		public function getCharset() {
-			return $this->charset;
-		}
+        /**
+         * @return string
+         */
+        public function getCharset() {
+            return $this->charset;
+        }
 
-		/**
-		 * @param string $contenu
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 */
-		public function setContenu($contenu) {
-			if(!is_array($contenu)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $contenu);
-			}
+        /**
+         * @param string $contenu
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         */
+        public function setContenu($contenu) {
+            if(!is_array($contenu)) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $contenu);
+            }
 
-			$this->contenu = $contenu;
-		}
+            $this->contenu = $contenu;
+        }
 
-		/**
-		 * @param int $nouveauStatus
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @throws \Serveur\Exceptions\Exceptions\MainException
-		 */
-		public function setStatus($nouveauStatus) {
-			if(!is_int($nouveauStatus)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'int', $nouveauStatus);
-			}
+        /**
+         * @param int $nouveauStatus
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        public function setStatus($nouveauStatus) {
+            if(!is_int($nouveauStatus)) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'int', $nouveauStatus);
+            }
 
-			if(!Tools::isValideHttpCode($nouveauStatus)) {
-				throw new \Serveur\Exceptions\Exceptions\MainException(20100, 500, $nouveauStatus);
-			}
+            if(!Tools::isValideHttpCode($nouveauStatus)) {
+                throw new \Serveur\Exceptions\Exceptions\MainException(20100, 500, $nouveauStatus);
+            }
 
-			$this->status = $nouveauStatus;
-		}
+            $this->status = $nouveauStatus;
+        }
 
-		/**
-		 * @param string $formatRetourDefaut
-		 * @param string[] $formatsAcceptes
-		 */
-		public function setFormats($formatRetourDefaut, $formatsAcceptes) {
-			$this->setFormatsAcceptes($formatsAcceptes);
+        /**
+         * @param string $formatRetourDefaut
+         * @param string[] $formatsAcceptes
+         */
+        public function setFormats($formatRetourDefaut, $formatsAcceptes) {
+            $this->setFormatsAcceptes($formatsAcceptes);
 
-			if(array_key_exists(strtoupper($formatRetourDefaut), $formatsAcceptes)) {
-				$this->setFormatRetour($formatRetourDefaut);
-			} else {
-				$this->setFormatRetour(key($formatsAcceptes));
-				trigger_error_app(20101, $formatRetourDefaut);
-			}
-		}
+            if(array_key_exists(strtoupper($formatRetourDefaut), $formatsAcceptes)) {
+                $this->setFormatRetour($formatRetourDefaut);
+            } else {
+                $this->setFormatRetour(key($formatsAcceptes));
+                trigger_error_app(20101, $formatRetourDefaut);
+            }
+        }
 
-		/**
-		 * @param string $formatRetourDefaut
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @throws \Serveur\Exceptions\Exceptions\MainException
-		 */
-		public function setFormatRetour($formatRetourDefaut) {
-			if(!is_string($formatRetourDefaut)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $formatRetourDefaut);
-			}
+        /**
+         * @param string $formatRetourDefaut
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        public function setFormatRetour($formatRetourDefaut) {
+            if(!is_string($formatRetourDefaut)) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $formatRetourDefaut);
+            }
 
-			$this->formatRetour = $formatRetourDefaut;
-		}
+            $this->formatRetour = $formatRetourDefaut;
+        }
 
-		/**
-		 * @param string[] $formatsAcceptes
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @throws \Serveur\Exceptions\Exceptions\MainException
-		 */
-		public function setFormatsAcceptes($formatsAcceptes) {
-			if(!is_array($formatsAcceptes)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsAcceptes);
-			}
+        /**
+         * @param string[] $formatsAcceptes
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        public function setFormatsAcceptes($formatsAcceptes) {
+            if(!is_array($formatsAcceptes)) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsAcceptes);
+            }
 
-			if(isNull($formatsAcceptes)) {
-				throw new \Serveur\Exceptions\Exceptions\MainException(20102, 400);
-			}
+            if(isNull($formatsAcceptes)) {
+                throw new \Serveur\Exceptions\Exceptions\MainException(20102, 400);
+            }
 
-			$this->formatsAcceptes = $formatsAcceptes;
-		}
+            $this->formatsAcceptes = $formatsAcceptes;
+        }
 
-		/**
-		 * @param string $charset
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @throws \Serveur\Exceptions\Exceptions\MainException
-		 */
-		public function setCharset($charset) {
-			if(!is_string($charset)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $charset);
-			}
+        /**
+         * @param string $charset
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        public function setCharset($charset) {
+            if(!is_string($charset)) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $charset);
+            }
 
-			if(!in_array(strtoupper($charset), array_map('strtoupper', mb_list_encodings()))) {
-				throw new \Serveur\Exceptions\Exceptions\MainException(20103, 500, $charset);
-			}
+            if(!in_array(strtoupper($charset), array_map('strtoupper', mb_list_encodings()))) {
+                throw new \Serveur\Exceptions\Exceptions\MainException(20103, 500, $charset);
+            }
 
-			$this->charset = strtolower($charset);
-		}
+            $this->charset = strtolower($charset);
+        }
 
-		private function envoyerHeaders() {
-			http_response_code($this->status);
-			$this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($this->formatRetour)] . '; charset=' . strtolower($this->charset));
-			$this->headerManager->envoyerHeaders();
-		}
+        private function envoyerHeaders() {
+            http_response_code($this->status);
+            $this->headerManager->ajouterHeader('Content-type', Constante::chargerConfig('mimes')[strtolower($this->formatRetour)] . '; charset=' . strtolower($this->charset));
+            $this->headerManager->envoyerHeaders();
+        }
 
-		private function trouverFormatRetourCorrect(array $formatsDemandes, array $formatsAcceptes, $formatDefaut) {
-			$nomClassFormatRetour = null;
+        private function trouverFormatRetourCorrect(array $formatsDemandes, array $formatsAcceptes, $formatDefaut) {
+            $nomClassFormatRetour = null;
 
-			foreach($formatsDemandes as $unFormatDemande) {
-				if(false !== $temp = array_search_recursif($unFormatDemande, $formatsAcceptes)) {
-					$this->formatRetour = $unFormatDemande;
-					$nomClassFormatRetour = ucfirst(strtolower($temp));
-					break;
-				}
-			}
+            foreach($formatsDemandes as $unFormatDemande) {
+                if(false !== $temp = array_search_recursif($unFormatDemande, $formatsAcceptes)) {
+                    $this->formatRetour = $unFormatDemande;
+                    $nomClassFormatRetour = ucfirst(strtolower($temp));
+                    break;
+                }
+            }
 
-			if(isNull($nomClassFormatRetour)) {
-				if(!isNull($formatDefaut) && array_key_exists($formatDefaut, $formatsAcceptes)) {
-					$this->formatRetour = $formatsAcceptes[$formatDefaut];
-					$nomClassFormatRetour = ucfirst(strtolower($formatDefaut));
-				} else {
-					throw new \Serveur\Exceptions\Exceptions\MainException(20104, 500, $formatDefaut);
-				}
-			}
+            if(isNull($nomClassFormatRetour)) {
+                if(!isNull($formatDefaut) && array_key_exists($formatDefaut, $formatsAcceptes)) {
+                    $this->formatRetour = $formatsAcceptes[$formatDefaut];
+                    $nomClassFormatRetour = ucfirst(strtolower($formatDefaut));
+                } else {
+                    throw new \Serveur\Exceptions\Exceptions\MainException(20104, 500, $formatDefaut);
+                }
+            }
 
-			return $nomClassFormatRetour;
-		}
+            return $nomClassFormatRetour;
+        }
 
-		/**
-		 * @param string $renderClassName
-		 * @return mixed
-		 * @throws \Serveur\Exceptions\Exceptions\MainException
-		 */
-		protected function getRenderClass($renderClassName) {
-			if(!class_exists($view_name = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
-				throw new \Serveur\Exceptions\Exceptions\MainException(20105, 415, $renderClassName);
-			}
+        /**
+         * @param string $renderClassName
+         * @return mixed
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        protected function getRenderClass($renderClassName) {
+            if(!class_exists($view_name = '\\' . SERVER_NAMESPACE . '\Renderers\\' . $renderClassName)) {
+                throw new \Serveur\Exceptions\Exceptions\MainException(20105, 415, $renderClassName);
+            }
 
-			return new $view_name();
-		}
+            return new $view_name();
+        }
 
-		/**
-		 * @param array $formatsDemandes
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @return string
-		 */
-		public function fabriquerReponse($formatsDemandes) {
-			if(!is_array($formatsDemandes)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
-			}
+        /**
+         * @param array $formatsDemandes
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @return string
+         */
+        public function fabriquerReponse($formatsDemandes) {
+            if(!is_array($formatsDemandes)) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
+            }
 
-			/* @var $view \Serveur\Renderers\AbstractRenderer */
-			$view = $this->getRenderClass($this->trouverFormatRetourCorrect($formatsDemandes, $this->formatsAcceptes, $this->formatRetour));
+            /* @var $view \Serveur\Renderers\AbstractRenderer */
+            $view = $this->getRenderClass($this->trouverFormatRetourCorrect($formatsDemandes, $this->formatsAcceptes, $this->formatRetour));
 
-			$this->envoyerHeaders();
+            $this->envoyerHeaders();
 
-			return $view->render($this->contenu);
-		}
-	}
+            return $view->render($this->contenu);
+        }
+    }

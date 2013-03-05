@@ -1,41 +1,38 @@
 <?php
-	namespace Logging;
+    namespace Logging;
 
-	class LoggingFactory {
+    class LoggingFactory {
 
-		private static $langueDefaut = 'French';
-		private static $langueDispo = array(
-			'French' => 'fr',
-			'English' => 'en'
-		);
+        private static $langueDefaut = 'French';
+        private static $langueDispo = array('French' => 'fr', 'English' => 'en');
 
-		/**
-		 * @param string $loggingMethode
-		 * @return Displayer\AbstractDisplayer
-		 * @throws \Exception
-		 */
-		public static function getLogger($loggingMethode) {
-			if(class_exists($displayerName = '\\' . __NAMESPACE__ . '\Displayer\\' . ucfirst(strtolower($loggingMethode)))) {
-				/** @var $logger \Logging\Displayer\AbstractDisplayer */
-				$logger = new $displayerName();
-				$logger->setTradManager(self::getI18n());
+        /**
+         * @param string $loggingMethode
+         * @return Displayer\AbstractDisplayer
+         * @throws \Exception
+         */
+        public static function getLogger($loggingMethode) {
+            if(class_exists($displayerName = '\\' . __NAMESPACE__ . '\Displayer\\' . ucfirst(strtolower($loggingMethode)))) {
+                /** @var $logger \Logging\Displayer\AbstractDisplayer */
+                $logger = new $displayerName();
+                $logger->setTradManager(self::getI18n());
 
-				return $logger;
-			} else {
-				throw new \Exception();
-			}
-		}
+                return $logger;
+            } else {
+                throw new \Exception();
+            }
+        }
 
-		/**
-		 * @return I18n\TradManager
-		 */
-		private static function getI18n() {
-			$I18nManager = new \Logging\I18n\I18nManager();
-			$I18nManager->setConfig(self::$langueDefaut, self::$langueDispo);
+        /**
+         * @return I18n\TradManager
+         */
+        private static function getI18n() {
+            $I18nManager = new \Logging\I18n\I18nManager();
+            $I18nManager->setConfig(self::$langueDefaut, self::$langueDispo);
 
-			$tradManager = new \Logging\I18n\TradManager();
-			$tradManager->setFichierTraduction($I18nManager->getFichierTraduction());
+            $tradManager = new \Logging\I18n\TradManager();
+            $tradManager->setFichierTraduction($I18nManager->getFichierTraduction());
 
-			return $tradManager;
-		}
-	}
+            return $tradManager;
+        }
+    }

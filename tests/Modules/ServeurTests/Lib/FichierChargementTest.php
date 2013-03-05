@@ -12,7 +12,7 @@
 			vfsStreamWrapper::register();
 			vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
 		}
-		
+
 		public function testChargerPhp() {
 			file_put_contents(vfsStream::url('testPath/fichier.php'), "<?php return array('its1' => 'var1'); ?>");
 

@@ -1,18 +1,18 @@
 <?php
-	namespace Serveur\Utils;
+    namespace Serveur\Utils;
 
-	class Constante {
+    class Constante {
 
-		private static $extension = 'php';
+        private static $extension = 'php';
 
-		/**
-		 * @param string $nomConfig
-		 * @return mixed
-		 */
-		public static function chargerConfig($nomConfig) {
-			$fichier = \Serveur\Utils\FileManager::getFichier();
-			$fichier->setFichierParametres($nomConfig . '.' . self::$extension, '/public/constantes');
+        /**
+         * @param string $nomConfig
+         * @return mixed
+         */
+        public static function chargerConfig($nomConfig) {
+            $fichier = \Serveur\Utils\FileManager::getFichier();
+            $fichier->setFichierParametres($nomConfig . '.' . self::$extension, '/public/constantes');
 
-			return $fichier->chargerFichier();
-		}
-	}
+            return $fichier->chargerFichier();
+        }
+    }

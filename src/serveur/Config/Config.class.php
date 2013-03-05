@@ -1,64 +1,64 @@
 <?php
-	namespace Serveur\Config;
+    namespace Serveur\Config;
 
-	class Config {
+    class Config {
 
-		/**
-		 * @var array
-		 */
-		private $applicationConfiguration = array();
+        /**
+         * @var array
+         */
+        private $applicationConfiguration = array();
 
-		/**
-		 * @var array
-		 */
-		private static $clefMinimales = array('config', 'config.default_render', 'config.default_displayer', 'displayers', 'render');
+        /**
+         * @var array
+         */
+        private static $clefMinimales = array('config', 'config.default_render', 'config.default_displayer', 'displayers', 'render');
 
-		/**
-		 * @param \Serveur\Lib\Fichier $fichierFramework
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @throws \Serveur\Exceptions\Exceptions\MainException
-		 */
-		public function chargerConfiguration($fichierFramework) {
-			if(!$fichierFramework instanceof \Serveur\Lib\Fichier) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
-			}
+        /**
+         * @param \Serveur\Lib\Fichier $fichierFramework
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        public function chargerConfiguration($fichierFramework) {
+            if(!$fichierFramework instanceof \Serveur\Lib\Fichier) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
+            }
 
-			try {
-				$this->applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
-			} catch(\Exception $fe) {
-				throw new \Serveur\Exceptions\Exceptions\MainException(30000, 500, $fichierFramework->getCheminCompletFichier());
-			}
+            try {
+                $this->applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
+            } catch(\Exception $fe) {
+                throw new \Serveur\Exceptions\Exceptions\MainException(30000, 500, $fichierFramework->getCheminCompletFichier());
+            }
 
-			$this->validerFichierConfiguration();
-		}
+            $this->validerFichierConfiguration();
+        }
 
-		/**
-		 * @throws \Serveur\Exceptions\Exceptions\MainException
-		 */
-		private function validerFichierConfiguration() {
-			foreach(self::$clefMinimales as $uneClefQuiDoitExister) {
-				if(is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
-					throw new \Serveur\Exceptions\Exceptions\MainException(30001, 500, $uneClefQuiDoitExister);
-				}
-			}
-		}
+        /**
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        private function validerFichierConfiguration() {
+            foreach(self::$clefMinimales as $uneClefQuiDoitExister) {
+                if(is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
+                    throw new \Serveur\Exceptions\Exceptions\MainException(30001, 500, $uneClefQuiDoitExister);
+                }
+            }
+        }
 
-		/**
-		 * @param string $clefConfig
-		 * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-		 * @return array|bool|null
-		 */
-		public function getConfigValeur($clefConfig) {
-			if(!is_string($clefConfig)) {
-				throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
-			}
+        /**
+         * @param string $clefConfig
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @return array|bool|null
+         */
+        public function getConfigValeur($clefConfig) {
+            if(!is_string($clefConfig)) {
+                throw new \Serveur\Exceptions\Exceptions\ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
+            }
 
-			if($valeur = rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->applicationConfiguration)) {
-				return $valeur;
-			} else {
-				trigger_error_app(E_USER_NOTICE, 30002, $clefConfig);
+            if($valeur = rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->applicationConfiguration)) {
+                return $valeur;
+            } else {
+                trigger_error_app(E_USER_NOTICE, 30002, $clefConfig);
 
-				return null;
-			}
-		}
-	}
+                return null;
+            }
+        }
+    }

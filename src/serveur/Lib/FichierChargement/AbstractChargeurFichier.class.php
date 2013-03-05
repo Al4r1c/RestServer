@@ -1,10 +1,10 @@
 <?php
-	namespace Serveur\Lib\FichierChargement;
+    namespace Serveur\Lib\FichierChargement;
 
-	abstract class AbstractChargeurFichier {
-		/**
-		 * @param string $locationFichier
-		 * @return mixed
-		 */
-		abstract public function chargerFichier($locationFichier);
-	}
+    abstract class AbstractChargeurFichier {
+        /**
+         * @param string $locationFichier
+         * @return mixed
+         */
+        abstract public function chargerFichier($locationFichier);
+    }
