@@ -24,12 +24,12 @@
 		<mkdir dir="${buildRepertory}/coverage" />
 		<mkdir dir="${buildRepertory}/pdepend" />
 
-		<exec executable="bash">
+		<exec executable="bash" description="Télécharge composer.phar">
 			<arg value="-c" />
 			<arg value="curl -s http://getcomposer.org/installer | php" />
 		</exec>
 
-		<exec executable="php">
+		<exec executable="php" description="Installe les paquets prérequis via Composer">
 			<arg value="composer.phar" />
 			<arg value="install" />
 			<arg value="-d" />
@@ -41,7 +41,7 @@
 		<delete file="${project.basedir}/composer.phar" />
 	</target>
 
-	<target name="qa" description="Lance les outils d'analyse">
+	<target name="outils_qualites" description="Lance les outils d'analyse">
 		<phingcall target="pdepend" />
 		<phingcall target="phpmd" />
 		<phingcall target="phpcpd" />
@@ -71,7 +71,6 @@
 		</phpcpd>
 	</target>
 
-
 	<target name="phploc">
 		<phploc reportType="csv" reportDirectory="${logRepertory}">
 			<fileset dir="${sourceRepertory}">
@@ -97,5 +96,5 @@
 		<exec logoutput="true" command="phpcb --log '${buildRepertory}/logs' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'" escape="false" />
 	</target>
 
-	<target name="build" depends="clean, prepare, qa, end" description="Tâche principale d'intégration continue" />
+	<target name="build" depends="clean, prepare, outils_qualites, end" description="Tâche principale d'intégration continue" />
 </project>

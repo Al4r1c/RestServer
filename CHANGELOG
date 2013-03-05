@@ -1,5 +1,8 @@
 ==CHANGELOG==
 
+[05/03/13]
+Build sous Phing avec différents outils d'analyses.
+
 [01/03/13]
 Uniformisation des restrictions, egalement plus strict, sur les types + tests associés.
 PHPDoc.
