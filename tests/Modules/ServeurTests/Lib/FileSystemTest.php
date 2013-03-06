@@ -261,6 +261,10 @@
             $this->assertEquals('/home/ok/', $this->fileSystem->relatifToAbsolu('/home/ok/'));
         }
 
+        public function testRelatifToAbsoluStream() {
+            $this->assertEquals('str://path/deeper/', $this->fileSystem->relatifToAbsolu('str://path/deeper/'));
+        }
+
         /**
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000

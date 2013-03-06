@@ -51,6 +51,7 @@
 
         /**
          * @param string $basePath
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
         public function setBasePath($basePath) {
@@ -222,6 +223,12 @@
             $separateurChemin = $this->getDirectorySeparateur();
             $chemin = $this->ajouterBaseSiBesoin($chemin, $separateurChemin);
 
+            if (preg_match('(^[a-z]{3,}://)S', $chemin)) {
+                $tabUrl = explode('://', $chemin);
+                $streamUrl = $tabUrl[0].'://';
+                $chemin = $tabUrl[1];
+            }
+
             $chemin = str_replace(array('/', '\\'), $separateurChemin, $chemin);
             $parts = array_filter(explode($separateurChemin, $chemin), 'strlen');
             $absolutes = array();
@@ -237,7 +244,13 @@
                 }
             }
 
-            return ($this->_os == 'Windows' ? '' : '/') . implode($separateurChemin, $absolutes) . $separateurChemin;
+            if(isset($streamUrl)) {
+                $prefixe = $streamUrl;
+            } else {
+                $prefixe = ($this->_os == 'Windows' ? '' : '/');
+            }
+
+            return $prefixe . implode($separateurChemin, $absolutes) . $separateurChemin;
         }
 
         /**
