@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\LoggingTests\I18n;
+    namespace Modules\LoggingTests\Factory;
 
     include_once(__DIR__ . '/../../../TestEnv.php');
 
