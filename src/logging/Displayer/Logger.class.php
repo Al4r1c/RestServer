@@ -19,7 +19,7 @@
          * @throws \InvalidArgumentException
          */
         public function setFichierLogAcces($fichierLogAcces) {
-            if(!$fichierLogAcces instanceof \Serveur\Lib\Fichier) {
+            if (!$fichierLogAcces instanceof \Serveur\Lib\Fichier) {
                 throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
             }
 
@@ -31,7 +31,7 @@
          * @throws \InvalidArgumentException
          */
         public function setFichierLogErreur($fichierLogErreur) {
-            if(!$fichierLogErreur instanceof \Serveur\Lib\Fichier) {
+            if (!$fichierLogErreur instanceof \Serveur\Lib\Fichier) {
                 throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
             }
 
@@ -45,15 +45,15 @@
          * @throws \Exception
          */
         protected function ecrireMessageAcces($restRequete, $restReponse) {
-            if(!$restRequete instanceof \Serveur\Rest\RestRequete) {
+            if (!$restRequete instanceof \Serveur\Rest\RestRequete) {
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restRequete)));
             }
 
-            if(!$restReponse instanceof \Serveur\Rest\RestReponse) {
+            if (!$restReponse instanceof \Serveur\Rest\RestReponse) {
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restReponse)));
             }
 
-            if(!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()) {
+            if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()) {
                 throw new \Exception('Invalid log access file or file not found.');
             }
 
@@ -81,7 +81,7 @@
                 throw new \InvalidArgumentException(sprintf('Invalid error type %s.', get_class($uneErreur)));
             }
 
-            if(!($this->_fichierLogErreur instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogErreur->fichierExiste()) {
+            if (!($this->_fichierLogErreur instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogErreur->fichierExiste()) {
                 throw new \Exception('Invalid log error file or file not found.');
             }
 

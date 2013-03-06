@@ -10,7 +10,7 @@
          * @throws \InvalidArgumentException
          */
         public function setTradManager($tradManager) {
-            if(!$tradManager instanceof \Logging\I18n\TradManager) {
+            if (!$tradManager instanceof \Logging\I18n\TradManager) {
                 throw new \InvalidArgumentException();
             }
 

@@ -65,7 +65,7 @@
 
         public function __destruct() {
             foreach ($this->_observeurs as $unObserveur) {
-                foreach($this->_conteneur->getErrorManager()->getErreurs() as $uneErreur) {
+                foreach ($this->_conteneur->getErrorManager()->getErreurs() as $uneErreur) {
                     $unObserveur->ecrireErreurLog($uneErreur);
                 }
 
