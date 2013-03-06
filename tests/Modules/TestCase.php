@@ -27,6 +27,12 @@
             return $tabEvals;
         }
 
+        /**
+         * @param \PHPUnit_Framework_MockObject_MockObject $mock
+         * @param string $enteteMock
+         * @param array $tabEvals
+         * @return \PHPUnit_Framework_MockObject_MockObject|mixed
+         */
         protected function informerMock($mock, $enteteMock, $tabEvals) {
             $cptAt = 0;
             foreach ($tabEvals as $methodeEval) {

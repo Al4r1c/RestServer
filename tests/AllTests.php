@@ -15,6 +15,7 @@
 
             $suite->addTest(Modules\LoggingTests\I18nTests::suite());
             $suite->addTest(Modules\ServeurTests\ApplicationTests::suite());
+            $suite->addTest(Modules\ServeurTests\ExceptionTests::suite());
             $suite->addTest(Modules\ServeurTests\ConfigTests::suite());
             $suite->addTest(Modules\ServeurTests\LibTests::suite());
             $suite->addTest(Modules\ServeurTests\RestTests::suite());

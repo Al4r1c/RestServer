@@ -3,14 +3,14 @@
 
     class ErrorManager {
         /**
-         * @var \Serveur\Exceptions\Handler\ErrorHandling
+         * @var \Serveur\Exceptions\Handler\ErrorHandler
          */
         private $_errorHandler;
 
         /**
-         * @param Handler\ErrorHandling $errorHandler
+         * @param \Serveur\Exceptions\Handler\ErrorHandler $errorHandler
          */
-        public function setErrorHandler(\Serveur\Exceptions\Handler\ErrorHandling $errorHandler) {
+        public function setErrorHandler(\Serveur\Exceptions\Handler\ErrorHandler $errorHandler) {
             $this->_errorHandler = $errorHandler;
         }
 

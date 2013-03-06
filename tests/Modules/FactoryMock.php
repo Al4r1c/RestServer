@@ -4,6 +4,8 @@
     class FactoryMock extends \PHPUnit_Framework_TestCase {
         /** @return \PHPUnit_Framework_MockObject_MockObject */
         public function createMock($type, $methodes = array()) {
+            $mock = null;
+
             switch (strtolower($type)) {
                 case 'abstractchargeurfichier':
                     $mock = self::getMockAbstractChargeur();
@@ -19,6 +21,9 @@
                     break;
                 case 'erreur':
                     $mock = self::getMockErreur($methodes);
+                    break;
+                case 'errorhandler':
+                    $mock = self::getErrorHandler($methodes);
                     break;
                 case 'fichier':
                     $mock = self::getMockFichier($methodes);
@@ -93,6 +98,14 @@
          */
         private function getMockErreur($methodes = array()) {
             return $this->getMock('Serveur\Exceptions\Types\Error', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Handler\ErrorHandler
+         */
+        private function getErrorHandler($methodes) {
+            return $this->getMock('Serveur\Exceptions\Handler\ErrorHandler', $methodes);
         }
 
         /**

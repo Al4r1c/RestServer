@@ -72,7 +72,7 @@
             });
 
             $conteneur['errorHandler'] = function () {
-                return new \Serveur\Exceptions\Handler\ErrorHandling();
+                return new \Serveur\Exceptions\Handler\ErrorHandler();
             };
 
             $this->_conteneur = $conteneur;
