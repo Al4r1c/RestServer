@@ -31,11 +31,11 @@
          * @return I18n\TradManager
          */
         private static function getI18n() {
-            $i18nManager = new \Logging\I18n\I18nManager();
-            $i18nManager->setConfig(self::$_langueDefaut, self::$_langueDispo);
+            $internationalizationManager = new \Logging\I18n\I18nManager();
+            $internationalizationManager->setConfig(self::$_langueDefaut, self::$_langueDispo);
 
             $tradManager = new \Logging\I18n\TradManager();
-            $tradManager->setFichierTraduction($i18nManager->getFichierTraduction());
+            $tradManager->setFichierTraduction($internationalizationManager->getFichierTraduction());
 
             return $tradManager;
         }
