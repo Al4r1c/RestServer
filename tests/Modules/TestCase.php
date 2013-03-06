@@ -6,14 +6,11 @@
         private static $boolArray = array(false => 'false', true => 'true');
         private $tabTricks = array();
 
-        protected function createMock($type) {
-            /** @var $mock \PHPUnit_Framework_MockObject_MockObject */
-            $mock = null;
-            $static = false;
+        protected function genererEvals($tabMethodes) {
             $tabEvals = array();
 
-            foreach (array_slice(func_get_args(), 1) as $uneMethode) {
-                $tabMethode[] = $uneMethode[0];
+            foreach ($tabMethodes as $uneMethode) {
+                $tabMethodes[] = $uneMethode[0];
                 $methode = "->method(\"" . $uneMethode[0] . "\")";
 
                 if (!isNull($uneMethode[1])) {
@@ -27,58 +24,10 @@
                 $tabEvals[$uneMethode[0]][] = array('methode' => $methode, 'with' => $with, 'will' => $will);
             }
 
-            switch (strtolower($type)) {
-                case 'abstractrenderer':
-                    $mock = $this->getMockAbstractRenderer();
-                    break;
-                case 'abstractchargeurfichier':
-                    $mock = $this->getMockAbstractChargeur();
-                    break;
-                case 'config':
-                    $mock = $this->getMockConfig(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'constante':
-                    $static = true;
-                    $mock = $this->getMockConstante(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'fichier':
-                    $mock = $this->getMockFichier(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'filesystem':
-                    $mock = $this->getMockFileSystem(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'headermanager':
-                    $mock = $this->getMockHeadersManager(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'i18nmanager':
-                    $mock = $this->getMockI18nManager(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'restrequete':
-                    $mock = $this->getMockRestRequete(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'restreponse':
-                    $mock = $this->getMockRestReponse(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'server':
-                    $mock = $this->getMockServer(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'xmlelement':
-                    $mock = $this->getMockXmlElement(array_unique(array_keys($tabEvals)));
-                    break;
-                case 'xmlparser':
-                    $mock = $this->getMockXmlParser(array_unique(array_keys($tabEvals)));
-                    break;
-                default:
-                    new \Exception('Mock type not found.');
-                    break;
-            }
+            return $tabEvals;
+        }
 
-            if (!$static) {
-                $enteteMock = "\$mock->expects";
-            } else {
-                $enteteMock = "\$mock::staticExpects";
-            }
-
+        protected function informerMock($mock, $enteteMock, $tabEvals) {
             $cptAt = 0;
             foreach ($tabEvals as $methodeEval) {
                 if (count($methodeEval) == 1) {
@@ -104,6 +53,33 @@
             $this->tabTricks = array();
 
             return $mock;
+        }
+
+        protected function createStaticMock($type) {
+            $tabEvals = $this->genererEvals(array_slice(func_get_args(), 1));
+
+            $factoryMock = new FactoryMock();
+            $mock = $factoryMock->createMock($type, array_unique(array_keys($tabEvals)));
+
+            return $this->informerMock($mock, "\$mock::staticExpects", $tabEvals);
+        }
+
+        protected function createMockWithArgs($type, $arguments = array()) {
+            $tabEvals = $this->genererEvals(array_slice(func_get_args(), 2));
+
+            $factoryMock = new FactoryMock();
+            $mock = $factoryMock->createMock($type, array_unique(array_keys($tabEvals)), $arguments);
+
+            return $this->informerMock($mock, "\$mock->expects", $tabEvals);
+        }
+
+        protected function createMock($type) {
+            $tabEvals = $this->genererEvals(array_slice(func_get_args(), 1));
+
+            $factoryMock = new FactoryMock();
+            $mock = $factoryMock->createMock($type, array_unique(array_keys($tabEvals)));
+
+            return $this->informerMock($mock, "\$mock->expects", $tabEvals);
         }
 
         private function getPlainVar($element) {
@@ -147,103 +123,5 @@
             }
 
             return substr($string, 0, -1) . ')';
-        }
-
-        /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Renderers\AbstractRenderer */
-        protected function getMockAbstractRenderer() {
-            return $this->getMockForAbstractClass('Serveur\Renderers\AbstractRenderer');
-        }
-
-        /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FichierChargement\AbstractChargeurFichier */
-        private function getMockAbstractChargeur() {
-            return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier');
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Config\Config
-         */
-        protected function getMockConfig($methodes = array()) {
-            return $this->getMock('Serveur\Config\Config', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Utils\Constante
-         */
-        protected function getMockConstante($methodes = array()) {
-            return $this->getMock('Serveur\Utils\Constante', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\Fichier
-         */
-        protected function getMockFichier($methodes = array()) {
-            return $this->getMock('Serveur\Lib\Fichier', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FileSystem
-         */
-        protected function getMockFileSystem($methodes = array()) {
-            return $this->getMock('Serveur\Lib\FileSystem', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\HeaderManager
-         */
-        protected function getMockHeadersManager($methodes = array()) {
-            return $this->getMock('Serveur\Rest\HeaderManager', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Logging\I18n\I18nManager
-         */
-        protected function getMockI18nManager($methodes = array()) {
-            return $this->getMock('Logging\I18n\I18nManager', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestRequete
-         */
-        protected function getMockRestRequete($methodes = array()) {
-            return $this->getMock('Serveur\Rest\RestRequete', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestReponse
-         */
-        protected function getMockRestReponse($methodes = array()) {
-            return $this->getMock('Serveur\Rest\RestReponse', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\Server
-         */
-        protected function getMockServer($methodes = array()) {
-            return $this->getMock('Serveur\Rest\Server', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLElement
-         */
-        protected function getMockXmlElement($methodes = array()) {
-            return $this->getMock('Serveur\Lib\XMLParser\XMLElement', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLParser
-         */
-        protected function getMockXmlParser($methodes = array()) {
-            return $this->getMock('Serveur\Lib\XMLParser\XMLParser', $methodes);
         }
     }

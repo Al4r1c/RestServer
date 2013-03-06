@@ -16,7 +16,7 @@
         }
 
         public function testFileSystem() {
-            $fileSystem = $this->getMockFileSystem();
+            $fileSystem = $this->createMock('FileSystem');
 
             $this->fichier->setFileSystem($fileSystem);
 

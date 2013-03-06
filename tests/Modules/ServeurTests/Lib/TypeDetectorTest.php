@@ -15,7 +15,7 @@
 
         public function setUp() {
             /** @var $constantes \Serveur\Utils\Constante * */
-            $constantes = $this->createMock('Constante', array('chargerConfig', 'mimes', self::$mimeFichier));
+            $constantes = $this->createStaticMock('Constante', array('chargerConfig', 'mimes', self::$mimeFichier));
 
             $this->typeDetector = new TypeDetector($constantes::chargerConfig('mimes'));
         }

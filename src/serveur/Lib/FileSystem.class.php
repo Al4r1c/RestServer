@@ -244,7 +244,7 @@
                 }
             }
 
-            if(isset($streamUrl)) {
+            if (isset($streamUrl)) {
                 $prefixe = $streamUrl;
             } else {
                 $prefixe = ($this->_os == 'Windows' ? '' : '/');

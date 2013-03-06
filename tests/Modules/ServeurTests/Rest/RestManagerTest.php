@@ -17,7 +17,7 @@
         }
 
         public function testRestSetRequete() {
-            $restRequete = $this->getMockRestRequete();
+            $restRequete = $this->createMock('RestRequete');
             $this->restManager->setRequete($restRequete);
 
             $this->assertEquals($restRequete, $this->restManager->getRestRequest());
@@ -32,7 +32,7 @@
         }
 
         public function testRestSetReponse() {
-            $restReponse = $this->getMockRestReponse();
+            $restReponse = $this->createMock('RestReponse');
 
             $this->restManager->setReponse($restReponse);
 
