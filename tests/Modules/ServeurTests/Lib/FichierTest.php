@@ -218,4 +218,31 @@
 
             $this->fichier->creerFichier();
         }
+
+        public function testEcrire() {
+            \org\bovigo\vfs\vfsStreamWrapper::register();
+            \org\bovigo\vfs\vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
+            $fileSystem = new \Serveur\Lib\FileSystem();
+            $fileSystem->setBasePath(\org\bovigo\vfs\vfsStream::url('testPath'));
+
+            $this->fichier->setFileSystem($fileSystem);
+            $this->fichier->setNomFichier('coucou.txt');
+            $this->fichier->setRepertoireFichier('newDossier');
+
+            mkdir(\org\bovigo\vfs\vfsStream::url('testPath/newDossier/'));
+
+            $this->fichier->creerFichier();
+            $this->fichier->ecrireDansFichier("Nouvelle ligne\n");
+            $this->fichier->ecrireDansFichier("Heya");
+
+            $this->assertEquals("Nouvelle ligne\nHeya", file_get_contents($this->fichier->getCheminCompletFichier()));
+        }
+
+        /**
+         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedExceptionCode 10203
+         */
+        public function testEcrireFichierInexistant() {
+            $this->fichier->ecrireDansFichier("Nouvelle ligne\n");
+        }
     }

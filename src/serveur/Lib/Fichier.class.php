@@ -139,4 +139,16 @@
 
             return $this->_fileSystemInstance->chargerFichier($this->getCheminCompletFichier());
         }
+
+        /**
+         * @param string $nouvelleLigne
+         * @throws \Serveur\Exceptions\Exceptions\MainException
+         */
+        public function ecrireDansFichier($nouvelleLigne) {
+            if (!$this->fichierExiste()) {
+                throw new MainException(10203, 50, $this->getCheminCompletFichier());
+            }
+
+            file_put_contents($this->getCheminCompletFichier(), $nouvelleLigne, FILE_APPEND);
+        }
     }
