@@ -28,5 +28,5 @@
     }
 
     if (PHPUnit_MAIN_METHOD == 'LibTests::main') {
-        ConfigTests::main();
+        LibTests::main();
     }
