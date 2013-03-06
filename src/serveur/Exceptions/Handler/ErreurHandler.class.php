@@ -40,7 +40,7 @@
                     break;
 
                 default:
-                    die('Error type not supported.');
+                    new \InvalidArgumentException('Error type not supported.');
                     break;
             }
         }
