@@ -64,15 +64,6 @@
             return $this->informerMock($mock, "\$mock::staticExpects", $tabEvals);
         }
 
-        protected function createMockWithArgs($type, $arguments = array()) {
-            $tabEvals = $this->genererEvals(array_slice(func_get_args(), 2));
-
-            $factoryMock = new FactoryMock();
-            $mock = $factoryMock->createMock($type, array_unique(array_keys($tabEvals)), $arguments);
-
-            return $this->informerMock($mock, "\$mock->expects", $tabEvals);
-        }
-
         protected function createMock($type) {
             $tabEvals = $this->genererEvals(array_slice(func_get_args(), 1));
 
