@@ -60,6 +60,7 @@
          */
         private function templateHtml($donneesFormatListeHtml) {
             $retour = sprintf(self::$templateHtml, $donneesFormatListeHtml);
+
             return <<<EOT
 $retour
 EOT;

@@ -143,7 +143,8 @@
                     $uri = substr($uri, 0, $pos);
                 }
 
-                $this->_dataUri = array_map('rawurlencode', explode('/', trim(preg_replace('%([^:])([/]{2,})%', '\\1/', $uri), '/')));
+                $this->_dataUri =
+                    array_map('rawurlencode', explode('/', trim(preg_replace('%([^:])([/]{2,})%', '\\1/', $uri), '/')));
             }
         }
 

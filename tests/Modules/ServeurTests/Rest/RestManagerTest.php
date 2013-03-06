@@ -97,7 +97,8 @@
         }
 
         public function testRestSetVariableReponse() {
-            $restReponse = $this->createMock('RestReponse', array('setStatus', 500), array('setContenu', "<html></html>"));
+            $restReponse =
+                $this->createMock('RestReponse', array('setStatus', 500), array('setContenu', "<html></html>"));
 
 
             $this->restManager->setReponse($restReponse);

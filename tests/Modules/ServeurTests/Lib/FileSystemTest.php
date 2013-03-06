@@ -199,7 +199,8 @@
             vfsStreamWrapper::register();
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
 
-            $abstractChargeur = $this->createMock('AbstractChargeurFichier', array('chargerFichier', vfsStream::url('testPath/fichier.php'), array('paris' => 'yeah')));
+            $abstractChargeur = $this->createMock('AbstractChargeurFichier',
+                array('chargerFichier', vfsStream::url('testPath/fichier.php'), array('paris' => 'yeah')));
 
             /** @var $fileSystem FileSystem */
             $fileSystem = $this->createMock('FileSystem', array('getChargeurClass', 'Php', $abstractChargeur));
@@ -207,14 +208,16 @@
             $fileSystem->setBasePath(vfsStream::url('testPath'));
             $fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));
 
-            $this->assertEquals(array('paris' => 'yeah'), $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php')));
+            $this->assertEquals(array('paris' => 'yeah'),
+                $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php')));
         }
 
         public function testChargerFichierClassImpossi() {
             vfsStreamWrapper::register();
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
 
-            $abstractChargeur = $this->createMock('AbstractChargeurFichier', array('chargerFichier', vfsStream::url('testPath/fichier.php'), array('paris' => 'yeah')));
+            $abstractChargeur = $this->createMock('AbstractChargeurFichier',
+                array('chargerFichier', vfsStream::url('testPath/fichier.php'), array('paris' => 'yeah')));
 
             /** @var $fileSystem FileSystem */
             $fileSystem = $this->createMock('FileSystem', array('getChargeurClass', 'Php', $abstractChargeur));
@@ -222,7 +225,8 @@
             $fileSystem->setBasePath(vfsStream::url('testPath'));
             $fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));
 
-            $this->assertEquals(array('paris' => 'yeah'), $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php')));
+            $this->assertEquals(array('paris' => 'yeah'),
+                $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php')));
         }
 
         /**

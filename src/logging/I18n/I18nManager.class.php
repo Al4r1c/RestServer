@@ -58,7 +58,9 @@
 
             $fichierTraductionParDefaut = $this->getFichier($nomFichierLangueDefaut);
 
-            if ($fichierTraductionParDefaut->fichierExiste() && $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValide()) {
+            if ($fichierTraductionParDefaut->fichierExiste() &&
+                $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValide()
+            ) {
                 return $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut);
             } else {
                 if (($langueChoisiAleatoirement = $this->getUneTraductionAleatoire()) !== false) {
@@ -86,7 +88,9 @@
             foreach ($this->_languesDisponibles as $uneLangueDispo => $classeLangue) {
                 $traductionDisponible = $this->getFichier($classeLangue);
 
-                if ($traductionDisponible->fichierExiste() && $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValide()) {
+                if ($traductionDisponible->fichierExiste() &&
+                    $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValide()
+                ) {
                     return array($uneLangueDispo => $traductionDisponible);
                 }
             }

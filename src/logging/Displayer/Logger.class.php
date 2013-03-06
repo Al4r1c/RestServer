@@ -53,18 +53,27 @@
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restReponse)));
             }
 
-            if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()) {
+            if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()
+            ) {
                 throw new \Exception('Invalid log access file or file not found.');
             }
 
             $this->_fichierLogAcces->ecrireDansFichier($restRequete->getDateRequete()->format('d-m-Y H:i:s') . ": \n");
-            $this->_fichierLogAcces->ecrireDansFichier("\t" . $this->traduireMessageEtRemplacerVariables("{trad.remoteIp}: " . $restRequete->getIp()) . "\n");
-            $this->_fichierLogAcces->ecrireDansFichier("\t" . $this->traduireMessageEtRemplacerVariables("{trad.method}: " . $restRequete->getMethode() . " -- URI: /" . implode('/', $restRequete->getUriVariables()) . "") . "\n");
-            $this->_fichierLogAcces->ecrireDansFichier("\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\n");
+            $this->_fichierLogAcces->ecrireDansFichier(
+                "\t" . $this->traduireMessageEtRemplacerVariables("{trad.remoteIp}: " . $restRequete->getIp()) . "\n");
+            $this->_fichierLogAcces->ecrireDansFichier("\t" .
+                $this->traduireMessageEtRemplacerVariables(
+                    "{trad.method}: " . $restRequete->getMethode() . " -- URI: /" .
+                        implode('/', $restRequete->getUriVariables()) . "") . "\n");
+            $this->_fichierLogAcces->ecrireDansFichier(
+                "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\n");
             foreach ($restRequete->getParametres() as $clefParam => $unParam) {
                 $this->_fichierLogAcces->ecrireDansFichier("\t\t" . $clefParam . " => " . $unParam . "\n");
             }
-            $this->_fichierLogAcces->ecrireDansFichier("\t" . $this->traduireMessageEtRemplacerVariables("{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " . $restReponse->getFormatRetour()) . "\n");
+            $this->_fichierLogAcces->ecrireDansFichier("\t" .
+                $this->traduireMessageEtRemplacerVariables(
+                    "{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " .
+                        $restReponse->getFormatRetour()) . "\n");
         }
 
         /**
@@ -81,12 +90,18 @@
                 throw new \InvalidArgumentException(sprintf('Invalid error type %s.', get_class($uneErreur)));
             }
 
-            if (!($this->_fichierLogErreur instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogErreur->fichierExiste()) {
+            if (!($this->_fichierLogErreur instanceof \Serveur\Lib\Fichier) ||
+                !$this->_fichierLogErreur->fichierExiste()
+            ) {
                 throw new \Exception('Invalid log error file or file not found.');
             }
 
             $this->_fichierLogErreur->ecrireDansFichier($uneErreur->getDate()->format('d-m-Y H:i:s') . ": \n");
-            $this->_fichierLogErreur->ecrireDansFichier("\t" . $this->traduireMessageEtRemplacerVariables("{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." . substr($uneErreur->getCodeErreur(), 0, -2) . "}\n"));
-            $this->_fichierLogErreur->ecrireDansFichier("\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\n");
+            $this->_fichierLogErreur->ecrireDansFichier("\t" .
+                $this->traduireMessageEtRemplacerVariables(
+                    "{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." .
+                        substr($uneErreur->getCodeErreur(), 0, -2) . "}\n"));
+            $this->_fichierLogErreur->ecrireDansFichier(
+                "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\n");
         }
     }

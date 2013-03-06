@@ -3,19 +3,19 @@
 
 <language lang="fr">
 
-    <trad>
-        <message code="notice">Remarque</message>
-        <message code="warning">Attention</message>
-        <message code="error">Erreur</message>
-        <message code="fatalerror">Erreur critique</message>
-        <message code="file">Fichier</message>
-        <message code="line">Ligne</message>
-        <message code="remoteIp">Ip client distant</message>
-        <message code="method">Méthode</message>
-        <message code="arguments">Paramètres</message>
-        <message code="reponseCode">Code retour</message>
-        <message code="reponseFormat">Format retour</message>
-    </trad>
+	<trad>
+		<message code="notice">Remarque</message>
+		<message code="warning">Attention</message>
+		<message code="error">Erreur</message>
+		<message code="fatalerror">Erreur critique</message>
+		<message code="file">Fichier</message>
+		<message code="line">Ligne</message>
+		<message code="remoteIp">Ip client distant</message>
+		<message code="method">Méthode</message>
+		<message code="arguments">Paramètres</message>
+		<message code="reponseCode">Code retour</message>
+		<message code="reponseFormat">Format retour</message>
+	</trad>
 
 	<errorType>
 		<message code="10">Paramètre invalide</message>
@@ -29,38 +29,38 @@
 		<message code="300">Fichier de configuration</message>
 	</errorType>
 
-    <errorMessage>
-	    <message code="1000">Paramètre de la fonction %s() doit être du type %s, %s obtenu.</message>
-	    <message code="10100">L'OS "%s" n'est pas supporté ou est invalide.</message>
-	    <message code="10101">Le chemin de base "%s" n'est pas absolu.</message>
-	    <message code="10102">Le chemin de base "%s" n'existe pas.</message>
-	    <message code="10103">Le fichier "%s" n'existe pas, impossible d'en récupérer les droits.</message>
-	    <message code="10104">Le fichier "%s" n'a pas pu être créé (problème de permission ?).</message>
-	    <message code="10105">Le fichier "%s" n'existe pas et rien n'a été chargé.</message>
-	    <message code="10106">Les fichiers avec l'extension "%s" ne peuvent être chargés. (Fichier: %s)</message>
-	    <message code="10200">Le nom du fichier est vide.</message>
-	    <message code="10201">Le fichier %s est dépourvue d'extension.</message>
-	    <message code="10202">Le nom du répertoire est vide.</message>
-	    <message code="10203">Le fichier "%s" n'existe pas.</message>
-	    <message code="10204">Le dossier de destination "%s" n'existe pas.</message>
-	    <message code="10205">Erreur lors de la tentative de créer le fichier "%s".</message>
-	    <message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
-	    <message code="20001">Aucun format de retour valide trouvé.</message>
-	    <message code="20001">L'IP du client distant est invalide.</message>
-	    <message code="20100">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
-	    <message code="20101">Le format de retour configuré (%s) n'existe pas dans les rendus disponibles.</message>
-	    <message code="20102">Les formats de retour acceptés sont invalides.</message>
-	    <message code="20103">Charset %s invalide.</message>
-	    <message code="20104">Le format de sortie par défaut "%s" n'a pas été trouvé dans la configuration.</message>
-	    <message code="20105">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
-	    <message code="20200">La clef %s n'existe pas dans l'URI.</message>
-	    <message code="20201">Le paramètre demandé %s n'existe pas.</message>
-	    <message code="20300">Des variables serveurs manquent.</message>
-	    <message code="20301">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
-	    <message code="20400">L'entête HTTP "%s" pour la réponse est invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html pour plus d'information sur les entêtes.</message>
-	    <message code="30000">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
-	    <message code="30001">La clef %s est obligatoire dans la configuration mais n'existe pas.</message>
-	    <message code="30002">La clef %s n'existe pas dans la configuration.</message>
-    </errorMessage>
+	<errorMessage>
+		<message code="1000">Paramètre de la fonction %s() doit être du type %s, %s obtenu.</message>
+		<message code="10100">L'OS "%s" n'est pas supporté ou est invalide.</message>
+		<message code="10101">Le chemin de base "%s" n'est pas absolu.</message>
+		<message code="10102">Le chemin de base "%s" n'existe pas.</message>
+		<message code="10103">Le fichier "%s" n'existe pas, impossible d'en récupérer les droits.</message>
+		<message code="10104">Le fichier "%s" n'a pas pu être créé (problème de permission ?).</message>
+		<message code="10105">Le fichier "%s" n'existe pas et rien n'a été chargé.</message>
+		<message code="10106">Les fichiers avec l'extension "%s" ne peuvent être chargés. (Fichier: %s)</message>
+		<message code="10200">Le nom du fichier est vide.</message>
+		<message code="10201">Le fichier %s est dépourvue d'extension.</message>
+		<message code="10202">Le nom du répertoire est vide.</message>
+		<message code="10203">Le fichier "%s" n'existe pas.</message>
+		<message code="10204">Le dossier de destination "%s" n'existe pas.</message>
+		<message code="10205">Erreur lors de la tentative de créer le fichier "%s".</message>
+		<message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
+		<message code="20001">Aucun format de retour valide trouvé.</message>
+		<message code="20001">L'IP du client distant est invalide.</message>
+		<message code="20100">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
+		<message code="20101">Le format de retour configuré (%s) n'existe pas dans les rendus disponibles.</message>
+		<message code="20102">Les formats de retour acceptés sont invalides.</message>
+		<message code="20103">Charset %s invalide.</message>
+		<message code="20104">Le format de sortie par défaut "%s" n'a pas été trouvé dans la configuration.</message>
+		<message code="20105">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
+		<message code="20200">La clef %s n'existe pas dans l'URI.</message>
+		<message code="20201">Le paramètre demandé %s n'existe pas.</message>
+		<message code="20300">Des variables serveurs manquent.</message>
+		<message code="20301">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
+		<message code="20400">L'entête HTTP "%s" pour la réponse est invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html pour plus d'information sur les entêtes.</message>
+		<message code="30000">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
+		<message code="30001">La clef %s est obligatoire dans la configuration mais n'existe pas.</message>
+		<message code="30002">La clef %s n'existe pas dans la configuration.</message>
+	</errorMessage>
 
 </language>

@@ -73,7 +73,15 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
             }
 
-            if (!array_keys_exist(array('HTTP_ACCEPT', 'PHP_INPUT', 'QUERY_STRING', 'REMOTE_ADDR', 'REQUEST_METHOD', 'REQUEST_TIME', 'REQUEST_URI'), $serverVar)) {
+            if (!array_keys_exist(array('HTTP_ACCEPT',
+                                        'PHP_INPUT',
+                                        'QUERY_STRING',
+                                        'REMOTE_ADDR',
+                                        'REQUEST_METHOD',
+                                        'REQUEST_TIME',
+                                        'REQUEST_URI'),
+                $serverVar)
+            ) {
                 throw new MainException(20300, 500);
             }
 

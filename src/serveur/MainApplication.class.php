@@ -35,7 +35,8 @@
          */
         public function run() {
             try {
-                $this->_conteneur->getRestManager()->setVariablesReponse(200, $this->_conteneur->getRestManager()->getParametres());
+                $this->_conteneur->getRestManager()
+                    ->setVariablesReponse(200, $this->_conteneur->getRestManager()->getParametres());
 
                 return $this->_conteneur->getRestManager()->fabriquerReponse();
             } catch (\Exception $e) {
@@ -58,7 +59,8 @@
 
             $infoHttpCode = Constante::chargerConfig('httpcode')[$statusHttp];
 
-            $this->_conteneur->getRestManager()->setVariablesReponse($statusHttp, array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1]));
+            $this->_conteneur->getRestManager()->setVariablesReponse($statusHttp,
+                array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1]));
 
             return $this->_conteneur->getRestManager()->fabriquerReponse();
         }
@@ -69,7 +71,8 @@
                     $unObserveur->ecrireErreurLog($uneErreur);
                 }
 
-                $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(), $this->_conteneur->getRestManager()->getRestResponse());
+                $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(),
+                    $this->_conteneur->getRestManager()->getRestResponse());
             }
         }
     }

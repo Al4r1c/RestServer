@@ -16,6 +16,7 @@
         }
 
         public function testObjetCree() {
-            $this->assertThat($this->mainApp, $this->logicalAnd($this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\MainApplication')));
+            $this->assertThat($this->mainApp,
+                $this->logicalAnd($this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\MainApplication')));
         }
     }

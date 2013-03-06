@@ -141,7 +141,10 @@
         }
 
         public function testRestSetConfig() {
-            $config = $this->createMock('Config', array('getConfigValeur', 'config.default_render', 'JSON'), array('getConfigValeur', 'render', array('JSON' => 'json', 'HTML' => 'html')), array('getConfigValeur', 'config.charset', 'utf-8'));
+            $config = $this->createMock('Config',
+                array('getConfigValeur', 'config.default_render', 'JSON'),
+                array('getConfigValeur', 'render', array('JSON' => 'json', 'HTML' => 'html')),
+                array('getConfigValeur', 'config.charset', 'utf-8'));
 
             $this->restReponse->setConfig($config);
             $this->assertEquals('utf-8', $this->restReponse->getCharset());
@@ -158,7 +161,8 @@
         }
 
         public function testRestRenderAbstract() {
-            $abstractrender = $this->createMock('AbstractRenderer', array('genererRendu', array('getKey' => 'getVar'), '{"getKey":"getVar"}'));
+            $abstractrender = $this->createMock('AbstractRenderer',
+                array('genererRendu', array('getKey' => 'getVar'), '{"getKey":"getVar"}'));
 
             /** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
             $restReponse = $this->createMock('RestReponse', array('getRenderClass', 'Json', $abstractrender));
@@ -174,7 +178,8 @@
         }
 
         public function testRestRenderNonTrouveUtiliseAutre() {
-            $abstractrender = $this->createMock('AbstractRenderer', array('genererRendu', array('param1' => 'var1'), '{"param1":"var1"}'));
+            $abstractrender = $this->createMock('AbstractRenderer',
+                array('genererRendu', array('param1' => 'var1'), '{"param1":"var1"}'));
 
             /** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
             $restReponse = $this->createMock('RestReponse', array('getRenderClass', 'Json', $abstractrender));

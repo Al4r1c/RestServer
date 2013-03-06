@@ -1,67 +1,67 @@
 <?xml version="1.0"?>
 
 <project name="RestServer" default="build" basedir=".">
-	<property name="sources" value="${project.basedir}/sources" />
-	<property name="buildRepertory" value="${project.basedir}/build" />
-	<property name="logRepertory" value="${buildRepertory}/logs" />
-	<property name="sourceRepertory" value="${sources}/src" />
-	<property name="testsRepository" value="${sources}/tests" />
+	<property name="sources" value="${project.basedir}/sources"/>
+	<property name="buildRepertory" value="${project.basedir}/build"/>
+	<property name="logRepertory" value="${buildRepertory}/logs"/>
+	<property name="sourceRepertory" value="${sources}/src"/>
+	<property name="testsRepository" value="${sources}/tests"/>
 
-	<target name="clean" description="Nettoie" >
-		<delete dir="${buildRepertory}/logs" />
-		<delete dir="${buildRepertory}/phpcs" />
-		<delete dir="${buildRepertory}/code-browser" />
-		<delete dir="${buildRepertory}/coverage" />
-		<delete dir="${buildRepertory}/pdepend" />
+	<target name="clean" description="Nettoie">
+		<delete dir="${buildRepertory}/logs"/>
+		<delete dir="${buildRepertory}/phpcs"/>
+		<delete dir="${buildRepertory}/code-browser"/>
+		<delete dir="${buildRepertory}/coverage"/>
+		<delete dir="${buildRepertory}/pdepend"/>
 		<delete dir="${buildRepertory}"/>
 	</target>
 
 	<target name="prepare" description="Prepare">
-		<mkdir dir="${buildRepertory}" />
-		<mkdir dir="${buildRepertory}/logs" />
-		<mkdir dir="${buildRepertory}/phpcs" />
-		<mkdir dir="${buildRepertory}/code-browser" />
-		<mkdir dir="${buildRepertory}/coverage" />
-		<mkdir dir="${buildRepertory}/pdepend" />
+		<mkdir dir="${buildRepertory}"/>
+		<mkdir dir="${buildRepertory}/logs"/>
+		<mkdir dir="${buildRepertory}/phpcs"/>
+		<mkdir dir="${buildRepertory}/code-browser"/>
+		<mkdir dir="${buildRepertory}/coverage"/>
+		<mkdir dir="${buildRepertory}/pdepend"/>
 
 		<exec executable="bash" description="Télécharge composer.phar">
-			<arg value="-c" />
-			<arg value="curl -s http://getcomposer.org/installer | php" />
+			<arg value="-c"/>
+			<arg value="curl -s http://getcomposer.org/installer | php"/>
 		</exec>
 
 		<exec executable="php" description="Installe les paquets prérequis via Composer">
-			<arg value="composer.phar" />
-			<arg value="install" />
-			<arg value="-d" />
-			<arg value="${sources}" />
+			<arg value="composer.phar"/>
+			<arg value="install"/>
+			<arg value="-d"/>
+			<arg value="${sources}"/>
 		</exec>
 	</target>
 
-	<target name="end" description="Nettoie" >
-		<delete file="${project.basedir}/composer.phar" />
+	<target name="end" description="Nettoie">
+		<delete file="${project.basedir}/composer.phar"/>
 	</target>
 
 	<target name="outils_qualites" description="Lance les outils d'analyse">
-		<phingcall target="pdepend" />
-		<phingcall target="phpmd" />
-		<phingcall target="phpcpd" />
-		<phingcall target="phploc" />
-		<phingcall target="phpcs" />
-		<phingcall target="phpunit" />
-		<phingcall target="phpcb" />
+		<phingcall target="pdepend"/>
+		<phingcall target="phpmd"/>
+		<phingcall target="phpcpd"/>
+		<phingcall target="phploc"/>
+		<phingcall target="phpcs"/>
+		<phingcall target="phpunit"/>
+		<phingcall target="phpcb"/>
 	</target>
 
 	<target name="pdepend">
 		<phpdepend file="${sourceRepertory}">
-			<logger type="jdepend-xml" outfile="${logRepertory}/jdepend.xml" />
-			<logger type="jdepend-chart" outfile="${buildRepertory}/pdepend/dependencies.svg" />
-			<logger type="overview-pyramid" outfile="${buildRepertory}/pdepend/overview-pyramid.svg" />
+			<logger type="jdepend-xml" outfile="${logRepertory}/jdepend.xml"/>
+			<logger type="jdepend-chart" outfile="${buildRepertory}/pdepend/dependencies.svg"/>
+			<logger type="overview-pyramid" outfile="${buildRepertory}/pdepend/overview-pyramid.svg"/>
 		</phpdepend>
 	</target>
 
 	<target name="phpmd">
 		<phpmd file="${sourceRepertory}">
-			<formatter type="xml" outfile="${buildRepertory}/phpmd.xml" />
+			<formatter type="xml" outfile="${buildRepertory}/phpmd.xml"/>
 		</phpmd>
 	</target>
 
@@ -89,12 +89,15 @@
 	</target>
 
 	<target name="phpunit" description="Lance les tests">
-		<exec logoutput="true" dir="${testsRepository}" command="phpunit" escape="false" />
+		<exec logoutput="true" dir="${testsRepository}" command="phpunit" escape="false"/>
 	</target>
 
 	<target name="phpcb">
-		<exec logoutput="true" command="phpcb --log '${buildRepertory}/logs' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'" escape="false" />
+		<exec logoutput="true"
+		      command="phpcb --log '${buildRepertory}/logs' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'"
+		      escape="false"/>
 	</target>
 
-	<target name="build" depends="clean, prepare, outils_qualites, end" description="Tâche principale d'intégration continue" />
+	<target name="build" depends="clean, prepare, outils_qualites, end"
+	        description="Tâche principale d'intégration continue"/>
 </project>

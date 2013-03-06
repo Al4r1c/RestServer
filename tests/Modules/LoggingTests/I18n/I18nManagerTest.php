@@ -27,7 +27,9 @@
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setLangueDispo(array('Allemand' => 'al', 'Kosovar' => 'ksv'));
 
-            $this->assertAttributeEquals(array('Allemand' => 'al', 'Kosovar' => 'ksv'), '_languesDisponibles', $i18nManager);
+            $this->assertAttributeEquals(array('Allemand' => 'al', 'Kosovar' => 'ksv'),
+                '_languesDisponibles',
+                $i18nManager);
         }
 
         /**
@@ -45,33 +47,41 @@
 
             $this->assertAttributeEquals('French', '_langueDefaut', $i18nManager);
 
-            $this->assertAttributeEquals(array('French' => 'fr', 'English' => 'en'), '_languesDisponibles', $i18nManager);
+            $this->assertAttributeEquals(array('French' => 'fr', 'English' => 'en'),
+                '_languesDisponibles',
+                $i18nManager);
         }
 
         public function testGetFichierTraduction() {
             $xmlParser = $this->createMock('xmlparser', array('isValide', '', true));
 
-            $fichier = $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParser));
+            $fichier =
+                $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParser));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
             $i18nManager = $this->createMock('I18nManager', array('getFichier', 'fr', $fichier));
 
             $i18nManager->setConfig('French', array('FRENCH' => 'fr', 'ENGLISH' => 'en'));
 
-            $this->assertThat($i18nManager->getFichierTraduction(), $this->logicalAnd($this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
+            $this->assertThat($i18nManager->getFichierTraduction(),
+                $this->logicalAnd($this->logicalNot($this->isNull()),
+                    $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
         }
 
         public function testGetFichierTraductionDefautInexistant() {
             $xmlParser = $this->createMock('xmlparser', array('isValide', '', true));
 
-            $fichier = $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParser));
+            $fichier =
+                $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParser));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
             $i18nManager = $this->createMock('I18nManager', array('getFichier', 'en', $fichier));
 
             $i18nManager->setConfig('French', array('ENGLISH' => 'en'));
 
-            $this->assertThat($i18nManager->getFichierTraduction(), $this->logicalAnd($this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
+            $this->assertThat($i18nManager->getFichierTraduction(),
+                $this->logicalAnd($this->logicalNot($this->isNull()),
+                    $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
         }
 
         public function testGetFichierTraductionDefautInvalide() {
@@ -79,16 +89,24 @@
 
             $xmlParserFr = $this->createMock('xmlparser', array('isValide', '', false));
 
-            $fichierCn = $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParserCn));
+            $fichierCn = $this->createMock('Fichier',
+                array('fichierExiste', '', true),
+                array('chargerFichier', '', $xmlParserCn));
 
-            $fichierFr = $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParserFr));
+            $fichierFr = $this->createMock('Fichier',
+                array('fichierExiste', '', true),
+                array('chargerFichier', '', $xmlParserFr));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
-            $i18nManager = $this->createMock('I18nManager', array('getFichier', 'fr', $fichierFr), array('getFichier', 'cn', $fichierCn));
+            $i18nManager = $this->createMock('I18nManager',
+                array('getFichier', 'fr', $fichierFr),
+                array('getFichier', 'cn', $fichierCn));
 
             $i18nManager->setConfig('French', array('CHINOIS' => 'cn', 'FRENCH' => 'fr'));
 
-            $this->assertThat($i18nManager->getFichierTraduction(), $this->logicalAnd($this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
+            $this->assertThat($i18nManager->getFichierTraduction(),
+                $this->logicalAnd($this->logicalNot($this->isNull()),
+                    $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
         }
 
         public function testGetFichierTraductionPlusieursFichierInexistantOuBugges() {
@@ -98,16 +116,26 @@
 
             $fichierEn = $this->createMock('Fichier', array('fichierExiste', '', false));
 
-            $fichierIt = $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParserIt));
+            $fichierIt = $this->createMock('Fichier',
+                array('fichierExiste', '', true),
+                array('chargerFichier', '', $xmlParserIt));
 
-            $fichierFr = $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParserFr));
+            $fichierFr = $this->createMock('Fichier',
+                array('fichierExiste', '', true),
+                array('chargerFichier', '', $xmlParserFr));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
-            $i18nManager = $this->createMock('I18nManager', array('getFichier', 'en', $fichierEn), array('getFichier', 'en', $fichierEn), array('getFichier', 'it', $fichierIt), array('getFichier', 'fr', $fichierFr));
+            $i18nManager = $this->createMock('I18nManager',
+                array('getFichier', 'en', $fichierEn),
+                array('getFichier', 'en', $fichierEn),
+                array('getFichier', 'it', $fichierIt),
+                array('getFichier', 'fr', $fichierFr));
 
             $i18nManager->setConfig('English', array('ENGLISH' => 'en', 'ITALIAN' => 'it', 'FRENCH' => 'fr'));
 
-            $this->assertThat($i18nManager->getFichierTraduction(), $this->logicalAnd($this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
+            $this->assertThat($i18nManager->getFichierTraduction(),
+                $this->logicalAnd($this->logicalNot($this->isNull()),
+                    $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
         }
 
         /**

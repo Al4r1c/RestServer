@@ -21,16 +21,14 @@
         private function buildConteneur() {
             $conteneur = new \Pimple();
 
-            $conteneur['configManager'] = $conteneur->share(
-                function () {
-                    $fichier = \Serveur\Utils\FileManager::getFichier();
-                    $fichier->setFichierParametres('config.yaml', '/config');
-                    $configurationManager = new \Serveur\Config\Config();
-                    $configurationManager->chargerConfiguration($fichier);
+            $conteneur['configManager'] = $conteneur->share(function () {
+                $fichier = \Serveur\Utils\FileManager::getFichier();
+                $fichier->setFichierParametres('config.yaml', '/config');
+                $configurationManager = new \Serveur\Config\Config();
+                $configurationManager->chargerConfiguration($fichier);
 
-                    return $configurationManager;
-                }
-            );
+                return $configurationManager;
+            });
 
             $conteneur['server'] = function () {
                 $server = new \Serveur\Rest\Server();
@@ -58,24 +56,20 @@
                 return $restReponse;
             };
 
-            $conteneur['restManager'] = $conteneur->share(
-                function ($c) {
-                    $restManager = new \Serveur\Rest\RestManager();
-                    $restManager->setRequete($c['restRequest']);
-                    $restManager->setReponse($c['restReponse']);
+            $conteneur['restManager'] = $conteneur->share(function ($c) {
+                $restManager = new \Serveur\Rest\RestManager();
+                $restManager->setRequete($c['restRequest']);
+                $restManager->setReponse($c['restReponse']);
 
-                    return $restManager;
-                }
-            );
+                return $restManager;
+            });
 
-            $conteneur['errorManager'] = $conteneur->share(
-                function ($c) {
-                    $errorManager = new \Serveur\Exceptions\ErrorManager();
-                    $errorManager->setErrorHandler($c['errorHandler']);
+            $conteneur['errorManager'] = $conteneur->share(function ($c) {
+                $errorManager = new \Serveur\Exceptions\ErrorManager();
+                $errorManager->setErrorHandler($c['errorHandler']);
 
-                    return $errorManager;
-                }
-            );
+                return $errorManager;
+            });
 
             $conteneur['errorHandler'] = function () {
                 return new \Serveur\Exceptions\Handler\ErrorHandling();

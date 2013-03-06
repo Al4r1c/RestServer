@@ -71,7 +71,9 @@
                 case E_CORE_ERROR:
                 case E_USER_ERROR:
                 case E_PARSE:
-                    $this->_erreurs[] = new Error($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
+                    $this->_erreurs[] =
+                        new Error($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur .
+                            ' | {trad.warning}: ' . $messageErreur);
                     throw new \Exception();
                     break;
 
@@ -85,7 +87,9 @@
                 case E_DEPRECATED:
                 case E_USER_DEPRECATED:
                 case E_RECOVERABLE_ERROR:
-                    $this->_erreurs[] = new Notice($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' . $messageErreur);
+                    $this->_erreurs[] =
+                        new Notice($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur .
+                            ' | {trad.warning}: ' . $messageErreur);
                     break;
 
                 default:

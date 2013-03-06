@@ -41,7 +41,10 @@
             if ($this->isValide()) {
                 return null;
             } else {
-                return sprintf('XML error at line %d column %d: %s', $this->_erreur['line'], $this->_erreur['column'], $this->_erreur['message']);
+                return sprintf('XML error at line %d column %d: %s',
+                    $this->_erreur['line'],
+                    $this->_erreur['column'],
+                    $this->_erreur['message']);
             }
         }
 
@@ -50,7 +53,9 @@
          * @return XMLElement[]
          */
         public function getConfigValeur($clefConfig) {
-            if ($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)), $this->_donneesParsees->getChildren())) {
+            if ($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)),
+                $this->_donneesParsees->getChildren())
+            ) {
                 return $valeur;
             } else {
                 return null;
@@ -94,7 +99,9 @@
 
                 if (!xml_parse($parser, $donnee)) {
                     $this->_donneesParsees = null;
-                    $this->_erreur = array('line' => xml_get_current_line_number($parser), 'column' => xml_get_current_column_number($parser), 'message' => xml_error_string(xml_get_error_code($parser)));
+                    $this->_erreur = array('line' => xml_get_current_line_number($parser),
+                                           'column' => xml_get_current_column_number($parser),
+                                           'message' => xml_error_string(xml_get_error_code($parser)));
                 }
             }
             unset($GLOBALS['temporaire']);

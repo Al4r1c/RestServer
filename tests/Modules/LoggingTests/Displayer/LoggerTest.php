@@ -16,13 +16,11 @@
         }
 
         public function getFakeTradManager() {
-            $functionCallback = function($object) {
+            $functionCallback = function ($object) {
                 return $object;
             };
 
-            $tradManager = $this->createMock('TradManager',
-                array('recupererChaineTraduite', '', $functionCallback)
-            );
+            $tradManager = $this->createMock('TradManager', array('recupererChaineTraduite', '', $functionCallback));
 
             return $tradManager;
         }
@@ -86,17 +84,14 @@
             $dateRequete = new \DateTime();
 
             $restRequete = $this->createMock('RestRequete',
-               array('getDateRequete', '', $dateRequete),
-               array('getIp', '', '127.0.0.1'),
-               array('getMethode', '', 'GET'),
-               array('getUriVariables', '', array('edit')),
-               array('getParametres', '', array('param1' => 'var1'))
-            );
+                array('getDateRequete', '', $dateRequete),
+                array('getIp', '', '127.0.0.1'),
+                array('getMethode', '', 'GET'),
+                array('getUriVariables', '', array('edit')),
+                array('getParametres', '', array('param1' => 'var1')));
 
-            $restReponse = $this->createMock('RestReponse',
-                array('getStatus', '', 200),
-                array('getFormatRetour', '', 'json')
-            );
+            $restReponse =
+                $this->createMock('RestReponse', array('getStatus', '', 200), array('getFormatRetour', '', 'json'));
 
             $fichierAcces = new \Serveur\Lib\Fichier();
             $fichierAcces->setFileSystem($this->getFakeFileSystem());

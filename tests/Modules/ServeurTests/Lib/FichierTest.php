@@ -80,31 +80,43 @@
         public function testCheminDacces() {
             $this->fichier->setRepertoireFichier('/path\\\\to///fichier////');
 
-            $this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
+            $this->assertEquals(
+                BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR .
+                    'fichier' . DIRECTORY_SEPARATOR,
+                $this->fichier->getRepertoireFichier());
         }
 
         public function testCheminDaccesAbsolue() {
             $this->fichier->setRepertoireFichier(BASE_PATH . '/path/to/fichier/');
 
-            $this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR . 'fichier' . DIRECTORY_SEPARATOR, $this->fichier->getRepertoireFichier());
+            $this->assertEquals(
+                BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR .
+                    'fichier' . DIRECTORY_SEPARATOR,
+                $this->fichier->getRepertoireFichier());
         }
 
         public function testGetCheminComplet() {
             $this->fichier->setRepertoireFichier('/path/');
             $this->fichier->setNomFichier('comeatme.log');
 
-            $this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'comeatme.log', $this->fichier->getCheminCompletFichier());
+            $this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'comeatme.log',
+                $this->fichier->getCheminCompletFichier());
         }
 
         public function testSetFichierConfig() {
             $this->fichier->setFichierParametres('monFichier.txt', '/chemin\\dacces/');
 
-            $this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'chemin' . DIRECTORY_SEPARATOR . 'dacces' . DIRECTORY_SEPARATOR . 'monFichier.txt', $this->fichier->getCheminCompletFichier());
+            $this->assertEquals(
+                BASE_PATH . DIRECTORY_SEPARATOR . 'chemin' . DIRECTORY_SEPARATOR . 'dacces' . DIRECTORY_SEPARATOR .
+                    'monFichier.txt',
+                $this->fichier->getCheminCompletFichier());
         }
 
         public function testVerifierExistence() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', 'c:\\wwww\\', true), array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', true));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', 'c:\\wwww\\', true),
+                array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', true));
 
             $fileSystem->initialiser('Windows', 'c:\\wwww\\');
 
@@ -117,7 +129,9 @@
 
         public function testVerifierExistenceFalse() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', 'c:\\wwww\\', true), array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', false));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', 'c:\\wwww\\', true),
+                array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', false));
 
             $fileSystem->initialiser('Windows', 'c:\\wwww\\');
 
@@ -130,7 +144,10 @@
 
         public function testChargerFichier() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', '/data/www/', true), array('fichierExiste', '/data/www/chemin/variables.php', true), array('chargerFichier', '/data/www/chemin/variables.php', array('VAR1' => 'PARAM1')));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', '/data/www/', true),
+                array('fichierExiste', '/data/www/chemin/variables.php', true),
+                array('chargerFichier', '/data/www/chemin/variables.php', array('VAR1' => 'PARAM1')));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -147,7 +164,9 @@
          */
         public function testChargerFichierInexistant() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', '/data/www/', true), array('fichierExiste', '/data/www/chemin/monFichierFAke.php', false));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', '/data/www/', true),
+                array('fichierExiste', '/data/www/chemin/monFichierFAke.php', false));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -160,7 +179,9 @@
 
         public function testCreerFichier() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', '', true), array('creerFichier', '/data/www/chemin/party.png', true));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', '', true),
+                array('creerFichier', '/data/www/chemin/party.png', true));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -173,7 +194,9 @@
 
         public function testNeRecreerPasFichierExisteDeja() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', '', true), array('fichierExiste', '/data/www/chemin/party.png', true));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', '', true),
+                array('fichierExiste', '/data/www/chemin/party.png', true));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -191,7 +214,9 @@
          */
         public function testCreerDansDossierInexistant() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', 'c:\\www\\', true), array('dossierExiste', 'c:\\www\\path\\', false));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', 'c:\\www\\', true),
+                array('dossierExiste', 'c:\\www\\path\\', false));
 
             $fileSystem->initialiser('Windows', 'c:\\www\\');
 
@@ -208,7 +233,9 @@
          */
         public function testCreerBug() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('dossierExiste', '', true), array('creerFichier', 'c:\\www\\path\\heya.log', ''));
+            $fileSystem = $this->createMock('FileSystem',
+                array('dossierExiste', '', true),
+                array('creerFichier', 'c:\\www\\path\\heya.log', ''));
 
             $fileSystem->initialiser('Windows', 'c:\\www\\');
 

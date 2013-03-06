@@ -225,7 +225,7 @@
 
             if (preg_match('(^[a-z]{3,}://)S', $chemin)) {
                 $tabUrl = explode('://', $chemin);
-                $streamUrl = $tabUrl[0].'://';
+                $streamUrl = $tabUrl[0] . '://';
                 $chemin = $tabUrl[1];
             }
 

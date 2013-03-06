@@ -9,7 +9,13 @@
     class ConfigTest extends TestCase {
         /** @var Config */
         private $configuration;
-        private static $donneesConfig = array('Config' => array('DEBUG_WEBSITE' => true, 'DEBUG_FRAMEWORK' => true, 'CHARSET' => 'utf-8', 'DEFAULT_DISPLAYER' => 'LOG', 'DEFAULT_RENDER' => 'XML'), 'Displayers' => array('LOG' => 'logger'), 'Render' => array('XML' => 'xml'));
+        private static $donneesConfig = array('Config' => array('DEBUG_WEBSITE' => true,
+                                                                'DEBUG_FRAMEWORK' => true,
+                                                                'CHARSET' => 'utf-8',
+                                                                'DEFAULT_DISPLAYER' => 'LOG',
+                                                                'DEFAULT_RENDER' => 'XML'),
+                                              'Displayers' => array('LOG' => 'logger'),
+                                              'Render' => array('XML' => 'xml'));
 
         public function setUp() {
             $this->configuration = new Config();
@@ -21,7 +27,9 @@
 
             $this->configuration->chargerConfiguration($fichier);
 
-            $this->assertAttributeEquals(array_change_key_case(self::$donneesConfig, CASE_UPPER), '_applicationConfiguration', $this->configuration);
+            $this->assertAttributeEquals(array_change_key_case(self::$donneesConfig, CASE_UPPER),
+                '_applicationConfiguration',
+                $this->configuration);
         }
 
         /**

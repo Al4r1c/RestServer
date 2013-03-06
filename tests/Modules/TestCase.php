@@ -101,7 +101,7 @@
             }
 
             if (!isNull($element)) {
-                $will = "->will(\$this->".$returnType."(" . $this->getPlainVar($element) . "))" . $will;
+                $will = "->will(\$this->" . $returnType . "(" . $this->getPlainVar($element) . "))" . $will;
             }
 
             return $will;
