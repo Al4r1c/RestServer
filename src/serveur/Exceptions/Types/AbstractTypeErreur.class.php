@@ -37,7 +37,7 @@
         /**
          * @return int
          */
-        public function getCode() {
+        public function getCodeErreur() {
             return $this->_codeErreur;
         }
 

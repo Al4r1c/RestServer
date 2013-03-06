@@ -8,8 +8,8 @@
 
         /**
          * @param string $loggingMethode
+         * @throws \InvalidArgumentException
          * @return Displayer\AbstractDisplayer
-         * @throws \Exception
          */
         public static function getLogger($loggingMethode) {
             switch ($loggingMethode) {
@@ -20,7 +20,7 @@
                     $logger->setFichierLogAcces(self::creerFichierSiNexistePas('access.log'));
                     break;
                 default:
-                    throw new \Exception();
+                    throw new \InvalidArgumentException(sprintf('Invalid displayer name %s.', $loggingMethode));
                     break;
             }
 

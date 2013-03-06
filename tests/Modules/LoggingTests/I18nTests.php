@@ -19,6 +19,7 @@
             $suite->addTestSuite('Modules\LoggingTests\I18n\TradManagerTest');
             $suite->addTestSuite('Modules\LoggingTests\I18n\I18nManagerTest');
             $suite->addTestSuite('Modules\LoggingTests\Factory\LoggingFactoryTest');
+            $suite->addTestSuite('Modules\LoggingTests\Displayer\LoggerTest');
 
             return $suite;
         }
