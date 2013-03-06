@@ -1,5 +1,9 @@
 ==CHANGELOG==
 
+[06/03/13]
+LoggingFactoryTest + LoggerTest
+FactoryMock
+
 [05/03/13]
 Build sous Phing avec différents outils d'analyses.
 
