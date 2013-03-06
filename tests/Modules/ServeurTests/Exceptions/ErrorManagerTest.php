@@ -14,16 +14,10 @@
         }
 
         public function testSetErrorHandler() {
-            $errorHandler = $this->createMock('ErrorHandler');
+            $errorHandler = $this->createMock('ErreurHandler');
 
             $this->_errorManager->setErrorHandler($errorHandler);
 
             $this->assertAttributeEquals($errorHandler, '_errorHandler', $this->_errorManager);
-        }
-
-        public function testSetHandlers() {
-            $errorHandler = $this->createMock('ErrorHandler',
-                array('setHandler')
-            );
         }
     }

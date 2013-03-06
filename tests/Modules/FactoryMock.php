@@ -3,60 +3,60 @@
 
     class FactoryMock extends \PHPUnit_Framework_TestCase {
         /** @return \PHPUnit_Framework_MockObject_MockObject */
-        public function createMock($type, $methodes = array()) {
+        protected function recupererMockSelonNom($type, $methodes = array()) {
             $mock = null;
 
             switch (strtolower($type)) {
                 case 'abstractchargeurfichier':
-                    $mock = self::getMockAbstractChargeur();
+                    $mock = $this->getMockAbstractChargeur();
                     break;
                 case 'abstractrenderer':
-                    $mock = self::getMockAbstractRenderer();
+                    $mock = $this->getMockAbstractRenderer();
                     break;
                 case 'config':
-                    $mock = self::getMockConfig($methodes);
+                    $mock = $this->getMockConfig($methodes);
                     break;
                 case 'constante':
-                    $mock = self::getMockConstante($methodes);
+                    $mock = $this->getMockConstante($methodes);
                     break;
                 case 'erreur':
-                    $mock = self::getMockErreur($methodes);
+                    $mock = $this->getMockErreur($methodes);
                     break;
-                case 'errorhandler':
-                    $mock = self::getErrorHandler($methodes);
+                case 'erreurhandler':
+                    $mock = $this->getMockErreurHandler($methodes);
                     break;
                 case 'fichier':
-                    $mock = self::getMockFichier($methodes);
+                    $mock = $this->getMockFichier($methodes);
                     break;
                 case 'filesystem':
-                    $mock = self::getMockFileSystem($methodes);
+                    $mock = $this->getMockFileSystem($methodes);
                     break;
                 case 'headermanager':
-                    $mock = self::getMockHeadersManager($methodes);
+                    $mock = $this->getMockHeadersManager($methodes);
                     break;
                 case 'i18nmanager':
-                    $mock = self::getMockI18nManager($methodes);
+                    $mock = $this->getMockI18nManager($methodes);
                     break;
                 case 'notice':
-                    $mock = self::getMockNotice($methodes);
+                    $mock = $this->getMockNotice($methodes);
                     break;
                 case 'restrequete':
-                    $mock = self::getMockRestRequete($methodes);
+                    $mock = $this->getMockRestRequete($methodes);
                     break;
                 case 'restreponse':
-                    $mock = self::getMockRestReponse($methodes);
+                    $mock = $this->getMockRestReponse($methodes);
                     break;
                 case 'server':
-                    $mock = self::getMockServer($methodes);
+                    $mock = $this->getMockServer($methodes);
                     break;
                 case 'tradmanager':
-                    $mock = self::getMockTradManager($methodes);
+                    $mock = $this->getMockTradManager($methodes);
                     break;
                 case 'xmlelement':
-                    $mock = self::getMockXmlElement($methodes);
+                    $mock = $this->getMockXmlElement($methodes);
                     break;
                 case 'xmlparser':
-                    $mock = self::getMockXmlParser($methodes);
+                    $mock = $this->getMockXmlParser($methodes);
                     break;
                 default:
                     new \Exception('Mock type not found.');
@@ -67,7 +67,7 @@
         }
 
         /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FichierChargement\AbstractChargeurFichier */
-        private function getMockAbstractChargeur() {
+        protected function getMockAbstractChargeur() {
             return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier');
         }
 
@@ -96,15 +96,15 @@
          * @param array $methodes
          * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Types\Error
          */
-        private function getMockErreur($methodes = array()) {
+        protected function getMockErreur($methodes = array()) {
             return $this->getMock('Serveur\Exceptions\Types\Error', $methodes);
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Handler\ErrorHandler
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Handler\ErreurHandler
          */
-        private function getErrorHandler($methodes) {
+        protected function getMockErreurHandler($methodes) {
             return $this->getMock('Serveur\Exceptions\Handler\ErrorHandler', $methodes);
         }
 
@@ -144,7 +144,7 @@
          * @param array $methodes
          * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Types\Notice
          */
-        private function getMockNotice($methodes = array()) {
+        protected function getMockNotice($methodes = array()) {
             return $this->getMock('Serveur\Exceptions\Types\Notice', $methodes);
         }
 
@@ -176,7 +176,7 @@
          * @param array $methodes
          * @return \PHPUnit_Framework_MockObject_MockObject|\Logging\I18n\TradManager
          */
-        private function getMockTradManager($methodes = array()) {
+        protected function getMockTradManager($methodes = array()) {
             return $this->getMock('Logging\I18n\TradManager', $methodes);
         }
 

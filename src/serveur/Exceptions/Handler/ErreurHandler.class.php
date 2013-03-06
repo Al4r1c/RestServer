@@ -4,7 +4,7 @@
     use Serveur\Exceptions\Types\Notice;
     use Serveur\Exceptions\Types\Error;
 
-    class ErrorHandler {
+    class ErreurHandler {
 
         /**
          * @var string[]

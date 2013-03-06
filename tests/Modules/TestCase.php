@@ -1,7 +1,7 @@
 <?php
     namespace Modules;
 
-    class TestCase extends \PHPUnit_Framework_TestCase {
+    class TestCase extends FactoryMock {
 
         private static $boolArray = array(false => 'false', true => 'true');
         private $tabTricks = array();
@@ -64,8 +64,7 @@
         protected function createStaticMock($type) {
             $tabEvals = $this->genererEvals(array_slice(func_get_args(), 1));
 
-            $factoryMock = new FactoryMock();
-            $mock = $factoryMock->createMock($type, array_unique(array_keys($tabEvals)));
+            $mock = $this->recupererMockSelonNom($type, array_unique(array_keys($tabEvals)));
 
             return $this->informerMock($mock, "\$mock::staticExpects", $tabEvals);
         }
@@ -73,8 +72,7 @@
         protected function createMock($type) {
             $tabEvals = $this->genererEvals(array_slice(func_get_args(), 1));
 
-            $factoryMock = new FactoryMock();
-            $mock = $factoryMock->createMock($type, array_unique(array_keys($tabEvals)));
+            $mock = $this->recupererMockSelonNom($type, array_unique(array_keys($tabEvals)));
 
             return $this->informerMock($mock, "\$mock->expects", $tabEvals);
         }
