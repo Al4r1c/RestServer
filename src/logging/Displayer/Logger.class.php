@@ -64,7 +64,7 @@
             $this->_fichierLogAcces->ecrireDansFichier("\t" .
                 $this->traduireMessageEtRemplacerVariables(
                     "{trad.method}: " . $restRequete->getMethode() . " -- URI: /" .
-                        implode('/', $restRequete->getUriVariables()) . "") . "\n");
+                    implode('/', $restRequete->getUriVariables()) . "") . "\n");
             $this->_fichierLogAcces->ecrireDansFichier(
                 "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\n");
             foreach ($restRequete->getParametres() as $clefParam => $unParam) {
@@ -73,7 +73,7 @@
             $this->_fichierLogAcces->ecrireDansFichier("\t" .
                 $this->traduireMessageEtRemplacerVariables(
                     "{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " .
-                        $restReponse->getFormatRetour()) . "\n");
+                    $restReponse->getFormatRetour()) . "\n");
         }
 
         /**
@@ -100,7 +100,7 @@
             $this->_fichierLogErreur->ecrireDansFichier("\t" .
                 $this->traduireMessageEtRemplacerVariables(
                     "{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." .
-                        substr($uneErreur->getCodeErreur(), 0, -2) . "}\n"));
+                    substr($uneErreur->getCodeErreur(), 0, -2) . "}\n"));
             $this->_fichierLogErreur->ecrireDansFichier(
                 "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\n");
         }

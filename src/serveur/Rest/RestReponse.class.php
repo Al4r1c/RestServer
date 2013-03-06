@@ -193,7 +193,7 @@
             http_response_code($this->_status);
             $this->_headerManager->ajouterHeader('Content-type',
                 Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' .
-                    strtolower($this->_charset));
+                strtolower($this->_charset));
             $this->_headerManager->envoyerHeaders();
         }
 
