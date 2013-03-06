@@ -7,7 +7,7 @@
     class ErreurHandler {
 
         /**
-         * @var string[]
+         * @var \Serveur\Exceptions\Types\AbstractTypeErreur[]
          */
         private $_erreurs = array();
 
@@ -18,7 +18,7 @@
         }
 
         /**
-         * @return \string[]
+         * @return \Serveur\Exceptions\Types\AbstractTypeErreur[]
          */
         public function getErreurs() {
             return $this->_erreurs;
