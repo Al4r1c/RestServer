@@ -12,15 +12,19 @@
          * @throws \Exception
          */
         public static function getLogger($loggingMethode) {
-            if (class_exists($displayerName = '\\' . __NAMESPACE__ . '\Displayer\\' . ucfirst(strtolower($loggingMethode)))) {
-                /** @var $logger \Logging\Displayer\AbstractDisplayer */
-                $logger = new $displayerName();
-                $logger->setTradManager(self::getI18n());
-
-                return $logger;
-            } else {
-                throw new \Exception();
+            switch ($loggingMethode) {
+                case 'logger':
+                    $logger = new \Logging\Displayer\Logger();
+                    $logger->setTradManager(self::getI18n());
+                    $logger->setFichierLogErreur(self::creerFichierSiNexistePas('errors.log'));
+                    $logger->setFichierLogAcces(self::creerFichierSiNexistePas('access.log'));
+                    break;
+                default:
+                    throw new \Exception();
+                    break;
             }
+
+            return $logger;
         }
 
         /**
@@ -34,5 +38,17 @@
             $tradManager->setFichierTraduction($i18nManager->getFichierTraduction());
 
             return $tradManager;
+        }
+
+        /**
+         * @param string $nomFichier
+         * @return \Serveur\Lib\Fichier
+         */
+        private static function creerFichierSiNexistePas($nomFichier) {
+            $fichier = \Serveur\Utils\FileManager::getFichier();
+            $fichier->setFichierParametres($nomFichier, BASE_PATH . '/log');
+            $fichier->creerFichier('0700');
+
+            return $fichier;
         }
     }

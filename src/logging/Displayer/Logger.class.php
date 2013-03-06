@@ -5,16 +5,6 @@
 
     class Logger extends AbstractDisplayer {
         /**
-         * @var string
-         */
-        private static $_nomFichierErreurs = 'errors.log';
-
-        /**
-         * @var string
-         */
-        private static $_nomFichierAcces = 'access.log';
-
-        /**
          * @var \Serveur\Lib\Fichier
          */
         private $_fichierLogErreur;
@@ -24,21 +14,18 @@
          */
         private $_fichierLogAcces;
 
-        public function __construct() {
-            $this->_fichierLogErreur = $this->creerFichierSiNexistePas(self::$_nomFichierErreurs);
-            $this->_fichierLogAcces = $this->creerFichierSiNexistePas(self::$_nomFichierAcces);
+        /**
+         * @param \Serveur\Lib\Fichier $fichierLogAcces
+         */
+        public function setFichierLogAcces($fichierLogAcces) {
+            $this->_fichierLogAcces = $fichierLogAcces;
         }
 
         /**
-         * @param string $nomFichier
-         * @return \Serveur\Lib\Fichier
+         * @param \Serveur\Lib\Fichier $fichierLogErreur
          */
-        private function creerFichierSiNexistePas($nomFichier) {
-            $fichier = \Serveur\Utils\FileManager::getFichier();
-            $fichier->setFichierParametres($nomFichier, BASE_PATH . '/log');
-            $fichier->creerFichier('0700');
-
-            return $fichier;
+        public function setFichierLogErreur($fichierLogErreur) {
+            $this->_fichierLogErreur = $fichierLogErreur;
         }
 
         /**
@@ -59,9 +46,9 @@
                     throw new \Exception('Invalid error type');
                 }
 
-                fputs($fp, $uneErreur->getDate()->format('d-m-Y H:i:s') . ": \r\n");
-                fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.error}" . " n°" . $uneErreur->getCode() . ": {errorType." . substr($uneErreur->getCode(), 0, -2) . "}\r\n"));
-                fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\r\n");
+                fputs($fp, $uneErreur->getDate()->format('d-m-Y H:i:s') . ": \n");
+                fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.error}" . " n°" . $uneErreur->getCode() . ": {errorType." . substr($uneErreur->getCode(), 0, -2) . "}\n"));
+                fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\n");
             }
 
             fclose($fp);
@@ -77,14 +64,14 @@
             $fp = fopen($this->_fichierLogAcces->getCheminCompletFichier(), 'a+');
             fseek($fp, SEEK_END);
 
-            fputs($fp, $restRequete->getDateRequete()->format('d-m-Y H:i:s') . ": \r\n");
-            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.remoteIp}: " . $restRequete->getIp()) . "\r\n");
-            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.method}: " . $restRequete->getMethode() . " -- URI: /" . implode('/', $restRequete->getUriVariables()) . "") . "\r\n");
-            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\r\n");
+            fputs($fp, $restRequete->getDateRequete()->format('d-m-Y H:i:s') . ": \n");
+            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.remoteIp}: " . $restRequete->getIp()) . "\n");
+            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.method}: " . $restRequete->getMethode() . " -- URI: /" . implode('/', $restRequete->getUriVariables()) . "") . "\n");
+            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\n");
             foreach ($restRequete->getParametres() as $clefParam => $unParam) {
-                fputs($fp, "\t\t" . $clefParam . " => " . $unParam . "\r\n");
+                fputs($fp, "\t\t" . $clefParam . " => " . $unParam . "\n");
             }
-            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " . $restReponse->getFormatRetour()) . "\r\n");
+            fputs($fp, "\t" . $this->traduireMessageEtRemplacerVariables("{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " . $restReponse->getFormatRetour()) . "\n");
 
             fclose($fp);
         }
