@@ -127,8 +127,14 @@
         private function makeWill($element) {
             $will = ";";
 
+            if (!is_callable($element)) {
+                $returnType = 'returnValue';
+            } else {
+                $returnType = 'returnCallback';
+            }
+
             if (!isNull($element)) {
-                $will = "->will(\$this->returnValue(" . $this->getPlainVar($element) . "))" . $will;
+                $will = "->will(\$this->".$returnType."(" . $this->getPlainVar($element) . "))" . $will;
             }
 
             return $will;
