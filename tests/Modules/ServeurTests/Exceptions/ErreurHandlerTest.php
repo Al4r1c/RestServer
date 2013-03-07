@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Exceptions;
 
     use Modules\TestCase;
+    use Modules\MockArg;
 
     class ErreurHandlerTest extends TestCase {
         /** @var \Serveur\Exceptions\Handler\ErreurHandler */
@@ -13,7 +14,7 @@
 
         private function expectEcrireErreur() {
             $abstractDisplayer = $this->createMock('AbstractDisplayer',
-                array('ecrireMessageErreur'));
+                new MockArg('ecrireMessageErreur'));
 
             $this->_errorHandler->ajouterUnLogger($abstractDisplayer);
         }

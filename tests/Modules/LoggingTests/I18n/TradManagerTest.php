@@ -2,6 +2,7 @@
     namespace Modules\LoggingTests\I18n;
 
     use Modules\TestCase;
+    use Modules\MockArg;
 
     class TradManagerTest extends TestCase {
 
@@ -13,7 +14,7 @@
         }
 
         public function testSetXmlObjet() {
-            $xmlParser = $this->createMock('XMLParser', array('isValide', '', true));
+            $xmlParser = $this->createMock('XMLParser', new MockArg('isValide', true));
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -25,20 +26,20 @@
          * @expectedExceptionMessage Traduction object is invalid.
          */
         public function testSetXmlObjetInvalide() {
-            $xmlParser = $this->createMock('XMLParser', array('isValide', '', false));
+            $xmlParser = $this->createMock('XMLParser', new MockArg('isValide', false));
 
             $this->tradManager->setFichierTraduction($xmlParser);
         }
 
         public function testTransformeMessage() {
-            $xmlElem1 = $this->createMock('XMLElement', array('getValeur', '', 'goA'));
+            $xmlElem1 = $this->createMock('XMLElement', new MockArg('getValeur', 'goA'));
 
-            $xmlElem2 = $this->createMock('XMLElement', array('getValeur', '', 'MessParticulier'));
+            $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValeur', 'MessParticulier'));
 
             $xmlParser = $this->createMock('XMLParser',
-                array('isValide', '', true),
-                array('getConfigValeur', 'key.message[code=a]', array($xmlElem1)),
-                array('getConfigValeur', 'section.message[code=3]', array($xmlElem2)));
+                new MockArg('isValide', true),
+                new MockArg('getConfigValeur', array($xmlElem1), array('key.message[code=a]')),
+                new MockArg('getConfigValeur', array($xmlElem2), array('section.message[code=3]')));
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -47,7 +48,7 @@
         }
 
         public function testTransformeMessageRienModifie() {
-            $xmlParser = $this->createMock('XMLParser', array('isValide', '', true));
+            $xmlParser = $this->createMock('XMLParser', new MockArg('isValide', true));
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -56,8 +57,8 @@
 
         public function testTransformeMessageNonTrouvee() {
             $xmlParser = $this->createMock('XMLParser',
-                array('isValide', '', true),
-                array('getConfigValeur', 'fake.message[code=clef]', null));
+                new MockArg('isValide', true),
+                new MockArg('getConfigValeur', null, array('fake.message[code=clef]')));
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -66,14 +67,14 @@
         }
 
         public function testGetTraduction() {
-            $xmlElem1 = $this->createMock('XMLElement', array('getValeur', '', 'goC'));
+            $xmlElem1 = $this->createMock('XMLElement', new MockArg('getValeur', 'goC'));
 
-            $xmlElem2 = $this->createMock('XMLElement', array('getValeur', '', 'Mess2'));
+            $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValeur', 'Mess2'));
 
             $xmlParser = $this->createMock('XMLParser',
-                array('isValide', '', true),
-                array('getConfigValeur', 'maClef.message[code=code]', array($xmlElem1)),
-                array('getConfigValeur', 'section.message[code=2]', array($xmlElem2)));
+                new MockArg('isValide', true),
+                new MockArg('getConfigValeur', array($xmlElem1), array('maClef.message[code=code]')),
+                new MockArg('getConfigValeur', array($xmlElem2), array('section.message[code=2]')));
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -87,8 +88,8 @@
 
         public function testGetTraductionNonTrouvee() {
             $xmlParser = $this->createMock('XMLParser',
-                array('isValide', '', true),
-                array('getConfigValeur', 'existe.message[code=pas]', null));
+                new MockArg('isValide', true),
+                new MockArg('getConfigValeur', null, array('existe.message[code=pas]')));
 
             $this->tradManager->setFichierTraduction($xmlParser);
 

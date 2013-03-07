@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Lib;
 
     use Modules\TestCase;
+    use Modules\MockArg;
     use Serveur\Lib\TypeDetector;
 
     class TypeDetectorTest extends TestCase {
@@ -21,7 +22,8 @@
 
         public function setUp() {
             /** @var $constantes \Serveur\Utils\Constante * */
-            $constantes = $this->createStaticMock('Constante', array('chargerConfig', 'mimes', self::$mimeFichier));
+            $constantes = $this->createStaticMock('Constante',
+                new MockArg('chargerConfig', self::$mimeFichier, array('mimes')));
 
             $this->typeDetector = new TypeDetector($constantes::chargerConfig('mimes'));
         }

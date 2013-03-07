@@ -6,26 +6,20 @@
         private static $boolArray = array(false => 'false', true => 'true');
         private $tabTricks = array();
 
+        /**
+         * @param MockArg[] $tabMethodes
+         * @return array
+         */
         protected function genererEvals($tabMethodes) {
             $tabEvals = array();
 
             foreach ($tabMethodes as $uneMethode) {
-                $tabMethodes[] = $uneMethode[0];
-                $methode = "->method(\"" . $uneMethode[0] . "\")";
+                $methode = "->method(\"" . $uneMethode->getMethode() . "\")";
 
-                if (!isNull($uneMethode[1])) {
-                    $with = "->with(" . $this->getPlainVar($uneMethode[1]) . ")";
-                } else {
-                    $with = "";
-                }
+                $with = $this->makeWith($uneMethode->getArguments());
+                $will = $this->makeWill($uneMethode->getReturnValeur());
 
-                if (!isNull($uneMethode[2])) {
-                    $will = $this->makeWill($uneMethode[2]);
-                } else {
-                    $will = ";";
-                }
-
-                $tabEvals[$uneMethode[0]][] = array('methode' => $methode, 'with' => $with, 'will' => $will);
+                $tabEvals[$uneMethode->getMethode()][] = array('methode' => $methode, 'with' => $with, 'will' => $will);
             }
 
             return $tabEvals;
@@ -99,14 +93,34 @@
             return $var;
         }
 
-        private function makeWill($element) {
-            if (!is_callable($element)) {
-                $returnType = 'returnValue';
+        private function makeWith($tabArguments) {
+            if (!isNull($tabArguments)) {
+                $with = "->with(";
+
+                $with .= implode(", ", array_map(array($this, 'getPlainVar'), $tabArguments));
+
+                $with .= ")";
             } else {
-                $returnType = 'returnCallback';
+                $with = "";
             }
 
-            return "->will(\$this->" . $returnType . "(" . $this->getPlainVar($element) . "));";
+            return $with;
+        }
+
+        private function makeWill($element) {
+            if (!isNull($element)) {
+                if (!is_callable($element)) {
+                    $returnType = 'returnValue';
+                } else {
+                    $returnType = 'returnCallback';
+                }
+
+                $will = "->will(\$this->" . $returnType . "(" . $this->getPlainVar($element) . "));";
+            } else {
+                $will = ";";
+            }
+
+            return $will;
         }
 
         private function arrayToStringPhp(array $array) {

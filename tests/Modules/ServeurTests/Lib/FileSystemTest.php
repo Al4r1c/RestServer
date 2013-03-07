@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Lib;
 
     use Modules\TestCase;
+    use Modules\MockArg;
     use Serveur\Lib\FileSystem;
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
@@ -198,10 +199,11 @@
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
 
             $abstractChargeur = $this->createMock('AbstractChargeurFichier',
-                array('chargerFichier', vfsStream::url('testPath/fichier.php'), array('paris' => 'yeah')));
+                new MockArg('chargerFichier', array('paris' => 'yeah'), array(vfsStream::url('testPath/fichier.php'))));
 
             /** @var $fileSystem FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('getChargeurClass', 'Php', $abstractChargeur));
+            $fileSystem = $this->createMock('FileSystem',
+                new MockArg('getChargeurClass', $abstractChargeur, array('Php')));
 
             $fileSystem->setBasePath(vfsStream::url('testPath'));
             $fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));
@@ -215,10 +217,11 @@
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
 
             $abstractChargeur = $this->createMock('AbstractChargeurFichier',
-                array('chargerFichier', vfsStream::url('testPath/fichier.php'), array('paris' => 'yeah')));
+                new MockArg('chargerFichier', array('paris' => 'yeah'), array(vfsStream::url('testPath/fichier.php'))));
 
             /** @var $fileSystem FileSystem */
-            $fileSystem = $this->createMock('FileSystem', array('getChargeurClass', 'Php', $abstractChargeur));
+            $fileSystem = $this->createMock('FileSystem',
+                new MockArg('getChargeurClass', $abstractChargeur, array('Php')));
 
             $fileSystem->setBasePath(vfsStream::url('testPath'));
             $fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));

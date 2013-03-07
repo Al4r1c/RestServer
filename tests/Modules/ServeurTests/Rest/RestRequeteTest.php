@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Rest;
 
     use Modules\TestCase;
+    use Modules\MockArg;
     use Serveur\Rest\RestRequete;
 
     class RestRequeteTest extends TestCase {
@@ -121,12 +122,12 @@
 
         public function testRestSetServer() {
             $serveur = $this->createMock('Server',
-                array('getServeurMethode', '', 'PUT'),
-                array('getServeurHttpAccept', '', 'text/html,application/xhtml+xml,application/xml;q=0.9'),
-                array('getServeurUri', '', '/mon/uri/'),
-                array('getServeurDonnees', '', array('param1' => 'var1', 'param2' => 'var2')),
-                array('getRemoteIp', '', '127.0.0.1'),
-                array('getRequestTime', '', 1362000000));
+                new MockArg('getServeurMethode', 'PUT'),
+                new MockArg('getServeurHttpAccept', 'text/html,application/xhtml+xml,application/xml;q=0.9'),
+                new MockArg('getServeurUri', '/mon/uri/'),
+                new MockArg('getServeurDonnees', array('param1' => 'var1', 'param2' => 'var2')),
+                new MockArg('getRemoteIp', '127.0.0.1'),
+                new MockArg('getRequestTime', 1362000000));
 
             $this->restRequete->setServer($serveur);
             $this->assertEquals('PUT', $this->restRequete->getMethode());

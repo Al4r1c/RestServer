@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Rest;
 
     use Modules\TestCase;
+    use Modules\MockArg;
     use Serveur\Rest\RestManager;
 
     class RestManagerTest extends TestCase {
@@ -46,7 +47,8 @@
         }
 
         public function testRestRecupererUriParam() {
-            $restRequete = $this->createMock('RestRequete', array('getUriVariables', '', array('0' => 'monuri')));
+            $restRequete = $this->createMock('RestRequete',
+                new MockArg('getUriVariables', array('0' => 'monuri')));
 
             $this->restManager->setRequete($restRequete);
 
@@ -62,7 +64,8 @@
         }
 
         public function testRestUriVariableNull() {
-            $restRequete = $this->createMock('RestRequete', array('getUriVariables', '', array('0' => 'monuri')));
+            $restRequete = $this->createMock('RestRequete',
+                new MockArg('getUriVariables', array('0' => 'monuri')));
 
             $this->restManager->setRequete($restRequete);
 
@@ -70,7 +73,8 @@
         }
 
         public function testRestRecupererDonnee() {
-            $restRequete = $this->createMock('RestRequete', array('getParametres', '', array('param1' => 'donnee1')));
+            $restRequete = $this->createMock('RestRequete',
+                new MockArg('getParametres', array('param1' => 'donnee1')));
 
             $this->restManager->setRequete($restRequete);
 
@@ -86,7 +90,8 @@
         }
 
         public function testRestRenvoieDonneeNull() {
-            $restRequete = $this->createMock('RestRequete', array('getParametres', '', array('param1' => 'donnee1')));
+            $restRequete = $this->createMock('RestRequete',
+                new MockArg('getParametres', array(array('param1' => 'donnee1'))));
 
 
             $this->restManager->setRequete($restRequete);
@@ -95,8 +100,9 @@
         }
 
         public function testRestSetVariableReponse() {
-            $restReponse =
-                $this->createMock('RestReponse', array('setStatus', 500), array('setContenu', "<html></html>"));
+            $restReponse = $this->createMock('RestReponse',
+                new MockArg('setStatus', null, array(500)),
+                new MockArg('setContenu', null, array("<html></html>")));
 
 
             $this->restManager->setReponse($restReponse);
@@ -105,12 +111,15 @@
         }
 
         public function testRestFabriquerReponse() {
-            $restRequete = $this->createMock('RestRequete', array('getFormatsDemandes', '', array('json')));
+            $restRequete = $this->createMock('RestRequete',
+                new MockArg('getFormatsDemandes', array('json')));
 
             $restReponse = new \Serveur\Rest\RestReponse();
             $restReponse->setContenu(array('param1' => 'var1'));
             $restReponse->setFormats('JSON', array('JSON' => 'json'));
-            $headerManager = $this->createMock('HeaderManager', array('ajouterHeader'), array('envoyerHeaders'));
+            $headerManager = $this->createMock('HeaderManager',
+                new MockArg('ajouterHeader'),
+                new MockArg('envoyerHeaders'));
 
             $restReponse->setHeaderManager($headerManager);
 

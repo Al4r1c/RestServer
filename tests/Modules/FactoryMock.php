@@ -28,6 +28,9 @@
                 case 'erreurhandler':
                     $mock = $this->getMockErreurHandler($methodes);
                     break;
+                case 'errormanager':
+                    $mock = $this->getMockErrorManager($methodes);
+                    break;
                 case 'fichier':
                     $mock = $this->getMockFichier($methodes);
                     break;
@@ -40,8 +43,14 @@
                 case 'i18nmanager':
                     $mock = $this->getMockI18nManager($methodes);
                     break;
+                case 'conteneur':
+                    $mock = $this->getMockConteneur($methodes);
+                    break;
                 case 'notice':
                     $mock = $this->getMockNotice($methodes);
+                    break;
+                case 'restmanager':
+                    $mock = $this->getMockRestManager($methodes);
                     break;
                 case 'restrequete':
                     $mock = $this->getMockRestRequete($methodes);
@@ -118,6 +127,14 @@
 
         /**
          * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\ErrorManager
+         */
+        protected function getMockErrorManager($methodes) {
+            return $this->getMock('Serveur\Exceptions\ErrorManager', $methodes);
+        }
+
+        /**
+         * @param array $methodes
          * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\Fichier
          */
         protected function getMockFichier($methodes = array()) {
@@ -150,10 +167,26 @@
 
         /**
          * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Conteneur\Conteneur
+         */
+        protected function getMockConteneur($methodes = array()) {
+            return $this->getMock('\Conteneur\Conteneur', $methodes);
+        }
+
+        /**
+         * @param array $methodes
          * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Types\Notice
          */
         protected function getMockNotice($methodes = array()) {
             return $this->getMock('Serveur\Exceptions\Types\Notice', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestManager
+         */
+        protected function getMockRestManager($methodes = array()) {
+            return $this->getMock('Serveur\Rest\RestManager', $methodes);
         }
 
         /**

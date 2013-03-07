@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Lib;
 
     use Modules\TestCase;
+    use Modules\MockArg;
     use Serveur\Lib\Fichier;
 
     class FichierTest extends TestCase {
@@ -113,8 +114,8 @@
         public function testVerifierExistence() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', 'c:\\wwww\\', true),
-                array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', true));
+                new MockArg('dossierExiste', true, array('c:\\wwww\\')),
+                new MockArg('fichierExiste', true, array('c:\\wwww\\chemin\\monFichier.png')));
 
             $fileSystem->initialiser('Windows', 'c:\\wwww\\');
 
@@ -128,8 +129,8 @@
         public function testVerifierExistenceFalse() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', 'c:\\wwww\\', true),
-                array('fichierExiste', 'c:\\wwww\\chemin\\monFichier.png', false));
+                new MockArg('dossierExiste', true, array('c:\\wwww\\')),
+                new MockArg('fichierExiste', false, array('c:\\wwww\\chemin\\monFichier.png')));
 
             $fileSystem->initialiser('Windows', 'c:\\wwww\\');
 
@@ -143,9 +144,9 @@
         public function testChargerFichier() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', '/data/www/', true),
-                array('fichierExiste', '/data/www/chemin/variables.php', true),
-                array('chargerFichier', '/data/www/chemin/variables.php', array('VAR1' => 'PARAM1')));
+                new MockArg('dossierExiste', true, array('/data/www/')),
+                new MockArg('fichierExiste', true, array('/data/www/chemin/variables.php')),
+                new MockArg('chargerFichier', array('VAR1' => 'PARAM1'), array('/data/www/chemin/variables.php')));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -163,8 +164,8 @@
         public function testChargerFichierInexistant() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', '/data/www/', true),
-                array('fichierExiste', '/data/www/chemin/monFichierFAke.php', false));
+                new MockArg('dossierExiste', true, array('/data/www/')),
+                new MockArg('fichierExiste', false, array('/data/www/chemin/monFichierFAke.php')));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -178,8 +179,8 @@
         public function testCreerFichier() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', '', true),
-                array('creerFichier', '/data/www/chemin/party.png', true));
+                new MockArg('dossierExiste', true),
+                new MockArg('creerFichier', true, array('/data/www/chemin/party.png')));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -193,8 +194,8 @@
         public function testNeRecreerPasFichierExisteDeja() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', '', true),
-                array('fichierExiste', '/data/www/chemin/party.png', true));
+                new MockArg('dossierExiste', true),
+                new MockArg('fichierExiste', true, array('/data/www/chemin/party.png')));
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -213,8 +214,8 @@
         public function testCreerDansDossierInexistant() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', 'c:\\www\\', true),
-                array('dossierExiste', 'c:\\www\\path\\', false));
+                new MockArg('dossierExiste', true, array('c:\\www\\')),
+                new MockArg('dossierExiste', false, array('c:\\www\\path\\')));
 
             $fileSystem->initialiser('Windows', 'c:\\www\\');
 
@@ -232,8 +233,8 @@
         public function testCreerBug() {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
-                array('dossierExiste', '', true),
-                array('creerFichier', 'c:\\www\\path\\heya.log', ''));
+                new MockArg('dossierExiste', true),
+                new MockArg('creerFichier', null, array('c:\\www\\path\\heya.log')));
 
             $fileSystem->initialiser('Windows', 'c:\\www\\');
 

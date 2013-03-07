@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Config;
 
     use Modules\TestCase;
+    use Modules\MockArg;
     use Serveur\Config\Config;
 
     class ConfigTest extends TestCase {
@@ -21,7 +22,8 @@
 
         public function testChargerFichier() {
             /** @var $fichier \Serveur\Lib\Fichier */
-            $fichier = $this->createMock('Fichier', array('chargerFichier', '', self::$donneesConfig));
+            $fichier = $this->createMock('Fichier',
+                new MockArg('chargerFichier', self::$donneesConfig));
 
             $this->configuration->chargerConfiguration($fichier);
 
@@ -43,7 +45,8 @@
          * @expectedExceptionCode 30000
          */
         public function testChargerFichierInexistant() {
-            $fichier = $this->createMock('Fichier', array('fichierExiste', '', false));
+            $fichier = $this->createMock('Fichier',
+                new MockArg('fichierExiste', false));
 
             $this->configuration->chargerConfiguration($fichier);
         }
@@ -55,13 +58,15 @@
         public function testChargerFichierInvalide() {
             $donnees = self::$donneesConfig;
             unset($donnees['Displayers']);
-            $fichier = $this->createMock('Fichier', array('chargerFichier', '', $donnees));
+            $fichier = $this->createMock('Fichier',
+                new MockArg('chargerFichier', $donnees));
 
             $this->configuration->chargerConfiguration($fichier);
         }
 
         public function testGetValeur() {
-            $fichier = $this->createMock('Fichier', array('chargerFichier', '', self::$donneesConfig));
+            $fichier = $this->createMock('Fichier',
+                new MockArg('chargerFichier', self::$donneesConfig));
 
             $this->configuration->chargerConfiguration($fichier);
 

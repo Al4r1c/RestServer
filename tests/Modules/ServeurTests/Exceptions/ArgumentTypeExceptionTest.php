@@ -8,7 +8,8 @@
         private $_argumentException;
 
         private function setMainException($variable) {
-            $this->_argumentException = new \Serveur\Exceptions\Exceptions\ArgumentTypeException(10000, 500, 'Methode()', 'attendu', $variable);
+            $this->_argumentException =
+                new \Serveur\Exceptions\Exceptions\ArgumentTypeException(10000, 500, 'Methode()', 'attendu', $variable);
         }
 
         public function testGetObtenuInt() {

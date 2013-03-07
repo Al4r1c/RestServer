@@ -2,6 +2,7 @@
     namespace Modules\LoggingTests\I18n;
 
     use Modules\TestCase;
+    use Modules\MockArg;
 
     class I18nManagerTest extends TestCase {
 
@@ -51,13 +52,16 @@
         }
 
         public function testGetFichierTraduction() {
-            $xmlParser = $this->createMock('xmlparser', array('isValide', '', true));
+            $xmlParser = $this->createMock('xmlparser',
+                new MockArg('isValide', true));
 
-            $fichier =
-                $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParser));
+            $fichier = $this->createMock('Fichier',
+                new MockArg('fichierExiste', true),
+                new MockArg('chargerFichier', $xmlParser));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
-            $i18nManager = $this->createMock('I18nManager', array('getFichier', 'fr', $fichier));
+            $i18nManager = $this->createMock('I18nManager',
+                new MockArg('getFichier', $fichier, array('fr')));
 
             $i18nManager->setConfig('French', array('FRENCH' => 'fr', 'ENGLISH' => 'en'));
 
@@ -67,13 +71,16 @@
         }
 
         public function testGetFichierTraductionDefautInexistant() {
-            $xmlParser = $this->createMock('xmlparser', array('isValide', '', true));
+            $xmlParser = $this->createMock('xmlparser',
+                new MockArg('isValide', true));
 
-            $fichier =
-                $this->createMock('Fichier', array('fichierExiste', '', true), array('chargerFichier', '', $xmlParser));
+            $fichier = $this->createMock('Fichier',
+                new MockArg('fichierExiste', true),
+                new MockArg('chargerFichier', $xmlParser));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
-            $i18nManager = $this->createMock('I18nManager', array('getFichier', 'en', $fichier));
+            $i18nManager = $this->createMock('I18nManager',
+                new MockArg('getFichier', $fichier, array('en')));
 
             $i18nManager->setConfig('French', array('ENGLISH' => 'en'));
 
@@ -83,22 +90,24 @@
         }
 
         public function testGetFichierTraductionDefautInvalide() {
-            $xmlParserCn = $this->createMock('xmlparser', array('isValide', '', true));
+            $xmlParserCn = $this->createMock('xmlparser',
+                new MockArg('isValide', true));
 
-            $xmlParserFr = $this->createMock('xmlparser', array('isValide', '', false));
+            $xmlParserFr = $this->createMock('xmlparser',
+                new MockArg('isValide', false));
 
             $fichierCn = $this->createMock('Fichier',
-                array('fichierExiste', '', true),
-                array('chargerFichier', '', $xmlParserCn));
+                new MockArg('fichierExiste', true),
+                new MockArg('chargerFichier', $xmlParserCn));
 
             $fichierFr = $this->createMock('Fichier',
-                array('fichierExiste', '', true),
-                array('chargerFichier', '', $xmlParserFr));
+                new MockArg('fichierExiste', true),
+                new MockArg('chargerFichier', $xmlParserFr));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
             $i18nManager = $this->createMock('I18nManager',
-                array('getFichier', 'fr', $fichierFr),
-                array('getFichier', 'cn', $fichierCn));
+                new MockArg('getFichier', $fichierFr, array('fr')),
+                new MockArg('getFichier', $fichierCn, array('cn')));
 
             $i18nManager->setConfig('French', array('CHINOIS' => 'cn', 'FRENCH' => 'fr'));
 
@@ -108,26 +117,29 @@
         }
 
         public function testGetFichierTraductionPlusieursFichierInexistantOuBugges() {
-            $xmlParserIt = $this->createMock('xmlparser', array('isValide', '', false));
+            $xmlParserIt = $this->createMock('xmlparser',
+                new MockArg('isValide', false));
 
-            $xmlParserFr = $this->createMock('xmlparser', array('isValide', '', true));
+            $xmlParserFr = $this->createMock('xmlparser',
+                new MockArg('isValide', true));
 
-            $fichierEn = $this->createMock('Fichier', array('fichierExiste', '', false));
+            $fichierEn = $this->createMock('Fichier',
+                new MockArg('fichierExiste', false));
 
             $fichierIt = $this->createMock('Fichier',
-                array('fichierExiste', '', true),
-                array('chargerFichier', '', $xmlParserIt));
+                new MockArg('fichierExiste', true),
+                new MockArg('chargerFichier', $xmlParserIt));
 
             $fichierFr = $this->createMock('Fichier',
-                array('fichierExiste', '', true),
-                array('chargerFichier', '', $xmlParserFr));
+                new MockArg('fichierExiste', true),
+                new MockArg('chargerFichier', $xmlParserFr));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
             $i18nManager = $this->createMock('I18nManager',
-                array('getFichier', 'en', $fichierEn),
-                array('getFichier', 'en', $fichierEn),
-                array('getFichier', 'it', $fichierIt),
-                array('getFichier', 'fr', $fichierFr));
+                new MockArg('getFichier', $fichierEn, array('en')),
+                new MockArg('getFichier', $fichierEn, array('en')),
+                new MockArg('getFichier', $fichierIt, array('it')),
+                new MockArg('getFichier', $fichierFr, array('fr')));
 
             $i18nManager->setConfig('English', array('ENGLISH' => 'en', 'ITALIAN' => 'it', 'FRENCH' => 'fr'));
 
@@ -141,10 +153,12 @@
          * @expectedExceptionMessage No valid translation file set or found.
          */
         public function testGetFichierTraductionAucunFichierFonctionnel() {
-            $fichier = $this->createMock('Fichier', array('fichierExiste', '', false));
+            $fichier = $this->createMock('Fichier',
+                new MockArg('fichierExiste', false));
 
             /** @var $i18nManager \Logging\I18n\I18nManager */
-            $i18nManager = $this->createMock('I18nManager', array('getFichier', '', $fichier));
+            $i18nManager = $this->createMock('I18nManager',
+                new MockArg('getFichier', $fichier));
 
             $i18nManager->setConfig('English', array('ENGLISH' => 'en'));
 

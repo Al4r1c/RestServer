@@ -2,6 +2,7 @@
     namespace Modules\ServeurTests\Exceptions;
 
     use Modules\TestCase;
+    use Modules\MockArg;
 
     class ErrorManagerTest extends TestCase {
         /** @var \Serveur\Exceptions\ErrorManager */
@@ -21,8 +22,7 @@
 
         public function testSetHandlers() {
             $errorHandler = $this->createMock('ErreurHandler',
-                array('setHandlers')
-            );
+                new MockArg('setHandlers'));
 
             $this->_errorManager->setErrorHandler($errorHandler);
             $this->_errorManager->setHandlers();
@@ -31,7 +31,7 @@
         public function testAjouterObserveur() {
             $abstractDisplayer = $this->getMockAbstractDisplayer();
             $errorHandler = $this->createMock('ErreurHandler',
-                array('ajouterUnLogger', $abstractDisplayer));
+                new MockArg('ajouterUnLogger', null, array($abstractDisplayer)));
 
             $this->_errorManager->setErrorHandler($errorHandler);
             $this->_errorManager->ajouterObserveur($abstractDisplayer);
