@@ -19,7 +19,11 @@
                     $with = "";
                 }
 
-                $will = $this->makeWill($uneMethode[2]);
+                if (!isNull($uneMethode[2])) {
+                    $will = $this->makeWill($uneMethode[2]);
+                } else {
+                    $will = ";";
+                }
 
                 $tabEvals[$uneMethode[0]][] = array('methode' => $methode, 'with' => $with, 'will' => $will);
             }
@@ -96,19 +100,13 @@
         }
 
         private function makeWill($element) {
-            $will = ";";
-
             if (!is_callable($element)) {
                 $returnType = 'returnValue';
             } else {
                 $returnType = 'returnCallback';
             }
 
-            if (!isNull($element)) {
-                $will = "->will(\$this->" . $returnType . "(" . $this->getPlainVar($element) . "))" . $will;
-            }
-
-            return $will;
+            return "->will(\$this->" . $returnType . "(" . $this->getPlainVar($element) . "));";
         }
 
         private function arrayToStringPhp(array $array) {
