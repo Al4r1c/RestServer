@@ -8,8 +8,8 @@
             ((is_array($donnee) || is_object($donnee)) && empty($donnee)));
     }
 
-    function startsWith($haystack, $needle) {
-        return !strncmp($haystack, $needle, strlen($needle));
+    function startsWith($string, $stringRecherche) {
+        return !strncmp($string, $stringRecherche, strlen($stringRecherche));
     }
 
     function array_keys_exist(array $keys, array $array) {
