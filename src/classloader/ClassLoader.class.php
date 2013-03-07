@@ -13,25 +13,36 @@
          * @param string $extension
          */
         public function ajouterNamespace($namespace, $includePath, $extension = '.class.php') {
+            if (!startsWith($extension, '.')) {
+                $extension = '.' . $extension;
+            }
+
             $this->_namespaces[strtolower($namespace)] = array('path' => $includePath, 'extension' => $extension);
         }
 
+        /**
+         * @return bool
+         */
         public function register() {
-            spl_autoload_register(array($this, 'loaderFunction'));
+            return spl_autoload_register(array($this, 'loaderFunction')) === true;
         }
 
         /**
          * @param string $namespace
+         * @throws \Exception
+         * @return bool
          */
         public function unregister($namespace = '') {
             if (!isNull($namespace)) {
                 if (array_key_exists(strtolower($namespace), $this->_namespaces)) {
                     unset($this->_namespaces[strtolower($namespace)]);
+
+                    return true;
                 } else {
-                    echo 'Namespace ' . $namespace . ' not found';
+                    throw new \Exception('Namespace ' . $namespace . ' not found');
                 }
             } else {
-                spl_autoload_unregister(array($this, 'loaderFunction'));
+                return spl_autoload_unregister(array($this, 'loaderFunction')) === true;
             }
         }
 

@@ -11,6 +11,7 @@
         public static function suite() {
             $suite = new \PHPUnit_Framework_TestSuite('Server Tests');
 
+            $suite->addTestSuite('Modules\ClassLoader\ClassLoaderTest');
             $suite->addTest(Modules\LoggingTests\I18nTests::suite());
             $suite->addTest(Modules\ServeurTests\ApplicationTests::suite());
             $suite->addTest(Modules\ServeurTests\ExceptionTests::suite());
