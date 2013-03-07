@@ -15,7 +15,8 @@
     $classLoader->register();
 
 
-    $main = new \Serveur\MainApplication(new \Conteneur\MonConteneur());
+    $main = new \Serveur\MainApplication(new \Conteneur\Conteneur());
     $main->ajouterObserveur(\Logging\LoggingFactory::getLogger('logger'));
+    $main->setHandlers();
 
     echo $main->run();

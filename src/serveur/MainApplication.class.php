@@ -6,7 +6,7 @@
 
     class MainApplication {
         /**
-         * @var \Conteneur\MonConteneur
+         * @var \Conteneur\Conteneur
          */
         private $_conteneur;
 
@@ -16,10 +16,13 @@
         private $_observeurs = array();
 
         /**
-         * @param \Conteneur\MonConteneur $nouveauConteneur
+         * @param \Conteneur\Conteneur $nouveauConteneur
          */
-        public function __construct(\Conteneur\MonConteneur $nouveauConteneur) {
+        public function __construct($nouveauConteneur) {
             $this->_conteneur = $nouveauConteneur;
+        }
+
+        public function setHandlers() {
             $this->_conteneur->getErrorManager()->setHandlers();
         }
 
@@ -39,10 +42,14 @@
                 $this->_conteneur->getRestManager()
                     ->setVariablesReponse(200, $this->_conteneur->getRestManager()->getParametres());
 
-                return $this->_conteneur->getRestManager()->fabriquerReponse();
+                $resultat = $this->_conteneur->getRestManager()->fabriquerReponse();
             } catch (\Exception $e) {
-                return $this->leverException($e);
+                $resultat = $this->leverException($e);
             }
+
+            $this->ecrireAccesLog();
+
+            return $resultat;
         }
 
         /**
@@ -56,8 +63,6 @@
                 $statusHttp = 500;
             }
 
-            http_response_code($statusHttp);
-
             $infoHttpCode = Constante::chargerConfig('httpcode')[$statusHttp];
 
             $this->_conteneur->getRestManager()->setVariablesReponse($statusHttp,
@@ -66,7 +71,7 @@
             return $this->_conteneur->getRestManager()->fabriquerReponse();
         }
 
-        public function __destruct() {
+        private function ecrireAccesLog() {
             foreach ($this->_observeurs as $unObserveur) {
                 $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(),
                     $this->_conteneur->getRestManager()->getRestResponse());

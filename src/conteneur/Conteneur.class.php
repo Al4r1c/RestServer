@@ -77,4 +77,18 @@
 
             $this->_conteneur = $conteneur;
         }
+
+        /**
+         * @return \Serveur\Rest\RestManager
+         */
+        public function getRestManager() {
+            return $this->_conteneur['restManager'];
+        }
+
+        /**
+         * @return \Serveur\Exceptions\ErrorManager
+         */
+        public function getErrorManager() {
+            return $this->_conteneur['errorManager'];
+        }
     }
