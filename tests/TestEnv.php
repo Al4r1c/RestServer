@@ -16,7 +16,7 @@
     include_once(BASE_PATH . '/src/classloader/ClassLoader.class.php');
 
 
-    $GLOBALS['global_function_appli_error'] = 'throwExceptionEnvTest';
+    $GLOBALS['global_function_ajouterErreur'] = 'throwExceptionEnvTest';
     function throwExceptionEnvTest($erreurNumber, $codeErreur) {
         // Ajouter en global et tester ?
     }
