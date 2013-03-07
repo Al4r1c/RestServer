@@ -85,12 +85,10 @@
                 new MockArg('setVariablesReponse', null, array(200, array('variable1' => 'valeur1'))),
                 new MockArg('fabriquerReponse', 'variable1 => valeur1'),
                 new MockArg('getRestRequest', $restRequete),
-                new MockArg('getRestResponse', $restReponse)
-            );
+                new MockArg('getRestResponse', $restReponse));
 
             $abstractDisplayer = $this->createMock('AbstractDisplayer',
-                new MockArg('ecrireMessageAcces', null, array($restRequete, $restReponse))
-            );
+                new MockArg('ecrireMessageAcces', null, array($restRequete, $restReponse)));
 
             $errorManager = $this->createMock('ErrorManager',
                 new MockArg('ajouterObserveur'));
