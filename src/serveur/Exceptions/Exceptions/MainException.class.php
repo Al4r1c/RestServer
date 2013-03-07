@@ -28,6 +28,7 @@
 
         /**
          * @param int $codeHttp
+         * @throws \Exception
          */
         public function setStatus($codeHttp) {
             if (!is_int($codeHttp)) {
