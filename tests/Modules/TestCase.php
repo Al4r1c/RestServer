@@ -109,7 +109,9 @@
 
         private function makeWill($element) {
             if (!isNull($element)) {
-                if (!is_callable($element)) {
+                if ($element instanceof \Exception) {
+                    $returnType = 'throwException';
+                } elseif (!is_callable($element)) {
                     $returnType = 'returnValue';
                 } else {
                     $returnType = 'returnCallback';
