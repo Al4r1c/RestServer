@@ -5,16 +5,20 @@
     use Serveur\Exceptions\Types\Error;
 
     class ErreurHandler {
-
         /**
          * @var \Serveur\Exceptions\Types\AbstractTypeErreur[]
          */
         private $_erreurs = array();
 
+        /**
+         * @var \Logging\Displayer\AbstractDisplayer[]
+         */
+        private $_observeursLoggerErreurs;
+
         public function setHandlers() {
             set_error_handler(array($this, 'errorHandler'));
             set_exception_handler(array($this, 'exceptionHandler'));
-            $GLOBALS['global_function_appli_error'] = array($this, 'global_ajouterErreur');
+            $GLOBALS['global_function_ajouterErreur'] = array($this, 'global_ajouterErreur');
         }
 
         /**
@@ -28,19 +32,20 @@
          * @param int $erreurNumber
          * @param int $codeErreur
          * @param array $arguments
+         * @throws \InvalidArgumentException
          */
         public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments) {
             switch ($erreurNumber) {
                 case E_USER_ERROR:
-                    $this->_erreurs[] = new Error($codeErreur, null, $arguments);
+                    $this->_erreurs[] = new Error($codeErreur, $arguments);
                     break;
 
                 case E_USER_NOTICE:
-                    $this->_erreurs[] = new Notice($codeErreur, null, $arguments);
+                    $this->_erreurs[] = new Notice($codeErreur, $arguments);
                     break;
 
                 default:
-                    new \InvalidArgumentException('Error type not supported.');
+                    throw new \InvalidArgumentException('Error type not supported.');
                     break;
             }
         }
@@ -49,7 +54,9 @@
          * @param \Exception $exception
          */
         public function exceptionHandler(\Exception $exception) {
-
+            $erreur = new Error($exception->getCode());
+            $erreur->setMessage($exception->getMessage());
+            $this->_erreurs[] = $erreur;
         }
 
         /**
@@ -71,9 +78,11 @@
                 case E_CORE_ERROR:
                 case E_USER_ERROR:
                 case E_PARSE:
-                    $this->_erreurs[] =
-                        new Error($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur .
-                            ' | {trad.warning}: ' . $messageErreur);
+                    $erreur = new Error($codeErreur);
+                    $erreur->setMessage(
+                        '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
+                            $messageErreur);
+                    $this->_erreurs[] = $erreur;
                     throw new \Exception();
                     break;
 
@@ -87,13 +96,15 @@
                 case E_DEPRECATED:
                 case E_USER_DEPRECATED:
                 case E_RECOVERABLE_ERROR:
-                    $this->_erreurs[] =
-                        new Notice($codeErreur, '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur .
-                            ' | {trad.warning}: ' . $messageErreur);
+                    $erreur = new Notice($codeErreur);
+                    $erreur->setMessage(
+                        '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
+                            $messageErreur);
+                    $this->_erreurs[] = $erreur;
                     break;
 
                 default:
-                    echo "Type d'erreur inconnu : [$codeErreur] $messageErreur<br />\n";
+                    throw new \Exception('Type d\'erreur inconnu : ['.$codeErreur.'] '.$messageErreur);
                     break;
             }
 

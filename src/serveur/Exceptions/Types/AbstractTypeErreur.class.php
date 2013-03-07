@@ -24,12 +24,10 @@
 
         /**
          * @param int $erreurNum
-         * @param string $message
          * @param array $arguments
          */
-        public function __construct($erreurNum, $message, $arguments = array()) {
+        public function __construct($erreurNum, $arguments = array()) {
             $this->setCode($erreurNum);
-            $this->recupererMessage($message);
             $this->setDate(time());
             $this->_arguments = $arguments;
         }
@@ -45,7 +43,11 @@
          * @return string
          */
         public function getMessage() {
-            return $this->_message;
+            if (isNull($this->_message)) {
+                return '{errorMessage.' . $this->_codeErreur . '}';
+            } else {
+                return $this->_message;
+            }
         }
 
         /**
@@ -74,17 +76,6 @@
          */
         public function setMessage($nouveauMessage) {
             $this->_message = $nouveauMessage;
-        }
-
-        /**
-         * @param string $message
-         */
-        public function recupererMessage($message) {
-            if (isNull($message)) {
-                $message = '{errorMessage.' . $this->_codeErreur . '}';
-            }
-
-            $this->_message = $message;
         }
 
         /**
