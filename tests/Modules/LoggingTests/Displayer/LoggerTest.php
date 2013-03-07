@@ -135,7 +135,8 @@
         }
 
         public function testEcrireErreur() {
-            $uneErreur = new \Serveur\Exceptions\Types\Error(10000, "Mon message erreur");
+            $uneErreur = new \Serveur\Exceptions\Types\Error(10000);
+            $uneErreur->setMessage("Mon message erreur");
 
             $fichierErreurs = new \Serveur\Lib\Fichier();
             $fichierErreurs->setFileSystem($this->getFakeFileSystem());
@@ -155,7 +156,8 @@
         }
 
         public function testEcrireNotice() {
-            $uneErreur = new \Serveur\Exceptions\Types\Notice(10000, "Ma notice");
+            $uneErreur = new \Serveur\Exceptions\Types\Notice(10000);
+            $uneErreur->setMessage("Ma notice");
 
             $fichierErreurs = new \Serveur\Lib\Fichier();
             $fichierErreurs->setFileSystem($this->getFakeFileSystem());
