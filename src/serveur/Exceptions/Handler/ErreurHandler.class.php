@@ -104,7 +104,7 @@
                     break;
 
                 default:
-                    throw new \Exception('Type d\'erreur inconnu : ['.$codeErreur.'] '.$messageErreur);
+                    throw new \Exception('Type d\'erreur inconnu : [' . $codeErreur . '] ' . $messageErreur);
                     break;
             }
 

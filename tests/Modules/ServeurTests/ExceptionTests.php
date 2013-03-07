@@ -17,6 +17,7 @@
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
             $suite->addTestSuite('Modules\ServeurTests\Exceptions\ErrorManagerTest');
+            $suite->addTestSuite('Modules\ServeurTests\Exceptions\ErreurHandlerTest');
 
             return $suite;
         }

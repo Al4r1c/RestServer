@@ -23,8 +23,7 @@
 
         public function testSetHandlers() {
             $errorHandler = $this->createMock('ErreurHandler',
-                array('setHandlers')
-            );
+                array('setHandlers'));
 
             $this->_errorManager->setErrorHandler($errorHandler);
             $this->_errorManager->setHandlers();
@@ -32,8 +31,7 @@
 
         public function testGetErreurs() {
             $errorHandler = $this->createMock('ErreurHandler',
-                array('getErreurs', '', array('test'))
-            );
+                array('getErreurs', '', array('test')));
 
             $this->_errorManager->setErrorHandler($errorHandler);
             $this->assertEquals(array('test'), $this->_errorManager->getErreurs());

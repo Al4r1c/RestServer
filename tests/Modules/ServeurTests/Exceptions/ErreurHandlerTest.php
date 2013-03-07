@@ -21,7 +21,8 @@
 
         public function testAjouterNoticeGlobal() {
             $this->_errorHandler->global_ajouterErreur(E_USER_NOTICE, 10000, array('var1'));
-            $this->assertContainsOnlyInstancesOf('\Serveur\Exceptions\Types\Notice', $this->_errorHandler->getErreurs());
+            $this->assertContainsOnlyInstancesOf('\Serveur\Exceptions\Types\Notice',
+                $this->_errorHandler->getErreurs());
             $this->assertCount(1, $this->_errorHandler->getErreurs());
         }
 
@@ -47,7 +48,8 @@
 
         public function testErrorHandlerNotice() {
             $this->_errorHandler->errorHandler(E_DEPRECATED, 'Message', 'script.php', 15);
-            $this->assertContainsOnlyInstancesOf('\Serveur\Exceptions\Types\Notice', $this->_errorHandler->getErreurs());
+            $this->assertContainsOnlyInstancesOf('\Serveur\Exceptions\Types\Notice',
+                $this->_errorHandler->getErreurs());
             $this->assertCount(1, $this->_errorHandler->getErreurs());
         }
 
