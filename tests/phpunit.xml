@@ -1,6 +1,6 @@
-<phpunit>
+<phpunit bootstrap="TestEnv.php">
 	<testsuites>
-		<testsuite name="My Test Suite">
+		<testsuite name="Test Suite Rest Server">
 			<directory>./</directory>
 		</testsuite>
 	</testsuites>

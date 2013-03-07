@@ -26,8 +26,9 @@
         /**
          * @param \Logging\Displayer\AbstractDisplayer $observeur
          */
-        public function ajouterObserveur(\Logging\Displayer\AbstractDisplayer $observeur) {
+        public function ajouterObserveur($observeur) {
             $this->_observeurs[] = $observeur;
+            $this->_conteneur->getErrorManager()->ajouterObserveur($observeur);
         }
 
         /**
@@ -67,10 +68,6 @@
 
         public function __destruct() {
             foreach ($this->_observeurs as $unObserveur) {
-                foreach ($this->_conteneur->getErrorManager()->getErreurs() as $uneErreur) {
-                    $unObserveur->ecrireErreurLog($uneErreur);
-                }
-
                 $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(),
                     $this->_conteneur->getRestManager()->getRestResponse());
             }

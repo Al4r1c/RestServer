@@ -1,8 +1,6 @@
 <?php
     namespace Modules\LoggingTests\Displayer;
 
-    include_once(__DIR__ . '/../../../TestEnv.php');
-
     use Modules\TestCase;
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;

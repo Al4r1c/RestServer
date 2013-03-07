@@ -19,9 +19,9 @@
         }
 
         /**
-         * @return \string[]
+         * @param \Logging\Displayer\AbstractDisplayer $logger
          */
-        public function getErreurs() {
-            return $this->_errorHandler->getErreurs();
+        public function ajouterObserveur($logger) {
+            $this->_errorHandler->ajouterUnLogger($logger);
         }
     }

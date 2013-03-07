@@ -1,8 +1,6 @@
 <?php
     namespace Modules\ServeurTests\Rest;
 
-    include_once(__DIR__ . '/../../../TestEnv.php');
-
     use Modules\TestCase;
     use Serveur\Rest\RestManager;
 

@@ -6,14 +6,18 @@
 
     class ErreurHandler {
         /**
-         * @var \Serveur\Exceptions\Types\AbstractTypeErreur[]
-         */
-        private $_erreurs = array();
-
-        /**
          * @var \Logging\Displayer\AbstractDisplayer[]
          */
         private $_observeursLoggerErreurs;
+
+        /**
+         * @param \Serveur\Exceptions\Types\AbstractTypeErreur $erreur
+         */
+        private function ecrireErreur($erreur) {
+            foreach ($this->_observeursLoggerErreurs as $unObserveur) {
+                $unObserveur->ecrireErreurLog($erreur);
+            }
+        }
 
         public function setHandlers() {
             set_error_handler(array($this, 'errorHandler'));
@@ -22,10 +26,10 @@
         }
 
         /**
-         * @return \Serveur\Exceptions\Types\AbstractTypeErreur[]
+         * @param \Logging\Displayer\AbstractDisplayer $logger
          */
-        public function getErreurs() {
-            return $this->_erreurs;
+        public function ajouterUnLogger($logger) {
+            $this->_observeursLoggerErreurs[] = $logger;
         }
 
         /**
@@ -37,11 +41,11 @@
         public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments) {
             switch ($erreurNumber) {
                 case E_USER_ERROR:
-                    $this->_erreurs[] = new Error($codeErreur, $arguments);
+                    $this->ecrireErreur(new Error($codeErreur, $arguments));
                     break;
 
                 case E_USER_NOTICE:
-                    $this->_erreurs[] = new Notice($codeErreur, $arguments);
+                    $this->ecrireErreur(new Notice($codeErreur, $arguments));
                     break;
 
                 default:
@@ -56,7 +60,7 @@
         public function exceptionHandler(\Exception $exception) {
             $erreur = new Error($exception->getCode());
             $erreur->setMessage($exception->getMessage());
-            $this->_erreurs[] = $erreur;
+            $this->ecrireErreur($erreur);
         }
 
         /**
@@ -82,7 +86,7 @@
                     $erreur->setMessage(
                         '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
                             $messageErreur);
-                    $this->_erreurs[] = $erreur;
+                    $this->ecrireErreur($erreur);
                     throw new \Exception();
                     break;
 
@@ -100,7 +104,7 @@
                     $erreur->setMessage(
                         '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
                             $messageErreur);
-                    $this->_erreurs[] = $erreur;
+                    $this->ecrireErreur($erreur);
                     break;
 
                 default:

@@ -1,8 +1,6 @@
 <?php
     namespace Modules\ServeurTests\Config;
 
-    include_once(__DIR__ . '/../../../TestEnv.php');
-
     use Modules\TestCase;
     use Serveur\Config\Config;
 

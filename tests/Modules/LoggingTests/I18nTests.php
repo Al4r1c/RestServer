@@ -1,8 +1,6 @@
 <?php
     namespace Modules\LoggingTests;
 
-    include_once(__DIR__ . '/../../TestEnv.php');
-
     if (!defined('PHPUnit_MAIN_METHOD')) {
         define('PHPUnit_MAIN_METHOD', 'I18nTests::main');
     }

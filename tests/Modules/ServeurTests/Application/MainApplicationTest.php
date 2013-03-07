@@ -1,8 +1,6 @@
 <?php
     namespace Modules\ServeurTests\Application;
 
-    include_once(__DIR__ . '/../../../TestEnv.php');
-
     use Serveur\MainApplication;
     use Conteneur\MonConteneur;
 

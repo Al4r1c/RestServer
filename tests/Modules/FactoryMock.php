@@ -10,6 +10,9 @@
                 case 'abstractchargeurfichier':
                     $mock = $this->getMockAbstractChargeur();
                     break;
+                case 'abstractdisplayer':
+                    $mock = $this->getMockAbstractDisplayer();
+                    break;
                 case 'abstractrenderer':
                     $mock = $this->getMockAbstractRenderer();
                     break;
@@ -69,6 +72,11 @@
         /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FichierChargement\AbstractChargeurFichier */
         protected function getMockAbstractChargeur() {
             return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier');
+        }
+
+        /** @return \PHPUnit_Framework_MockObject_MockObject|\Logging\Displayer\AbstractDisplayer */
+        protected function getMockAbstractDisplayer() {
+            return $this->getMockForAbstractClass('Logging\Displayer\AbstractDisplayer');
         }
 
         /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Renderers\AbstractRenderer */

@@ -1,8 +1,6 @@
 <?php
     namespace Modules\ServeurTests\Lib;
 
-    include_once(__DIR__ . '/../../../TestEnv.php');
-
     use Modules\TestCase;
     use Serveur\Lib\Fichier;
 

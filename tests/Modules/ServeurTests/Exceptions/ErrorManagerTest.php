@@ -23,17 +23,19 @@
 
         public function testSetHandlers() {
             $errorHandler = $this->createMock('ErreurHandler',
-                array('setHandlers'));
+                array('setHandlers')
+            );
 
             $this->_errorManager->setErrorHandler($errorHandler);
             $this->_errorManager->setHandlers();
         }
 
-        public function testGetErreurs() {
+        public function testAjouterObserveur() {
+            $abstractDisplayer = $this->getMockAbstractDisplayer();
             $errorHandler = $this->createMock('ErreurHandler',
-                array('getErreurs', '', array('test')));
+                array('ajouterUnLogger', $abstractDisplayer));
 
             $this->_errorManager->setErrorHandler($errorHandler);
-            $this->assertEquals(array('test'), $this->_errorManager->getErreurs());
+            $this->_errorManager->ajouterObserveur($abstractDisplayer);
         }
     }
