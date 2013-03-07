@@ -1,5 +1,18 @@
 ==CHANGELOG==
 
+[07/03/13]
+Apports et corrections au mock générique:
+	-Possibilités de plusieurs arguments pour with.
+	-Possibilité de lancer des exceptions.
+	-Le scope de FactoryMock était corrompue.
+ClassLoaderTest.
+MainApplicationTest.
+ErreurHandlerTest + ErrorManagerTest.
+Exclusion de classes définie intestables:
+	-Conteneur : injection de dépendance
+	-ErrorHandler::setHandlers : contient des fonctions intestables (set_error_handler, set_exception_handler).
+Coverage actuel: 99%
+
 [06/03/13]
 LoggingFactoryTest + LoggerTest
 FactoryMock
@@ -20,7 +33,7 @@ Suppression du typage par exceptions, utilisation du code pour identifier le typ
 Nouvelle branche GitHub "dev". Le developpement sera push dans cette branche, les versions finales en master.
 Corrections de divers bug.
 Ajout des tests:
--TradManager, I18nManager
+	-TradManager, I18nManager
 
 [26/02/2013]
 Passage en realpath pour l'acheminement.
@@ -28,11 +41,11 @@ Création de la classe FileSystem.
 Appel de nouveaux fichiers grâce à la classe statique FileManager.
 Nouvelle classe XMLParser à la place de DOMDocument.
 Ajout des tests:
--MainApplication
--RestRequete, RestReponse, RestManager, HeaderManager, Server, Renderers
--Config
--Fichier, FileSystem (utilisation de vfsStream), Chargement de fichiers (Php, Xml & Yaml).
--TypeDetector
+	-MainApplication
+	-RestRequete, RestReponse, RestManager, HeaderManager, Server, Renderers
+	-Config
+	-Fichier, FileSystem (utilisation de vfsStream), Chargement de fichiers (Php, Xml & Yaml).
+	-TypeDetector
 
 [14/02/2013]
 .htaccess fonctionnel.
