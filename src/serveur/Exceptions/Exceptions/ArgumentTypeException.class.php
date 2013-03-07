@@ -3,19 +3,31 @@
 
     class ArgumentTypeException extends MainException {
         /**
+         * @var string
+         */
+        private $_obtenu;
+
+        /**
          * @param string $code
          * @param int $codeStatus
          * @param string $methode
          * @param string $attendu
-         * @param string $typeVariable
+         * @param mixed $typeVariable
          */
         public function __construct($code, $codeStatus, $methode, $attendu, $typeVariable) {
             if (!is_object($typeVariable)) {
-                $obtenu = gettype($typeVariable);
+                $this->setObtenu(gettype($typeVariable));
             } else {
-                $obtenu = get_class($typeVariable);
+                $this->setObtenu($this->_obtenu = get_class($typeVariable));
             }
 
-            parent::__construct($code, $codeStatus, $methode, $attendu, $obtenu);
+            parent::__construct($code, $codeStatus, $methode, $attendu, $this->_obtenu);
+        }
+
+        /**
+         * @param string $typeObtenu
+         */
+        public function setObtenu($typeObtenu) {
+            $this->_obtenu = $typeObtenu;
         }
     }

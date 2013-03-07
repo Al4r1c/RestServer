@@ -17,6 +17,7 @@
             $suite->addTestSuite('Modules\ServeurTests\Exceptions\ErrorManagerTest');
             $suite->addTestSuite('Modules\ServeurTests\Exceptions\ErreurHandlerTest');
             $suite->addTestSuite('Modules\ServeurTests\Exceptions\MainExceptionTest');
+            $suite->addTestSuite('Modules\ServeurTests\Exceptions\ArgumentTypeExceptionTest');
 
             return $suite;
         }
