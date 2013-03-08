@@ -1,12 +1,6 @@
 Config:
-  DEBUG_WEBSITE: true
-  DEBUG_FRAMEWORK: true
   CHARSET: utf-8
-  DEFAULT_DISPLAYER: LOG
   DEFAULT_RENDER: JSON
-
-Displayers:
-  LOG: logger
 
 Render:
   JSON: json

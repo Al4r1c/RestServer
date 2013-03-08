@@ -12,9 +12,7 @@
         private static $donneesConfig = array('Config' => array('DEBUG_WEBSITE' => true,
             'DEBUG_FRAMEWORK' => true,
             'CHARSET' => 'utf-8',
-            'DEFAULT_DISPLAYER' => 'LOG',
             'DEFAULT_RENDER' => 'XML'),
-            'Displayers' => array('LOG' => 'logger'),
             'Render' => array('XML' => 'xml'));
 
         public function setUp()
@@ -69,7 +67,7 @@
         public function testChargerFichierInvalide()
         {
             $donnees = self::$donneesConfig;
-            unset($donnees['Displayers']);
+            unset($donnees['Render']);
             $fichier = $this->createMock(
                 'Fichier',
                 new MockArg('chargerFichier', $donnees)
@@ -87,7 +85,7 @@
 
             $this->configuration->chargerConfiguration($fichier);
 
-            $this->assertEquals('LOG', $this->configuration->getConfigValeur('config.default_displayer'));
+            $this->assertEquals('utf-8', $this->configuration->getConfigValeur('config.charset'));
             $this->assertEquals('xml', $this->configuration->getConfigValeur('render.xml'));
             $this->assertNull($this->configuration->getConfigValeur('render.existepas'));
         }

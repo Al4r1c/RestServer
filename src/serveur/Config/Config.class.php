@@ -17,8 +17,6 @@
          */
         private static $_clefMinimales = array('config',
             'config.default_render',
-            'config.default_displayer',
-            'displayers',
             'render');
 
         /**
