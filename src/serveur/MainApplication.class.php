@@ -21,6 +21,7 @@
          */
         public function __construct($nouveauConteneur)
         {
+            http_response_code(500);
             $this->_conteneur = $nouveauConteneur;
         }
 
