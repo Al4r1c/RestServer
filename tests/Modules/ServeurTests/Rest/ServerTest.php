@@ -107,7 +107,8 @@
             $this->server->setServeurDonnees('GET');
 
             $this->assertAttributeCount(2, '_serveurDonnees', $this->server);
-            $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'),
+            $this->assertAttributeEquals(
+                array('param1' => 'var1', 'param2' => 'var2'),
                 '_serveurDonnees',
                 $this->server
             );
@@ -121,7 +122,8 @@
             $this->server->setServeurDonnees('PUT');
 
             $this->assertCount(2, $this->server->getServeurDonnees());
-            $this->assertEquals(array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'),
+            $this->assertEquals(
+                array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'),
                 $this->server->getServeurDonnees()
             );
         }
@@ -142,7 +144,8 @@
 
             $this->assertAttributeEquals(self::$donneesServer, '_serveurVariable', $this->server);
 
-            $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'),
+            $this->assertAttributeEquals(
+                array('param1' => 'var1', 'param2' => 'var2'),
                 '_serveurDonnees',
                 $this->server
             );
@@ -164,7 +167,8 @@
         public function testGetServeurHttpAccept()
         {
             $this->server->setVarServeur(self::$donneesServer);
-            $this->assertEquals('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            $this->assertEquals(
+                'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
                 $this->server->getServeurHttpAccept()
             );
         }

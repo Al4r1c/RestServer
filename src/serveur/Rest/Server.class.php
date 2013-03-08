@@ -81,7 +81,8 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
             }
 
-            if (!array_keys_exist(array('HTTP_ACCEPT',
+            if (!array_keys_exist(
+                array('HTTP_ACCEPT',
                     'PHP_INPUT',
                     'QUERY_STRING',
                     'REMOTE_ADDR',

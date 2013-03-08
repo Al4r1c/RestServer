@@ -45,7 +45,8 @@
             if ($this->isValide()) {
                 return null;
             } else {
-                return sprintf('XML error at line %d column %d: %s',
+                return sprintf(
+                    'XML error at line %d column %d: %s',
                     $this->_erreur['line'],
                     $this->_erreur['column'],
                     $this->_erreur['message']
@@ -59,7 +60,8 @@
          */
         public function getConfigValeur($clefConfig)
         {
-            if ($valeur = $this->rechercheValeurTableauMultidim(explode('.', strtolower($clefConfig)),
+            if ($valeur = $this->rechercheValeurTableauMultidim(
+                explode('.', strtolower($clefConfig)),
                 $this->_donneesParsees->getChildren()
             )
             ) {

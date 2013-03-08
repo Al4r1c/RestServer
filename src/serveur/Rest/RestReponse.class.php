@@ -61,7 +61,8 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Config\Config', $configuration);
             }
 
-            $this->setFormats($configuration->getConfigValeur('config.default_render'),
+            $this->setFormats(
+                $configuration->getConfigValeur('config.default_render'),
                 $configuration->getConfigValeur('render')
             );
             $this->setCharset($configuration->getConfigValeur('config.charset'));
@@ -207,9 +208,10 @@
         private function envoyerHeaders()
         {
             http_response_code($this->_status);
-            $this->_headerManager->ajouterHeader('Content-type',
+            $this->_headerManager->ajouterHeader(
+                'Content-type',
                 Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' .
-                    strtolower($this->_charset)
+                strtolower($this->_charset)
             );
             $this->_headerManager->envoyerHeaders();
         }
@@ -264,7 +266,9 @@
             }
 
             /* @var $view \Serveur\Renderers\AbstractRenderer */
-            $view = $this->getRenderClass($this->trouverFormatRetourCorrect($formatsDemandes,
+            $view = $this->getRenderClass(
+                $this->trouverFormatRetourCorrect(
+                    $formatsDemandes,
                     $this->_formatsAcceptes,
                     $this->_formatRetour
                 )

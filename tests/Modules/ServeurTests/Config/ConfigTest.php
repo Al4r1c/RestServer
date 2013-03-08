@@ -25,13 +25,15 @@
         public function testChargerFichier()
         {
             /** @var $fichier \Serveur\Lib\Fichier */
-            $fichier = $this->createMock('Fichier',
+            $fichier = $this->createMock(
+                'Fichier',
                 new MockArg('chargerFichier', self::$donneesConfig)
             );
 
             $this->configuration->chargerConfiguration($fichier);
 
-            $this->assertAttributeEquals(array_change_key_case(self::$donneesConfig, CASE_UPPER),
+            $this->assertAttributeEquals(
+                array_change_key_case(self::$donneesConfig, CASE_UPPER),
                 '_applicationConfiguration',
                 $this->configuration
             );
@@ -52,7 +54,8 @@
          */
         public function testChargerFichierInexistant()
         {
-            $fichier = $this->createMock('Fichier',
+            $fichier = $this->createMock(
+                'Fichier',
                 new MockArg('fichierExiste', false)
             );
 
@@ -67,7 +70,8 @@
         {
             $donnees = self::$donneesConfig;
             unset($donnees['Displayers']);
-            $fichier = $this->createMock('Fichier',
+            $fichier = $this->createMock(
+                'Fichier',
                 new MockArg('chargerFichier', $donnees)
             );
 
@@ -76,7 +80,8 @@
 
         public function testGetValeur()
         {
-            $fichier = $this->createMock('Fichier',
+            $fichier = $this->createMock(
+                'Fichier',
                 new MockArg('chargerFichier', self::$donneesConfig)
             );
 

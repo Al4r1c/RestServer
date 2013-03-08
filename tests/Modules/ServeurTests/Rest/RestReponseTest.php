@@ -161,7 +161,8 @@
 
         public function testRestSetConfig()
         {
-            $config = $this->createMock('Config',
+            $config = $this->createMock(
+                'Config',
                 new MockArg('getConfigValeur', 'JSON', array('config.default_render')),
                 new MockArg('getConfigValeur', array('JSON' => 'json', 'HTML' => 'html'), array('render')),
                 new MockArg('getConfigValeur', 'utf-8', array('config.charset'))
@@ -184,16 +185,19 @@
 
         public function testRestRenderAbstract()
         {
-            $abstractrender = $this->createMock('AbstractRenderer',
+            $abstractrender = $this->createMock(
+                'AbstractRenderer',
                 new MockArg('genererRendu', '{"getKey":"getVar"}', array(array('getKey' => 'getVar')))
             );
 
             /** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
-            $restReponse = $this->createMock('RestReponse',
+            $restReponse = $this->createMock(
+                'RestReponse',
                 new MockArg('getRenderClass', $abstractrender, array('Json'))
             );
 
-            $headerManager = $this->createMock('HeaderManager',
+            $headerManager = $this->createMock(
+                'HeaderManager',
                 new MockArg('ajouterHeader'),
                 new MockArg('envoyerHeaders')
             );
@@ -208,16 +212,19 @@
 
         public function testRestRenderNonTrouveUtiliseAutre()
         {
-            $abstractrender = $this->createMock('AbstractRenderer',
+            $abstractrender = $this->createMock(
+                'AbstractRenderer',
                 new MockArg('genererRendu', '{"param1":"var1"}', array(array('param1' => 'var1')))
             );
 
             /** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
-            $restReponse = $this->createMock('RestReponse',
+            $restReponse = $this->createMock(
+                'RestReponse',
                 new MockArg('getRenderClass', $abstractrender, array('Json'))
             );
 
-            $headerManager = $this->createMock('HeaderManager',
+            $headerManager = $this->createMock(
+                'HeaderManager',
                 new MockArg('ajouterHeader'),
                 new MockArg('envoyerHeaders')
             );

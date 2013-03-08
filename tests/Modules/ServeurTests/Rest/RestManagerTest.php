@@ -54,7 +54,8 @@
 
         public function testRestRecupererUriParam()
         {
-            $restRequete = $this->createMock('RestRequete',
+            $restRequete = $this->createMock(
+                'RestRequete',
                 new MockArg('getUriVariables', array('0' => 'monuri'))
             );
 
@@ -74,7 +75,8 @@
 
         public function testRestUriVariableNull()
         {
-            $restRequete = $this->createMock('RestRequete',
+            $restRequete = $this->createMock(
+                'RestRequete',
                 new MockArg('getUriVariables', array('0' => 'monuri'))
             );
 
@@ -85,7 +87,8 @@
 
         public function testRestRecupererDonnee()
         {
-            $restRequete = $this->createMock('RestRequete',
+            $restRequete = $this->createMock(
+                'RestRequete',
                 new MockArg('getParametres', array('param1' => 'donnee1'))
             );
 
@@ -105,7 +108,8 @@
 
         public function testRestRenvoieDonneeNull()
         {
-            $restRequete = $this->createMock('RestRequete',
+            $restRequete = $this->createMock(
+                'RestRequete',
                 new MockArg('getParametres', array(array('param1' => 'donnee1')))
             );
 
@@ -117,7 +121,8 @@
 
         public function testRestSetVariableReponse()
         {
-            $restReponse = $this->createMock('RestReponse',
+            $restReponse = $this->createMock(
+                'RestReponse',
                 new MockArg('setStatus', null, array(500)),
                 new MockArg('setContenu', null, array("<html></html>"))
             );
@@ -130,14 +135,16 @@
 
         public function testRestFabriquerReponse()
         {
-            $restRequete = $this->createMock('RestRequete',
+            $restRequete = $this->createMock(
+                'RestRequete',
                 new MockArg('getFormatsDemandes', array('json'))
             );
 
             $restReponse = new \Serveur\Rest\RestReponse();
             $restReponse->setContenu(array('param1' => 'var1'));
             $restReponse->setFormats('JSON', array('JSON' => 'json'));
-            $headerManager = $this->createMock('HeaderManager',
+            $headerManager = $this->createMock(
+                'HeaderManager',
                 new MockArg('ajouterHeader'),
                 new MockArg('envoyerHeaders')
             );

@@ -18,7 +18,8 @@
         public function testAjouterNamespace()
         {
             $this->_classLoader->ajouterNamespace('myNamespace', '/path/');
-            $this->assertAttributeEquals(array('mynamespace' => array('path' => '/path/', 'extension' => '.class.php')),
+            $this->assertAttributeEquals(
+                array('mynamespace' => array('path' => '/path/', 'extension' => '.class.php')),
                 '_namespaces',
                 $this->_classLoader
             );
@@ -27,7 +28,8 @@
         public function testAjouterNamespaceRajoutePointSiExtension()
         {
             $this->_classLoader->ajouterNamespace('myNamespace', '/path/', 'php');
-            $this->assertAttributeEquals(array('mynamespace' => array('path' => '/path/', 'extension' => '.php')),
+            $this->assertAttributeEquals(
+                array('mynamespace' => array('path' => '/path/', 'extension' => '.php')),
                 '_namespaces',
                 $this->_classLoader
             );

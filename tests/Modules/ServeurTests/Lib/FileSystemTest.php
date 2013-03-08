@@ -223,19 +223,22 @@
             vfsStreamWrapper::register();
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
 
-            $abstractChargeur = $this->createMock('AbstractChargeurFichier',
+            $abstractChargeur = $this->createMock(
+                'AbstractChargeurFichier',
                 new MockArg('chargerFichier', array('paris' => 'yeah'), array(vfsStream::url('testPath/fichier.php')))
             );
 
             /** @var $fileSystem FileSystem */
-            $fileSystem = $this->createMock('FileSystem',
+            $fileSystem = $this->createMock(
+                'FileSystem',
                 new MockArg('getChargeurClass', $abstractChargeur, array('Php'))
             );
 
             $fileSystem->setBasePath(vfsStream::url('testPath'));
             $fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));
 
-            $this->assertEquals(array('paris' => 'yeah'),
+            $this->assertEquals(
+                array('paris' => 'yeah'),
                 $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php'))
             );
         }
@@ -245,19 +248,22 @@
             vfsStreamWrapper::register();
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
 
-            $abstractChargeur = $this->createMock('AbstractChargeurFichier',
+            $abstractChargeur = $this->createMock(
+                'AbstractChargeurFichier',
                 new MockArg('chargerFichier', array('paris' => 'yeah'), array(vfsStream::url('testPath/fichier.php')))
             );
 
             /** @var $fileSystem FileSystem */
-            $fileSystem = $this->createMock('FileSystem',
+            $fileSystem = $this->createMock(
+                'FileSystem',
                 new MockArg('getChargeurClass', $abstractChargeur, array('Php'))
             );
 
             $fileSystem->setBasePath(vfsStream::url('testPath'));
             $fileSystem->creerFichier(vfsStream::url('testPath/fichier.php'));
 
-            $this->assertEquals(array('paris' => 'yeah'),
+            $this->assertEquals(
+                array('paris' => 'yeah'),
                 $fileSystem->chargerFichier(vfsStream::url('testPath/fichier.php'))
             );
         }

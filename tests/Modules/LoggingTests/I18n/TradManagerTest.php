@@ -41,7 +41,8 @@
 
             $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValeur', 'MessParticulier'));
 
-            $xmlParser = $this->createMock('XMLParser',
+            $xmlParser = $this->createMock(
+                'XMLParser',
                 new MockArg('isValide', true),
                 new MockArg('getConfigValeur', array($xmlElem1), array('key.message[code=a]')),
                 new MockArg('getConfigValeur', array($xmlElem2), array('section.message[code=3]'))
@@ -49,7 +50,8 @@
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
-            $this->assertEquals("goA messagerie MessParticulier",
+            $this->assertEquals(
+                "goA messagerie MessParticulier",
                 $this->tradManager->recupererChaineTraduite("{key.a} messagerie {section.3}")
             );
         }
@@ -65,14 +67,16 @@
 
         public function testTransformeMessageNonTrouvee()
         {
-            $xmlParser = $this->createMock('XMLParser',
+            $xmlParser = $this->createMock(
+                'XMLParser',
                 new MockArg('isValide', true),
                 new MockArg('getConfigValeur', null, array('fake.message[code=clef]'))
             );
 
             $this->tradManager->setFichierTraduction($xmlParser);
 
-            $this->assertEquals("Message avec {fake.clef}.",
+            $this->assertEquals(
+                "Message avec {fake.clef}.",
                 $this->tradManager->recupererChaineTraduite("Message avec {fake.clef}.")
             );
         }
@@ -83,7 +87,8 @@
 
             $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValeur', 'Mess2'));
 
-            $xmlParser = $this->createMock('XMLParser',
+            $xmlParser = $this->createMock(
+                'XMLParser',
                 new MockArg('isValide', true),
                 new MockArg('getConfigValeur', array($xmlElem1), array('maClef.message[code=code]')),
                 new MockArg('getConfigValeur', array($xmlElem2), array('section.message[code=2]'))
@@ -101,7 +106,8 @@
 
         public function testGetTraductionNonTrouvee()
         {
-            $xmlParser = $this->createMock('XMLParser',
+            $xmlParser = $this->createMock(
+                'XMLParser',
                 new MockArg('isValide', true),
                 new MockArg('getConfigValeur', null, array('existe.message[code=pas]'))
             );

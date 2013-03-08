@@ -140,7 +140,8 @@
 
         public function testRestSetServer()
         {
-            $serveur = $this->createMock('Server',
+            $serveur = $this->createMock(
+                'Server',
                 new MockArg('getServeurMethode', 'PUT'),
                 new MockArg('getServeurHttpAccept', 'text/html,application/xhtml+xml,application/xml;q=0.9'),
                 new MockArg('getServeurUri', '/mon/uri/'),

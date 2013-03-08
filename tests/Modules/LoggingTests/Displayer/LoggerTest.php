@@ -93,7 +93,8 @@
         {
             $dateRequete = new \DateTime();
 
-            $restRequete = $this->createMock('RestRequete',
+            $restRequete = $this->createMock(
+                'RestRequete',
                 new MockArg('getDateRequete', $dateRequete),
                 new MockArg('getIp', '127.0.0.1'),
                 new MockArg('getMethode', 'GET'),
@@ -101,7 +102,8 @@
                 new MockArg('getParametres', array('param1' => 'var1'))
             );
 
-            $restReponse = $this->createMock('RestReponse',
+            $restReponse = $this->createMock(
+                'RestReponse',
                 new MockArg('getStatus', 200),
                 new MockArg('getFormatRetour', 'json')
             );
