@@ -1,11 +1,13 @@
 <?php
     error_reporting(E_ALL ^ E_NOTICE);
 
-    if (!defined('BASE_PATH')) {
+    if (!defined('BASE_PATH'))
+    {
         define('BASE_PATH', realpath(__DIR__ . '/../'));
     }
 
-    if (!defined('SERVER_NAMESPACE')) {
+    if (!defined('SERVER_NAMESPACE'))
+    {
         define('SERVER_NAMESPACE', 'Serveur');
     }
 
@@ -17,7 +19,8 @@
 
 
     $GLOBALS['global_function_ajouterErreur'] = 'throwExceptionEnvTest';
-    function throwExceptionEnvTest($erreurNumber, $codeErreur) {
+    function throwExceptionEnvTest($erreurNumber, $codeErreur)
+    {
         // Ajouter en global et tester ?
     }
 

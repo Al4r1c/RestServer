@@ -6,16 +6,20 @@
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
 
-    class LoggerTest extends TestCase {
+    class LoggerTest extends TestCase
+    {
         /** @var \Logging\Displayer\Logger */
         private $_logger;
 
-        public function setUp() {
+        public function setUp()
+        {
             $this->_logger = new \Logging\Displayer\Logger();
         }
 
-        public function getFakeTradManager() {
-            $functionCallback = function ($object) {
+        public function getFakeTradManager()
+        {
+            $functionCallback = function ($object)
+            {
                 return $object;
             };
 
@@ -24,7 +28,8 @@
             return $tradManager;
         }
 
-        public function getFakeFileSystem() {
+        public function getFakeFileSystem()
+        {
             vfsStreamWrapper::register();
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('root'));
 
@@ -34,7 +39,8 @@
             return $fileSystem;
         }
 
-        public function testSetFichierLogAcces() {
+        public function testSetFichierLogAcces()
+        {
             $fichierAcces = $this->createMock('Fichier');
 
             $this->_logger->setFichierLogAcces($fichierAcces);
@@ -45,11 +51,13 @@
         /**
          * @expectedException \InvalidArgumentException
          */
-        public function testSetFichierLogAccesErrone() {
+        public function testSetFichierLogAccesErrone()
+        {
             $this->_logger->setFichierLogAcces(null);
         }
 
-        public function testSetFichierLogErreurs() {
+        public function testSetFichierLogErreurs()
+        {
             $fichierErreurs = $this->createMock('Fichier');
 
             $this->_logger->setFichierLogErreur($fichierErreurs);
@@ -60,11 +68,13 @@
         /**
          * @expectedException \InvalidArgumentException
          */
-        public function testSetFichierLogErreurErrone() {
+        public function testSetFichierLogErreurErrone()
+        {
             $this->_logger->setFichierLogErreur(5);
         }
 
-        public function testSetTradManager() {
+        public function testSetTradManager()
+        {
             $tradManager = $this->createMock('TradManager');
 
             $this->_logger->setTradManager($tradManager);
@@ -75,11 +85,13 @@
         /**
          * @expectedException \InvalidArgumentException
          */
-        public function testSetTradManagerErrone() {
+        public function testSetTradManagerErrone()
+        {
             $this->_logger->setTradManager('something');
         }
 
-        public function testEcrireAcces() {
+        public function testEcrireAcces()
+        {
             $dateRequete = new \DateTime();
 
             $restRequete = $this->createMock('RestRequete',
@@ -116,25 +128,29 @@
         /**
          * @expectedException \InvalidArgumentException
          */
-        public function testEcrireAccesWrongRequete() {
+        public function testEcrireAccesWrongRequete()
+        {
             $this->_logger->ecrireAcessLog(null, $this->createMock('RestReponse'));
         }
 
         /**
          * @expectedException \InvalidArgumentException
          */
-        public function testEcrireAccesWrongReponse() {
+        public function testEcrireAccesWrongReponse()
+        {
             $this->_logger->ecrireAcessLog($this->createMock('RestRequete'), null);
         }
 
         /**
          * @expectedException \Exception
          */
-        public function testEcrireAccesFileError() {
+        public function testEcrireAccesFileError()
+        {
             $this->_logger->ecrireAcessLog($this->createMock('RestRequete'), $this->createMock('RestReponse'));
         }
 
-        public function testEcrireErreur() {
+        public function testEcrireErreur()
+        {
             $uneErreur = new \Serveur\Exceptions\Types\Error(10000);
             $uneErreur->setMessage("Mon message erreur");
 
@@ -155,7 +171,8 @@
             $this->assertContains('10000', $contenu);
         }
 
-        public function testEcrireNotice() {
+        public function testEcrireNotice()
+        {
             $uneErreur = new \Serveur\Exceptions\Types\Notice(10000);
             $uneErreur->setMessage("Ma notice");
 
@@ -179,14 +196,16 @@
         /**
          * @expectedException \InvalidArgumentException
          */
-        public function testEcrireErrone() {
+        public function testEcrireErrone()
+        {
             $this->_logger->ecrireErreurLog(new \StdClass());
         }
 
         /**
          * @expectedException \Exception
          */
-        public function testEcrireErreurFileError() {
+        public function testEcrireErreurFileError()
+        {
             $this->_logger->ecrireErreurLog(new \Serveur\Exceptions\Types\Error(555, 'mess'));
         }
     }

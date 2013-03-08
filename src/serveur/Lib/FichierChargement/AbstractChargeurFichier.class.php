@@ -1,7 +1,8 @@
 <?php
     namespace Serveur\Lib\FichierChargement;
 
-    abstract class AbstractChargeurFichier {
+    abstract class AbstractChargeurFichier
+    {
         /**
          * @param string $locationFichier
          * @return mixed

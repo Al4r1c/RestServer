@@ -3,5 +3,6 @@
 
     use Serveur\Exceptions\Types\AbstractTypeErreur;
 
-    class Notice extends AbstractTypeErreur {
+    class Notice extends AbstractTypeErreur
+    {
     }

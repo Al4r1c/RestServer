@@ -5,7 +5,8 @@
     use Serveur\Exceptions\Exceptions\MainException;
     use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
-    class RestRequete {
+    class RestRequete
+    {
         /**
          * @var string
          */
@@ -40,8 +41,10 @@
          * @param Server $server
          * @throws ArgumentTypeException
          */
-        public function setServer($server) {
-            if (!$server instanceof Server) {
+        public function setServer($server)
+        {
+            if (!$server instanceof Server)
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\Server', $server);
             }
 
@@ -56,42 +59,48 @@
         /**
          * @return string
          */
-        public function getMethode() {
+        public function getMethode()
+        {
             return $this->_methode;
         }
 
         /**
          * @return string[]
          */
-        public function getFormatsDemandes() {
+        public function getFormatsDemandes()
+        {
             return $this->_formatsDemandes;
         }
 
         /**
          * @return string[]
          */
-        public function getUriVariables() {
+        public function getUriVariables()
+        {
             return $this->_dataUri;
         }
 
         /**
          * @return string[]
          */
-        public function getParametres() {
+        public function getParametres()
+        {
             return $this->_parametres;
         }
 
         /**
          * @return \DateTime
          */
-        public function getDateRequete() {
+        public function getDateRequete()
+        {
             return $this->_dateRequete;
         }
 
         /**
          * @return string
          */
-        public function getIp() {
+        public function getIp()
+        {
             return $this->_ip;
         }
 
@@ -99,10 +108,12 @@
          * @param string $method
          * @throws MainException
          */
-        public function setMethode($method) {
+        public function setMethode($method)
+        {
             $method = strtoupper(trim($method));
 
-            if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
+            if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE')))
+            {
                 throw new MainException(20000, 400, $method);
             }
 
@@ -114,15 +125,18 @@
          * @throws ArgumentTypeException
          * @throws MainException
          */
-        public function setFormat($format) {
-            if (!is_string($format)) {
+        public function setFormat($format)
+        {
+            if (!is_string($format))
+            {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $format);
             }
 
             $typeDetector = new TypeDetector(\Serveur\Utils\Constante::chargerConfig('mimes'));
             $formatsTrouves = $typeDetector->extraireMimesTypeHeader($format);
 
-            if (isNull($formatsTrouves)) {
+            if (isNull($formatsTrouves))
+            {
                 throw new MainException(20001, 400);
             }
 
@@ -133,13 +147,17 @@
          * @param string $uri
          * @throws ArgumentTypeException
          */
-        public function setVariableUri($uri) {
-            if (!isNull($uri)) {
-                if (!is_string($uri)) {
+        public function setVariableUri($uri)
+        {
+            if (!isNull($uri))
+            {
+                if (!is_string($uri))
+                {
                     throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $uri);
                 }
 
-                if (($pos = strpos($uri, '?')) !== false) {
+                if (($pos = strpos($uri, '?')) !== false)
+                {
                     $uri = substr($uri, 0, $pos);
                 }
 
@@ -152,8 +170,10 @@
          * @param string $donnee
          * @throws ArgumentTypeException
          */
-        public function setParametres($donnee) {
-            if (!is_array($donnee)) {
+        public function setParametres($donnee)
+        {
+            if (!is_array($donnee))
+            {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'array', $donnee);
             }
 
@@ -165,8 +185,10 @@
          * @throws ArgumentTypeException
          * @internal param \DateTime $dateRequete
          */
-        public function setDateRequete($dateRequeteTimestamp) {
-            if (!is_int($dateRequeteTimestamp)) {
+        public function setDateRequete($dateRequeteTimestamp)
+        {
+            if (!is_int($dateRequeteTimestamp))
+            {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'int', $dateRequeteTimestamp);
             }
 
@@ -180,12 +202,15 @@
          * @throws ArgumentTypeException
          * @throws MainException
          */
-        public function setIp($ip) {
-            if (!is_string($ip)) {
+        public function setIp($ip)
+        {
+            if (!is_string($ip))
+            {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $ip);
             }
 
-            if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+            if (!filter_var($ip, FILTER_VALIDATE_IP))
+            {
                 throw new MainException(20002, 400);
             }
 

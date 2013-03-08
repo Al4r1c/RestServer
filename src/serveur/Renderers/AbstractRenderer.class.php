@@ -3,14 +3,17 @@
 
     use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
-    abstract class AbstractRenderer {
+    abstract class AbstractRenderer
+    {
         /**
          * @param array $donnees
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @return string
          */
-        public function render($donnees) {
-            if (!is_array($donnees)) {
+        public function render($donnees)
+        {
+            if (!is_array($donnees))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $donnees);
             }
 

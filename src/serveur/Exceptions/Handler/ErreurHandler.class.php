@@ -4,7 +4,8 @@
     use Serveur\Exceptions\Types\Notice;
     use Serveur\Exceptions\Types\Error;
 
-    class ErreurHandler {
+    class ErreurHandler
+    {
         /**
          * @var \Logging\Displayer\AbstractDisplayer[]
          */
@@ -13,8 +14,10 @@
         /**
          * @param \Serveur\Exceptions\Types\AbstractTypeErreur $erreur
          */
-        private function ecrireErreur($erreur) {
-            foreach ($this->_observeursLoggerErreurs as $unObserveur) {
+        private function ecrireErreur($erreur)
+        {
+            foreach ($this->_observeursLoggerErreurs as $unObserveur)
+            {
                 $unObserveur->ecrireErreurLog($erreur);
             }
         }
@@ -22,7 +25,8 @@
         /**
          * @codeCoverageIgnore
          */
-        public function setHandlers() {
+        public function setHandlers()
+        {
             set_error_handler(array($this, 'errorHandler'));
             set_exception_handler(array($this, 'exceptionHandler'));
             $GLOBALS['global_function_ajouterErreur'] = array($this, 'global_ajouterErreur');
@@ -31,7 +35,8 @@
         /**
          * @param \Logging\Displayer\AbstractDisplayer $logger
          */
-        public function ajouterUnLogger($logger) {
+        public function ajouterUnLogger($logger)
+        {
             $this->_observeursLoggerErreurs[] = $logger;
         }
 
@@ -41,8 +46,10 @@
          * @param array $arguments
          * @throws \InvalidArgumentException
          */
-        public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments) {
-            switch ($erreurNumber) {
+        public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments)
+        {
+            switch ($erreurNumber)
+            {
                 case E_USER_ERROR:
                     $this->ecrireErreur(new Error($codeErreur, $arguments));
                     break;
@@ -60,7 +67,8 @@
         /**
          * @param \Exception $exception
          */
-        public function exceptionHandler(\Exception $exception) {
+        public function exceptionHandler(\Exception $exception)
+        {
             $erreur = new Error($exception->getCode());
             $erreur->setMessage($exception->getMessage());
             $this->ecrireErreur($erreur);
@@ -74,12 +82,15 @@
          * @return bool|null
          * @throws \Exception
          */
-        public function errorHandler($codeErreur, $messageErreur, $fichierErreur, $ligneErreur) {
-            if (!(error_reporting() & $codeErreur)) {
+        public function errorHandler($codeErreur, $messageErreur, $fichierErreur, $ligneErreur)
+        {
+            if (!(error_reporting() & $codeErreur))
+            {
                 return null;
             }
 
-            switch ($codeErreur) {
+            switch ($codeErreur)
+            {
                 case E_COMPILE_ERROR:
                 case E_ERROR:
                 case E_CORE_ERROR:
@@ -88,7 +99,7 @@
                     $erreur = new Error($codeErreur);
                     $erreur->setMessage(
                         '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                        $messageErreur);
+                            $messageErreur);
                     $this->ecrireErreur($erreur);
                     throw new \Exception();
                     break;
@@ -106,7 +117,7 @@
                     $erreur = new Notice($codeErreur);
                     $erreur->setMessage(
                         '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                        $messageErreur);
+                            $messageErreur);
                     $this->ecrireErreur($erreur);
                     break;
 

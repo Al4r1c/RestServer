@@ -5,14 +5,16 @@
     use Modules\MockArg;
     use Serveur\Rest\RestRequete;
 
-    class RestRequeteTest extends TestCase {
+    class RestRequeteTest extends TestCase
+    {
 
         /**
          * @var RestRequete $restRequete
          */
         private $restRequete;
 
-        protected function setUp() {
+        protected function setUp()
+        {
             $this->restRequete = new RestRequete();
         }
 
@@ -20,21 +22,25 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 20000
          */
-        public function testRestMethodeValide() {
+        public function testRestMethodeValide()
+        {
             $this->restRequete->setMethode('METHODE_ERREUR');
         }
 
-        public function testRestMethodeDefaultGet() {
+        public function testRestMethodeDefaultGet()
+        {
             $this->assertEquals('GET', $this->restRequete->getMethode());
         }
 
-        public function testRestMethodeAcceptePost() {
+        public function testRestMethodeAcceptePost()
+        {
             $this->restRequete->setMethode('post');
 
             $this->assertEquals('POST', $this->restRequete->getMethode());
         }
 
-        public function testRestAcceptFormatJSON() {
+        public function testRestAcceptFormatJSON()
+        {
             $this->restRequete->setFormat('application/json');
 
             $this->assertContains('json', $this->restRequete->getFormatsDemandes());
@@ -44,7 +50,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestAcceptFormatInvalide() {
+        public function testRestAcceptFormatInvalide()
+        {
             $this->restRequete->setFormat(5);
         }
 
@@ -52,11 +59,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 20001
          */
-        public function testRestFormatValide() {
+        public function testRestFormatValide()
+        {
             $this->restRequete->setFormat('HTTP_ACCEPT_INVALIDE');
         }
 
-        public function testRestUri() {
+        public function testRestUri()
+        {
             $this->restRequete->setVariableUri('/mon/uri/');
 
             $this->assertInternalType('array', $this->restRequete->getUriVariables());
@@ -66,37 +75,43 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestUriErronee() {
+        public function testRestUriErronee()
+        {
             $this->restRequete->setVariableUri(20.2);
         }
 
-        public function testRestUriVideNonGeree() {
+        public function testRestUriVideNonGeree()
+        {
             $this->restRequete->setVariableUri('/mon/uri/');
             $this->restRequete->setVariableUri('');
 
             $this->assertCount(2, $this->restRequete->getUriVariables());
         }
 
-        public function testRestUriRecupererVariable() {
+        public function testRestUriRecupererVariable()
+        {
             $this->restRequete->setVariableUri('/variable1//var2////var3/');
 
             $this->assertEquals('variable1', $this->restRequete->getUriVariables()[0]);
             $this->assertEquals('var3', $this->restRequete->getUriVariables()[2]);
         }
 
-        public function testRestRessourceEncode() {
+        public function testRestRessourceEncode()
+        {
             $this->restRequete->setVariableUri('/rés%s"ou#rce<////');
 
             $this->assertEquals(rawurlencode('rés%s"ou#rce<'), $this->restRequete->getUriVariables()[0]);
         }
 
-        public function testRestRessourceNoVariable() {
+        public function testRestRessourceNoVariable()
+        {
             $this->restRequete->setVariableUri('/var1?id=3');
 
             $this->assertEquals(rawurlencode('var1'), $this->restRequete->getUriVariables()[0]);
         }
 
-        public function testRestDonnee() {
+        public function testRestDonnee()
+        {
             $this->restRequete->setParametres(array());
 
             $this->assertInternalType('array', $this->restRequete->getParametres());
@@ -106,21 +121,25 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestDonneeSeulementTableau() {
+        public function testRestDonneeSeulementTableau()
+        {
             $this->restRequete->setParametres('GO_GO_ERREUR');
         }
 
-        public function testParametreSauvegardes() {
+        public function testParametreSauvegardes()
+        {
             $this->restRequete->setParametres(array("param1" => "valeur1", "data" => 1));
             $this->assertCount(2, $this->restRequete->getParametres());
         }
 
-        public function testRecupererParametre() {
+        public function testRecupererParametre()
+        {
             $this->restRequete->setParametres(array("param1" => "valeur1", "data" => 1));
             $this->assertEquals('valeur1', $this->restRequete->getParametres()['param1']);
         }
 
-        public function testRestSetServer() {
+        public function testRestSetServer()
+        {
             $serveur = $this->createMock('Server',
                 new MockArg('getServeurMethode', 'PUT'),
                 new MockArg('getServeurHttpAccept', 'text/html,application/xhtml+xml,application/xml;q=0.9'),
@@ -140,11 +159,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestSetServerEronnee() {
+        public function testRestSetServerEronnee()
+        {
             $this->restRequete->setServer(null);
         }
 
-        public function testRestDateRequete() {
+        public function testRestDateRequete()
+        {
             $this->restRequete->setDateRequete(1362000000);
 
             $this->assertInstanceOf('DateTime', $this->restRequete->getDateRequete());
@@ -155,11 +176,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestDateRequeteErrone() {
+        public function testRestDateRequeteErrone()
+        {
             $this->restRequete->setDateRequete('oops');
         }
 
-        public function testRestIp() {
+        public function testRestIp()
+        {
             $this->restRequete->setIp('192.168.0.250');
 
             $this->assertEquals('192.168.0.250', $this->restRequete->getIp());
@@ -169,7 +192,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestIpErrone() {
+        public function testRestIpErrone()
+        {
             $this->restRequete->setIp(500);
         }
 
@@ -177,11 +201,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 20002
          */
-        public function testRestIpFake() {
+        public function testRestIpFake()
+        {
             $this->restRequete->setIp('WRONG_IP');
         }
 
-        public function testRestIpV6() {
+        public function testRestIpV6()
+        {
             $this->restRequete->setIp('8000::123:4567:89AB:CDEF');
 
             $this->assertEquals('8000::123:4567:89AB:CDEF', $this->restRequete->getIp());

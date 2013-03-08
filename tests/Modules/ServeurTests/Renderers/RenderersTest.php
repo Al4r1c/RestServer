@@ -3,7 +3,8 @@
 
     use Modules\TestCase;
 
-    class RenderersTest extends TestCase {
+    class RenderersTest extends TestCase
+    {
 
         private static $donnee = array('param1' => 1, 'param2' => array('one' => 'onevar2'), array('yosh', 'yosh2'));
 
@@ -11,13 +12,15 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRenderNonArrayDonnees() {
+        public function testRenderNonArrayDonnees()
+        {
             $renderer = new \Serveur\Renderers\Html();
 
             $renderer->render('string');
         }
 
-        public function testRenderHtml() {
+        public function testRenderHtml()
+        {
             $renderer = new \Serveur\Renderers\Html();
 
             $sortie = sprintf($renderer::$templateHtml,
@@ -26,21 +29,24 @@
             $this->assertEquals($sortie, $renderer->render(self::$donnee));
         }
 
-        public function testJson() {
+        public function testJson()
+        {
             $renderer = new \Serveur\Renderers\Json();
 
             $this->assertEquals('{"param1":1,"param2":{"one":"onevar2"},"0":["yosh","yosh2"]}',
                 $renderer->render(self::$donnee));
         }
 
-        public function testPlain() {
+        public function testPlain()
+        {
             $renderer = new \Serveur\Renderers\Plain();
 
             $this->assertEquals("param1 => 1\nparam2 => \n\tone => onevar2\n0 => \n\t0 => yosh\n\t1 => yosh2\n",
                 $renderer->render(self::$donnee));
         }
 
-        public function testXml() {
+        public function testXml()
+        {
             $renderer = new \Serveur\Renderers\Xml();
 
             $this->assertEquals('<?xml version="1.0"?>' . "\n" .

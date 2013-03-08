@@ -1,7 +1,8 @@
 <?php
     namespace Logging\Displayer;
 
-    abstract class AbstractDisplayer {
+    abstract class AbstractDisplayer
+    {
         /** @var \Logging\I18n\TradManager */
         protected $_tradManager;
 
@@ -9,8 +10,10 @@
          * @param \Logging\I18n\TradManager $tradManager
          * @throws \InvalidArgumentException
          */
-        public function setTradManager($tradManager) {
-            if (!$tradManager instanceof \Logging\I18n\TradManager) {
+        public function setTradManager($tradManager)
+        {
+            if (!$tradManager instanceof \Logging\I18n\TradManager)
+            {
                 throw new \InvalidArgumentException();
             }
 
@@ -21,8 +24,10 @@
          * @param \Serveur\Exceptions\Types\AbstractTypeErreur $uneErreur
          * @return void
          */
-        public function ecrireErreurLog($uneErreur) {
-            if (!isNull($uneErreur)) {
+        public function ecrireErreurLog($uneErreur)
+        {
+            if (!isNull($uneErreur))
+            {
                 $this->ecrireMessageErreur($uneErreur);
             }
         }
@@ -31,7 +36,8 @@
          * @param \Serveur\Rest\RestRequete $restRequete
          * @param \Serveur\Rest\RestReponse $restReponse
          */
-        public function ecrireAcessLog($restRequete, $restReponse) {
+        public function ecrireAcessLog($restRequete, $restReponse)
+        {
             $this->ecrireMessageAcces($restRequete, $restReponse);
         }
 
@@ -40,7 +46,8 @@
          * @param array $arguments
          * @return string
          */
-        protected function traduireMessageEtRemplacerVariables($messageATraduire, array $arguments = array()) {
+        protected function traduireMessageEtRemplacerVariables($messageATraduire, array $arguments = array())
+        {
             return vsprintf($this->_tradManager->recupererChaineTraduite($messageATraduire), $arguments);
         }
 

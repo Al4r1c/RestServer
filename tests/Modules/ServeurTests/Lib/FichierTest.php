@@ -5,16 +5,19 @@
     use Modules\MockArg;
     use Serveur\Lib\Fichier;
 
-    class FichierTest extends TestCase {
+    class FichierTest extends TestCase
+    {
 
         /** @var Fichier */
         private $fichier;
 
-        public function setUp() {
+        public function setUp()
+        {
             $this->fichier = \Serveur\Utils\FileManager::getFichier();
         }
 
-        public function testFileSystem() {
+        public function testFileSystem()
+        {
             $fileSystem = $this->createMock('FileSystem');
 
             $this->fichier->setFileSystem($fileSystem);
@@ -26,11 +29,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testSetNotFileSystem() {
+        public function testSetNotFileSystem()
+        {
             $this->fichier->setFileSystem('should be object');
         }
 
-        public function testNomFichier() {
+        public function testNomFichier()
+        {
             $this->fichier->setNomFichier('monFichier.txt');
 
             $this->assertEquals('monFichier.txt', $this->fichier->getNomFichier());
@@ -40,7 +45,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testNomFichierNotString() {
+        public function testNomFichierNotString()
+        {
             $this->fichier->setNomFichier(5);
         }
 
@@ -48,7 +54,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 10200
          */
-        public function testNomFichierNonNull() {
+        public function testNomFichierNonNull()
+        {
             $this->fichier->setNomFichier(' ');
         }
 
@@ -56,7 +63,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 10201
          */
-        public function testNomFichierInvalid() {
+        public function testNomFichierInvalid()
+        {
             $this->fichier->setNomFichier('monFichierSansExtension');
         }
 
@@ -64,7 +72,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testCheminDaccesNonString() {
+        public function testCheminDaccesNonString()
+        {
             $this->fichier->setRepertoireFichier(23.3);
         }
 
@@ -72,11 +81,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 10202
          */
-        public function testCheminDaccesNull() {
+        public function testCheminDaccesNull()
+        {
             $this->fichier->setRepertoireFichier(' ');
         }
 
-        public function testCheminDacces() {
+        public function testCheminDacces()
+        {
             $this->fichier->setRepertoireFichier('/path\\\\to///fichier////');
 
             $this->assertEquals(
@@ -85,7 +96,8 @@
                 $this->fichier->getRepertoireFichier());
         }
 
-        public function testCheminDaccesAbsolue() {
+        public function testCheminDaccesAbsolue()
+        {
             $this->fichier->setRepertoireFichier(BASE_PATH . '/path/to/fichier/');
 
             $this->assertEquals(
@@ -94,7 +106,8 @@
                 $this->fichier->getRepertoireFichier());
         }
 
-        public function testGetCheminComplet() {
+        public function testGetCheminComplet()
+        {
             $this->fichier->setRepertoireFichier('/path/');
             $this->fichier->setNomFichier('comeatme.log');
 
@@ -102,7 +115,8 @@
                 $this->fichier->getCheminCompletFichier());
         }
 
-        public function testSetFichierConfig() {
+        public function testSetFichierConfig()
+        {
             $this->fichier->setFichierParametres('monFichier.txt', '/chemin\\dacces/');
 
             $this->assertEquals(
@@ -111,7 +125,8 @@
                 $this->fichier->getCheminCompletFichier());
         }
 
-        public function testVerifierExistence() {
+        public function testVerifierExistence()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('c:\\wwww\\')),
@@ -126,7 +141,8 @@
             $this->assertTrue($this->fichier->fichierExiste());
         }
 
-        public function testVerifierExistenceFalse() {
+        public function testVerifierExistenceFalse()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('c:\\wwww\\')),
@@ -141,7 +157,8 @@
             $this->assertFalse($this->fichier->fichierExiste());
         }
 
-        public function testChargerFichier() {
+        public function testChargerFichier()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('/data/www/')),
@@ -161,7 +178,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 10203
          */
-        public function testChargerFichierInexistant() {
+        public function testChargerFichierInexistant()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('/data/www/')),
@@ -176,7 +194,8 @@
             $this->fichier->chargerFichier();
         }
 
-        public function testCreerFichier() {
+        public function testCreerFichier()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true),
@@ -191,7 +210,8 @@
             $this->assertTrue($this->fichier->creerFichier());
         }
 
-        public function testNeRecreerPasFichierExisteDeja() {
+        public function testNeRecreerPasFichierExisteDeja()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true),
@@ -211,7 +231,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 10204
          */
-        public function testCreerDansDossierInexistant() {
+        public function testCreerDansDossierInexistant()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('c:\\www\\')),
@@ -230,7 +251,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 10205
          */
-        public function testCreerBug() {
+        public function testCreerBug()
+        {
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true),
@@ -245,7 +267,8 @@
             $this->fichier->creerFichier();
         }
 
-        public function testEcrire() {
+        public function testEcrire()
+        {
             \org\bovigo\vfs\vfsStreamWrapper::register();
             \org\bovigo\vfs\vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('testPath'));
             $fileSystem = new \Serveur\Lib\FileSystem();
@@ -268,7 +291,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 10203
          */
-        public function testEcrireFichierInexistant() {
+        public function testEcrireFichierInexistant()
+        {
             $this->fichier->ecrireDansFichier("Nouvelle ligne\n");
         }
     }

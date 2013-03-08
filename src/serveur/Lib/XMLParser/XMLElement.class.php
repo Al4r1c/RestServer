@@ -3,7 +3,8 @@
 
     use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
-    class XMLElement {
+    class XMLElement
+    {
 
         /**
          * @var string
@@ -28,14 +29,16 @@
         /**
          * @return string
          */
-        public function getNom() {
+        public function getNom()
+        {
             return $this->_nom;
         }
 
         /**
          * @return \string[]
          */
-        public function getAttributs() {
+        public function getAttributs()
+        {
             return $this->_attributs;
         }
 
@@ -43,10 +46,14 @@
          * @param $attribut
          * @return null|string
          */
-        public function getAttribut($attribut) {
-            if (array_key_exists(strtolower($attribut), $this->_attributs)) {
+        public function getAttribut($attribut)
+        {
+            if (array_key_exists(strtolower($attribut), $this->_attributs))
+            {
                 return $this->_attributs[strtolower($attribut)];
-            } else {
+            }
+            else
+            {
                 return null;
             }
         }
@@ -54,8 +61,10 @@
         /**
          * @return array|XMLElement[]
          */
-        public function getChildren() {
-            if ($this->_children === false) {
+        public function getChildren()
+        {
+            if ($this->_children === false)
+            {
                 return array();
             }
 
@@ -65,7 +74,8 @@
         /**
          * @return string
          */
-        public function getValeur() {
+        public function getValeur()
+        {
             return $this->_valeur;
         }
 
@@ -73,8 +83,10 @@
          * @param string $nom
          * @throws ArgumentTypeException
          */
-        public function setNom($nom) {
-            if (!is_string($nom)) {
+        public function setNom($nom)
+        {
+            if (!is_string($nom))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
             }
 
@@ -85,8 +97,10 @@
          * @param string[] $attributs
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
-        public function setAttributs($attributs) {
-            if (!is_array($attributs)) {
+        public function setAttributs($attributs)
+        {
+            if (!is_array($attributs))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $attributs);
             }
 
@@ -97,16 +111,20 @@
          * @param XMLElement[]|bool $children
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
-        public function setChildren($children) {
-            if (!is_array($children) && !is_bool($children)) {
+        public function setChildren($children)
+        {
+            if (!is_array($children) && !is_bool($children))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array|bool', $children);
             }
 
-            if (is_array($children)) {
-                foreach ($children as $unFils) {
-                    if (!$unFils instanceof XMLElement) {
-                        throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\XMLParser\XMLElement',
-                            $unFils);
+            if (is_array($children))
+            {
+                foreach ($children as $unFils)
+                {
+                    if (!$unFils instanceof XMLElement)
+                    {
+                        throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\XMLParser\XMLElement', $unFils);
                     }
                 }
             }
@@ -118,8 +136,10 @@
          * @param string $valeur
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
-        public function setValeur($valeur) {
-            if (!is_string($valeur)) {
+        public function setValeur($valeur)
+        {
+            if (!is_string($valeur))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
             }
 
@@ -129,11 +149,13 @@
         /**
          * @param array $donnees
          */
-        public function setDonnees($donnees) {
+        public function setDonnees($donnees)
+        {
             $this->setNom($donnees['element']);
             $this->setAttributs($donnees['attr']);
             $this->setChildren($donnees['children']);
-            if (isset($donnees['data'])) {
+            if (isset($donnees['data']))
+            {
                 $this->setValeur($donnees['data']);
             }
         }

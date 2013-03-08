@@ -4,7 +4,8 @@
     use Serveur\Utils\Constante;
     use Serveur\Exceptions\Exceptions\MainException;
 
-    class MainApplication {
+    class MainApplication
+    {
         /**
          * @var \Conteneur\Conteneur
          */
@@ -18,18 +19,21 @@
         /**
          * @param \Conteneur\Conteneur $nouveauConteneur
          */
-        public function __construct($nouveauConteneur) {
+        public function __construct($nouveauConteneur)
+        {
             $this->_conteneur = $nouveauConteneur;
         }
 
-        public function setHandlers() {
+        public function setHandlers()
+        {
             $this->_conteneur->getErrorManager()->setHandlers();
         }
 
         /**
          * @param \Logging\Displayer\AbstractDisplayer $observeur
          */
-        public function ajouterObserveur($observeur) {
+        public function ajouterObserveur($observeur)
+        {
             $this->_observeurs[] = $observeur;
             $this->_conteneur->getErrorManager()->ajouterObserveur($observeur);
         }
@@ -37,13 +41,17 @@
         /**
          * @return string
          */
-        public function run() {
-            try {
+        public function run()
+        {
+            try
+            {
                 $this->_conteneur->getRestManager()
                     ->setVariablesReponse(200, $this->_conteneur->getRestManager()->getParametres());
 
                 $resultat = $this->_conteneur->getRestManager()->fabriquerReponse();
-            } catch (\Exception $e) {
+            }
+            catch (\Exception $e)
+            {
                 $resultat = $this->leverException($e);
             }
 
@@ -56,10 +64,14 @@
          * @param \Exception $uneException
          * @return string
          */
-        private function leverException(\Exception $uneException) {
-            if ($uneException instanceof MainException) {
+        private function leverException(\Exception $uneException)
+        {
+            if ($uneException instanceof MainException)
+            {
                 $statusHttp = $uneException->getStatus();
-            } else {
+            }
+            else
+            {
                 $statusHttp = 500;
             }
 
@@ -71,8 +83,10 @@
             return $this->_conteneur->getRestManager()->fabriquerReponse();
         }
 
-        private function ecrireAccesLog() {
-            foreach ($this->_observeurs as $unObserveur) {
+        private function ecrireAccesLog()
+        {
+            foreach ($this->_observeurs as $unObserveur)
+            {
                 $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(),
                     $this->_conteneur->getRestManager()->getRestResponse());
             }

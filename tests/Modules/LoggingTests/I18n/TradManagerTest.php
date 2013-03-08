@@ -4,16 +4,19 @@
     use Modules\TestCase;
     use Modules\MockArg;
 
-    class TradManagerTest extends TestCase {
+    class TradManagerTest extends TestCase
+    {
 
         /** @var \Logging\I18n\TradManager */
         private $tradManager;
 
-        public function setUp() {
+        public function setUp()
+        {
             $this->tradManager = new \Logging\I18n\TradManager();
         }
 
-        public function testSetXmlObjet() {
+        public function testSetXmlObjet()
+        {
             $xmlParser = $this->createMock('XMLParser', new MockArg('isValide', true));
 
             $this->tradManager->setFichierTraduction($xmlParser);
@@ -25,13 +28,15 @@
          * @expectedException     \Exception
          * @expectedExceptionMessage Traduction object is invalid.
          */
-        public function testSetXmlObjetInvalide() {
+        public function testSetXmlObjetInvalide()
+        {
             $xmlParser = $this->createMock('XMLParser', new MockArg('isValide', false));
 
             $this->tradManager->setFichierTraduction($xmlParser);
         }
 
-        public function testTransformeMessage() {
+        public function testTransformeMessage()
+        {
             $xmlElem1 = $this->createMock('XMLElement', new MockArg('getValeur', 'goA'));
 
             $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValeur', 'MessParticulier'));
@@ -47,7 +52,8 @@
                 $this->tradManager->recupererChaineTraduite("{key.a} messagerie {section.3}"));
         }
 
-        public function testTransformeMessageRienModifie() {
+        public function testTransformeMessageRienModifie()
+        {
             $xmlParser = $this->createMock('XMLParser', new MockArg('isValide', true));
 
             $this->tradManager->setFichierTraduction($xmlParser);
@@ -55,7 +61,8 @@
             $this->assertEquals("Message banal", $this->tradManager->recupererChaineTraduite("Message banal"));
         }
 
-        public function testTransformeMessageNonTrouvee() {
+        public function testTransformeMessageNonTrouvee()
+        {
             $xmlParser = $this->createMock('XMLParser',
                 new MockArg('isValide', true),
                 new MockArg('getConfigValeur', null, array('fake.message[code=clef]')));
@@ -66,7 +73,8 @@
                 $this->tradManager->recupererChaineTraduite("Message avec {fake.clef}."));
         }
 
-        public function testGetTraduction() {
+        public function testGetTraduction()
+        {
             $xmlElem1 = $this->createMock('XMLElement', new MockArg('getValeur', 'goC'));
 
             $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValeur', 'Mess2'));
@@ -86,7 +94,8 @@
             $this->assertEquals('Mess2', $method->invokeArgs($this->tradManager, array('section', '2')));
         }
 
-        public function testGetTraductionNonTrouvee() {
+        public function testGetTraductionNonTrouvee()
+        {
             $xmlParser = $this->createMock('XMLParser',
                 new MockArg('isValide', true),
                 new MockArg('getConfigValeur', null, array('existe.message[code=pas]')));
@@ -104,7 +113,8 @@
          * @expectedException     \Exception
          * @expectedExceptionMessage No traduction object set.
          */
-        public function testGetTraductionAucunXml() {
+        public function testGetTraductionAucunXml()
+        {
             $this->tradManager->recupererChaineTraduite("NO XML");
         }
     }

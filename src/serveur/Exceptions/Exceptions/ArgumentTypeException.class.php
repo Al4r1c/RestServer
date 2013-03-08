@@ -1,7 +1,8 @@
 <?php
     namespace Serveur\Exceptions\Exceptions;
 
-    class ArgumentTypeException extends MainException {
+    class ArgumentTypeException extends MainException
+    {
         /**
          * @var string
          */
@@ -14,10 +15,14 @@
          * @param string $attendu
          * @param mixed $typeVariable
          */
-        public function __construct($code, $codeStatus, $methode, $attendu, $typeVariable) {
-            if (!is_object($typeVariable)) {
+        public function __construct($code, $codeStatus, $methode, $attendu, $typeVariable)
+        {
+            if (!is_object($typeVariable))
+            {
                 $this->setObtenu(gettype($typeVariable));
-            } else {
+            }
+            else
+            {
                 $this->setObtenu($this->_obtenu = get_class($typeVariable));
             }
 
@@ -27,7 +32,8 @@
         /**
          * @param string $typeObtenu
          */
-        public function setObtenu($typeObtenu) {
+        public function setObtenu($typeObtenu)
+        {
             $this->_obtenu = $typeObtenu;
         }
     }

@@ -3,7 +3,8 @@
 
     use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
-    class RestManager {
+    class RestManager
+    {
         /**
          * @var \Serveur\Rest\RestRequete
          */
@@ -17,14 +18,16 @@
         /**
          * @return \Serveur\Rest\RestRequete
          */
-        public function getRestRequest() {
+        public function getRestRequest()
+        {
             return $this->_restRequest;
         }
 
         /**
          * @return \Serveur\Rest\RestReponse
          */
-        public function getRestResponse() {
+        public function getRestResponse()
+        {
             return $this->_restResponse;
         }
 
@@ -32,8 +35,10 @@
          * @param \Serveur\Rest\RestRequete $restRequestObject
          * @throws ArgumentTypeException
          */
-        public function setRequete($restRequestObject) {
-            if (!$restRequestObject instanceof \Serveur\Rest\RestRequete) {
+        public function setRequete($restRequestObject)
+        {
+            if (!$restRequestObject instanceof \Serveur\Rest\RestRequete)
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestRequete', $restRequestObject);
             }
 
@@ -44,8 +49,10 @@
          * @param \Serveur\Rest\RestReponse $restReponseObject
          * @throws ArgumentTypeException
          */
-        public function setReponse($restReponseObject) {
-            if (!$restReponseObject instanceof \Serveur\Rest\RestReponse) {
+        public function setReponse($restReponseObject)
+        {
+            if (!$restReponseObject instanceof \Serveur\Rest\RestReponse)
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\RestReponse', $restReponseObject);
             }
 
@@ -57,14 +64,19 @@
          * @throws ArgumentTypeException
          * @return mixed|null
          */
-        public function getUriVariable($clef) {
-            if (!is_int($clef)) {
+        public function getUriVariable($clef)
+        {
+            if (!is_int($clef))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $clef);
             }
 
-            if (array_key_exists($clef, $tabVarUri = $this->_restRequest->getUriVariables())) {
+            if (array_key_exists($clef, $tabVarUri = $this->_restRequest->getUriVariables()))
+            {
                 return $tabVarUri[$clef];
-            } else {
+            }
+            else
+            {
                 trigger_error_app(E_USER_NOTICE, 20200, $clef);
 
                 return null;
@@ -74,7 +86,8 @@
         /**
          * @return array
          */
-        public function getParametres() {
+        public function getParametres()
+        {
             return $this->_restRequest->getParametres();
         }
 
@@ -83,14 +96,19 @@
          * @throws ArgumentTypeException
          * @return mixed|null
          */
-        public function getParametre($clef) {
-            if (!is_string($clef)) {
+        public function getParametre($clef)
+        {
+            if (!is_string($clef))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clef);
             }
 
-            if (array_key_exists($clef, $tabParam = $this->_restRequest->getParametres())) {
+            if (array_key_exists($clef, $tabParam = $this->_restRequest->getParametres()))
+            {
                 return $tabParam[$clef];
-            } else {
+            }
+            else
+            {
                 trigger_error_app(E_USER_NOTICE, 20201, $clef);
 
                 return null;
@@ -101,7 +119,8 @@
          * @param int $status
          * @param string $contenu
          */
-        public function setVariablesReponse($status, $contenu = '') {
+        public function setVariablesReponse($status, $contenu = '')
+        {
             $this->_restResponse->setStatus($status);
             $this->_restResponse->setContenu($contenu);
         }
@@ -109,7 +128,8 @@
         /**
          * @return string
          */
-        public function fabriquerReponse() {
+        public function fabriquerReponse()
+        {
             return $this->_restResponse->fabriquerReponse($this->_restRequest->getFormatsDemandes());
         }
     }

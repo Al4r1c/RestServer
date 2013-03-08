@@ -1,7 +1,8 @@
 <?php
     namespace ClassLoader;
 
-    class ClassLoader {
+    class ClassLoader
+    {
         /**
          * @var array
          */
@@ -12,8 +13,10 @@
          * @param string $includePath
          * @param string $extension
          */
-        public function ajouterNamespace($namespace, $includePath, $extension = '.class.php') {
-            if (!startsWith($extension, '.')) {
+        public function ajouterNamespace($namespace, $includePath, $extension = '.class.php')
+        {
+            if (!startsWith($extension, '.'))
+            {
                 $extension = '.' . $extension;
             }
 
@@ -23,7 +26,8 @@
         /**
          * @return bool
          */
-        public function register() {
+        public function register()
+        {
             return spl_autoload_register(array($this, 'loaderFunction')) === true;
         }
 
@@ -32,16 +36,23 @@
          * @throws \Exception
          * @return bool
          */
-        public function unregister($namespace = '') {
-            if (!isNull($namespace)) {
-                if (array_key_exists(strtolower($namespace), $this->_namespaces)) {
+        public function unregister($namespace = '')
+        {
+            if (!isNull($namespace))
+            {
+                if (array_key_exists(strtolower($namespace), $this->_namespaces))
+                {
                     unset($this->_namespaces[strtolower($namespace)]);
 
                     return true;
-                } else {
+                }
+                else
+                {
                     throw new \Exception('Namespace ' . $namespace . ' not found');
                 }
-            } else {
+            }
+            else
+            {
                 return spl_autoload_unregister(array($this, 'loaderFunction')) === true;
             }
         }
@@ -50,12 +61,15 @@
          * @param string $className
          * @return bool
          */
-        public function loaderFunction($className) {
-            foreach ($this->_namespaces as $unNamespace => $configNamespace) {
+        public function loaderFunction($className)
+        {
+            foreach ($this->_namespaces as $unNamespace => $configNamespace)
+            {
                 if (!isNull($unNamespace) && substr_count(strtolower($className), $unNamespace) > 0 &&
                     file_exists(
                         $configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension'])
-                ) {
+                )
+                {
                     include_once(
                         $configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension']);
 

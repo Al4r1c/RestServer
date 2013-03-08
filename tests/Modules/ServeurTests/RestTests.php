@@ -1,17 +1,21 @@
 <?php
     namespace Modules\ServeurTests;
 
-    if (!defined('PHPUnit_MAIN_METHOD')) {
+    if (!defined('PHPUnit_MAIN_METHOD'))
+    {
         define('PHPUnit_MAIN_METHOD', 'RestTests::main');
     }
 
-    class RestTests {
+    class RestTests
+    {
 
-        public static function main() {
+        public static function main()
+        {
             \PHPUnit_TextUI_TestRunner::run(self::suite());
         }
 
-        public static function suite() {
+        public static function suite()
+        {
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
             $suite->addTestSuite('Modules\ServeurTests\Renderers\RenderersTest');
@@ -25,6 +29,7 @@
         }
     }
 
-    if (PHPUnit_MAIN_METHOD == 'RestTests::main') {
+    if (PHPUnit_MAIN_METHOD == 'RestTests::main')
+    {
         RestTests::main();
     }

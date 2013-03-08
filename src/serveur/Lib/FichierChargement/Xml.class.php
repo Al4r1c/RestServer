@@ -3,12 +3,14 @@
 
     use Serveur\Lib\XMLParser\XMLParser;
 
-    class Xml extends AbstractChargeurFichier {
+    class Xml extends AbstractChargeurFichier
+    {
         /**
          * @param string $locationFichier
          * @return \Serveur\Lib\XMLParser\XMLParser
          */
-        public function chargerFichier($locationFichier) {
+        public function chargerFichier($locationFichier)
+        {
             $donneesXml = file_get_contents($locationFichier);
 
             $xmlParsee = new XMLParser();

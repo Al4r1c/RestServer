@@ -1,7 +1,8 @@
 <?php
     namespace Logging\I18n;
 
-    class I18nManager {
+    class I18nManager
+    {
         /**
          * @var string
          */
@@ -16,7 +17,8 @@
          * @param string $langueDefaut
          * @param array $languesDispo
          */
-        public function setConfig($langueDefaut, array $languesDispo) {
+        public function setConfig($langueDefaut, array $languesDispo)
+        {
             $this->setLangueDefaut($langueDefaut);
             $this->setLangueDispo($languesDispo);
         }
@@ -25,8 +27,10 @@
          * @param string $langueDefaut
          * @throws \Exception
          */
-        public function setLangueDefaut($langueDefaut) {
-            if (isNull($langueDefaut)) {
+        public function setLangueDefaut($langueDefaut)
+        {
+            if (isNull($langueDefaut))
+            {
                 throw new \Exception('Default language is not set properly.');
             }
 
@@ -37,8 +41,10 @@
          * @param array $languesDispo
          * @throws \Exception
          */
-        public function setLangueDispo(array $languesDispo) {
-            if (isNull($languesDispo)) {
+        public function setLangueDispo(array $languesDispo)
+        {
+            if (isNull($languesDispo))
+            {
                 throw new \Exception('No available language set.');
             }
 
@@ -49,10 +55,14 @@
          * @return \Serveur\Lib\XMLParser\XMLParser
          * @throws \Exception
          * */
-        public function getFichierTraduction() {
-            if (array_key_exists(strtoupper($this->_langueDefaut), $this->_languesDisponibles)) {
+        public function getFichierTraduction()
+        {
+            if (array_key_exists(strtoupper($this->_langueDefaut), $this->_languesDisponibles))
+            {
                 $nomFichierLangueDefaut = $this->_languesDisponibles[strtoupper($this->_langueDefaut)];
-            } else {
+            }
+            else
+            {
                 $nomFichierLangueDefaut = reset($this->_languesDisponibles);
             }
 
@@ -60,12 +70,18 @@
 
             if ($fichierTraductionParDefaut->fichierExiste() &&
                 $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValide()
-            ) {
+            )
+            {
                 return $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut);
-            } else {
-                if (($langueChoisiAleatoirement = $this->getUneTraductionAleatoire()) !== false) {
+            }
+            else
+            {
+                if (($langueChoisiAleatoirement = $this->getUneTraductionAleatoire()) !== false)
+                {
                     return $this->recupererXmlParserDepuisFichier(reset($langueChoisiAleatoirement));
-                } else {
+                }
+                else
+                {
                     throw new \Exception('No valid translation file set or found.');
                 }
             }
@@ -74,7 +90,8 @@
         /**
          * @return \Serveur\Lib\Fichier
          */
-        protected function getFichier($nomFichier) {
+        protected function getFichier($nomFichier)
+        {
             $fichier = \Serveur\Utils\FileManager::getFichier();
             $fichier->setFichierParametres($nomFichier . '.xml', '/public/i18n');
 
@@ -84,13 +101,16 @@
         /**
          * @return array|bool
          */
-        private function getUneTraductionAleatoire() {
-            foreach ($this->_languesDisponibles as $uneLangueDispo => $classeLangue) {
+        private function getUneTraductionAleatoire()
+        {
+            foreach ($this->_languesDisponibles as $uneLangueDispo => $classeLangue)
+            {
                 $traductionDisponible = $this->getFichier($classeLangue);
 
                 if ($traductionDisponible->fichierExiste() &&
                     $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValide()
-                ) {
+                )
+                {
                     return array($uneLangueDispo => $traductionDisponible);
                 }
             }
@@ -101,7 +121,8 @@
         /**
          * @return \Serveur\Lib\XMLParser\XMLParser
          */
-        private function recupererXmlParserDepuisFichier(\Serveur\Lib\Fichier $fichier) {
+        private function recupererXmlParserDepuisFichier(\Serveur\Lib\Fichier $fichier)
+        {
             return $fichier->chargerFichier();
         }
     }

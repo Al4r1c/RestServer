@@ -4,9 +4,11 @@
     use Modules\TestCase;
     use Modules\MockArg;
 
-    class I18nManagerTest extends TestCase {
+    class I18nManagerTest extends TestCase
+    {
 
-        public function testSetLangueDefaut() {
+        public function testSetLangueDefaut()
+        {
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setLangueDefaut('Mexicain');
 
@@ -17,12 +19,14 @@
          * @expectedException     \Exception
          * @expectedExceptionMessage Default language is not set properly.
          */
-        public function testSetLangueDefautErreur() {
+        public function testSetLangueDefautErreur()
+        {
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setLangueDefaut(null);
         }
 
-        public function testSetLangueDispo() {
+        public function testSetLangueDispo()
+        {
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setLangueDispo(array('Allemand' => 'al', 'Kosovar' => 'ksv'));
 
@@ -35,12 +39,14 @@
          * @expectedException     \Exception
          * @expectedExceptionMessage No available language set.
          */
-        public function testSetLangueDispoErreur() {
+        public function testSetLangueDispoErreur()
+        {
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setLangueDispo(array());
         }
 
-        public function testSetConfig() {
+        public function testSetConfig()
+        {
             $i18nManager = new \Logging\I18n\I18nManager();
             $i18nManager->setConfig('French', array('French' => 'fr', 'English' => 'en'));
 
@@ -51,7 +57,8 @@
                 $i18nManager);
         }
 
-        public function testGetFichierTraduction() {
+        public function testGetFichierTraduction()
+        {
             $xmlParser = $this->createMock('xmlparser',
                 new MockArg('isValide', true));
 
@@ -70,7 +77,8 @@
                     $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
         }
 
-        public function testGetFichierTraductionDefautInexistant() {
+        public function testGetFichierTraductionDefautInexistant()
+        {
             $xmlParser = $this->createMock('xmlparser',
                 new MockArg('isValide', true));
 
@@ -89,7 +97,8 @@
                     $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
         }
 
-        public function testGetFichierTraductionDefautInvalide() {
+        public function testGetFichierTraductionDefautInvalide()
+        {
             $xmlParserCn = $this->createMock('xmlparser',
                 new MockArg('isValide', true));
 
@@ -116,7 +125,8 @@
                     $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')));
         }
 
-        public function testGetFichierTraductionPlusieursFichierInexistantOuBugges() {
+        public function testGetFichierTraductionPlusieursFichierInexistantOuBugges()
+        {
             $xmlParserIt = $this->createMock('xmlparser',
                 new MockArg('isValide', false));
 
@@ -152,7 +162,8 @@
          * @expectedException     \Exception
          * @expectedExceptionMessage No valid translation file set or found.
          */
-        public function testGetFichierTraductionAucunFichierFonctionnel() {
+        public function testGetFichierTraductionAucunFichierFonctionnel()
+        {
             $fichier = $this->createMock('Fichier',
                 new MockArg('fichierExiste', false));
 

@@ -1,7 +1,8 @@
 <?php
     namespace Serveur\Exceptions;
 
-    class ErrorManager {
+    class ErrorManager
+    {
         /**
          * @var \Serveur\Exceptions\Handler\ErreurHandler
          */
@@ -10,18 +11,21 @@
         /**
          * @param \Serveur\Exceptions\Handler\ErreurHandler $errorHandler
          */
-        public function setErrorHandler($errorHandler) {
+        public function setErrorHandler($errorHandler)
+        {
             $this->_errorHandler = $errorHandler;
         }
 
-        public function setHandlers() {
+        public function setHandlers()
+        {
             $this->_errorHandler->setHandlers();
         }
 
         /**
          * @param \Logging\Displayer\AbstractDisplayer $logger
          */
-        public function ajouterObserveur($logger) {
+        public function ajouterObserveur($logger)
+        {
             $this->_errorHandler->ajouterUnLogger($logger);
         }
     }

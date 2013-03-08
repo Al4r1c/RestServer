@@ -4,15 +4,18 @@
     use Modules\TestCase;
     use Serveur\Rest\HeaderManager;
 
-    class HeaderManagerTest extends TestCase {
+    class HeaderManagerTest extends TestCase
+    {
         /** @var HeaderManager */
         private $headerManager;
 
-        public function setUp() {
+        public function setUp()
+        {
             $this->headerManager = new HeaderManager();
         }
 
-        public function testAjouterHeader() {
+        public function testAjouterHeader()
+        {
             $this->headerManager->ajouterHeader('Content-type', 'application/pdf');
             $this->headerManager->ajouterHeader('Expires', '0');
 
@@ -23,7 +26,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testAjouterHeaderChampNonString() {
+        public function testAjouterHeaderChampNonString()
+        {
             $this->headerManager->ajouterHeader(null, 'application/pdf');
         }
 
@@ -31,7 +35,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testAjouterHeaderValeurNonString() {
+        public function testAjouterHeaderValeurNonString()
+        {
             $this->headerManager->ajouterHeader('Content-type', 5);
         }
 
@@ -39,14 +44,16 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 20400
          */
-        public function testAjouterHeaderSiValide() {
+        public function testAjouterHeaderSiValide()
+        {
             $this->headerManager->ajouterHeader('WRONG', 'FAKE');
         }
 
         /**
          * @runInSeparateProcess
          */
-        public function testEnvoiHeader() {
+        public function testEnvoiHeader()
+        {
             $this->headerManager->ajouterHeader('Content-type', 'application/xml');
             $this->headerManager->ajouterHeader('Content-Length', '21245');
 

@@ -5,8 +5,10 @@
     use Modules\TestCase;
     use Modules\MockArg;
 
-    class MainApplicationTest extends TestCase {
-        public function testSetHandlers() {
+    class MainApplicationTest extends TestCase
+    {
+        public function testSetHandlers()
+        {
             $errorManager = $this->createMock('ErrorManager',
                 new MockArg('setHandlers'));
 
@@ -17,7 +19,8 @@
             $mainApp->setHandlers();
         }
 
-        public function testAjouterObserveur() {
+        public function testAjouterObserveur()
+        {
             $abstractDisplayer = $this->createMock('AbstractDisplayer');
 
             $errorManager = $this->createMock('ErrorManager',
@@ -32,7 +35,8 @@
             $this->assertAttributeContains($abstractDisplayer, '_observeurs', $mainApp);
         }
 
-        public function testRun() {
+        public function testRun()
+        {
             $restManager = $this->createMock('RestManager',
                 new MockArg('getParametres', array('variable1' => 'valeur1')),
                 new MockArg('setVariablesReponse', null, array(200, array('variable1' => 'valeur1'))),
@@ -45,7 +49,8 @@
             $this->assertEquals('variable1 => valeur1', $mainApp->run());
         }
 
-        public function testRunFail() {
+        public function testRunFail()
+        {
             $restManager = $this->createMock('RestManager',
                 new MockArg('getParametres', new \Exception()),
                 new MockArg('setVariablesReponse', null, array(500)),
@@ -58,15 +63,16 @@
             $this->assertEquals('Erreur => Une erreur est survenue', $mainApp->run());
         }
 
-        public function testRunFailMainException() {
+        public function testRunFailMainException()
+        {
             $infoHttpCode = \Serveur\Utils\Constante::chargerConfig('httpcode')[505];
 
             $restManager = $this->createMock('RestManager',
                 new MockArg('getParametres', new \Serveur\Exceptions\Exceptions\MainException(10000, 505)),
                 new MockArg('setVariablesReponse', null, array(505,
-                                                               array('Code' => 505,
-                                                                     'Status' => $infoHttpCode[0],
-                                                                     'Message' => $infoHttpCode[1]))),
+                    array('Code' => 505,
+                        'Status' => $infoHttpCode[0],
+                        'Message' => $infoHttpCode[1]))),
                 new MockArg('fabriquerReponse', 'Erreur => Une erreur est survenue'));
 
             $conteneur = $this->createMock('Conteneur',
@@ -76,7 +82,8 @@
             $this->assertEquals('Erreur => Une erreur est survenue', $mainApp->run());
         }
 
-        public function testEcrireLogAcces() {
+        public function testEcrireLogAcces()
+        {
             $restRequete = $this->getMockRestRequete();
             $restReponse = $this->getMockRestReponse();
 

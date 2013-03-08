@@ -1,12 +1,14 @@
 <?php
     namespace Serveur\Renderers;
 
-    class Plain extends \Serveur\Renderers\AbstractRenderer {
+    class Plain extends \Serveur\Renderers\AbstractRenderer
+    {
         /**
          * @param array $donnees
          * @return string
          */
-        protected function genererRendu(array $donnees) {
+        protected function genererRendu(array $donnees)
+        {
             return $this->arrayToString($donnees);
         }
 
@@ -15,17 +17,23 @@
          * @param int $level
          * @return string
          */
-        private function arrayToString(array $donnees, $level = 0) {
+        private function arrayToString(array $donnees, $level = 0)
+        {
             $valeurs = '';
 
-            foreach ($donnees as $clef => $valeur) {
-                for ($i = 0; $i < $level; $i++) {
+            foreach ($donnees as $clef => $valeur)
+            {
+                for ($i = 0; $i < $level; $i++)
+                {
                     $valeurs .= "\t";
                 }
 
-                if (is_array($valeur)) {
+                if (is_array($valeur))
+                {
                     $valeurs .= $clef . " => \n" . $this->arrayToString($valeur, ($level + 1));
-                } else {
+                }
+                else
+                {
                     $valeurs .= $clef . " => " . $valeur . "\n";
                 }
             }

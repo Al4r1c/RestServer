@@ -1,27 +1,32 @@
 <?php
     namespace Conteneur;
 
-    class Conteneur {
+    class Conteneur
+    {
         /**
          * @var string[]
          */
         protected $_conteneur;
 
-        public function __construct() {
+        public function __construct()
+        {
             $this->buildConteneur();
         }
 
         /**
          * @return string[]
          */
-        public function getConteneur() {
+        public function getConteneur()
+        {
             return $this->_conteneur;
         }
 
-        private function buildConteneur() {
+        private function buildConteneur()
+        {
             $conteneur = new \Pimple();
 
-            $conteneur['configManager'] = $conteneur->share(function () {
+            $conteneur['configManager'] = $conteneur->share(function ()
+            {
                 $fichier = \Serveur\Utils\FileManager::getFichier();
                 $fichier->setFichierParametres('config.yaml', '/config');
                 $configurationManager = new \Serveur\Config\Config();
@@ -30,25 +35,29 @@
                 return $configurationManager;
             });
 
-            $conteneur['server'] = function () {
+            $conteneur['server'] = function ()
+            {
                 $server = new \Serveur\Rest\Server();
                 $server->setVarServeur($_SERVER);
 
                 return $server;
             };
 
-            $conteneur['headerManager'] = function () {
+            $conteneur['headerManager'] = function ()
+            {
                 return new \Serveur\Rest\HeaderManager();
             };
 
-            $conteneur['restRequest'] = function ($c) {
+            $conteneur['restRequest'] = function ($c)
+            {
                 $restRequete = new \Serveur\Rest\RestRequete();
                 $restRequete->setServer($c['server']);
 
                 return $restRequete;
             };
 
-            $conteneur['restReponse'] = function ($c) {
+            $conteneur['restReponse'] = function ($c)
+            {
                 $restReponse = new \Serveur\Rest\RestReponse();
                 $restReponse->setConfig($c['configManager']);
                 $restReponse->setHeaderManager($c['headerManager']);
@@ -56,7 +65,8 @@
                 return $restReponse;
             };
 
-            $conteneur['restManager'] = $conteneur->share(function ($c) {
+            $conteneur['restManager'] = $conteneur->share(function ($c)
+            {
                 $restManager = new \Serveur\Rest\RestManager();
                 $restManager->setRequete($c['restRequest']);
                 $restManager->setReponse($c['restReponse']);
@@ -64,14 +74,16 @@
                 return $restManager;
             });
 
-            $conteneur['errorManager'] = $conteneur->share(function ($c) {
+            $conteneur['errorManager'] = $conteneur->share(function ($c)
+            {
                 $errorManager = new \Serveur\Exceptions\ErrorManager();
                 $errorManager->setErrorHandler($c['errorHandler']);
 
                 return $errorManager;
             });
 
-            $conteneur['errorHandler'] = function () {
+            $conteneur['errorHandler'] = function ()
+            {
                 return new \Serveur\Exceptions\Handler\ErreurHandler();
             };
 
@@ -81,14 +93,16 @@
         /**
          * @return \Serveur\Rest\RestManager
          */
-        public function getRestManager() {
+        public function getRestManager()
+        {
             return $this->_conteneur['restManager'];
         }
 
         /**
          * @return \Serveur\Exceptions\ErrorManager
          */
-        public function getErrorManager() {
+        public function getErrorManager()
+        {
             return $this->_conteneur['errorManager'];
         }
     }

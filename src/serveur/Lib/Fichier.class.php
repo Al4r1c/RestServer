@@ -4,7 +4,8 @@
     use Serveur\Exceptions\Exceptions\MainException;
     use Serveur\Exceptions\Exceptions\ArgumentTypeException;
 
-    class Fichier {
+    class Fichier
+    {
         /**
          * @var \Serveur\Lib\FileSystem
          */
@@ -20,7 +21,8 @@
          */
         private $_repertoireFichier;
 
-        public function getFileSystem() {
+        public function getFileSystem()
+        {
             return $this->_fileSystemInstance;
         }
 
@@ -28,23 +30,28 @@
          * @param \Serveur\Lib\FileSystem $fileSystem
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
-        public function setFileSystem($fileSystem) {
-            if (!$fileSystem instanceof \Serveur\Lib\FileSystem) {
+        public function setFileSystem($fileSystem)
+        {
+            if (!$fileSystem instanceof \Serveur\Lib\FileSystem)
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
             }
 
             $this->_fileSystemInstance = $fileSystem;
         }
 
-        public function getNomFichier() {
+        public function getNomFichier()
+        {
             return $this->_nomFichier;
         }
 
-        public function getRepertoireFichier() {
+        public function getRepertoireFichier()
+        {
             return $this->_repertoireFichier;
         }
 
-        public function getCheminCompletFichier() {
+        public function getCheminCompletFichier()
+        {
             return $this->_repertoireFichier . $this->_nomFichier;
         }
 
@@ -53,16 +60,20 @@
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
-        public function setNomFichier($nom) {
-            if (!is_string($nom)) {
+        public function setNomFichier($nom)
+        {
+            if (!is_string($nom))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
             }
 
-            if (isNull($nom)) {
+            if (isNull($nom))
+            {
                 throw new MainException(10200, 500);
             }
 
-            if (substr_count($nom, '.') < 1) {
+            if (substr_count($nom, '.') < 1)
+            {
                 throw new MainException(10201, 500, $nom);
             }
 
@@ -74,12 +85,15 @@
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
-        public function setRepertoireFichier($chemin) {
-            if (!is_string($chemin)) {
+        public function setRepertoireFichier($chemin)
+        {
+            if (!is_string($chemin))
+            {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
             }
 
-            if (isNull($chemin)) {
+            if (isNull($chemin))
+            {
                 throw new MainException(10202, 500);
             }
 
@@ -90,7 +104,8 @@
          * @param string $nomFichier
          * @param string $cheminAcces
          */
-        public function setFichierParametres($nomFichier, $cheminAcces) {
+        public function setFichierParametres($nomFichier, $cheminAcces)
+        {
             $this->setNomFichier($nomFichier);
             $this->setRepertoireFichier($cheminAcces);
         }
@@ -98,14 +113,16 @@
         /**
          * @return bool
          */
-        public function fichierExiste() {
+        public function fichierExiste()
+        {
             return $this->_fileSystemInstance->fichierExiste($this->getCheminCompletFichier());
         }
 
         /**
          * @return bool
          */
-        public function dossierExiste() {
+        public function dossierExiste()
+        {
             return $this->_fileSystemInstance->dossierExiste($this->getRepertoireFichier());
         }
 
@@ -114,13 +131,17 @@
          * @return bool
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
-        public function creerFichier($droit = '0777') {
-            if (!$this->dossierExiste()) {
+        public function creerFichier($droit = '0777')
+        {
+            if (!$this->dossierExiste())
+            {
                 throw new MainException(10204, 500, $this->_repertoireFichier);
             }
 
-            if (!$this->fichierExiste()) {
-                if (!$this->_fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
+            if (!$this->fichierExiste())
+            {
+                if (!$this->_fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit))
+                {
                     throw new MainException(10205, 500, $this->getCheminCompletFichier());
                 }
             }
@@ -132,8 +153,10 @@
          * @return mixed
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
-        public function chargerFichier() {
-            if (!$this->fichierExiste()) {
+        public function chargerFichier()
+        {
+            if (!$this->fichierExiste())
+            {
                 throw new MainException(10203, 50, $this->getCheminCompletFichier());
             }
 
@@ -144,8 +167,10 @@
          * @param string $nouvelleLigne
          * @throws \Serveur\Exceptions\Exceptions\MainException
          */
-        public function ecrireDansFichier($nouvelleLigne) {
-            if (!$this->fichierExiste()) {
+        public function ecrireDansFichier($nouvelleLigne)
+        {
+            if (!$this->fichierExiste())
+            {
                 throw new MainException(10203, 50, $this->getCheminCompletFichier());
             }
 

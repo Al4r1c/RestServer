@@ -1,7 +1,8 @@
 <?php
     namespace Logging;
 
-    class LoggingFactory {
+    class LoggingFactory
+    {
 
         private static $_langueDefaut = 'French';
         private static $_langueDispo = array('French' => 'fr', 'English' => 'en');
@@ -11,8 +12,10 @@
          * @throws \InvalidArgumentException
          * @return Displayer\AbstractDisplayer
          */
-        public static function getLogger($loggingMethode) {
-            switch ($loggingMethode) {
+        public static function getLogger($loggingMethode)
+        {
+            switch ($loggingMethode)
+            {
                 case 'logger':
                     $logger = new \Logging\Displayer\Logger();
                     $logger->setTradManager(self::getI18n());
@@ -30,7 +33,8 @@
         /**
          * @return I18n\TradManager
          */
-        private static function getI18n() {
+        private static function getI18n()
+        {
             $internationalizationManager = new \Logging\I18n\I18nManager();
             $internationalizationManager->setConfig(self::$_langueDefaut, self::$_langueDispo);
 
@@ -44,7 +48,8 @@
          * @param string $nomFichier
          * @return \Serveur\Lib\Fichier
          */
-        private static function creerFichierSiNexistePas($nomFichier) {
+        private static function creerFichierSiNexistePas($nomFichier)
+        {
             $fichier = \Serveur\Utils\FileManager::getFichier();
             $fichier->setFichierParametres($nomFichier, BASE_PATH . '/log');
             $fichier->creerFichier('0700');

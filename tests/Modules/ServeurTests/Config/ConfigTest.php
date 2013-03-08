@@ -5,22 +5,25 @@
     use Modules\MockArg;
     use Serveur\Config\Config;
 
-    class ConfigTest extends TestCase {
+    class ConfigTest extends TestCase
+    {
         /** @var Config */
         private $configuration;
         private static $donneesConfig = array('Config' => array('DEBUG_WEBSITE' => true,
-                                                                'DEBUG_FRAMEWORK' => true,
-                                                                'CHARSET' => 'utf-8',
-                                                                'DEFAULT_DISPLAYER' => 'LOG',
-                                                                'DEFAULT_RENDER' => 'XML'),
-                                              'Displayers' => array('LOG' => 'logger'),
-                                              'Render' => array('XML' => 'xml'));
+            'DEBUG_FRAMEWORK' => true,
+            'CHARSET' => 'utf-8',
+            'DEFAULT_DISPLAYER' => 'LOG',
+            'DEFAULT_RENDER' => 'XML'),
+            'Displayers' => array('LOG' => 'logger'),
+            'Render' => array('XML' => 'xml'));
 
-        public function setUp() {
+        public function setUp()
+        {
             $this->configuration = new Config();
         }
 
-        public function testChargerFichier() {
+        public function testChargerFichier()
+        {
             /** @var $fichier \Serveur\Lib\Fichier */
             $fichier = $this->createMock('Fichier',
                 new MockArg('chargerFichier', self::$donneesConfig));
@@ -36,7 +39,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testChargerConfigurationArgumentDoitEtreFichier() {
+        public function testChargerConfigurationArgumentDoitEtreFichier()
+        {
             $this->configuration->chargerConfiguration(null);
         }
 
@@ -44,7 +48,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 30000
          */
-        public function testChargerFichierInexistant() {
+        public function testChargerFichierInexistant()
+        {
             $fichier = $this->createMock('Fichier',
                 new MockArg('fichierExiste', false));
 
@@ -55,7 +60,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\MainException
          * @expectedExceptionCode 30001
          */
-        public function testChargerFichierInvalide() {
+        public function testChargerFichierInvalide()
+        {
             $donnees = self::$donneesConfig;
             unset($donnees['Displayers']);
             $fichier = $this->createMock('Fichier',
@@ -64,7 +70,8 @@
             $this->configuration->chargerConfiguration($fichier);
         }
 
-        public function testGetValeur() {
+        public function testGetValeur()
+        {
             $fichier = $this->createMock('Fichier',
                 new MockArg('chargerFichier', self::$donneesConfig));
 
@@ -79,7 +86,8 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testGetValeurNonString() {
+        public function testGetValeurNonString()
+        {
             $this->configuration->getConfigValeur(3);
         }
     }

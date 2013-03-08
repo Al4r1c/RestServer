@@ -5,17 +5,20 @@
     use Modules\MockArg;
     use Serveur\Rest\RestManager;
 
-    class RestManagerTest extends TestCase {
+    class RestManagerTest extends TestCase
+    {
         /**
          * @var RestManager
          */
         private $restManager;
 
-        public function setUp() {
+        public function setUp()
+        {
             $this->restManager = new RestManager();
         }
 
-        public function testRestSetRequete() {
+        public function testRestSetRequete()
+        {
             $restRequete = $this->createMock('RestRequete');
             $this->restManager->setRequete($restRequete);
 
@@ -26,11 +29,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestSetRequeteNull() {
+        public function testRestSetRequeteNull()
+        {
             $this->restManager->setRequete(null);
         }
 
-        public function testRestSetReponse() {
+        public function testRestSetReponse()
+        {
             $restReponse = $this->createMock('RestReponse');
 
             $this->restManager->setReponse($restReponse);
@@ -42,11 +47,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestSetReponseNull() {
+        public function testRestSetReponseNull()
+        {
             $this->restManager->setReponse(null);
         }
 
-        public function testRestRecupererUriParam() {
+        public function testRestRecupererUriParam()
+        {
             $restRequete = $this->createMock('RestRequete',
                 new MockArg('getUriVariables', array('0' => 'monuri')));
 
@@ -59,11 +66,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestUriVariableNonInt() {
+        public function testRestUriVariableNonInt()
+        {
             $this->restManager->getUriVariable('clef');
         }
 
-        public function testRestUriVariableNull() {
+        public function testRestUriVariableNull()
+        {
             $restRequete = $this->createMock('RestRequete',
                 new MockArg('getUriVariables', array('0' => 'monuri')));
 
@@ -72,7 +81,8 @@
             $this->assertNull($this->restManager->getUriVariable(1));
         }
 
-        public function testRestRecupererDonnee() {
+        public function testRestRecupererDonnee()
+        {
             $restRequete = $this->createMock('RestRequete',
                 new MockArg('getParametres', array('param1' => 'donnee1')));
 
@@ -85,11 +95,13 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testRestRecupererDonneeClefNonString() {
+        public function testRestRecupererDonneeClefNonString()
+        {
             $this->restManager->getParametre(50);
         }
 
-        public function testRestRenvoieDonneeNull() {
+        public function testRestRenvoieDonneeNull()
+        {
             $restRequete = $this->createMock('RestRequete',
                 new MockArg('getParametres', array(array('param1' => 'donnee1'))));
 
@@ -99,7 +111,8 @@
             $this->assertNull($this->restManager->getParametre('param2'));
         }
 
-        public function testRestSetVariableReponse() {
+        public function testRestSetVariableReponse()
+        {
             $restReponse = $this->createMock('RestReponse',
                 new MockArg('setStatus', null, array(500)),
                 new MockArg('setContenu', null, array("<html></html>")));
@@ -110,7 +123,8 @@
             $this->restManager->setVariablesReponse(500, "<html></html>");
         }
 
-        public function testRestFabriquerReponse() {
+        public function testRestFabriquerReponse()
+        {
             $restRequete = $this->createMock('RestRequete',
                 new MockArg('getFormatsDemandes', array('json')));
 
