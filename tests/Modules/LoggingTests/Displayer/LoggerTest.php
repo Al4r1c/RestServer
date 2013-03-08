@@ -5,6 +5,9 @@
     use Modules\MockArg;
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
+    use Serveur\Lib\Fichier;
+    use Serveur\GestionErreurs\Types\Error;
+    use Serveur\GestionErreurs\Types\Notice;
 
     class LoggerTest extends TestCase
     {
@@ -89,12 +92,12 @@
             $this->_logger->setTradManager('something');
         }
 
-        public function testEcrireAcces()
+        public function testEcrireRequete()
         {
             $dateRequete = new \DateTime();
 
             $restRequete = $this->createMock(
-                'RestRequete',
+                'RequeteManager',
                 new MockArg('getDateRequete', $dateRequete),
                 new MockArg('getIp', '127.0.0.1'),
                 new MockArg('getMethode', 'GET'),
@@ -102,20 +105,14 @@
                 new MockArg('getParametres', array('param1' => 'var1'))
             );
 
-            $restReponse = $this->createMock(
-                'RestReponse',
-                new MockArg('getStatus', 200),
-                new MockArg('getFormatRetour', 'json')
-            );
-
-            $fichierAcces = new \Serveur\Lib\Fichier();
+            $fichierAcces = new Fichier();
             $fichierAcces->setFileSystem($this->getFakeFileSystem());
             $fichierAcces->setFichierParametres('acces.log', vfsStream::url('root'));
             $fichierAcces->creerFichier();
             $this->_logger->setFichierLogAcces($fichierAcces);
             $this->_logger->setTradManager($this->getFakeTradManager());
 
-            $this->_logger->ecrireAcessLog($restRequete, $restReponse);
+            $this->_logger->ecrireLogRequete($restRequete);
 
             $contenu = file_get_contents($fichierAcces->getCheminCompletFichier());
 
@@ -124,8 +121,6 @@
             $this->assertContains('GET', $contenu);
             $this->assertContains('/edit', $contenu);
             $this->assertContains('param1 => var1', $contenu);
-            $this->assertContains('200', $contenu);
-            $this->assertContains('json', $contenu);
         }
 
         /**
@@ -133,7 +128,38 @@
          */
         public function testEcrireAccesWrongRequete()
         {
-            $this->_logger->ecrireAcessLog(null, $this->createMock('RestReponse'));
+            $this->_logger->ecrireLogRequete(null);
+        }
+
+        /**
+         * @expectedException \Exception
+         */
+        public function testEcrireRequeteFileError()
+        {
+            $this->_logger->ecrireLogRequete($this->createMock('RequeteManager'));
+        }
+
+        public function testEcrireReponse()
+        {
+            $restReponse = $this->createMock(
+                'ReponseManager',
+                new MockArg('getStatus', 200),
+                new MockArg('getFormatRetour', 'json')
+            );
+
+            $fichierAcces = new Fichier();
+            $fichierAcces->setFileSystem($this->getFakeFileSystem());
+            $fichierAcces->setFichierParametres('acces.log', vfsStream::url('root'));
+            $fichierAcces->creerFichier();
+            $this->_logger->setFichierLogAcces($fichierAcces);
+            $this->_logger->setTradManager($this->getFakeTradManager());
+
+            $this->_logger->ecrireLogReponse($restReponse);
+
+            $contenu = file_get_contents($fichierAcces->getCheminCompletFichier());
+
+            $this->assertContains('200', $contenu);
+            $this->assertContains('json', $contenu);
         }
 
         /**
@@ -141,23 +167,23 @@
          */
         public function testEcrireAccesWrongReponse()
         {
-            $this->_logger->ecrireAcessLog($this->createMock('RestRequete'), null);
+            $this->_logger->ecrireLogReponse(null);
         }
 
         /**
          * @expectedException \Exception
          */
-        public function testEcrireAccesFileError()
+        public function testEcrireReponseFileError()
         {
-            $this->_logger->ecrireAcessLog($this->createMock('RestRequete'), $this->createMock('RestReponse'));
+            $this->_logger->ecrireLogReponse($this->createMock('ReponseManager'));
         }
 
         public function testEcrireErreur()
         {
-            $uneErreur = new \Serveur\Exceptions\Types\Error(10000);
+            $uneErreur = new Error(10000);
             $uneErreur->setMessage("Mon message erreur");
 
-            $fichierErreurs = new \Serveur\Lib\Fichier();
+            $fichierErreurs = new Fichier();
             $fichierErreurs->setFileSystem($this->getFakeFileSystem());
             $fichierErreurs->setFichierParametres('erreur.log', vfsStream::url('root'));
             $fichierErreurs->creerFichier();
@@ -176,10 +202,10 @@
 
         public function testEcrireNotice()
         {
-            $uneErreur = new \Serveur\Exceptions\Types\Notice(10000);
+            $uneErreur = new Notice(10000);
             $uneErreur->setMessage("Ma notice");
 
-            $fichierErreurs = new \Serveur\Lib\Fichier();
+            $fichierErreurs = new Fichier();
             $fichierErreurs->setFileSystem($this->getFakeFileSystem());
             $fichierErreurs->setFichierParametres('erreur.log', vfsStream::url('root'));
             $fichierErreurs->creerFichier();
@@ -209,6 +235,6 @@
          */
         public function testEcrireErreurFileError()
         {
-            $this->_logger->ecrireErreurLog(new \Serveur\Exceptions\Types\Error(555, 'mess'));
+            $this->_logger->ecrireErreurLog(new Error(555, 'mess'));
         }
     }

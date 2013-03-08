@@ -25,93 +25,100 @@
         {
             $conteneur = new \Pimple();
 
-            $conteneur['configManager'] = $conteneur->share(
-                function () {
-                    $fichier = \Serveur\Utils\FileManager::getFichier();
-                    $fichier->setFichierParametres('config.yaml', '/config');
-                    $configurationManager = new \Serveur\Config\Config();
-                    $configurationManager->chargerConfiguration($fichier);
+            $conteneur['RequeteManager'] = function ($c) {
+                $restRequete = new \Serveur\Requete\RequeteManager();
+                $restRequete->setServer($c['Server']);
 
-                    return $configurationManager;
-                }
-            );
+                return $restRequete;
+            };
 
-            $conteneur['server'] = function () {
-                $server = new \Serveur\Rest\Server();
+            $conteneur['Server'] = function () {
+                $server = new \Serveur\Requete\Server\Server();
                 $server->setVarServeur($_SERVER);
 
                 return $server;
             };
 
-            $conteneur['headerManager'] = function () {
-                return new \Serveur\Rest\HeaderManager();
+
+            $conteneur['TraitementManager'] = function ($c) {
+
             };
 
-            $conteneur['restRequest'] = function ($c) {
-                $restRequete = new \Serveur\Rest\RestRequete();
-                $restRequete->setServer($c['server']);
-
-                return $restRequete;
-            };
-
-            $conteneur['restReponse'] = function ($c) {
-                $restReponse = new \Serveur\Rest\RestReponse();
-                $restReponse->setConfig($c['configManager']);
-                $restReponse->setHeaderManager($c['headerManager']);
-
-                return $restReponse;
-            };
-
-            $conteneur['restManager'] = $conteneur->share(
-                function ($c) {
-                    $restManager = new \Serveur\Rest\RestManager();
-                    $restManager->setRequete($c['restRequest']);
-                    $restManager->setReponse($c['restReponse']);
-                    $restManager->setRouteManger($c['routeManager']);
-
-                    return $restManager;
-                }
-            );
-
-            $conteneur['routeManager'] = function () {
+            $conteneur['Route'] = function () {
                 $fichier = \Serveur\Utils\FileManager::getFichier();
                 $fichier->setFichierParametres('routemap.yaml', '/config');
 
-                $routeManager = new \Serveur\Route\RouteManager();
+                $routeManager = new \Serveur\Traitement\Route\Route();
                 $routeManager->chargerFichierMapping($fichier);
 
                 return $routeManager;
             };
 
-            $conteneur['errorManager'] = $conteneur->share(
+
+            $conteneur['ReponseManager'] = function ($c) {
+                $restReponse = new \Serveur\Reponse\ReponseManager();
+                $restReponse->setConfig($c['Config']);
+                $restReponse->setHeader($c['Header']);
+
+                return $restReponse;
+            };
+
+            $conteneur['Config'] = function () {
+                $fichier = \Serveur\Utils\FileManager::getFichier();
+                $fichier->setFichierParametres('config.yaml', '/config');
+                $configurationManager = new \Serveur\Reponse\Config\Config();
+                $configurationManager->chargerConfiguration($fichier);
+
+                return $configurationManager;
+            };
+
+            $conteneur['Header'] = function () {
+                return new \Serveur\Reponse\Header\Header();
+            };
+
+
+            $conteneur['ErreurManager'] = $conteneur->share(
                 function ($c) {
-                    $errorManager = new \Serveur\Exceptions\ErrorManager();
-                    $errorManager->setErrorHandler($c['errorHandler']);
+                    $errorManager = new \Serveur\GestionErreurs\ErreurManager();
+                    $errorManager->setErrorHandler($c['ErreurHandler']);
 
                     return $errorManager;
                 }
             );
 
-            $conteneur['errorHandler'] = function () {
-                return new \Serveur\Exceptions\Handler\ErreurHandler();
+            $conteneur['ErreurHandler'] = function () {
+                return new \Serveur\GestionErreurs\Handler\ErreurHandler();
             };
 
             $this->_conteneur = $conteneur;
         }
 
         /**
-         * @return \Serveur\Rest\RestManager
+         * @return \Serveur\Requete\RequeteManager
          */
-        public function getRestManager()
+        public function getRequeteManager()
         {
-            return $this->_conteneur['restManager'];
+            return $this->_conteneur['RequeteManager'];
+        }
+
+        public function getTraitementManager()
+        {
+            return $this->_conteneur['TraitementManager'];
         }
 
         /**
-         * @return \Serveur\Exceptions\ErrorManager
+         * @return \Serveur\Reponse\ReponseManager
+         */
+        public function getReponseManager()
+        {
+            return $this->_conteneur['ReponseManager'];
+        }
+
+        /**
+         * @return \Serveur\GestionErreurs\ErreurManager
          */
         public function getErrorManager()
         {
-            return $this->_conteneur['errorManager'];
+            return $this->_conteneur['ErreurManager'];
         }
     }

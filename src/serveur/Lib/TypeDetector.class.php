@@ -2,7 +2,7 @@
     namespace Serveur\Lib;
 
     use Serveur\Utils\Constante;
-    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class TypeDetector
     {
@@ -13,7 +13,7 @@
 
         /**
          * @param array $mimesTypes
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function __construct($mimesTypes)
         {

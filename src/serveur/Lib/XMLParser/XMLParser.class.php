@@ -2,7 +2,7 @@
     namespace Serveur\Lib\XMLParser;
 
     use Serveur\Lib\XMLParser\XMLElement;
-    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class XMLParser
     {
@@ -73,7 +73,7 @@
 
         /**
          * @param string $contenuXml
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setContenuInitial($contenuXml)
         {

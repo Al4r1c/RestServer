@@ -20,7 +20,7 @@
         }
 
         /**
-         * @param \Serveur\Exceptions\Types\AbstractTypeErreur $uneErreur
+         * @param \Serveur\GestionErreurs\Types\AbstractTypeErreur $uneErreur
          * @return void
          */
         public function ecrireErreurLog($uneErreur)
@@ -31,12 +31,19 @@
         }
 
         /**
-         * @param \Serveur\Rest\RestRequete $restRequete
-         * @param \Serveur\Rest\RestReponse $restReponse
+         * @param \Serveur\Requete\RequeteManager $restRequete
          */
-        public function ecrireAcessLog($restRequete, $restReponse)
+        public function ecrireLogRequete($restRequete)
         {
-            $this->ecrireMessageAcces($restRequete, $restReponse);
+            $this->logRequete($restRequete);
+        }
+
+        /**
+         * @param \Serveur\Reponse\ReponseManager $restReponse
+         */
+        public function ecrireLogReponse($restReponse)
+        {
+            $this->logReponse($restReponse);
         }
 
         /**
@@ -50,15 +57,20 @@
         }
 
         /**
-         * @param \Serveur\Exceptions\Types\AbstractTypeErreur $uneErreur
+         * @param \Serveur\GestionErreurs\Types\AbstractTypeErreur $uneErreur
          * @return void
          */
         abstract protected function ecrireMessageErreur($uneErreur);
 
         /**
-         * @param \Serveur\Rest\RestRequete $restRequete
-         * @param \Serveur\Rest\RestReponse $restReponse
+         * @param \Serveur\Requete\RequeteManager $restRequete
          * @return void
          */
-        abstract protected function ecrireMessageAcces($restRequete, $restReponse);
+        abstract protected function logRequete($restRequete);
+
+        /**
+         * @param \Serveur\Reponse\ReponseManager $restReponse
+         * @return void
+         */
+        abstract protected function logReponse($restReponse);
     }

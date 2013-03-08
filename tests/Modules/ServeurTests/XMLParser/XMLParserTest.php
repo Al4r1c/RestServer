@@ -2,15 +2,16 @@
     namespace Modules\ServeurTests\XMLParser;
 
     use Modules\TestCase;
+    use Serveur\Lib\XMLParser\XMLParser;
 
     class XMLParserTest extends TestCase
     {
-        /** @var \Serveur\Lib\XMLParser\XMLParser */
+        /** @var XMLParser */
         private $_xmlParser;
 
         public function setUp()
         {
-            $this->_xmlParser = new \Serveur\Lib\XMLParser\XMLParser();
+            $this->_xmlParser = new XMLParser();
         }
 
         public function testSetContenu()
@@ -21,7 +22,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetContenuErrone()

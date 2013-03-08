@@ -9,7 +9,6 @@
 
     class FileSystemTest extends TestCase
     {
-
         /** @var FileSystem */
         private $fileSystem;
 
@@ -35,7 +34,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetOsNonString()
@@ -44,7 +43,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10100
          */
         public function testSetWrongOs()
@@ -62,7 +61,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10101
          */
         public function testSetBasePathWrong()
@@ -72,7 +71,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetBasePathNonString()
@@ -81,7 +80,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10102
          */
         public function testSetBasePathInexistant()
@@ -103,7 +102,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testFichierExisteString()
@@ -123,7 +122,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testDossierExisteString()
@@ -142,7 +141,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testGetExtensionString()
@@ -162,7 +161,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testGetDroitsStringNomFichier()
@@ -171,7 +170,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10103
          */
         public function testGetDroitsFichierInexistant()
@@ -191,7 +190,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testCreerFichierNomNonString()
@@ -200,7 +199,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testCreerFichierDroitIncorrecte()
@@ -269,7 +268,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testChargerFichierNomDoitString()
@@ -278,7 +277,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10105
          */
         public function testChargerFichierInexistant()
@@ -289,7 +288,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10106
          */
         public function testChargerFichierChargeurNonPresent()
@@ -314,7 +313,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testRelatifToAbsoluString()
@@ -347,7 +346,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testIsAbsoluteStringChemin()

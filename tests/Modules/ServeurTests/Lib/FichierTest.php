@@ -7,7 +7,6 @@
 
     class FichierTest extends TestCase
     {
-
         /** @var Fichier */
         private $fichier;
 
@@ -26,7 +25,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetNotFileSystem()
@@ -42,7 +41,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testNomFichierNotString()
@@ -51,7 +50,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10200
          */
         public function testNomFichierNonNull()
@@ -60,7 +59,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10201
          */
         public function testNomFichierInvalid()
@@ -69,7 +68,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testCheminDaccesNonString()
@@ -78,7 +77,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10202
          */
         public function testCheminDaccesNull()
@@ -186,7 +185,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10203
          */
         public function testChargerFichierInexistant()
@@ -245,7 +244,7 @@
 
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10204
          */
         public function testCreerDansDossierInexistant()
@@ -267,7 +266,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10205
          */
         public function testCreerBug()
@@ -309,7 +308,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\MainException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
          * @expectedExceptionCode 10203
          */
         public function testEcrireFichierInexistant()

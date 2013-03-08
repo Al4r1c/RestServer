@@ -1,7 +1,7 @@
 <?php
     namespace Serveur\Lib\XMLParser;
 
-    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class XMLElement
     {
@@ -90,7 +90,7 @@
 
         /**
          * @param string[] $attributs
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setAttributs($attributs)
         {
@@ -103,7 +103,7 @@
 
         /**
          * @param XMLElement[]|bool $children
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setChildren($children)
         {
@@ -124,7 +124,7 @@
 
         /**
          * @param string $valeur
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setValeur($valeur)
         {

@@ -2,15 +2,16 @@
     namespace Modules\ServeurTests\XMLParser;
 
     use Modules\TestCase;
+    use Serveur\Lib\XMLParser\XMLElement;
 
     class XMLElementTest extends TestCase
     {
-        /** @var \Serveur\Lib\XMLParser\XMLElement */
+        /** @var XMLElement */
         private $_xmlElement;
 
         public function setUp()
         {
-            $this->_xmlElement = new \Serveur\Lib\XMLParser\XMLElement();
+            $this->_xmlElement = new XMLElement();
         }
 
         public function testSetNom()
@@ -21,7 +22,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetNomErrone()
@@ -37,7 +38,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetChildrenErrone()
@@ -46,7 +47,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetChildrenErrone2()
@@ -69,7 +70,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetAttributsErrone()
@@ -99,7 +100,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testSetValeurErrone()

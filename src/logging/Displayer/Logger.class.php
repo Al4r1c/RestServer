@@ -42,19 +42,14 @@
         }
 
         /**
-         * @param \Serveur\Rest\RestRequete $restRequete
-         * @param \Serveur\Rest\RestReponse $restReponse
+         * @param \Serveur\Requete\RequeteManager $restRequete
          * @throws \InvalidArgumentException
          * @throws \Exception
          */
-        protected function ecrireMessageAcces($restRequete, $restReponse)
+        protected function logRequete($restRequete)
         {
-            if (!$restRequete instanceof \Serveur\Rest\RestRequete) {
+            if (!$restRequete instanceof \Serveur\Requete\RequeteManager) {
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restRequete)));
-            }
-
-            if (!$restReponse instanceof \Serveur\Rest\RestReponse) {
-                throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restReponse)));
             }
 
             if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()
@@ -78,6 +73,22 @@
             foreach ($restRequete->getParametres() as $clefParam => $unParam) {
                 $this->_fichierLogAcces->ecrireDansFichier("\t\t" . $clefParam . " => " . $unParam . "\n");
             }
+        }
+
+        /**
+         * @param \Serveur\Reponse\ReponseManager $restReponse
+         */
+        protected function logReponse($restReponse)
+        {
+            if (!$restReponse instanceof \Serveur\Reponse\ReponseManager) {
+                throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restReponse)));
+            }
+
+            if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()
+            ) {
+                throw new \Exception('Invalid log access file or file not found.');
+            }
+
             $this->_fichierLogAcces->ecrireDansFichier(
                 "\t" . $this->traduireMessageEtRemplacerVariables(
                     "{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " .
@@ -87,15 +98,15 @@
         }
 
         /**
-         * @param \Serveur\Exceptions\Types\AbstractTypeErreur $uneErreur
+         * @param \Serveur\GestionErreurs\Types\AbstractTypeErreur $uneErreur
          * @throws \InvalidArgumentException
          * @throws \Exception
          */
         protected function ecrireMessageErreur($uneErreur)
         {
-            if ($uneErreur instanceof \Serveur\Exceptions\Types\Error) {
+            if ($uneErreur instanceof \Serveur\GestionErreurs\Types\Error) {
                 $message = '{trad.fatalerror}: ' . $uneErreur->getMessage();
-            } elseif ($uneErreur instanceof \Serveur\Exceptions\Types\Notice) {
+            } elseif ($uneErreur instanceof \Serveur\GestionErreurs\Types\Notice) {
                 $message = '{trad.notice}: ' . $uneErreur->getMessage();
             } else {
                 throw new \InvalidArgumentException(sprintf('Invalid error type %s.', get_class($uneErreur)));

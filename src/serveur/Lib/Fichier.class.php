@@ -1,8 +1,8 @@
 <?php
     namespace Serveur\Lib;
 
-    use Serveur\Exceptions\Exceptions\MainException;
-    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class Fichier
     {
@@ -28,7 +28,7 @@
 
         /**
          * @param \Serveur\Lib\FileSystem $fileSystem
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          */
         public function setFileSystem($fileSystem)
         {
@@ -56,8 +56,8 @@
 
         /**
          * @param string $nom
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws ArgumentTypeException
+         * @throws MainException
          */
         public function setNomFichier($nom)
         {
@@ -78,8 +78,8 @@
 
         /**
          * @param string $chemin
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws ArgumentTypeException
+         * @throws MainException
          */
         public function setRepertoireFichier($chemin)
         {
@@ -123,7 +123,7 @@
         /**
          * @param string $droit
          * @return bool
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws MainException
          */
         public function creerFichier($droit = '0777')
         {
@@ -142,7 +142,7 @@
 
         /**
          * @return mixed
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws MainException
          */
         public function chargerFichier()
         {
@@ -155,7 +155,7 @@
 
         /**
          * @param string $nouvelleLigne
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws MainException
          */
         public function ecrireDansFichier($nouvelleLigne)
         {

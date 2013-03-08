@@ -7,7 +7,6 @@
 
     class TypeDetectorTest extends TestCase
     {
-
         /** @var $typeDetector TypeDetector */
         private $typeDetector;
 
@@ -33,7 +32,7 @@
         }
 
         /**
-         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
         public function testNewTypeDetectorArgumentNonArray()

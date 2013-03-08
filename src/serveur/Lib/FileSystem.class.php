@@ -1,8 +1,8 @@
 <?php
     namespace Serveur\Lib;
 
-    use Serveur\Exceptions\Exceptions\MainException;
-    use Serveur\Exceptions\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class FileSystem
     {
@@ -28,8 +28,8 @@
 
         /**
          * @param string $os
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws ArgumentTypeException
+         * @throws MainException
          */
         public function setOs($os)
         {
@@ -54,8 +54,8 @@
 
         /**
          * @param string $basePath
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws ArgumentTypeException
+         * @throws MainException
          */
         public function setBasePath($basePath)
         {
@@ -76,7 +76,7 @@
 
         /**
          * @param string $cheminVersFichier
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return bool
          */
         public function fichierExiste($cheminVersFichier)
@@ -90,7 +90,7 @@
 
         /**
          * @param string $cheminDossier
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return bool
          */
         public function dossierExiste($cheminDossier)
@@ -104,7 +104,7 @@
 
         /**
          * @param string $nomFichier
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return string|null
          */
         public function getExtension($nomFichier)
@@ -124,8 +124,8 @@
 
         /**
          * @param string $cheminDemande
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws ArgumentTypeException
+         * @throws MainException
          * @return string
          */
         public function getDroits($cheminDemande)
@@ -144,7 +144,7 @@
         /**
          * @param string $urlFichier
          * @param string $droit
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return bool
          */
         public function creerFichier($urlFichier, $droit = '0777')
@@ -172,8 +172,8 @@
 
         /**
          * @param string $cheminVersFichier
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws ArgumentTypeException
+         * @throws MainException
          * @return mixed
          */
         public function chargerFichier($cheminVersFichier)
@@ -196,7 +196,7 @@
 
         /**
          * @param string $className
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return bool
          */
         protected function getChargeurClass($className)
@@ -224,7 +224,7 @@
 
         /**
          * @param string $chemin
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return string
          */
         public function relatifToAbsolu($chemin)
@@ -269,7 +269,7 @@
         /**
          * @param string $chemin
          * @param string $separateurChemin
-         * @throws \Serveur\Exceptions\Exceptions\MainException
+         * @throws MainException
          * @return string
          */
         protected function ajouterBaseSiBesoin($chemin, $separateurChemin)
@@ -283,7 +283,7 @@
 
         /**
          * @param string $chemin
-         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @throws ArgumentTypeException
          * @return bool
          */
         protected function isAbsolutePath($chemin)

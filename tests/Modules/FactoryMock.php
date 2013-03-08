@@ -39,8 +39,8 @@
                 case 'filesystem':
                     $mock = $this->getMockFileSystem($methodes);
                     break;
-                case 'headermanager':
-                    $mock = $this->getMockHeadersManager($methodes);
+                case 'header':
+                    $mock = $this->getMockHeaders($methodes);
                     break;
                 case 'i18nmanager':
                     $mock = $this->getMockI18nManager($methodes);
@@ -51,13 +51,10 @@
                 case 'notice':
                     $mock = $this->getMockNotice($methodes);
                     break;
-                case 'restmanager':
-                    $mock = $this->getMockRestManager($methodes);
-                    break;
-                case 'restrequete':
+                case 'requetemanager':
                     $mock = $this->getMockRestRequete($methodes);
                     break;
-                case 'restreponse':
+                case 'reponsemanager':
                     $mock = $this->getMockRestReponse($methodes);
                     break;
                 case 'routemanager':
@@ -95,19 +92,19 @@
             return $this->getMockForAbstractClass('Logging\Displayer\AbstractDisplayer');
         }
 
-        /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Renderers\AbstractRenderer */
+        /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Renderers\AbstractRenderer */
         protected function getMockAbstractRenderer()
         {
-            return $this->getMockForAbstractClass('Serveur\Renderers\AbstractRenderer');
+            return $this->getMockForAbstractClass('Serveur\Reponse\Renderers\AbstractRenderer');
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Config\Config
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Config\Config
          */
         protected function getMockConfig($methodes = array())
         {
-            return $this->getMock('Serveur\Config\Config', $methodes);
+            return $this->getMock('Serveur\Reponse\Config\Config', $methodes);
         }
 
         /**
@@ -121,29 +118,29 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Types\Error
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\Types\Error
          */
         protected function getMockErreur($methodes = array())
         {
-            return $this->getMock('Serveur\Exceptions\Types\Error', $methodes);
+            return $this->getMock('Serveur\GestionErreurs\Types\Error', $methodes);
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Handler\ErreurHandler
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\Handler\ErreurHandler
          */
         protected function getMockErreurHandler($methodes)
         {
-            return $this->getMock('Serveur\Exceptions\Handler\ErrorHandler', $methodes);
+            return $this->getMock('Serveur\GestionErreurs\Handler\ErreurHandler', $methodes);
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\ErrorManager
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\ErreurManager
          */
         protected function getMockErrorManager($methodes)
         {
-            return $this->getMock('Serveur\Exceptions\ErrorManager', $methodes);
+            return $this->getMock('Serveur\GestionErreurs\ErrorManager', $methodes);
         }
 
         /**
@@ -166,11 +163,11 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\HeaderManager
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Header\Header
          */
-        protected function getMockHeadersManager($methodes = array())
+        protected function getMockHeaders($methodes = array())
         {
-            return $this->getMock('Serveur\Rest\HeaderManager', $methodes);
+            return $this->getMock('Serveur\Reponse\Header\Header', $methodes);
         }
 
         /**
@@ -193,56 +190,47 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Exceptions\Types\Notice
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\Types\Notice
          */
         protected function getMockNotice($methodes = array())
         {
-            return $this->getMock('Serveur\Exceptions\Types\Notice', $methodes);
+            return $this->getMock('Serveur\GestionErreurs\Types\Notice', $methodes);
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestManager
-         */
-        protected function getMockRestManager($methodes = array())
-        {
-            return $this->getMock('Serveur\Rest\RestManager', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestRequete
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Requete\RequeteManager
          */
         protected function getMockRestRequete($methodes = array())
         {
-            return $this->getMock('Serveur\Rest\RestRequete', $methodes);
+            return $this->getMock('Serveur\Requete\RequeteManager', $methodes);
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\RestReponse
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\ReponseManager
          */
         protected function getMockRestReponse($methodes = array())
         {
-            return $this->getMock('Serveur\Rest\RestReponse', $methodes);
+            return $this->getMock('Serveur\Reponse\ReponseManager', $methodes);
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Route\RouteManager
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Route\Route
          */
         private function getMockRouteManager($methodes = array())
         {
-            return $this->getMock('Serveur\Route\RouteManager', $methodes);
+            return $this->getMock('Serveur\Traitement\Route\Route', $methodes);
         }
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Rest\Server
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Requete\Server\Server
          */
         protected function getMockServer($methodes = array())
         {
-            return $this->getMock('Serveur\Rest\Server', $methodes);
+            return $this->getMock('Serveur\Requete\Server\Server', $methodes);
         }
 
         /**
