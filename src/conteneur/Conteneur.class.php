@@ -72,6 +72,16 @@
                 }
             );
 
+            $conteneur['routeManager'] = function () {
+                $fichier = \Serveur\Utils\FileManager::getFichier();
+                $fichier->setFichierParametres('routemap.yaml', '/config');
+
+                $routeManager = new \Serveur\Route\RouteManager();
+                $routeManager->chargerFichierMapping($fichier);
+
+                return $routeManager;
+            };
+
             $conteneur['errorManager'] = $conteneur->share(
                 function ($c) {
                     $errorManager = new \Serveur\Exceptions\ErrorManager();

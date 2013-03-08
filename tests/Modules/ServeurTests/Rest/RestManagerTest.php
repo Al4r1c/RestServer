@@ -43,6 +43,7 @@
             $this->assertEquals($restReponse, $this->restManager->getRestResponse());
         }
 
+
         /**
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
@@ -50,6 +51,24 @@
         public function testRestSetReponseNull()
         {
             $this->restManager->setReponse(null);
+        }
+
+        public function testRestSetRouteManager()
+        {
+            $routeManager = $this->createMock('RouteManager');
+
+            $this->restManager->setRouteManger($routeManager);
+
+            $this->assertAttributeEquals($routeManager, '_routeManager', $this->restManager);
+        }
+
+        /**
+         * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         * @expectedExceptionCode 1000
+         */
+        public function testRestSetRouteManagerErrone()
+        {
+            $this->restManager->setRouteManger(5);
         }
 
         public function testRestRecupererUriParam()

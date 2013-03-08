@@ -60,6 +60,9 @@
                 case 'restreponse':
                     $mock = $this->getMockRestReponse($methodes);
                     break;
+                case 'routemanager':
+                    $mock = $this->getMockRouteManager($methodes);
+                    break;
                 case 'server':
                     $mock = $this->getMockServer($methodes);
                     break;
@@ -222,6 +225,15 @@
         protected function getMockRestReponse($methodes = array())
         {
             return $this->getMock('Serveur\Rest\RestReponse', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Route\RouteManager
+         */
+        private function getMockRouteManager($methodes = array())
+        {
+            return $this->getMock('Serveur\Route\RouteManager', $methodes);
         }
 
         /**

@@ -16,6 +16,11 @@
         private $_restResponse;
 
         /**
+         * @var \Serveur\Route\RouteManager
+         */
+        private $_routeManager;
+
+        /**
          * @return \Serveur\Rest\RestRequete
          */
         public function getRestRequest()
@@ -55,6 +60,18 @@
             }
 
             $this->_restResponse = $restReponseObject;
+        }
+
+        /**
+         * @param \Serveur\Route\RouteManager $routeManager
+         * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
+         */
+        public function setRouteManger($routeManager) {
+            if (!$routeManager instanceof \Serveur\Route\RouteManager) {
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Route\RouteManager', $routeManager);
+            }
+
+            $this->_routeManager = $routeManager;
         }
 
         /**

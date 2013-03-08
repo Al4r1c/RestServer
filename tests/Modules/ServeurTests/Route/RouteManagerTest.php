@@ -55,17 +55,20 @@
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000
          */
-        public function testChargerFichierErrone() {
+        public function testChargerFichierErrone()
+        {
             $this->_routeManager->chargerFichierMapping(null);
         }
 
-        public function testGetUneRoute() {
+        public function testGetUneRoute()
+        {
             $this->_routeManager->setRoutesListe(array('/routeOne' => 'ressOne', '/routeNew' => 'ressNew'));
 
             $this->assertEquals('ressOne', $this->_routeManager->getUneRoute('/routeOne'));
         }
 
-        public function testGetUneRouteNonTrouvee() {
+        public function testGetUneRouteNonTrouvee()
+        {
             $this->_routeManager->setRoutesListe(array('/routeOne' => 'ressOne', '/routeNew' => 'ressNew'));
 
             $this->assertNull($this->_routeManager->getUneRoute('/fakeRoute'));

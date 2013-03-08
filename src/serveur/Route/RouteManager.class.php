@@ -15,7 +15,8 @@
          * @param $fichierMapping \Serveur\Lib\Fichier
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
-        public function chargerFichierMapping($fichierMapping) {
+        public function chargerFichierMapping($fichierMapping)
+        {
             if (!$fichierMapping instanceof \Serveur\Lib\Fichier) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierMapping);
             }
@@ -37,7 +38,7 @@
          */
         public function getUneRoute($nomRoute)
         {
-            if(array_key_exists($nomRoute, $this->_routesListe)) {
+            if (array_key_exists($nomRoute, $this->_routesListe)) {
                 return $this->_routesListe[$nomRoute];
             } else {
                 return null;
