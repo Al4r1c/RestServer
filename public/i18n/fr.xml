@@ -27,6 +27,7 @@
 		<message code="203">Variables de serveur et d'exécution</message>
 		<message code="204">Gestionnaire des entêtes</message>
 		<message code="300">Fichier de configuration</message>
+		<message code="301">Gestionnaire des routes</message>
 	</errorType>
 
 	<errorMessage>

@@ -67,6 +67,7 @@
                     $restManager = new \Serveur\Rest\RestManager();
                     $restManager->setRequete($c['restRequest']);
                     $restManager->setReponse($c['restReponse']);
+                    $restManager->setRouteManger($c['routeManager']);
 
                     return $restManager;
                 }

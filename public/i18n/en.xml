@@ -27,6 +27,7 @@
 		<message code="203">Server and execution environment information</message>
 		<message code="204">Header Manager</message>
 		<message code="300">Configuration file</message>
+		<message code="300">Route Manager</message>
 	</errorType>
 
 	<errorMessage>

@@ -56,7 +56,7 @@
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $nouvellesRoutes);
             }
 
-            if (!$this->isValideRouteMap($nouvellesRoutes)) {
+            if (!$this->isValideRouteMap($nouvellesRoutes) && !empty($nouvellesRoutes)) {
                 throw new MainException(30100, 500);
             }
 

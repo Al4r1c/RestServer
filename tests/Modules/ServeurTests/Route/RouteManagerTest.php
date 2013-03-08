@@ -21,6 +21,13 @@
             $this->assertEquals(array('/route' => 'routeRess'), $this->_routeManager->getRoutesListe());
         }
 
+        public function testSetRouteVide()
+        {
+            $this->_routeManager->setRoutesListe(array());
+
+            $this->assertEquals(array(), $this->_routeManager->getRoutesListe());
+        }
+
         /**
          * @expectedException     \Serveur\Exceptions\Exceptions\ArgumentTypeException
          * @expectedExceptionCode 1000

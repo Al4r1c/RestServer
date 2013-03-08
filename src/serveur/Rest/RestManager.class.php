@@ -66,7 +66,8 @@
          * @param \Serveur\Route\RouteManager $routeManager
          * @throws \Serveur\Exceptions\Exceptions\ArgumentTypeException
          */
-        public function setRouteManger($routeManager) {
+        public function setRouteManger($routeManager)
+        {
             if (!$routeManager instanceof \Serveur\Route\RouteManager) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Route\RouteManager', $routeManager);
             }
