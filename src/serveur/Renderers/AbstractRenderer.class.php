@@ -12,8 +12,7 @@
          */
         public function render($donnees)
         {
-            if (!is_array($donnees))
-            {
+            if (!is_array($donnees)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $donnees);
             }
 

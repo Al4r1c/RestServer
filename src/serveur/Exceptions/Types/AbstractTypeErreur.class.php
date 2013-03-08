@@ -47,12 +47,9 @@
          */
         public function getMessage()
         {
-            if (isNull($this->_message))
-            {
+            if (isNull($this->_message)) {
                 return '{errorMessage.' . $this->_codeErreur . '}';
-            }
-            else
-            {
+            } else {
                 return $this->_message;
             }
         }

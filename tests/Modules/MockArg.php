@@ -80,26 +80,17 @@
 
         private function toPlainVar($element)
         {
-            if (is_bool($element))
-            {
+            if (is_bool($element)) {
                 $var = self::$boolArray[$element];
-            }
-            elseif (is_array($element))
-            {
+            } elseif (is_array($element)) {
                 $var = $this->arrayToStringPhp($element);
-            }
-            elseif (is_object($element))
-            {
+            } elseif (is_object($element)) {
                 $this->tabTricks[] = $element;
                 end($this->tabTricks);
                 $var = "\$this->tabTricks[" . key($this->tabTricks) . "]";
-            }
-            elseif (is_numeric($element))
-            {
+            } elseif (is_numeric($element)) {
                 $var = $element;
-            }
-            else
-            {
+            } else {
                 $var = '"' . addslashes($element) . '"';
             }
 

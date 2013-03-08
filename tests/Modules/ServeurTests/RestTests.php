@@ -1,8 +1,7 @@
 <?php
     namespace Modules\ServeurTests;
 
-    if (!defined('PHPUnit_MAIN_METHOD'))
-    {
+    if (!defined('PHPUnit_MAIN_METHOD')) {
         define('PHPUnit_MAIN_METHOD', 'RestTests::main');
     }
 
@@ -29,7 +28,6 @@
         }
     }
 
-    if (PHPUnit_MAIN_METHOD == 'RestTests::main')
-    {
+    if (PHPUnit_MAIN_METHOD == 'RestTests::main') {
         RestTests::main();
     }

@@ -43,8 +43,7 @@
          */
         public function setServer($server)
         {
-            if (!$server instanceof Server)
-            {
+            if (!$server instanceof Server) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Rest\Server', $server);
             }
 
@@ -112,8 +111,7 @@
         {
             $method = strtoupper(trim($method));
 
-            if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE')))
-            {
+            if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
                 throw new MainException(20000, 400, $method);
             }
 
@@ -127,16 +125,14 @@
          */
         public function setFormat($format)
         {
-            if (!is_string($format))
-            {
+            if (!is_string($format)) {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $format);
             }
 
             $typeDetector = new TypeDetector(\Serveur\Utils\Constante::chargerConfig('mimes'));
             $formatsTrouves = $typeDetector->extraireMimesTypeHeader($format);
 
-            if (isNull($formatsTrouves))
-            {
+            if (isNull($formatsTrouves)) {
                 throw new MainException(20001, 400);
             }
 
@@ -149,15 +145,12 @@
          */
         public function setVariableUri($uri)
         {
-            if (!isNull($uri))
-            {
-                if (!is_string($uri))
-                {
+            if (!isNull($uri)) {
+                if (!is_string($uri)) {
                     throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $uri);
                 }
 
-                if (($pos = strpos($uri, '?')) !== false)
-                {
+                if (($pos = strpos($uri, '?')) !== false) {
                     $uri = substr($uri, 0, $pos);
                 }
 
@@ -172,8 +165,7 @@
          */
         public function setParametres($donnee)
         {
-            if (!is_array($donnee))
-            {
+            if (!is_array($donnee)) {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'array', $donnee);
             }
 
@@ -187,8 +179,7 @@
          */
         public function setDateRequete($dateRequeteTimestamp)
         {
-            if (!is_int($dateRequeteTimestamp))
-            {
+            if (!is_int($dateRequeteTimestamp)) {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'int', $dateRequeteTimestamp);
             }
 
@@ -204,13 +195,11 @@
          */
         public function setIp($ip)
         {
-            if (!is_string($ip))
-            {
+            if (!is_string($ip)) {
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $ip);
             }
 
-            if (!filter_var($ip, FILTER_VALIDATE_IP))
-            {
+            if (!filter_var($ip, FILTER_VALIDATE_IP)) {
                 throw new MainException(20002, 400);
             }
 

@@ -15,8 +15,7 @@
          */
         public function ajouterNamespace($namespace, $includePath, $extension = '.class.php')
         {
-            if (!startsWith($extension, '.'))
-            {
+            if (!startsWith($extension, '.')) {
                 $extension = '.' . $extension;
             }
 
@@ -38,21 +37,15 @@
          */
         public function unregister($namespace = '')
         {
-            if (!isNull($namespace))
-            {
-                if (array_key_exists(strtolower($namespace), $this->_namespaces))
-                {
+            if (!isNull($namespace)) {
+                if (array_key_exists(strtolower($namespace), $this->_namespaces)) {
                     unset($this->_namespaces[strtolower($namespace)]);
 
                     return true;
-                }
-                else
-                {
+                } else {
                     throw new \Exception('Namespace ' . $namespace . ' not found');
                 }
-            }
-            else
-            {
+            } else {
                 return spl_autoload_unregister(array($this, 'loaderFunction')) === true;
             }
         }
@@ -63,13 +56,11 @@
          */
         public function loaderFunction($className)
         {
-            foreach ($this->_namespaces as $unNamespace => $configNamespace)
-            {
+            foreach ($this->_namespaces as $unNamespace => $configNamespace) {
                 if (!isNull($unNamespace) && substr_count(strtolower($className), $unNamespace) > 0 &&
                     file_exists(
                         $configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension'])
-                )
-                {
+                ) {
                     include_once(
                         $configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension']);
 

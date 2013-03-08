@@ -8,8 +8,7 @@
         {
             $mock = null;
 
-            switch (strtolower($type))
-            {
+            switch (strtolower($type)) {
                 case 'abstractchargeurfichier':
                     $mock = $this->getMockAbstractChargeur();
                     break;

@@ -44,15 +44,11 @@
         {
             $list = "<ul>\n";
 
-            foreach ($array as $clef => $valeur)
-            {
+            foreach ($array as $clef => $valeur) {
                 $list .= "\t<li><strong>" . $clef . ":</strong> ";
-                if (is_array($valeur))
-                {
+                if (is_array($valeur)) {
                     $list .= $this->convertTableauToListeHtml($valeur);
-                }
-                else
-                {
+                } else {
                     $list .= $valeur;
                 }
                 $list .= "</li>\n";

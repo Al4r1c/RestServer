@@ -12,8 +12,7 @@
          */
         public function setTradManager($tradManager)
         {
-            if (!$tradManager instanceof \Logging\I18n\TradManager)
-            {
+            if (!$tradManager instanceof \Logging\I18n\TradManager) {
                 throw new \InvalidArgumentException();
             }
 
@@ -26,8 +25,7 @@
          */
         public function ecrireErreurLog($uneErreur)
         {
-            if (!isNull($uneErreur))
-            {
+            if (!isNull($uneErreur)) {
                 $this->ecrireMessageErreur($uneErreur);
             }
         }

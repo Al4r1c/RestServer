@@ -32,8 +32,7 @@
          */
         public function setFileSystem($fileSystem)
         {
-            if (!$fileSystem instanceof \Serveur\Lib\FileSystem)
-            {
+            if (!$fileSystem instanceof \Serveur\Lib\FileSystem) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
             }
 
@@ -62,18 +61,15 @@
          */
         public function setNomFichier($nom)
         {
-            if (!is_string($nom))
-            {
+            if (!is_string($nom)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
             }
 
-            if (isNull($nom))
-            {
+            if (isNull($nom)) {
                 throw new MainException(10200, 500);
             }
 
-            if (substr_count($nom, '.') < 1)
-            {
+            if (substr_count($nom, '.') < 1) {
                 throw new MainException(10201, 500, $nom);
             }
 
@@ -87,13 +83,11 @@
          */
         public function setRepertoireFichier($chemin)
         {
-            if (!is_string($chemin))
-            {
+            if (!is_string($chemin)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $chemin);
             }
 
-            if (isNull($chemin))
-            {
+            if (isNull($chemin)) {
                 throw new MainException(10202, 500);
             }
 
@@ -133,15 +127,12 @@
          */
         public function creerFichier($droit = '0777')
         {
-            if (!$this->dossierExiste())
-            {
+            if (!$this->dossierExiste()) {
                 throw new MainException(10204, 500, $this->_repertoireFichier);
             }
 
-            if (!$this->fichierExiste())
-            {
-                if (!$this->_fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit))
-                {
+            if (!$this->fichierExiste()) {
+                if (!$this->_fileSystemInstance->creerFichier($this->getCheminCompletFichier(), $droit)) {
                     throw new MainException(10205, 500, $this->getCheminCompletFichier());
                 }
             }
@@ -155,8 +146,7 @@
          */
         public function chargerFichier()
         {
-            if (!$this->fichierExiste())
-            {
+            if (!$this->fichierExiste()) {
                 throw new MainException(10203, 50, $this->getCheminCompletFichier());
             }
 
@@ -169,8 +159,7 @@
          */
         public function ecrireDansFichier($nouvelleLigne)
         {
-            if (!$this->fichierExiste())
-            {
+            if (!$this->fichierExiste()) {
                 throw new MainException(10203, 50, $this->getCheminCompletFichier());
             }
 

@@ -18,8 +18,7 @@
 
         public function getFakeTradManager()
         {
-            $functionCallback = function ($object)
-            {
+            $functionCallback = function ($object) {
                 return $object;
             };
 

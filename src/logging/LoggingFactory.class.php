@@ -14,8 +14,7 @@
          */
         public static function getLogger($loggingMethode)
         {
-            switch ($loggingMethode)
-            {
+            switch ($loggingMethode) {
                 case 'logger':
                     $logger = new \Logging\Displayer\Logger();
                     $logger->setTradManager(self::getI18n());

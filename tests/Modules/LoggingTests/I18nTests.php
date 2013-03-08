@@ -1,8 +1,7 @@
 <?php
     namespace Modules\LoggingTests;
 
-    if (!defined('PHPUnit_MAIN_METHOD'))
-    {
+    if (!defined('PHPUnit_MAIN_METHOD')) {
         define('PHPUnit_MAIN_METHOD', 'I18nTests::main');
     }
 
@@ -27,7 +26,6 @@
         }
     }
 
-    if (PHPUnit_MAIN_METHOD == 'I18nTests::main')
-    {
+    if (PHPUnit_MAIN_METHOD == 'I18nTests::main') {
         I18nTests::main();
     }

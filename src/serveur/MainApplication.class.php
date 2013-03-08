@@ -43,15 +43,13 @@
          */
         public function run()
         {
-            try
-            {
+            try {
                 $this->_conteneur->getRestManager()
                     ->setVariablesReponse(200, $this->_conteneur->getRestManager()->getParametres());
 
                 $resultat = $this->_conteneur->getRestManager()->fabriquerReponse();
             }
-            catch (\Exception $e)
-            {
+            catch (\Exception $e) {
                 $resultat = $this->leverException($e);
             }
 
@@ -66,12 +64,9 @@
          */
         private function leverException(\Exception $uneException)
         {
-            if ($uneException instanceof MainException)
-            {
+            if ($uneException instanceof MainException) {
                 $statusHttp = $uneException->getStatus();
-            }
-            else
-            {
+            } else {
                 $statusHttp = 500;
             }
 
@@ -85,8 +80,7 @@
 
         private function ecrireAccesLog()
         {
-            foreach ($this->_observeurs as $unObserveur)
-            {
+            foreach ($this->_observeurs as $unObserveur) {
                 $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(),
                     $this->_conteneur->getRestManager()->getRestResponse());
             }

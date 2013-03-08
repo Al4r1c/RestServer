@@ -28,18 +28,15 @@
          */
         public function chargerConfiguration($fichierFramework)
         {
-            if (!$fichierFramework instanceof \Serveur\Lib\Fichier)
-            {
+            if (!$fichierFramework instanceof \Serveur\Lib\Fichier) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
             }
 
-            try
-            {
+            try {
                 $this->_applicationConfiguration =
                     array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
             }
-            catch (\Exception $fe)
-            {
+            catch (\Exception $fe) {
                 throw new MainException(30000, 500, $fichierFramework->getCheminCompletFichier());
             }
 
@@ -51,10 +48,8 @@
          */
         private function validerFichierConfiguration()
         {
-            foreach (self::$_clefMinimales as $uneClefQuiDoitExister)
-            {
-                if (is_null($this->getConfigValeur($uneClefQuiDoitExister)))
-                {
+            foreach (self::$_clefMinimales as $uneClefQuiDoitExister) {
+                if (is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
                     throw new MainException(30001, 500, $uneClefQuiDoitExister);
                 }
             }
@@ -67,19 +62,15 @@
          */
         public function getConfigValeur($clefConfig)
         {
-            if (!is_string($clefConfig))
-            {
+            if (!is_string($clefConfig)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
             }
 
             if ($valeur =
                 rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->_applicationConfiguration)
-            )
-            {
+            ) {
                 return $valeur;
-            }
-            else
-            {
+            } else {
                 trigger_error_app(E_USER_NOTICE, 30002, $clefConfig);
 
                 return null;

@@ -22,8 +22,7 @@
          */
         public function setVarServeur($varServeur)
         {
-            if (!is_array($varServeur))
-            {
+            if (!is_array($varServeur)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $varServeur);
             }
 
@@ -78,8 +77,7 @@
          */
         public function setServeurVariable($serverVar)
         {
-            if (!is_array($serverVar))
-            {
+            if (!is_array($serverVar)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
             }
 
@@ -91,8 +89,7 @@
                     'REQUEST_TIME',
                     'REQUEST_URI'),
                 $serverVar)
-            )
-            {
+            ) {
                 throw new MainException(20300, 500);
             }
 
@@ -113,8 +110,7 @@
          */
         public function setServeurDonnees($methode)
         {
-            switch (strtoupper($methode))
-            {
+            switch (strtoupper($methode)) {
                 case 'GET':
                     parse_str($this->_serveurVariable['QUERY_STRING'], $this->_serveurDonnees);
                     break;

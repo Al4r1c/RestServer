@@ -1,13 +1,11 @@
 <?php
     error_reporting(E_ALL ^ E_NOTICE);
 
-    if (!defined('BASE_PATH'))
-    {
+    if (!defined('BASE_PATH')) {
         define('BASE_PATH', realpath(__DIR__ . '/../'));
     }
 
-    if (!defined('SERVER_NAMESPACE'))
-    {
+    if (!defined('SERVER_NAMESPACE')) {
         define('SERVER_NAMESPACE', 'Serveur');
     }
 

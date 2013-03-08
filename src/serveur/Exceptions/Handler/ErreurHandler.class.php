@@ -16,8 +16,7 @@
          */
         private function ecrireErreur($erreur)
         {
-            foreach ($this->_observeursLoggerErreurs as $unObserveur)
-            {
+            foreach ($this->_observeursLoggerErreurs as $unObserveur) {
                 $unObserveur->ecrireErreurLog($erreur);
             }
         }
@@ -48,8 +47,7 @@
          */
         public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments)
         {
-            switch ($erreurNumber)
-            {
+            switch ($erreurNumber) {
                 case E_USER_ERROR:
                     $this->ecrireErreur(new Error($codeErreur, $arguments));
                     break;
@@ -84,13 +82,11 @@
          */
         public function errorHandler($codeErreur, $messageErreur, $fichierErreur, $ligneErreur)
         {
-            if (!(error_reporting() & $codeErreur))
-            {
+            if (!(error_reporting() & $codeErreur)) {
                 return null;
             }
 
-            switch ($codeErreur)
-            {
+            switch ($codeErreur) {
                 case E_COMPILE_ERROR:
                 case E_ERROR:
                 case E_CORE_ERROR:

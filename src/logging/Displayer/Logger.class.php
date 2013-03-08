@@ -21,8 +21,7 @@
          */
         public function setFichierLogAcces($fichierLogAcces)
         {
-            if (!$fichierLogAcces instanceof \Serveur\Lib\Fichier)
-            {
+            if (!$fichierLogAcces instanceof \Serveur\Lib\Fichier) {
                 throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
             }
 
@@ -35,8 +34,7 @@
          */
         public function setFichierLogErreur($fichierLogErreur)
         {
-            if (!$fichierLogErreur instanceof \Serveur\Lib\Fichier)
-            {
+            if (!$fichierLogErreur instanceof \Serveur\Lib\Fichier) {
                 throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
             }
 
@@ -51,19 +49,16 @@
          */
         protected function ecrireMessageAcces($restRequete, $restReponse)
         {
-            if (!$restRequete instanceof \Serveur\Rest\RestRequete)
-            {
+            if (!$restRequete instanceof \Serveur\Rest\RestRequete) {
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restRequete)));
             }
 
-            if (!$restReponse instanceof \Serveur\Rest\RestReponse)
-            {
+            if (!$restReponse instanceof \Serveur\Rest\RestReponse) {
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restReponse)));
             }
 
             if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()
-            )
-            {
+            ) {
                 throw new \Exception('Invalid log access file or file not found.');
             }
 
@@ -76,8 +71,7 @@
                         implode('/', $restRequete->getUriVariables()) . "") . "\n");
             $this->_fichierLogAcces->ecrireDansFichier(
                 "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\n");
-            foreach ($restRequete->getParametres() as $clefParam => $unParam)
-            {
+            foreach ($restRequete->getParametres() as $clefParam => $unParam) {
                 $this->_fichierLogAcces->ecrireDansFichier("\t\t" . $clefParam . " => " . $unParam . "\n");
             }
             $this->_fichierLogAcces->ecrireDansFichier("\t" .
@@ -93,23 +87,17 @@
          */
         protected function ecrireMessageErreur($uneErreur)
         {
-            if ($uneErreur instanceof \Serveur\Exceptions\Types\Error)
-            {
+            if ($uneErreur instanceof \Serveur\Exceptions\Types\Error) {
                 $message = '{trad.fatalerror}: ' . $uneErreur->getMessage();
-            }
-            elseif ($uneErreur instanceof \Serveur\Exceptions\Types\Notice)
-            {
+            } elseif ($uneErreur instanceof \Serveur\Exceptions\Types\Notice) {
                 $message = '{trad.notice}: ' . $uneErreur->getMessage();
-            }
-            else
-            {
+            } else {
                 throw new \InvalidArgumentException(sprintf('Invalid error type %s.', get_class($uneErreur)));
             }
 
             if (!($this->_fichierLogErreur instanceof \Serveur\Lib\Fichier) ||
                 !$this->_fichierLogErreur->fichierExiste()
-            )
-            {
+            ) {
                 throw new \Exception('Invalid log error file or file not found.');
             }
 

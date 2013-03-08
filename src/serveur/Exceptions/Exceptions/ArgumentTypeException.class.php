@@ -17,12 +17,9 @@
          */
         public function __construct($code, $codeStatus, $methode, $attendu, $typeVariable)
         {
-            if (!is_object($typeVariable))
-            {
+            if (!is_object($typeVariable)) {
                 $this->setObtenu(gettype($typeVariable));
-            }
-            else
-            {
+            } else {
                 $this->setObtenu($this->_obtenu = get_class($typeVariable));
             }
 

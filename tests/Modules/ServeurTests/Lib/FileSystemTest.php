@@ -27,8 +27,7 @@
 
         public function testSetOs()
         {
-            foreach (array('Windows', 'Mac', 'Linux', 'FreeBSD') as $unOsValide)
-            {
+            foreach (array('Windows', 'Mac', 'Linux', 'FreeBSD') as $unOsValide) {
                 $this->fileSystem->setOs($unOsValide);
 
                 $this->assertAttributeEquals($unOsValide, '_os', $this->fileSystem);

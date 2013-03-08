@@ -29,8 +29,7 @@
          */
         public function setLangueDefaut($langueDefaut)
         {
-            if (isNull($langueDefaut))
-            {
+            if (isNull($langueDefaut)) {
                 throw new \Exception('Default language is not set properly.');
             }
 
@@ -43,8 +42,7 @@
          */
         public function setLangueDispo(array $languesDispo)
         {
-            if (isNull($languesDispo))
-            {
+            if (isNull($languesDispo)) {
                 throw new \Exception('No available language set.');
             }
 
@@ -57,12 +55,9 @@
          * */
         public function getFichierTraduction()
         {
-            if (array_key_exists(strtoupper($this->_langueDefaut), $this->_languesDisponibles))
-            {
+            if (array_key_exists(strtoupper($this->_langueDefaut), $this->_languesDisponibles)) {
                 $nomFichierLangueDefaut = $this->_languesDisponibles[strtoupper($this->_langueDefaut)];
-            }
-            else
-            {
+            } else {
                 $nomFichierLangueDefaut = reset($this->_languesDisponibles);
             }
 
@@ -70,18 +65,12 @@
 
             if ($fichierTraductionParDefaut->fichierExiste() &&
                 $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValide()
-            )
-            {
+            ) {
                 return $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut);
-            }
-            else
-            {
-                if (($langueChoisiAleatoirement = $this->getUneTraductionAleatoire()) !== false)
-                {
+            } else {
+                if (($langueChoisiAleatoirement = $this->getUneTraductionAleatoire()) !== false) {
                     return $this->recupererXmlParserDepuisFichier(reset($langueChoisiAleatoirement));
-                }
-                else
-                {
+                } else {
                     throw new \Exception('No valid translation file set or found.');
                 }
             }
@@ -103,14 +92,12 @@
          */
         private function getUneTraductionAleatoire()
         {
-            foreach ($this->_languesDisponibles as $uneLangueDispo => $classeLangue)
-            {
+            foreach ($this->_languesDisponibles as $uneLangueDispo => $classeLangue) {
                 $traductionDisponible = $this->getFichier($classeLangue);
 
                 if ($traductionDisponible->fichierExiste() &&
                     $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValide()
-                )
-                {
+                ) {
                     return array($uneLangueDispo => $traductionDisponible);
                 }
             }

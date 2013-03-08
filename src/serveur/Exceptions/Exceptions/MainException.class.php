@@ -35,13 +35,11 @@
          */
         public function setStatus($codeHttp)
         {
-            if (!is_int($codeHttp))
-            {
+            if (!is_int($codeHttp)) {
                 throw new \Exception('Invalid argument type, int required');
             }
 
-            if (Tools::isValideHttpCode($codeHttp))
-            {
+            if (Tools::isValideHttpCode($codeHttp)) {
                 $this->_codeRetourHttp = $codeHttp;
             }
         }

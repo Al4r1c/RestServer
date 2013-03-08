@@ -48,12 +48,9 @@
          */
         public function getAttribut($attribut)
         {
-            if (array_key_exists(strtolower($attribut), $this->_attributs))
-            {
+            if (array_key_exists(strtolower($attribut), $this->_attributs)) {
                 return $this->_attributs[strtolower($attribut)];
-            }
-            else
-            {
+            } else {
                 return null;
             }
         }
@@ -63,8 +60,7 @@
          */
         public function getChildren()
         {
-            if ($this->_children === false)
-            {
+            if ($this->_children === false) {
                 return array();
             }
 
@@ -85,8 +81,7 @@
          */
         public function setNom($nom)
         {
-            if (!is_string($nom))
-            {
+            if (!is_string($nom)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $nom);
             }
 
@@ -99,8 +94,7 @@
          */
         public function setAttributs($attributs)
         {
-            if (!is_array($attributs))
-            {
+            if (!is_array($attributs)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $attributs);
             }
 
@@ -113,17 +107,13 @@
          */
         public function setChildren($children)
         {
-            if (!is_array($children) && !is_bool($children))
-            {
+            if (!is_array($children) && !is_bool($children)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array|bool', $children);
             }
 
-            if (is_array($children))
-            {
-                foreach ($children as $unFils)
-                {
-                    if (!$unFils instanceof XMLElement)
-                    {
+            if (is_array($children)) {
+                foreach ($children as $unFils) {
+                    if (!$unFils instanceof XMLElement) {
                         throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\XMLParser\XMLElement', $unFils);
                     }
                 }
@@ -138,8 +128,7 @@
          */
         public function setValeur($valeur)
         {
-            if (!is_string($valeur))
-            {
+            if (!is_string($valeur)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
             }
 
@@ -154,8 +143,7 @@
             $this->setNom($donnees['element']);
             $this->setAttributs($donnees['attr']);
             $this->setChildren($donnees['children']);
-            if (isset($donnees['data']))
-            {
+            if (isset($donnees['data'])) {
                 $this->setValeur($donnees['data']);
             }
         }
