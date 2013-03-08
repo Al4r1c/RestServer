@@ -61,6 +61,7 @@
 		<message code="30000">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
 		<message code="30001">La clef %s est obligatoire dans la configuration mais n'existe pas.</message>
 		<message code="30002">La clef %s n'existe pas dans la configuration.</message>
+		<message code="30100">Le fichier du mapping des routes est mal formé, une ou plusieurs clef ne commencent pas avec un slash.</message>
 	</errorMessage>
 
 </language>

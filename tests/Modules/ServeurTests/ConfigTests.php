@@ -18,6 +18,7 @@
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
             $suite->addTestSuite('Modules\ServeurTests\Config\ConfigTest');
+            $suite->addTestSuite('Modules\ServeurTests\Route\RouteManagerTest');
 
             return $suite;
         }

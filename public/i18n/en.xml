@@ -61,6 +61,7 @@
 		<message code="30000">Framework's configuration file not found. (Should be located: %s)</message>
 		<message code="30001">Key %s must be present but does not exist in the configuration.</message>
 		<message code="30002">Key %s does not exist in the configuration.</message>
+		<message code="30100">Route mapping file is malformed, one or more key does not start with slash.</message>
 	</errorMessage>
 
 </language>
