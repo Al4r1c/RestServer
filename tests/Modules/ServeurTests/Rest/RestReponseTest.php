@@ -164,7 +164,8 @@
             $config = $this->createMock('Config',
                 new MockArg('getConfigValeur', 'JSON', array('config.default_render')),
                 new MockArg('getConfigValeur', array('JSON' => 'json', 'HTML' => 'html'), array('render')),
-                new MockArg('getConfigValeur', 'utf-8', array('config.charset')));
+                new MockArg('getConfigValeur', 'utf-8', array('config.charset'))
+            );
 
             $this->restReponse->setConfig($config);
             $this->assertEquals('utf-8', $this->restReponse->getCharset());
@@ -184,15 +185,18 @@
         public function testRestRenderAbstract()
         {
             $abstractrender = $this->createMock('AbstractRenderer',
-                new MockArg('genererRendu', '{"getKey":"getVar"}', array(array('getKey' => 'getVar'))));
+                new MockArg('genererRendu', '{"getKey":"getVar"}', array(array('getKey' => 'getVar')))
+            );
 
             /** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
             $restReponse = $this->createMock('RestReponse',
-                new MockArg('getRenderClass', $abstractrender, array('Json')));
+                new MockArg('getRenderClass', $abstractrender, array('Json'))
+            );
 
             $headerManager = $this->createMock('HeaderManager',
                 new MockArg('ajouterHeader'),
-                new MockArg('envoyerHeaders'));
+                new MockArg('envoyerHeaders')
+            );
 
             $restReponse->setHeaderManager($headerManager);
             $restReponse->setContenu(array('getKey' => 'getVar'));
@@ -205,15 +209,18 @@
         public function testRestRenderNonTrouveUtiliseAutre()
         {
             $abstractrender = $this->createMock('AbstractRenderer',
-                new MockArg('genererRendu', '{"param1":"var1"}', array(array('param1' => 'var1'))));
+                new MockArg('genererRendu', '{"param1":"var1"}', array(array('param1' => 'var1')))
+            );
 
             /** @var $restReponse RestReponse|\PHPUnit_Framework_MockObject_MockObject */
             $restReponse = $this->createMock('RestReponse',
-                new MockArg('getRenderClass', $abstractrender, array('Json')));
+                new MockArg('getRenderClass', $abstractrender, array('Json'))
+            );
 
             $headerManager = $this->createMock('HeaderManager',
                 new MockArg('ajouterHeader'),
-                new MockArg('envoyerHeaders'));
+                new MockArg('envoyerHeaders')
+            );
 
             $restReponse->setHeaderManager($headerManager);
             $restReponse->setContenu(array('param1' => 'var1'));

@@ -62,7 +62,8 @@
             }
 
             $this->setFormats($configuration->getConfigValeur('config.default_render'),
-                $configuration->getConfigValeur('render'));
+                $configuration->getConfigValeur('render')
+            );
             $this->setCharset($configuration->getConfigValeur('config.charset'));
         }
 
@@ -208,7 +209,8 @@
             http_response_code($this->_status);
             $this->_headerManager->ajouterHeader('Content-type',
                 Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' .
-                    strtolower($this->_charset));
+                    strtolower($this->_charset)
+            );
             $this->_headerManager->envoyerHeaders();
         }
 
@@ -263,8 +265,10 @@
 
             /* @var $view \Serveur\Renderers\AbstractRenderer */
             $view = $this->getRenderClass($this->trouverFormatRetourCorrect($formatsDemandes,
-                $this->_formatsAcceptes,
-                $this->_formatRetour));
+                    $this->_formatsAcceptes,
+                    $this->_formatRetour
+                )
+            );
 
             $this->envoyerHeaders();
 

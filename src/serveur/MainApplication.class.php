@@ -73,7 +73,8 @@
             $infoHttpCode = Constante::chargerConfig('httpcode')[$statusHttp];
 
             $this->_conteneur->getRestManager()->setVariablesReponse($statusHttp,
-                array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1]));
+                array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1])
+            );
 
             return $this->_conteneur->getRestManager()->fabriquerReponse();
         }
@@ -82,7 +83,8 @@
         {
             foreach ($this->_observeurs as $unObserveur) {
                 $unObserveur->ecrireAcessLog($this->_conteneur->getRestManager()->getRestRequest(),
-                    $this->_conteneur->getRestManager()->getRestResponse());
+                    $this->_conteneur->getRestManager()->getRestResponse()
+                );
             }
         }
     }

@@ -93,7 +93,8 @@
             $this->assertEquals(
                 BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR .
                     'fichier' . DIRECTORY_SEPARATOR,
-                $this->fichier->getRepertoireFichier());
+                $this->fichier->getRepertoireFichier()
+            );
         }
 
         public function testCheminDaccesAbsolue()
@@ -103,7 +104,8 @@
             $this->assertEquals(
                 BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'to' . DIRECTORY_SEPARATOR .
                     'fichier' . DIRECTORY_SEPARATOR,
-                $this->fichier->getRepertoireFichier());
+                $this->fichier->getRepertoireFichier()
+            );
         }
 
         public function testGetCheminComplet()
@@ -112,7 +114,8 @@
             $this->fichier->setNomFichier('comeatme.log');
 
             $this->assertEquals(BASE_PATH . DIRECTORY_SEPARATOR . 'path' . DIRECTORY_SEPARATOR . 'comeatme.log',
-                $this->fichier->getCheminCompletFichier());
+                $this->fichier->getCheminCompletFichier()
+            );
         }
 
         public function testSetFichierConfig()
@@ -122,7 +125,8 @@
             $this->assertEquals(
                 BASE_PATH . DIRECTORY_SEPARATOR . 'chemin' . DIRECTORY_SEPARATOR . 'dacces' . DIRECTORY_SEPARATOR .
                     'monFichier.txt',
-                $this->fichier->getCheminCompletFichier());
+                $this->fichier->getCheminCompletFichier()
+            );
         }
 
         public function testVerifierExistence()
@@ -130,7 +134,8 @@
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('c:\\wwww\\')),
-                new MockArg('fichierExiste', true, array('c:\\wwww\\chemin\\monFichier.png')));
+                new MockArg('fichierExiste', true, array('c:\\wwww\\chemin\\monFichier.png'))
+            );
 
             $fileSystem->initialiser('Windows', 'c:\\wwww\\');
 
@@ -146,7 +151,8 @@
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('c:\\wwww\\')),
-                new MockArg('fichierExiste', false, array('c:\\wwww\\chemin\\monFichier.png')));
+                new MockArg('fichierExiste', false, array('c:\\wwww\\chemin\\monFichier.png'))
+            );
 
             $fileSystem->initialiser('Windows', 'c:\\wwww\\');
 
@@ -163,7 +169,8 @@
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('/data/www/')),
                 new MockArg('fichierExiste', true, array('/data/www/chemin/variables.php')),
-                new MockArg('chargerFichier', array('VAR1' => 'PARAM1'), array('/data/www/chemin/variables.php')));
+                new MockArg('chargerFichier', array('VAR1' => 'PARAM1'), array('/data/www/chemin/variables.php'))
+            );
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -183,7 +190,8 @@
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('/data/www/')),
-                new MockArg('fichierExiste', false, array('/data/www/chemin/monFichierFAke.php')));
+                new MockArg('fichierExiste', false, array('/data/www/chemin/monFichierFAke.php'))
+            );
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -199,7 +207,8 @@
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true),
-                new MockArg('creerFichier', true, array('/data/www/chemin/party.png')));
+                new MockArg('creerFichier', true, array('/data/www/chemin/party.png'))
+            );
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -215,7 +224,8 @@
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true),
-                new MockArg('fichierExiste', true, array('/data/www/chemin/party.png')));
+                new MockArg('fichierExiste', true, array('/data/www/chemin/party.png'))
+            );
 
             $fileSystem->initialiser('Linux', '/data/www/');
 
@@ -236,7 +246,8 @@
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true, array('c:\\www\\')),
-                new MockArg('dossierExiste', false, array('c:\\www\\path\\')));
+                new MockArg('dossierExiste', false, array('c:\\www\\path\\'))
+            );
 
             $fileSystem->initialiser('Windows', 'c:\\www\\');
 
@@ -256,7 +267,8 @@
             /** @var $fileSystem \Serveur\Lib\FileSystem */
             $fileSystem = $this->createMock('FileSystem',
                 new MockArg('dossierExiste', true),
-                new MockArg('creerFichier', null, array('c:\\www\\path\\heya.log')));
+                new MockArg('creerFichier', null, array('c:\\www\\path\\heya.log'))
+            );
 
             $fileSystem->initialiser('Windows', 'c:\\www\\');
 

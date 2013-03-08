@@ -88,7 +88,8 @@
                     'REQUEST_METHOD',
                     'REQUEST_TIME',
                     'REQUEST_URI'),
-                $serverVar)
+                $serverVar
+            )
             ) {
                 throw new MainException(20300, 500);
             }

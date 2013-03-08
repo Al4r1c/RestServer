@@ -109,7 +109,8 @@
             $this->assertAttributeCount(2, '_serveurDonnees', $this->server);
             $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'),
                 '_serveurDonnees',
-                $this->server);
+                $this->server
+            );
         }
 
         public function testSetServeurDonneesPutPostDelete()
@@ -121,7 +122,8 @@
 
             $this->assertCount(2, $this->server->getServeurDonnees());
             $this->assertEquals(array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'),
-                $this->server->getServeurDonnees());
+                $this->server->getServeurDonnees()
+            );
         }
 
         /**
@@ -142,7 +144,8 @@
 
             $this->assertAttributeEquals(array('param1' => 'var1', 'param2' => 'var2'),
                 '_serveurDonnees',
-                $this->server);
+                $this->server
+            );
         }
 
         public function testGetServeurMethode()
@@ -162,7 +165,8 @@
         {
             $this->server->setVarServeur(self::$donneesServer);
             $this->assertEquals('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                $this->server->getServeurHttpAccept());
+                $this->server->getServeurHttpAccept()
+            );
         }
 
         public function testGetRemoteIp()

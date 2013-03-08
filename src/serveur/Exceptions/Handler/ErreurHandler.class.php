@@ -95,7 +95,8 @@
                     $erreur = new Error($codeErreur);
                     $erreur->setMessage(
                         '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                            $messageErreur);
+                            $messageErreur
+                    );
                     $this->ecrireErreur($erreur);
                     throw new \Exception();
                     break;
@@ -113,7 +114,8 @@
                     $erreur = new Notice($codeErreur);
                     $erreur->setMessage(
                         '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                            $messageErreur);
+                            $messageErreur
+                    );
                     $this->ecrireErreur($erreur);
                     break;
 

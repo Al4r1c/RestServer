@@ -10,10 +10,12 @@
         public function testSetHandlers()
         {
             $errorManager = $this->createMock('ErrorManager',
-                new MockArg('setHandlers'));
+                new MockArg('setHandlers')
+            );
 
             $conteneur = $this->createMock('Conteneur',
-                new MockArg('getErrorManager', $errorManager));
+                new MockArg('getErrorManager', $errorManager)
+            );
 
             $mainApp = new MainApplication($conteneur);
             $mainApp->setHandlers();
@@ -24,10 +26,12 @@
             $abstractDisplayer = $this->createMock('AbstractDisplayer');
 
             $errorManager = $this->createMock('ErrorManager',
-                new MockArg('ajouterObserveur'));
+                new MockArg('ajouterObserveur')
+            );
 
             $conteneur = $this->createMock('Conteneur',
-                new MockArg('getErrorManager', $errorManager));
+                new MockArg('getErrorManager', $errorManager)
+            );
 
             $mainApp = new MainApplication($conteneur);
             $mainApp->ajouterObserveur($abstractDisplayer);
@@ -40,10 +44,12 @@
             $restManager = $this->createMock('RestManager',
                 new MockArg('getParametres', array('variable1' => 'valeur1')),
                 new MockArg('setVariablesReponse', null, array(200, array('variable1' => 'valeur1'))),
-                new MockArg('fabriquerReponse', 'variable1 => valeur1'));
+                new MockArg('fabriquerReponse', 'variable1 => valeur1')
+            );
 
             $conteneur = $this->createMock('Conteneur',
-                new MockArg('getRestManager', $restManager));
+                new MockArg('getRestManager', $restManager)
+            );
 
             $mainApp = new MainApplication($conteneur);
             $this->assertEquals('variable1 => valeur1', $mainApp->run());
@@ -54,10 +60,12 @@
             $restManager = $this->createMock('RestManager',
                 new MockArg('getParametres', new \Exception()),
                 new MockArg('setVariablesReponse', null, array(500)),
-                new MockArg('fabriquerReponse', 'Erreur => Une erreur est survenue'));
+                new MockArg('fabriquerReponse', 'Erreur => Une erreur est survenue')
+            );
 
             $conteneur = $this->createMock('Conteneur',
-                new MockArg('getRestManager', $restManager));
+                new MockArg('getRestManager', $restManager)
+            );
 
             $mainApp = new MainApplication($conteneur);
             $this->assertEquals('Erreur => Une erreur est survenue', $mainApp->run());
@@ -73,10 +81,12 @@
                     array('Code' => 505,
                         'Status' => $infoHttpCode[0],
                         'Message' => $infoHttpCode[1]))),
-                new MockArg('fabriquerReponse', 'Erreur => Une erreur est survenue'));
+                new MockArg('fabriquerReponse', 'Erreur => Une erreur est survenue')
+            );
 
             $conteneur = $this->createMock('Conteneur',
-                new MockArg('getRestManager', $restManager));
+                new MockArg('getRestManager', $restManager)
+            );
 
             $mainApp = new MainApplication($conteneur);
             $this->assertEquals('Erreur => Une erreur est survenue', $mainApp->run());
@@ -92,17 +102,21 @@
                 new MockArg('setVariablesReponse', null, array(200, array('variable1' => 'valeur1'))),
                 new MockArg('fabriquerReponse', 'variable1 => valeur1'),
                 new MockArg('getRestRequest', $restRequete),
-                new MockArg('getRestResponse', $restReponse));
+                new MockArg('getRestResponse', $restReponse)
+            );
 
             $abstractDisplayer = $this->createMock('AbstractDisplayer',
-                new MockArg('ecrireMessageAcces', null, array($restRequete, $restReponse)));
+                new MockArg('ecrireMessageAcces', null, array($restRequete, $restReponse))
+            );
 
             $errorManager = $this->createMock('ErrorManager',
-                new MockArg('ajouterObserveur'));
+                new MockArg('ajouterObserveur')
+            );
 
             $conteneur = $this->createMock('Conteneur',
                 new MockArg('getRestManager', $restManager),
-                new MockArg('getErrorManager', $errorManager));
+                new MockArg('getErrorManager', $errorManager)
+            );
 
             $mainApp = new MainApplication($conteneur);
             $mainApp->ajouterObserveur($abstractDisplayer);
