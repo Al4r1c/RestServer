@@ -147,7 +147,7 @@
         public function chargerFichier()
         {
             if (!$this->fichierExiste()) {
-                throw new MainException(10203, 50, $this->getCheminCompletFichier());
+                throw new MainException(10203, 500, $this->getCheminCompletFichier());
             }
 
             return $this->_fileSystemInstance->chargerFichier($this->getCheminCompletFichier());
@@ -160,7 +160,7 @@
         public function ecrireDansFichier($nouvelleLigne)
         {
             if (!$this->fichierExiste()) {
-                throw new MainException(10203, 50, $this->getCheminCompletFichier());
+                throw new MainException(10203, 500, $this->getCheminCompletFichier());
             }
 
             file_put_contents($this->getCheminCompletFichier(), $nouvelleLigne, FILE_APPEND);

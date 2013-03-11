@@ -183,7 +183,7 @@
             }
 
             if (!$this->fichierExiste($cheminVersFichier)) {
-                throw new MainException(10105, 50, $cheminVersFichier);
+                throw new MainException(10105, 500, $cheminVersFichier);
             }
 
             /** @var $chargeur \Serveur\Lib\FichierChargement\AbstractChargeurFichier */
