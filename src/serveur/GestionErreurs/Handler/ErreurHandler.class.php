@@ -12,7 +12,7 @@
         private $_observeursLoggerErreurs;
 
         /**
-         * @param \Serveur\Exceptions\Types\AbstractTypeErreur $erreur
+         * @param \Serveur\GestionErreurs\Types\AbstractTypeErreur $erreur
          */
         private function ecrireErreur($erreur)
         {
