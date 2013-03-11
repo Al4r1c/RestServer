@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests\Rest;
+    namespace Modules\ServeurTests\Requete;
 
     use Modules\TestCase;
     use Serveur\Requete\Server\Server;

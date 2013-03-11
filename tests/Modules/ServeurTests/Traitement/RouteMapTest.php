@@ -1,11 +1,11 @@
 <?php
-    namespace Modules\ServeurTests\Config;
+    namespace Modules\ServeurTests\Traitement;
 
     use Modules\TestCase;
     use Modules\MockArg;
     use Serveur\Traitement\Route\RouteMap;
 
-    class RouteManagerTest extends TestCase
+    class RouteMapTest extends TestCase
     {
         /** @var RouteMap */
         private $_route;

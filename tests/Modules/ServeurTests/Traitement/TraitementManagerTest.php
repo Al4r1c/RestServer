@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests\Config;
+    namespace Modules\ServeurTests\Traitement;
 
     use Modules\TestCase;
     use Modules\MockArg;
@@ -15,7 +15,8 @@
             $this->_traitementManager = new TraitementManager();
         }
 
-        public function testSetRoute() {
+        public function testSetRoute()
+        {
             $routeMap = $this->createMock('RouteMap');
 
             $this->_traitementManager->setRouteMap($routeMap);

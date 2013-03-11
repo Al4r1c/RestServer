@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests\Renderers;
+    namespace Modules\ServeurTests\Reponse;
 
     use Modules\TestCase;
 

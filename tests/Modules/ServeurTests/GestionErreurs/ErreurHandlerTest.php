@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests\Exceptions;
+    namespace Modules\ServeurTests\GestionErreurs;
 
     use Modules\TestCase;
     use Modules\MockArg;

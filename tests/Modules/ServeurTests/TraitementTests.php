@@ -17,8 +17,8 @@
         {
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-            $suite->addTestSuite('Modules\ServeurTests\Traitement\TraitementManager');
-            $suite->addTestSuite('Modules\ServeurTests\Traitement\Route');
+            $suite->addTestSuite('Modules\ServeurTests\Traitement\TraitementManagerTest');
+            $suite->addTestSuite('Modules\ServeurTests\Traitement\RouteMapTest');
 
             return $suite;
         }

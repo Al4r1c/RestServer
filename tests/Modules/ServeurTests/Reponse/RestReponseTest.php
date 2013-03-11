@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests\Rest;
+    namespace Modules\ServeurTests\Reponse;
 
     use Modules\TestCase;
     use Modules\MockArg;
