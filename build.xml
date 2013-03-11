@@ -93,9 +93,9 @@
 	</target>
 
 	<target name="phpcb">
-		<exec logoutput="true"
-		      command="phpcb --log '${buildRepertory}/logs' --source '${sourceRepertory}' --output '${buildRepertory}/code-browser'"
-		      escape="false"/>
+		<exec dir="${sourceRepertory}" executable="phpcb" failonerror="false">
+			<arg line="--log ${logRepertory} --source ${sourceRepertory} --output ${buildRepertory}/code-browser" />
+		</exec>
 	</target>
 
 	<target name="build" depends="clean, prepare, outils_qualites, end"
