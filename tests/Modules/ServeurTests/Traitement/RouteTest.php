@@ -3,16 +3,16 @@
 
     use Modules\TestCase;
     use Modules\MockArg;
-    use Serveur\Traitement\Route\Route;
+    use Serveur\Traitement\Route\RouteMap;
 
     class RouteManagerTest extends TestCase
     {
-        /** @var Route */
+        /** @var RouteMap */
         private $_route;
 
         public function setUp()
         {
-            $this->_route = new Route();
+            $this->_route = new RouteMap();
         }
 
         public function testSetRoute()

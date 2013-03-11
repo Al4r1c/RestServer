@@ -4,7 +4,7 @@
     use Serveur\GestionErreurs\Exceptions\MainException;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
-    class Route
+    class RouteMap
     {
         /**
          * @var array

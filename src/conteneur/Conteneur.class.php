@@ -48,7 +48,7 @@
                 $fichier = \Serveur\Utils\FileManager::getFichier();
                 $fichier->setFichierParametres('routemap.yaml', '/config');
 
-                $routeManager = new \Serveur\Traitement\Route\Route();
+                $routeManager = new \Serveur\Traitement\Route\RouteMap();
                 $routeManager->chargerFichierMapping($fichier);
 
                 return $routeManager;

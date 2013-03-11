@@ -217,7 +217,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Route\Route
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Route\RouteMap
          */
         private function getMockRouteManager($methodes = array())
         {
