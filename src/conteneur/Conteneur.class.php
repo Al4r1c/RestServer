@@ -41,10 +41,13 @@
 
 
             $conteneur['TraitementManager'] = function ($c) {
+                $traitementManager = new \Serveur\Traitement\TraitementManager();
+                $traitementManager->setRouteMap($c['RouteMap']);
 
+                return $traitementManager;
             };
 
-            $conteneur['Route'] = function () {
+            $conteneur['RouteMap'] = function () {
                 $fichier = \Serveur\Utils\FileManager::getFichier();
                 $fichier->setFichierParametres('routemap.yaml', '/config');
 
