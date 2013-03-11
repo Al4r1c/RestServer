@@ -93,8 +93,8 @@
 	</target>
 
 	<target name="phpcb">
-		<exec dir="${sourceRepertory}" executable="phpcb" failonerror="false">
-			<arg line="--log ${logRepertory} --source ${sourceRepertory} --output ${buildRepertory}/code-browser" />
+		<exec dir="${sourceRepertory}" executable="phpcb">
+			<arg line="--source '${sourceRepertory}' --output '${buildRepertory}/code-browser' --log '${logRepertory}'" />
 		</exec>
 	</target>
 
