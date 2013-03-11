@@ -5,7 +5,7 @@
     use Modules\MockArg;
     use Serveur\Reponse\ReponseManager;
 
-    class RestReponseTest extends TestCase
+    class ReponseManagerTest extends TestCase
     {
         /**
          * @var ReponseManager $restRequete

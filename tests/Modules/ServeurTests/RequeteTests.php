@@ -18,7 +18,7 @@
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
             $suite->addTestSuite('Modules\ServeurTests\Requete\ServerTest');
-            $suite->addTestSuite('Modules\ServeurTests\Requete\RestRequeteTest');
+            $suite->addTestSuite('Modules\ServeurTests\Requete\RequeteManagerTest');
 
             return $suite;
         }

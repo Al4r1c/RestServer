@@ -20,7 +20,7 @@
             $suite->addTestSuite('Modules\ServeurTests\Reponse\ConfigTest');
             $suite->addTestSuite('Modules\ServeurTests\Reponse\RenderersTest');
             $suite->addTestSuite('Modules\ServeurTests\Reponse\HeaderManagerTest');
-            $suite->addTestSuite('Modules\ServeurTests\Reponse\RestReponseTest');
+            $suite->addTestSuite('Modules\ServeurTests\Reponse\ReponseManagerTest');
 
             return $suite;
         }

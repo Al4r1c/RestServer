@@ -5,7 +5,7 @@
     use Modules\MockArg;
     use Serveur\Requete\RequeteManager;
 
-    class RestRequeteTest extends TestCase
+    class RequeteManagerTest extends TestCase
     {
 
         /**
