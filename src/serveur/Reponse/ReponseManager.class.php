@@ -31,7 +31,7 @@
         /**
          * @var string
          */
-        private $contenu;
+        private $_contenu;
 
         /**
          * @return \string[]
@@ -70,7 +70,7 @@
          */
         public function getContenu()
         {
-            return $this->contenu;
+            return $this->_contenu;
         }
 
         /**
@@ -80,7 +80,8 @@
         public function setHeader($headerManager)
         {
             if (!$headerManager instanceof \Serveur\Reponse\Header\Header) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager', $headerManager);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager',
+                    $headerManager);
             }
 
             $this->_header = $headerManager;
@@ -93,7 +94,8 @@
         public function setConfig($configuration)
         {
             if (!$configuration instanceof \Serveur\Reponse\Config\Config) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Config\Config', $configuration);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Config\Config',
+                    $configuration);
             }
 
             $this->setFormats(
@@ -241,6 +243,6 @@
 
             $this->envoyerHeaders($objetReponse->getStatusHttp());
 
-            $this->contenu = $view->render($objetReponse->getDonneesReponse());
+            $this->_contenu = $view->render($objetReponse->getDonneesReponse());
         }
     }
