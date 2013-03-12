@@ -20,7 +20,7 @@
 
         public function __construct($statusHttp = 200, $donneesReponse = array())
         {
-            $this->setStatusHttp(200);
+            $this->setStatusHttp($statusHttp);
             $this->setDonneesReponse($donneesReponse);
         }
 
