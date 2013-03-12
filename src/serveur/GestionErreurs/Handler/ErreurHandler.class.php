@@ -42,11 +42,13 @@
         /**
          * @param int $erreurNumber
          * @param int $codeErreur
-         * @param array $arguments
          * @throws \InvalidArgumentException
+         * @internal param array $arguments
          */
-        public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments)
+        public function global_ajouterErreur($erreurNumber, $codeErreur)
         {
+            $arguments = array_slice(func_get_args(), -2);
+
             switch ($erreurNumber) {
                 case E_USER_ERROR:
                     $this->ecrireErreur(new Error($codeErreur, $arguments));

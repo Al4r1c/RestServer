@@ -1,5 +1,5 @@
 <?php
-    function  trigger_error_app($erreurNumber, $codeErreur, $arguments = array()) {
+    function  trigger_error_app($erreurNumber, $codeErreur) {
         call_user_func_array($GLOBALS['global_function_ajouterErreur'], func_get_args());
     }
 
