@@ -1,8 +1,8 @@
 <?php
-    namespace Modules\LoggingTests\Displayer;
+    namespace Tests\LoggingTests\Displayer;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
     use Serveur\Lib\Fichier;

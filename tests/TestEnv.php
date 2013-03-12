@@ -11,7 +11,7 @@
 
     include_once(BASE_PATH . '/functions/functions.php');
 
-    include_once(BASE_PATH . '/packages/autoload.php');
+    include_once(BASE_PATH . '/libraries/autoload.php');
 
     include_once(BASE_PATH . '/src/classloader/ClassLoader.class.php');
 
@@ -24,8 +24,8 @@
 
 
     $classLoader = new \ClassLoader\ClassLoader();
-    $classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src');
-    $classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src');
-    $classLoader->ajouterNamespace('Logging', BASE_PATH . '/src');
-    $classLoader->ajouterNamespace('Modules', realpath(__DIR__) . DIRECTORY_SEPARATOR, '.php');
+    $classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src/serveur');
+    $classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src/conteneur');
+    $classLoader->ajouterNamespace('Logging', BASE_PATH . '/src/logging');
+    $classLoader->ajouterNamespace('Tests', realpath(__DIR__ . '/Modules') . DIRECTORY_SEPARATOR, '.php');
     $classLoader->register();

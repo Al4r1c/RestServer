@@ -92,7 +92,7 @@
                 $serverVar
             )
             ) {
-                throw new MainException(20300, 500);
+                throw new MainException(20100, 500);
             }
 
             $this->_serveurVariable = $serverVar;
@@ -122,7 +122,7 @@
                     parse_str($this->_serveurVariable['PHP_INPUT'], $this->_serveurDonnees);
                     break;
                 default:
-                    throw new MainException(20301, 405, $methode);
+                    throw new MainException(20101, 405, $methode);
             }
         }
     }

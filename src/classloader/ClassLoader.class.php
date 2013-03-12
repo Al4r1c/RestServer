@@ -58,11 +58,13 @@
         {
             foreach ($this->_namespaces as $unNamespace => $configNamespace) {
                 if (!isNull($unNamespace) && substr_count(strtolower($className), $unNamespace) > 0 && file_exists(
-                    $configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension']
+                    $fileName =
+                        $configNamespace['path'] . DIRECTORY_SEPARATOR .
+                        substr($className, strpos($unNamespace, $className) + strlen($unNamespace) + 1) .
+                        $configNamespace['extension']
                 )
                 ) {
-                    include_once(
-                        $configNamespace['path'] . DIRECTORY_SEPARATOR . $className . $configNamespace['extension']);
+                    include_once($fileName);
 
                     return true;
                 }

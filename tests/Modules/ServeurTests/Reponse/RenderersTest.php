@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\ServeurTests\Reponse;
+    namespace Tests\ServeurTests\Reponse;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
 
     class RenderersTest extends TestCase
     {

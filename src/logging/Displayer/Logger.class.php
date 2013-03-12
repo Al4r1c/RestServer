@@ -77,6 +77,8 @@
 
         /**
          * @param \Serveur\Reponse\ReponseManager $restReponse
+         * @throws \InvalidArgumentException
+         * @throws \Exception
          */
         protected function logReponse($restReponse)
         {

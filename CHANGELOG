@@ -1,5 +1,10 @@
 ==CHANGELOG==
 
+[12/03/13]
+Création objet de réponse + tests.
+Passage en trois phases: requête, traitement, réponse.
+Réorganisation des packages.
+
 [07/03/13]
 Apports et corrections au mock générique:
 	-Possibilités de plusieurs arguments pour with.

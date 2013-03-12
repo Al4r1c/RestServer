@@ -1,8 +1,8 @@
 <?php
-    namespace Modules\ServeurTests\GestionErreurs;
+    namespace Tests\ServeurTests\GestionErreurs;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
     use Serveur\GestionErreurs\ErreurManager;
 
     class ErrorManagerTest extends TestCase

@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\ServeurTests\Requete;
+    namespace Tests\ServeurTests\Requete;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
     use Serveur\Requete\Server\Server;
 
     class ServerTest extends TestCase
@@ -73,7 +73,7 @@
 
         /**
          * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-         * @expectedExceptionCode 20300
+         * @expectedExceptionCode 20100
          */
         public function testWhiteList()
         {
@@ -129,7 +129,7 @@
 
         /**
          * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-         * @expectedExceptionCode 20301
+         * @expectedExceptionCode 20101
          */
         public function testSetServeurDonneesMethodeInvalide()
         {

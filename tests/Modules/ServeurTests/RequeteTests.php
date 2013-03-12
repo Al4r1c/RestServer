@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests;
+    namespace Tests\ServeurTests;
 
     if (!defined('PHPUnit_MAIN_METHOD')) {
         define('PHPUnit_MAIN_METHOD', 'RestTests::main');
@@ -17,8 +17,8 @@
         {
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-            $suite->addTestSuite('Modules\ServeurTests\Requete\ServerTest');
-            $suite->addTestSuite('Modules\ServeurTests\Requete\RequeteManagerTest');
+            $suite->addTestSuite('Tests\ServeurTests\Requete\ServerTest');
+            $suite->addTestSuite('Tests\ServeurTests\Requete\RequeteManagerTest');
 
             return $suite;
         }

@@ -1,14 +1,14 @@
 <?php
     namespace Serveur\GestionErreurs\Exceptions;
 
-    use Serveur\Utils\Tools;
+    use Serveur\Lib\ObjetReponse;
 
     class MainException extends \Exception
     {
         /**
-         * @var int
+         * @var ObjetReponse
          */
-        private $_codeRetourHttp = 500;
+        private $_objetReponseErreur;
 
         /**
          * @param string $code
@@ -17,30 +17,27 @@
         public function __construct($code, $codeStatus)
         {
             parent::__construct('', $code);
-            $this->setStatus($codeStatus);
+            $this->setObjetReponseErreur($codeStatus);
             trigger_error_app(E_USER_ERROR, $code, array_slice(func_get_args(), 2));
         }
 
         /**
-         * @return int
+         * @return ObjetReponse
          */
-        public function getStatus()
+        public function getObjetReponseErreur()
         {
-            return $this->_codeRetourHttp;
+            return $this->_objetReponseErreur;
         }
 
         /**
-         * @param int $codeHttp
-         * @throws \Exception
+         * @param int $codeHttpErreur
          */
-        public function setStatus($codeHttp)
+        public function setObjetReponseErreur($codeHttpErreur)
         {
-            if (!is_int($codeHttp)) {
-                throw new \Exception('Invalid argument type, int required');
-            }
+            $objetReponse = new ObjetReponse();
+            $objetReponse->setErreurHttp($codeHttpErreur);
 
-            if (Tools::isValideHttpCode($codeHttp)) {
-                $this->_codeRetourHttp = $codeHttp;
-            }
+            $this->_objetReponseErreur = $objetReponse;
         }
+
     }

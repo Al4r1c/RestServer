@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\LoggingTests\Factory;
+    namespace Tests\LoggingTests\Factory;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
 
     class LoggingFactoryTest extends TestCase
     {

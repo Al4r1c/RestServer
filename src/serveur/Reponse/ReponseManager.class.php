@@ -2,7 +2,7 @@
     namespace Serveur\Reponse;
 
     use Serveur\Utils\Constante;
-    use Serveur\Utils\Tools;
+    use Serveur\Lib\ObjetReponse;
     use Serveur\GestionErreurs\Exceptions\MainException;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
@@ -12,11 +12,6 @@
          * @var \Serveur\Reponse\Header\Header
          */
         private $_header;
-
-        /**
-         * @var int
-         */
-        private $_status = 500;
 
         /**
          * @var string
@@ -36,7 +31,47 @@
         /**
          * @var string
          */
-        private $_contenu = '';
+        private $contenu;
+
+        /**
+         * @return \string[]
+         */
+        public function getFormatsAcceptes()
+        {
+            return $this->_formatsAcceptes;
+        }
+
+        /**
+         * @return string
+         */
+        public function getFormatRetour()
+        {
+            return $this->_formatRetour;
+        }
+
+        /**
+         * @return string
+         */
+        public function getCharset()
+        {
+            return $this->_charset;
+        }
+
+        /**
+         * @codeCoverageIgnore
+         */
+        public function getStatus()
+        {
+            return http_response_code();
+        }
+
+        /**
+         * @return string
+         */
+        public function getContenu()
+        {
+            return $this->contenu;
+        }
 
         /**
          * @param \Serveur\Reponse\Header\Header $headerManager
@@ -69,77 +104,6 @@
         }
 
         /**
-         * @return int
-         */
-        public function getStatus()
-        {
-            return $this->_status;
-        }
-
-        /**
-         * @return string
-         */
-        public function getContenu()
-        {
-            return $this->_contenu;
-        }
-
-        /**
-         * @return \string[]
-         */
-        public function getFormatsAcceptes()
-        {
-            return $this->_formatsAcceptes;
-        }
-
-        /**
-         * @return string
-         */
-        public function getFormatRetour()
-        {
-            return $this->_formatRetour;
-        }
-
-        /**
-         * @return string
-         */
-        public function getCharset()
-        {
-            return $this->_charset;
-        }
-
-        /**
-         * @param string $contenu
-         * @throws ArgumentTypeException
-         */
-        public function setContenu($contenu)
-        {
-            if (!is_array($contenu)) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $contenu);
-            }
-
-            $this->_contenu = $contenu;
-        }
-
-        /**
-         * @param int $nouveauStatus
-         * @throws ArgumentTypeException
-         * @throws MainException
-         */
-        public function setStatus($nouveauStatus)
-        {
-            if (!is_int($nouveauStatus)) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $nouveauStatus);
-            }
-
-            if (!Tools::isValideHttpCode($nouveauStatus)) {
-                throw new MainException(20100, 500, $nouveauStatus);
-            }
-
-            $this->_status = $nouveauStatus;
-        }
-
-        /**
          * @param string $formatRetourDefaut
          * @param string[] $formatsAcceptes
          */
@@ -151,14 +115,13 @@
                 $this->setFormatRetour($formatRetourDefaut);
             } else {
                 $this->setFormatRetour(key($formatsAcceptes));
-                trigger_error_app(20101, $formatRetourDefaut);
+                trigger_error_app(40000, $formatRetourDefaut);
             }
         }
 
         /**
          * @param string $formatRetourDefaut
          * @throws ArgumentTypeException
-         * @throws MainException
          */
         public function setFormatRetour($formatRetourDefaut)
         {
@@ -181,7 +144,7 @@
             }
 
             if (isNull($formatsAcceptes)) {
-                throw new MainException(20102, 400);
+                throw new MainException(40001, 400);
             }
 
             $this->_formatsAcceptes = $formatsAcceptes;
@@ -199,15 +162,15 @@
             }
 
             if (!in_array(strtoupper($charset), array_map('strtoupper', mb_list_encodings()))) {
-                throw new MainException(20103, 500, $charset);
+                throw new MainException(40002, 500, $charset);
             }
 
             $this->_charset = strtolower($charset);
         }
 
-        private function envoyerHeaders()
+        private function envoyerHeaders($codeHttp)
         {
-            http_response_code($this->_status);
+            http_response_code($codeHttp);
             $this->_header->ajouterHeader(
                 'Content-type',
                 Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' .
@@ -233,7 +196,7 @@
                     $this->_formatRetour = $formatsAcceptes[$formatDefaut];
                     $nomClassFormatRetour = ucfirst(strtolower($formatDefaut));
                 } else {
-                    throw new MainException(20104, 500, $formatDefaut);
+                    throw new MainException(40003, 500, $formatDefaut);
                 }
             }
 
@@ -244,22 +207,24 @@
          * @param string $renderClassName
          * @return mixed
          * @throws MainException
+         * @codeCoverageIgnore
          */
         protected function getRenderClass($renderClassName)
         {
             if (!class_exists($nomVue = '\\' . __NAMESPACE__ . '\Renderers\\' . $renderClassName)) {
-                throw new MainException(20105, 415, $renderClassName);
+                throw new MainException(40004, 415, $renderClassName);
             }
 
             return new $nomVue();
         }
 
         /**
+         * @param ObjetReponse $objetReponse
          * @param array $formatsDemandes
-         * @throws ArgumentTypeException
+         * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
          * @return string
          */
-        public function fabriquerReponse($formatsDemandes)
+        public function fabriquerReponse($objetReponse, $formatsDemandes)
         {
             if (!is_array($formatsDemandes)) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
@@ -274,8 +239,8 @@
                 )
             );
 
-            $this->envoyerHeaders();
+            $this->envoyerHeaders($objetReponse->getStatusHttp());
 
-            return $view->render($this->_contenu);
+            $this->contenu = $view->render($objetReponse->getDonneesReponse());
         }
     }

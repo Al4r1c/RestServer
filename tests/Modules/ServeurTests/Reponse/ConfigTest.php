@@ -1,8 +1,8 @@
 <?php
-    namespace Modules\ServeurTests\Reponse;
+    namespace Tests\ServeurTests\Reponse;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
     use Serveur\Reponse\Config\Config;
 
     class ConfigTest extends TestCase
@@ -48,7 +48,7 @@
 
         /**
          * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-         * @expectedExceptionCode 30000
+         * @expectedExceptionCode 40200
          */
         public function testChargerFichierInexistant()
         {
@@ -62,7 +62,7 @@
 
         /**
          * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-         * @expectedExceptionCode 30001
+         * @expectedExceptionCode 40201
          */
         public function testChargerFichierInvalide()
         {

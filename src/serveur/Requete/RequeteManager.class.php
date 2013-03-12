@@ -25,7 +25,7 @@
         /**
          * @var string[]
          */
-        private $_parametres;
+        private $_parametres = array();
 
         /**
          * @var string
@@ -41,7 +41,7 @@
          * @param \Serveur\Requete\Server\Server $server
          * @throws ArgumentTypeException
          */
-        public function setServer($server)
+        public function parseServer($server)
         {
             if (!$server instanceof \Serveur\Requete\Server\Server) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Requete\Server\Server', $server);
@@ -77,6 +77,17 @@
         public function getUriVariables()
         {
             return $this->_dataUri;
+        }
+
+        public function getUriVariable($clef)
+        {
+            if (array_key_exists($clef, $this->_dataUri)) {
+                return $this->_dataUri[$clef];
+            } else {
+                trigger_error_app(E_USER_NOTICE, 20003, $clef);
+
+                return null;
+            }
         }
 
         /**
@@ -160,7 +171,7 @@
         }
 
         /**
-         * @param string $donnee
+         * @param array $donnee
          * @throws ArgumentTypeException
          */
         public function setParametres($donnee)

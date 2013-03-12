@@ -1,35 +1,160 @@
 <?php
-    namespace Modules\ServeurTests\Traitement;
+    namespace Tests\ServeurTests\Traitement;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
+    use Serveur\Requete\RequeteManager;
     use Serveur\Traitement\TraitementManager;
 
     class TraitementManagerTest extends TestCase
     {
-        /** @var TraitementManager */
-        private $_traitementManager;
-
-        public function setUp()
+        public function testTraiterGet()
         {
-            $this->_traitementManager = new TraitementManager();
+            $requete = new RequeteManager();
+            $requete->setMethode('GET');
+            $requete->setParametres(array('data1' => 'var1'));
+            $requete->setVariableUri('/path/1');
+
+            $objetReponse = $this->createMock(
+                'ObjetReponse',
+                new MockArg('getDonneesReponse', array('here' => 'some data'))
+            );
+
+            $abstractRessource = $this->createMock(
+                'AbstractRessource',
+                new MockArg('doGet', $objetReponse, array(1, array('data1' => 'var1')))
+            );
+
+            /** @var TraitementManager $traitementManager */
+            $traitementManager = $this->createMock(
+                'TraitementManager',
+                new MockArg('getRessourceClass', $abstractRessource, array('path'))
+            );
+
+            $this->assertEquals(
+                array('here' => 'some data'),
+                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+            );
         }
 
-        public function testSetRoute()
+        public function testTraiterPut()
         {
-            $routeMap = $this->createMock('RouteMap');
+            $requete = new RequeteManager();
+            $requete->setMethode('PUT');
+            $requete->setParametres(array('data1' => 'var1'));
+            $requete->setVariableUri('/path/1');
 
-            $this->_traitementManager->setRouteMap($routeMap);
+            $objetReponse = $this->createMock(
+                'ObjetReponse',
+                new MockArg('getDonneesReponse', array('here' => 'some data'))
+            );
 
-            $this->assertEquals($routeMap, $this->_traitementManager->getRouteMap());
+            $abstractRessource = $this->createMock(
+                'AbstractRessource',
+                new MockArg('doPut', $objetReponse, array(1, array('data1' => 'var1')))
+            );
+
+            /** @var TraitementManager $traitementManager */
+            $traitementManager = $this->createMock(
+                'TraitementManager',
+                new MockArg('getRessourceClass', $abstractRessource, array('path'))
+            );
+
+            $this->assertEquals(
+                array('here' => 'some data'),
+                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+            );
+        }
+
+        public function testTraiterPost()
+        {
+            $requete = new RequeteManager();
+            $requete->setMethode('POST');
+            $requete->setParametres(array('data1' => 'var1'));
+            $requete->setVariableUri('/path/1');
+
+            $objetReponse = $this->createMock(
+                'ObjetReponse',
+                new MockArg('getDonneesReponse', array('here' => 'some data'))
+            );
+
+            $abstractRessource = $this->createMock(
+                'AbstractRessource',
+                new MockArg('doPost', $objetReponse, array(1, array('data1' => 'var1')))
+            );
+
+            /** @var TraitementManager $traitementManager */
+            $traitementManager = $this->createMock(
+                'TraitementManager',
+                new MockArg('getRessourceClass', $abstractRessource, array('path'))
+            );
+
+            $this->assertEquals(
+                array('here' => 'some data'),
+                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+            );
+        }
+
+        public function testTraiterDelete()
+        {
+            $requete = new RequeteManager();
+            $requete->setMethode('DELETE');
+            $requete->setVariableUri('/path/1');
+
+            $objetReponse = $this->createMock(
+                'ObjetReponse',
+                new MockArg('getDonneesReponse', array('here' => 'some data'))
+            );
+
+            $abstractRessource = $this->createMock(
+                'AbstractRessource',
+                new MockArg('doDelete', $objetReponse, array(1))
+            );
+
+            /** @var TraitementManager $traitementManager */
+            $traitementManager = $this->createMock(
+                'TraitementManager',
+                new MockArg('getRessourceClass', $abstractRessource, array('path'))
+            );
+
+            $this->assertEquals(
+                array('here' => 'some data'),
+                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+            );
+        }
+
+        public function testTraiterRessourceInconnue()
+        {
+            $requete = new RequeteManager();
+            $requete->setMethode('GET');
+            $requete->setVariableUri('/unknown');
+
+            /** @var TraitementManager $traitementManager */
+            $traitementManager = $this->createMock(
+                'TraitementManager',
+                new MockArg('getRessourceClass', false, array('unknown'))
+            );
+
+            $this->assertEquals(404, $traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp());
         }
 
         /**
-         * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
-         * @expectedExceptionCode 1000
+         * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+         * @expectedExceptionCode 30000
          */
-        public function testSetRouteErrone()
+        public function testTraiterMethodeInconnue()
         {
-            $this->_traitementManager->setRouteMap('fake');
+            $requete = $this->createMock(
+                'RequeteManager',
+                new MockArg('getMethode', 'FAKE')
+            );
+            $requete->setVariableUri('/path/1');
+
+            $traitementManager = $this->createMock(
+                'TraitementManager',
+                new MockArg('getRessourceClass', $this->getMockAbstractRessource())
+            );
+
+            $traitementManager->traiterRequeteEtRecupererResultat($requete);
         }
     }

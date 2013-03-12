@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\ServeurTests\Lib;
+    namespace Tests\ServeurTests\Lib;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
 

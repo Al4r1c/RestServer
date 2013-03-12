@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\ServeurTests\Reponse;
+    namespace Tests\ServeurTests\Reponse;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
     use Serveur\Reponse\Header\Header;
 
     class HeaderManagerTest extends TestCase
@@ -42,7 +42,7 @@
 
         /**
          * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-         * @expectedExceptionCode 20400
+         * @expectedExceptionCode 40100
          */
         public function testAjouterHeaderSiValide()
         {

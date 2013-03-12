@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests;
+    namespace Tests\ServeurTests;
 
     if (!defined('PHPUnit_MAIN_METHOD')) {
         define('PHPUnit_MAIN_METHOD', 'TraitementTests::main');
@@ -17,8 +17,7 @@
         {
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-            $suite->addTestSuite('Modules\ServeurTests\Traitement\TraitementManagerTest');
-            $suite->addTestSuite('Modules\ServeurTests\Traitement\RouteMapTest');
+            $suite->addTestSuite('Tests\ServeurTests\Traitement\TraitementManagerTest');
 
             return $suite;
         }

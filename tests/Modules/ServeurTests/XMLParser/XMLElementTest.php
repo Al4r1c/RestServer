@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\ServeurTests\XMLParser;
+    namespace Tests\ServeurTests\XMLParser;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
     use Serveur\Lib\XMLParser\XMLElement;
 
     class XMLElementTest extends TestCase

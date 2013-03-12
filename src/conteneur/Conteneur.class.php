@@ -27,7 +27,7 @@
 
             $conteneur['RequeteManager'] = function ($c) {
                 $restRequete = new \Serveur\Requete\RequeteManager();
-                $restRequete->setServer($c['Server']);
+                $restRequete->parseServer($c['Server']);
 
                 return $restRequete;
             };
@@ -42,19 +42,8 @@
 
             $conteneur['TraitementManager'] = function ($c) {
                 $traitementManager = new \Serveur\Traitement\TraitementManager();
-                $traitementManager->setRouteMap($c['RouteMap']);
 
                 return $traitementManager;
-            };
-
-            $conteneur['RouteMap'] = function () {
-                $fichier = \Serveur\Utils\FileManager::getFichier();
-                $fichier->setFichierParametres('routemap.yaml', '/config');
-
-                $routeManager = new \Serveur\Traitement\Route\RouteMap();
-                $routeManager->chargerFichierMapping($fichier);
-
-                return $routeManager;
             };
 
 
@@ -104,6 +93,9 @@
             return $this->_conteneur['RequeteManager'];
         }
 
+        /**
+         * @return \Serveur\Traitement\TraitementManager
+         */
         public function getTraitementManager()
         {
             return $this->_conteneur['TraitementManager'];

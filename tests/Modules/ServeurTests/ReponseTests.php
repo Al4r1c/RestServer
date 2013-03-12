@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests;
+    namespace Tests\ServeurTests;
 
     if (!defined('PHPUnit_MAIN_METHOD')) {
         define('PHPUnit_MAIN_METHOD', 'ReponseTests::main');
@@ -17,10 +17,10 @@
         {
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-            $suite->addTestSuite('Modules\ServeurTests\Reponse\ConfigTest');
-            $suite->addTestSuite('Modules\ServeurTests\Reponse\RenderersTest');
-            $suite->addTestSuite('Modules\ServeurTests\Reponse\HeaderManagerTest');
-            $suite->addTestSuite('Modules\ServeurTests\Reponse\ReponseManagerTest');
+            $suite->addTestSuite('Tests\ServeurTests\Reponse\ConfigTest');
+            $suite->addTestSuite('Tests\ServeurTests\Reponse\RenderersTest');
+            $suite->addTestSuite('Tests\ServeurTests\Reponse\HeaderManagerTest');
+            $suite->addTestSuite('Tests\ServeurTests\Reponse\ReponseManagerTest');
 
             return $suite;
         }

@@ -1,34 +1,58 @@
 <?php
     namespace Serveur\Traitement;
 
+    use Serveur\Requete\RequeteManager;
+    use Serveur\Traitement\Ressource\AbstractRessource;
+    use Serveur\Lib\ObjetReponse;
     use Serveur\GestionErreurs\Exceptions\MainException;
-    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class TraitementManager
     {
         /**
-         * @var \Serveur\Traitement\Route\RouteMap
+         * @param RequeteManager $requete
+         * @throws MainException
+         * @return ObjetReponse
          */
-        private $_routeMap;
-
-        /**
-         * @param \Serveur\Traitement\Route\RouteMap $routeMap
-         * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
-         */
-        public function setRouteMap($routeMap)
+        public function traiterRequeteEtRecupererResultat($requete)
         {
-            if (!$routeMap instanceof \Serveur\Traitement\Route\RouteMap) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Traitement\Route\RouteMap', $routeMap);
+            /** @var $ressourceObjet AbstractRessource */
+            if (($ressourceObjet = $this->getRessourceClass($requete->getUriVariable(0))) !== false) {
+                switch (strtoupper($requete->getMethode())) {
+                    case 'GET':
+                        $objetReponse = $ressourceObjet->doGet($requete->getUriVariable(1), $requete->getParametres());
+                        break;
+                    case 'POST':
+                        $objetReponse = $ressourceObjet->doPost($requete->getUriVariable(1), $requete->getParametres());
+                        break;
+                    case 'PUT':
+                        $objetReponse = $ressourceObjet->doPut($requete->getUriVariable(1), $requete->getParametres());
+                        break;
+                    case 'DELETE':
+                        $objetReponse = $ressourceObjet->doDelete($requete->getUriVariable(1));
+                        break;
+                    default:
+                        throw new MainException(30000, 500, $requete->getMethode());
+                        break;
+                }
+            } else {
+                $objetReponse = new \Serveur\Lib\ObjetReponse();
+                $objetReponse->setErreurHttp(404);
             }
 
-            $this->_routeMap = $routeMap;
+            return $objetReponse;
         }
 
         /**
-         * @return \Serveur\Traitement\Route\RouteMap
+         * @param $nomRessourceDemandee
+         * @return AbstractRessource
+         * @codeCoverageIgnore
          */
-        public function getRouteMap()
+        protected function getRessourceClass($nomRessourceDemandee)
         {
-            return $this->_routeMap;
+            if (class_exists($classeRessource = '\\Ressource\\' . ucfirst(strtolower($nomRessourceDemandee)))) {
+                return new $classeRessource();
+            } else {
+                return false;
+            }
         }
     }

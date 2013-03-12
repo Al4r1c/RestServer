@@ -1,8 +1,8 @@
 <?php
-    namespace Modules\LoggingTests\I18n;
+    namespace Tests\LoggingTests\I18n;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
 
     class TradManagerTest extends TestCase
     {

@@ -1,9 +1,9 @@
 <?php
-    namespace Modules\ServeurTests\Application;
+    namespace Tests\ServeurTests\Application;
 
     use Serveur\MainApplication;
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
     use Serveur\GestionErreurs\Exceptions\MainException;
 
     class MainApplicationTest extends TestCase
@@ -48,19 +48,26 @@
         {
             $requete = $this->createMock(
                 'RequeteManager',
-                new MockArg('getParametres', array('variable1' => 'valeur1'))
+                new MockArg('getFormatsDemandes', array('htm'))
+            );
+
+            $objetReponse = $this->getMockObjetReponse();
+
+            $traitementManager = $this->createMock(
+                'TraitementManager',
+                new MockArg('traiterRequeteEtRecupererResultat', $objetReponse, array($requete))
             );
 
             $reponse = $this->createMock(
                 'ReponseManager',
-                new MockArg('setStatus', null, array(200)),
-                new MockArg('setContenu', null, array(array('variable1' => 'valeur1'))),
-                new MockArg('fabriquerReponse', 'variable1 => valeur1')
+                new MockArg('fabriquerReponse', null, array($objetReponse, array('htm'))),
+                new MockArg('getContenu', 'variable1 => valeur1')
             );
 
             $conteneur = $this->createMock(
                 'Conteneur',
                 new MockArg('getRequeteManager', $requete),
+                new MockArg('getTraitementManager', $traitementManager),
                 new MockArg('getReponseManager', $reponse)
             );
 
@@ -70,68 +77,23 @@
 
         public function testRunFailMainException()
         {
-            $infoHttpCode = \Serveur\Utils\Constante::chargerConfig('httpcode')[505];
-
-            $requete = $this->createMock(
-                'RequeteManager',
-                new MockArg('getParametres', new MainException(10000, 505))
-            );
-
-            $reponse = $this->createMock(
-                'ReponseManager',
-                new MockArg('setStatus', null, array(505)),
-                new MockArg('setContenu', null, array(array('Code' => 505,
-                    'Status' => $infoHttpCode[0],
-                    'Message' => $infoHttpCode[1]))),
-                new MockArg('fabriquerReponse', 'Erreur => Une erreur est survenue')
-            );
+            $reponse = $this->getMockRestReponse();
 
             $conteneur = $this->createMock(
                 'Conteneur',
-                new MockArg('getRequeteManager', $requete),
+                new MockArg('getRequeteManager', new MainException(10000, 505)),
                 new MockArg('getReponseManager', $reponse)
             );
 
             $mainApp = new MainApplication($conteneur);
-            $this->assertEquals('Erreur => Une erreur est survenue', $mainApp->run());
-        }
-
-        public function testRunFailExceptionGenerique()
-        {
-            $requete = $this->createMock(
-                'RequeteManager',
-                new MockArg('getParametres', new \Exception())
-            );
-
-            $reponse = $this->createMock(
-                'ReponseManager',
-                new MockArg('setStatus', null, array(500)),
-                new MockArg('fabriquerReponse', 'Erreur => Une erreur est survenue')
-            );
-
-            $conteneur = $this->createMock(
-                'Conteneur',
-                new MockArg('getRequeteManager', $requete),
-                new MockArg('getReponseManager', $reponse)
-            );
-
-            $mainApp = new MainApplication($conteneur);
-            $this->assertEquals('Erreur => Une erreur est survenue', $mainApp->run());
+            $mainApp->run();
         }
 
         public function testEcrireLogAcces()
         {
-            $requete = $this->createMock(
-                'RequeteManager',
-                new MockArg('getParametres', array('variable1' => 'valeur1'))
-            );
-
-            $reponse = $this->createMock(
-                'ReponseManager',
-                new MockArg('setStatus', null, array(200)),
-                new MockArg('setContenu', null, array(array('variable1' => 'valeur1'))),
-                new MockArg('fabriquerReponse', 'variable1 => valeur1')
-            );
+            $requete = $this->getMockRestRequete();
+            $traitementManager = $this->getMockTraitementManager();
+            $reponse = $this->getMockRestReponse();
 
             $abstractDisplayer = $this->createMock(
                 'AbstractDisplayer',
@@ -147,6 +109,7 @@
             $conteneur = $this->createMock(
                 'Conteneur',
                 new MockArg('getRequeteManager', $requete),
+                new MockArg('getTraitementManager', $traitementManager),
                 new MockArg('getReponseManager', $reponse),
                 new MockArg('getErrorManager', $errorManager)
             );

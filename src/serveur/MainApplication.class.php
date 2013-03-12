@@ -17,16 +17,6 @@
         private $_observeurs = array();
 
         /**
-         * @var \Serveur\Requete\RequeteManager
-         */
-        private $_requete;
-
-        /**
-         * @var \Serveur\Reponse\ReponseManager
-         */
-        private $_reponse;
-
-        /**
          * @param \Conteneur\Conteneur $nouveauConteneur
          */
         public function __construct($nouveauConteneur)
@@ -55,70 +45,54 @@
         public function run()
         {
             try {
-                $this->_requete = $this->_conteneur->getRequeteManager();
-                $this->ecrireRequeteLog();
+                $requete = $this->_conteneur->getRequeteManager();
+                $this->ecrireRequeteLog($requete);
 
-                $this->_reponse = $this->_conteneur->getReponseManager();
-
-                $resultat = $this->recupererResultat(200, $this->_requete->getParametres());
+                $traitementRequete = $this->_conteneur->getTraitementManager();
+                $reponse = $this->fabriquerEtRecupererReponse(
+                    $traitementRequete->traiterRequeteEtRecupererResultat($requete),
+                    $requete->getFormatsDemandes()
+                );
             }
-            catch (\Exception $e) {
-                $resultat = $this->leverException($e);
+            catch (MainException $e) {
+                $reponse = $this->fabriquerEtRecupererReponse($e->getObjetReponseErreur());
             }
 
-            $this->ecrireReponseLog();
+            $this->ecrireReponseLog($reponse);
 
-            return $resultat;
+            return $reponse->getContenu();
         }
 
         /**
-         * @param \Exception $uneException
-         * @return string
+         * @param \Serveur\Lib\ObjetReponse $objetReponse
+         * @param array $formatsDemandees
+         * @return \Serveur\Reponse\ReponseManager
          */
-        private function leverException(\Exception $uneException)
+        private function fabriquerEtRecupererReponse($objetReponse, $formatsDemandees = array())
         {
-            if ($uneException instanceof MainException) {
-                $statusHttp = $uneException->getStatus();
-            } else {
-                $statusHttp = 500;
-            }
+            $reponse = $this->_conteneur->getReponseManager();
+            $reponse->fabriquerReponse($objetReponse, $formatsDemandees);
 
-            $infoHttpCode = Constante::chargerConfig('httpcode')[$statusHttp];
-
-            return $this->recupererResultat(
-                $statusHttp,
-                array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1])
-            );
+            return $reponse;
         }
 
         /**
-         * @param int $codeHttp
-         * @param array $donneessAAfficher
-         * @return string
+         * @param \Serveur\Requete\RequeteManager $requete
          */
-        private function recupererResultat($codeHttp, $donneessAAfficher)
-        {
-            $this->_reponse->setStatus($codeHttp);
-            $this->_reponse->setContenu($donneessAAfficher);
-
-            return $this->_reponse->fabriquerReponse($this->_requete->getFormatsDemandes());
-        }
-
-        private function ecrireRequeteLog()
+        private function ecrireRequeteLog($requete)
         {
             foreach ($this->_observeurs as $unObserveur) {
-                $unObserveur->ecrireLogRequete(
-                    $this->_requete
-                );
+                $unObserveur->ecrireLogRequete($requete);
             }
         }
 
-        private function ecrireReponseLog()
+        /**
+         * @param \Serveur\Reponse\ReponseManager $reponse
+         */
+        private function ecrireReponseLog($reponse)
         {
             foreach ($this->_observeurs as $unObserveur) {
-                $unObserveur->ecrireLogReponse(
-                    $this->_reponse
-                );
+                $unObserveur->ecrireLogReponse($reponse);
             }
         }
     }

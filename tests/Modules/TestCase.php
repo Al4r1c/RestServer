@@ -1,5 +1,5 @@
 <?php
-    namespace Modules;
+    namespace Tests;
 
     class TestCase extends FactoryMock
     {

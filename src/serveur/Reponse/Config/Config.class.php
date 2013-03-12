@@ -35,7 +35,7 @@
                     array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
             }
             catch (\Exception $fe) {
-                throw new MainException(30000, 500, $fichierFramework->getCheminCompletFichier());
+                throw new MainException(40200, 500, $fichierFramework->getCheminCompletFichier());
             }
 
             $this->validerFichierConfiguration();
@@ -48,7 +48,7 @@
         {
             foreach (self::$_clefMinimales as $uneClefQuiDoitExister) {
                 if (is_null($this->getConfigValeur($uneClefQuiDoitExister))) {
-                    throw new MainException(30001, 500, $uneClefQuiDoitExister);
+                    throw new MainException(40201, 500, $uneClefQuiDoitExister);
                 }
             }
         }
@@ -69,7 +69,7 @@
             ) {
                 return $valeur;
             } else {
-                trigger_error_app(E_USER_NOTICE, 30002, $clefConfig);
+                trigger_error_app(E_USER_NOTICE, 40202, $clefConfig);
 
                 return null;
             }

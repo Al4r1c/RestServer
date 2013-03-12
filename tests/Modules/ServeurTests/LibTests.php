@@ -1,5 +1,5 @@
 <?php
-    namespace Modules\ServeurTests;
+    namespace Tests\ServeurTests;
 
     if (!defined('PHPUnit_MAIN_METHOD')) {
         define('PHPUnit_MAIN_METHOD', 'LibTests::main');
@@ -17,12 +17,13 @@
         {
             $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
-            $suite->addTestSuite('Modules\ServeurTests\Lib\FichierTest');
-            $suite->addTestSuite('Modules\ServeurTests\Lib\FileSystemTest');
-            $suite->addTestSuite('Modules\ServeurTests\Lib\FichierChargementTest');
-            $suite->addTestSuite('Modules\ServeurTests\Lib\TypeDetectorTest');
-            $suite->addTestSuite('Modules\ServeurTests\XMLParser\XMLElementTest');
-            $suite->addTestSuite('Modules\ServeurTests\XMLParser\XMLParserTest');
+            $suite->addTestSuite('Tests\ServeurTests\Lib\ObjetReponseTest');
+            $suite->addTestSuite('Tests\ServeurTests\Lib\FichierTest');
+            $suite->addTestSuite('Tests\ServeurTests\Lib\FileSystemTest');
+            $suite->addTestSuite('Tests\ServeurTests\Lib\FichierChargementTest');
+            $suite->addTestSuite('Tests\ServeurTests\Lib\TypeDetectorTest');
+            $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLElementTest');
+            $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLParserTest');
 
             return $suite;
         }

@@ -1,5 +1,5 @@
 .idea/
-/packages/.composer/
-packages/
+/libraries/.composer/
+libraries/
 tests/report/
 composer.lock

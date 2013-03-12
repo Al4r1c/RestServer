@@ -21,13 +21,13 @@
 		<message code="10">Invalid Argument</message>
 		<message code="101">File system</message>
 		<message code="102">File</message>
+		<message code="103">Response Object</message>
 		<message code="200">Request</message>
-		<message code="201">Response</message>
-		<message code="202">Rest Manager</message>
-		<message code="203">Server and execution environment information</message>
-		<message code="204">Header Manager</message>
-		<message code="300">Configuration file</message>
-		<message code="300">Route Manager</message>
+		<message code="201">Server and execution environment information</message>
+		<message code="300">Handling manager</message>
+		<message code="400">Response</message>
+		<message code="401">Header Manager</message>
+		<message code="402">Configuration file</message>
 	</errorType>
 
 	<errorMessage>
@@ -45,24 +45,23 @@
 		<message code="10203">File "%s" does not exist.</message>
 		<message code="10204">Destination folder "%s" does not exist.</message>
 		<message code="10205">Error while trying to create file "%s".</message>
+		<message code="10300">HTTP code "%s" is not valid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html for more informations about HTTP code.</message>
 		<message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 		<message code="20001">No valid return format found.</message>
 		<message code="20002">Remote client ip is not valid.</message>
-		<message code="20100">HTTP code "%s" is not valid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html for more informations about HTTP code.</message>
-		<message code="20101">Output format set (%s) does not exist in available outputs.</message>
-		<message code="20102">Accepted output format are invalid.</message>
-		<message code="20103">Invalid charset %s.</message>
-		<message code="20104">Default output format "%s" not found in configuration.</message>
-		<message code="20105">Specified output rendering class (%s) not found.</message>
-		<message code="20200">Key %s does not exist in the URI.</message>
-		<message code="20201">Requested parameter %s does not exist.</message>
-		<message code="20300">Missing server variables.</message>
-		<message code="20301">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
-		<message code="20400">Response header "%s" is invalid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html for more informations about headers.</message>
-		<message code="30000">Framework's configuration file not found. (Should be located: %s)</message>
-		<message code="30001">Key %s must be present but does not exist in the configuration.</message>
-		<message code="30002">Key %s does not exist in the configuration.</message>
-		<message code="30100">Route mapping file is malformed, one or more key does not start with slash.</message>
+		<message code="20003">Key %s does not exist in the URI.</message>
+		<message code="20100">Missing server variables.</message>
+		<message code="20101">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
+		<message code="30000">Méthode HTML "%s" invalide.</message>
+		<message code="40000">Output format set (%s) does not exist in available outputs.</message>
+		<message code="40001">Accepted output format are invalid.</message>
+		<message code="40002">Invalid charset %s.</message>
+		<message code="40003">Default output format "%s" not found in configuration.</message>
+		<message code="40004">Specified output rendering class (%s) not found.</message>
+		<message code="40100">Response header "%s" is invalid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html for more informations about headers.</message>
+		<message code="40200">Framework's configuration file not found. (Should be located: %s)</message>
+		<message code="40201">Key %s must be present but does not exist in the configuration.</message>
+		<message code="40202">Key %s does not exist in the configuration.</message>
 	</errorMessage>
 
 </language>

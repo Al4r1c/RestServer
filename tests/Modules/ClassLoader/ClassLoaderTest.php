@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\ClassLoader;
+    namespace Tests\ClassLoader;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
 
@@ -40,10 +40,10 @@
             vfsStreamWrapper::register();
             vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('realPath'));
 
-            mkdir(vfsStream::url('realPath') . '/MyNamespace');
-            file_put_contents(vfsStream::url('realPath/MyNamespace') . '/Factice.class.php', '');
+            mkdir(vfsStream::url('realPath') . '/folder');
+            file_put_contents(vfsStream::url('realPath/folder') . '/Factice.class.php', '');
 
-            $this->_classLoader->ajouterNamespace('MyNamespace', vfsStream::url('realPath'));
+            $this->_classLoader->ajouterNamespace('MyNamespace', vfsStream::url('realPath/folder'));
 
             $this->assertTrue($this->_classLoader->loaderFunction('MyNamespace\Factice'));
         }

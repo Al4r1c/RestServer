@@ -1,8 +1,8 @@
 <?php
-    namespace Modules\ServeurTests\Lib;
+    namespace Tests\ServeurTests\Lib;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
     use Serveur\Lib\TypeDetector;
 
     class TypeDetectorTest extends TestCase

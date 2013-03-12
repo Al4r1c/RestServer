@@ -29,7 +29,7 @@
             }
 
             if (!Tools::isValideHeader($champ)) {
-                throw new MainException(20400, 500, $champ);
+                throw new MainException(40100, 500, $champ);
             }
 
             $this->_headers[$champ] = $valeur;

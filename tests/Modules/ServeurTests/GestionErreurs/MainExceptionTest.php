@@ -1,7 +1,7 @@
 <?php
-    namespace Modules\ServeurTests\GestionErreurs;
+    namespace Tests\ServeurTests\GestionErreurs;
 
-    use Modules\TestCase;
+    use Tests\TestCase;
     use Serveur\GestionErreurs\Exceptions\MainException;
 
     class MainExceptionTest extends TestCase
@@ -23,14 +23,6 @@
         public function testGetCodeStatus()
         {
             $this->setMainException(10000, 500);
-            $this->assertEquals(500, $this->_mainException->getStatus());
-        }
-
-        /**
-         * @expectedException \Exception
-         */
-        public function testSetCodeErrone()
-        {
-            $this->setMainException(10000, 'fake');
+            $this->assertInstanceOf('Serveur\Lib\ObjetReponse', $this->_mainException->getObjetReponseErreur());
         }
     }

@@ -1,8 +1,8 @@
 <?php
-    namespace Modules\ServeurTests\Lib;
+    namespace Tests\ServeurTests\Lib;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
     use Serveur\Lib\FileSystem;
     use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;

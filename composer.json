@@ -5,6 +5,6 @@
 		"mikey179/vfsStream":"dev-master"
 	},
 	"config":{
-		"vendor-dir":"packages"
+		"vendor-dir":"libraries"
 	}
 }

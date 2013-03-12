@@ -1,8 +1,8 @@
 <?php
-    namespace Modules\ServeurTests\Requete;
+    namespace Tests\ServeurTests\Requete;
 
-    use Modules\TestCase;
-    use Modules\MockArg;
+    use Tests\TestCase;
+    use Tests\MockArg;
     use Serveur\Requete\RequeteManager;
 
     class RequeteManagerTest extends TestCase
@@ -88,6 +88,20 @@
             $this->assertCount(2, $this->restRequete->getUriVariables());
         }
 
+        public function testgetUriVariable()
+        {
+            $this->restRequete->setVariableUri('/mon/uri/');
+
+            $this->assertEquals('uri', $this->restRequete->getUriVariable(1));
+        }
+
+        public function testgetUriVariableNullSiNonTrouve()
+        {
+            $this->restRequete->setVariableUri('/mon/uri/');
+
+            $this->assertNull($this->restRequete->getUriVariable(3));
+        }
+
         public function testRestUriRecupererVariable()
         {
             $this->restRequete->setVariableUri('/variable1//var2////var3/');
@@ -150,7 +164,7 @@
                 new MockArg('getRequestTime', 1362000000)
             );
 
-            $this->restRequete->setServer($serveur);
+            $this->restRequete->parseServer($serveur);
             $this->assertEquals('PUT', $this->restRequete->getMethode());
             $this->assertContains('xml', $this->restRequete->getFormatsDemandes());
             $this->assertEquals('uri', $this->restRequete->getUriVariables()[1]);
@@ -163,7 +177,7 @@
          */
         public function testRestSetServerEronnee()
         {
-            $this->restRequete->setServer(null);
+            $this->restRequete->parseServer(null);
         }
 
         public function testRestDateRequete()

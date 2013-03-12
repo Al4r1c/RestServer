@@ -1,5 +1,5 @@
 <?php
-    namespace Modules;
+    namespace Tests;
 
     class FactoryMock extends \PHPUnit_Framework_TestCase
     {
@@ -10,13 +10,16 @@
 
             switch (strtolower($type)) {
                 case 'abstractchargeurfichier':
-                    $mock = $this->getMockAbstractChargeur();
+                    $mock = $this->getMockAbstractChargeur($methodes);
                     break;
                 case 'abstractdisplayer':
-                    $mock = $this->getMockAbstractDisplayer();
+                    $mock = $this->getMockAbstractDisplayer($methodes);
                     break;
                 case 'abstractrenderer':
-                    $mock = $this->getMockAbstractRenderer();
+                    $mock = $this->getMockAbstractRenderer($methodes);
+                    break;
+                case 'abstractressource':
+                    $mock = $this->getMockAbstractRessource($methodes);
                     break;
                 case 'config':
                     $mock = $this->getMockConfig($methodes);
@@ -51,20 +54,23 @@
                 case 'notice':
                     $mock = $this->getMockNotice($methodes);
                     break;
+                case 'objetreponse';
+                    $mock = $this->getMockObjetReponse($methodes);
+                    break;
                 case 'requetemanager':
                     $mock = $this->getMockRestRequete($methodes);
                     break;
                 case 'reponsemanager':
                     $mock = $this->getMockRestReponse($methodes);
                     break;
-                case 'routemap':
-                    $mock = $this->getMockRouteMap($methodes);
-                    break;
                 case 'server':
                     $mock = $this->getMockServer($methodes);
                     break;
                 case 'tradmanager':
                     $mock = $this->getMockTradManager($methodes);
+                    break;
+                case 'traitementmanager':
+                    $mock = $this->getMockTraitementManager($methodes);
                     break;
                 case 'xmlelement':
                     $mock = $this->getMockXmlElement($methodes);
@@ -80,22 +86,45 @@
             return $mock;
         }
 
-        /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FichierChargement\AbstractChargeurFichier */
-        protected function getMockAbstractChargeur()
+        protected function getMockAbstractClass($mockClass, $tabMethodes = array())
         {
-            return $this->getMockForAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier');
+            return $this->getMockForAbstractClass($mockClass, array(), '', true, true, true, $tabMethodes);
         }
 
-        /** @return \PHPUnit_Framework_MockObject_MockObject|\Logging\Displayer\AbstractDisplayer */
-        protected function getMockAbstractDisplayer()
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FichierChargement\AbstractChargeurFichier
+         */
+        protected function getMockAbstractChargeur($methodes = array())
         {
-            return $this->getMockForAbstractClass('Logging\Displayer\AbstractDisplayer');
+            return $this->getMockAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier', $methodes);
         }
 
-        /** @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Renderers\AbstractRenderer */
-        protected function getMockAbstractRenderer()
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Logging\Displayer\AbstractDisplayer
+         */
+        protected function getMockAbstractDisplayer($methodes = array())
         {
-            return $this->getMockForAbstractClass('Serveur\Reponse\Renderers\AbstractRenderer');
+            return $this->getMockAbstractClass('Logging\Displayer\AbstractDisplayer', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Renderers\AbstractRenderer
+         */
+        protected function getMockAbstractRenderer($methodes = array())
+        {
+            return $this->getMockAbstractClass('Serveur\Reponse\Renderers\AbstractRenderer', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Ressource\AbstractRessource
+         */
+        protected function getMockAbstractRessource($methodes = array())
+        {
+            return $this->getMockAbstractClass('Serveur\Traitement\Ressource\AbstractRessource', $methodes);
         }
 
         /**
@@ -199,6 +228,15 @@
 
         /**
          * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\ObjetReponse
+         */
+        protected function getMockObjetReponse($methodes = array())
+        {
+            return $this->getMock('Serveur\Lib\ObjetReponse', $methodes);
+        }
+
+        /**
+         * @param array $methodes
          * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Requete\RequeteManager
          */
         protected function getMockRestRequete($methodes = array())
@@ -217,15 +255,6 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Route\RouteMap
-         */
-        private function getMockRouteMap($methodes = array())
-        {
-            return $this->getMock('Serveur\Traitement\Route\RouteMap', $methodes);
-        }
-
-        /**
-         * @param array $methodes
          * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Requete\Server\Server
          */
         protected function getMockServer($methodes = array())
@@ -240,6 +269,15 @@
         protected function getMockTradManager($methodes = array())
         {
             return $this->getMock('Logging\I18n\TradManager', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\TraitementManager
+         */
+        protected function getMockTraitementManager($methodes = array())
+        {
+            return $this->getMock('Serveur\Traitement\TraitementManager', $methodes);
         }
 
         /**
