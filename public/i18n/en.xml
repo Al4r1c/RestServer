@@ -49,7 +49,6 @@
 		<message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 		<message code="20001">No valid return format found.</message>
 		<message code="20002">Remote client ip is not valid.</message>
-		<message code="20003">Key %s does not exist in the URI.</message>
 		<message code="20100">Missing server variables.</message>
 		<message code="20101">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 		<message code="30000">Méthode HTML "%s" invalide.</message>

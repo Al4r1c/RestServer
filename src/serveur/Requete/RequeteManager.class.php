@@ -84,8 +84,6 @@
             if (array_key_exists($clef, $this->_dataUri)) {
                 return $this->_dataUri[$clef];
             } else {
-                trigger_error_app(E_USER_NOTICE, 20003, $clef);
-
                 return null;
             }
         }
