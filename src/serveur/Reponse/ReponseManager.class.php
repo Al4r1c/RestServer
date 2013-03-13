@@ -81,7 +81,8 @@
         {
             if (!$headerManager instanceof \Serveur\Reponse\Header\Header) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager',
-                    $headerManager);
+                    $headerManager
+                );
             }
 
             $this->_header = $headerManager;
@@ -95,7 +96,8 @@
         {
             if (!$configuration instanceof \Serveur\Reponse\Config\Config) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Config\Config',
-                    $configuration);
+                    $configuration
+                );
             }
 
             $this->setFormats(
