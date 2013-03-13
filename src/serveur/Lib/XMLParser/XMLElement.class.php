@@ -114,8 +114,8 @@
             if (is_array($children)) {
                 foreach ($children as $unFils) {
                     if (!$unFils instanceof XMLElement) {
-                        throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\XMLParser\XMLElement',
-                            $unFils
+                        throw new ArgumentTypeException(
+                            1000, 500, __METHOD__, '\Serveur\Lib\XMLParser\XMLElement', $unFils
                         );
                     }
                 }
