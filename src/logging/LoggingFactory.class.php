@@ -1,9 +1,13 @@
 <?php
     namespace Logging;
 
+    use Logging\Displayer\Logger;
+    use Logging\I18n\I18nManager;
+    use Logging\I18n\TradManager;
+    use Serveur\Utils\FileManager;
+
     class LoggingFactory
     {
-
         private static $_langueDefaut = 'French';
         private static $_langueDispo = array('French' => 'fr', 'English' => 'en');
 
@@ -16,7 +20,7 @@
         {
             switch ($loggingMethode) {
                 case 'logger':
-                    $logger = new \Logging\Displayer\Logger();
+                    $logger = new Logger();
                     $logger->setTradManager(self::getI18n());
                     $logger->setFichierLogErreur(self::creerFichierSiNexistePas('errors.log'));
                     $logger->setFichierLogAcces(self::creerFichierSiNexistePas('access.log'));
@@ -34,10 +38,10 @@
          */
         private static function getI18n()
         {
-            $internationalizationManager = new \Logging\I18n\I18nManager();
+            $internationalizationManager = new I18nManager();
             $internationalizationManager->setConfig(self::$_langueDefaut, self::$_langueDispo);
 
-            $tradManager = new \Logging\I18n\TradManager();
+            $tradManager = new TradManager();
             $tradManager->setFichierTraduction($internationalizationManager->getFichierTraduction());
 
             return $tradManager;
@@ -49,7 +53,7 @@
          */
         private static function creerFichierSiNexistePas($nomFichier)
         {
-            $fichier = \Serveur\Utils\FileManager::getFichier();
+            $fichier = FileManager::getFichier();
             $fichier->setFichierParametres($nomFichier, BASE_PATH . '/log');
             $fichier->creerFichier('0700');
 

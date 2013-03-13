@@ -1,13 +1,15 @@
 <?php
     namespace Serveur\Traitement\Ressource;
 
+    use Serveur\Lib\ObjetReponse;
+
     abstract class AbstractRessource
     {
         /**
          * @param int $id
          * @param array $donnees
          * @param string $champs
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         public function doGet($id, $donnees, $champs)
         {
@@ -27,7 +29,7 @@
         /**
          * @param int $id
          * @param array $donnees
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         public function doPut($id, $donnees)
         {
@@ -40,7 +42,7 @@
 
         /**
          * @param array $donnees
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         public function doPost($donnees)
         {
@@ -49,7 +51,7 @@
 
         /**
          * @param int $id
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         public function doDelete($id)
         {
@@ -61,22 +63,22 @@
         }
 
         /**
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected function forbidden()
         {
-            $objetReponse = new \Serveur\Lib\ObjetReponse();
+            $objetReponse = new ObjetReponse();
             $objetReponse->setErreurHttp(403);
 
             return $objetReponse;
         }
 
         /**
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected function missingArgument()
         {
-            $objetReponse = new \Serveur\Lib\ObjetReponse();
+            $objetReponse = new ObjetReponse();
             $objetReponse->setErreurHttp(400);
 
             return $objetReponse;
@@ -84,40 +86,40 @@
 
         /**
          * @param array $donnees
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected abstract function creer($donnees);
 
         /**
          * @param array $champs
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected abstract function recupererCollection($champs);
 
         /**
          * @param int $id
          * @param array $champs
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected abstract function recuperer($id, $champs);
 
         /**
          * @param int $id
          * @param array $donnees
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected abstract function mettreAJour($id, $donnees);
 
         /**
          * @param int $id
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected abstract function supprimer($id);
 
         /**
          * @param array $filtres
          * @param array $champs
-         * @return \Serveur\Lib\ObjetReponse
+         * @return ObjetReponse
          */
         protected abstract function rechercher($filtres, $champs);
     }

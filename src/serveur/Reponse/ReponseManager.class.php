@@ -4,12 +4,14 @@
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
     use Serveur\GestionErreurs\Exceptions\MainException;
     use Serveur\Lib\ObjetReponse;
+    use Serveur\Reponse\Config\Config;
+    use Serveur\Reponse\Header\Header;
     use Serveur\Utils\Constante;
 
     class ReponseManager
     {
         /**
-         * @var \Serveur\Reponse\Header\Header
+         * @var Header
          */
         private $_header;
 
@@ -74,26 +76,30 @@
         }
 
         /**
-         * @param \Serveur\Reponse\Header\Header $headerManager
+         * @param Header $headerManager
          * @throws ArgumentTypeException
          */
         public function setHeader($headerManager)
         {
-            if (!$headerManager instanceof \Serveur\Reponse\Header\Header) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager', $headerManager);
+            if (!$headerManager instanceof Header) {
+                throw new ArgumentTypeException(
+                    1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager', $headerManager
+                );
             }
 
             $this->_header = $headerManager;
         }
 
         /**
-         * @param \Serveur\Reponse\Config\Config $configuration
+         * @param Config $configuration
          * @throws ArgumentTypeException
          */
         public function setConfig($configuration)
         {
-            if (!$configuration instanceof \Serveur\Reponse\Config\Config) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Config\Config', $configuration);
+            if (!$configuration instanceof Config) {
+                throw new ArgumentTypeException(
+                    1000, 500, __METHOD__, '\Serveur\Reponse\Config\Config', $configuration
+                );
             }
 
             $this->setFormats(

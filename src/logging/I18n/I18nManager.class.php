@@ -1,13 +1,16 @@
 <?php
     namespace Logging\I18n;
 
+    use Serveur\Lib\Fichier;
+    use Serveur\Lib\XMLParser\XMLParser;
+    use Serveur\Utils\FileManager;
+
     class I18nManager
     {
         /**
          * @var string
          */
         private $_langueDefaut;
-
         /**
          * @var string[]
          */
@@ -50,7 +53,7 @@
         }
 
         /**
-         * @return \Serveur\Lib\XMLParser\XMLParser
+         * @return XMLParser
          * @throws \Exception
          * */
         public function getFichierTraduction()
@@ -77,14 +80,24 @@
         }
 
         /**
-         * @return \Serveur\Lib\Fichier
+         * @param $nomFichier
+         * @return Fichier
          */
         protected function getFichier($nomFichier)
         {
-            $fichier = \Serveur\Utils\FileManager::getFichier();
+            $fichier = FileManager::getFichier();
             $fichier->setFichierParametres($nomFichier . '.xml', '/public/i18n');
 
             return $fichier;
+        }
+
+        /**
+         * @param Fichier $fichier
+         * @return XMLParser
+         */
+        private function recupererXmlParserDepuisFichier(Fichier $fichier)
+        {
+            return $fichier->chargerFichier();
         }
 
         /**
@@ -103,13 +116,5 @@
             }
 
             return false;
-        }
-
-        /**
-         * @return \Serveur\Lib\XMLParser\XMLParser
-         */
-        private function recupererXmlParserDepuisFichier(\Serveur\Lib\Fichier $fichier)
-        {
-            return $fichier->chargerFichier();
         }
     }

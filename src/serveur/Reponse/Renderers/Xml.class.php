@@ -1,7 +1,7 @@
 <?php
     namespace Serveur\Reponse\Renderers;
 
-    class Xml extends \Serveur\Reponse\Renderers\AbstractRenderer
+    class Xml extends AbstractRenderer
     {
         /**
          * @param array $donnees

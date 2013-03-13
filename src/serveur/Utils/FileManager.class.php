@@ -2,6 +2,7 @@
     namespace Serveur\Utils;
 
     use Serveur\Lib\Fichier;
+    use Serveur\Lib\FileSystem;
 
     class FileManager
     {
@@ -10,7 +11,7 @@
          */
         public static function getFichier()
         {
-            $fileSystem = new \Serveur\Lib\FileSystem();
+            $fileSystem = new FileSystem();
             $fileSystem->initialiser(php_uname('s'), BASE_PATH);
 
             $fichier = new Fichier();

@@ -1,7 +1,7 @@
 <?php
     namespace Serveur\Reponse\Renderers;
 
-    class Html extends \Serveur\Reponse\Renderers\AbstractRenderer
+    class Html extends AbstractRenderer
     {
 
         public static $templateHtml = "<!DOCTYPE html>

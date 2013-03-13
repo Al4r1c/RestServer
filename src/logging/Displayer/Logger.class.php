@@ -2,26 +2,32 @@
     namespace Logging\Displayer;
 
     use Logging\Displayer\AbstractDisplayer;
+    use Serveur\GestionErreurs\Types\AbstractTypeErreur;
+    use Serveur\GestionErreurs\Types\Error;
+    use Serveur\GestionErreurs\Types\Notice;
+    use Serveur\Lib\Fichier;
+    use Serveur\Reponse\ReponseManager;
+    use Serveur\Requete\RequeteManager;
 
     class Logger extends AbstractDisplayer
     {
         /**
-         * @var \Serveur\Lib\Fichier
+         * @var Fichier
          */
         private $_fichierLogErreur;
 
         /**
-         * @var \Serveur\Lib\Fichier
+         * @var Fichier
          */
         private $_fichierLogAcces;
 
         /**
-         * @param \Serveur\Lib\Fichier $fichierLogAcces
+         * @param Fichier $fichierLogAcces
          * @throws \InvalidArgumentException
          */
         public function setFichierLogAcces($fichierLogAcces)
         {
-            if (!$fichierLogAcces instanceof \Serveur\Lib\Fichier) {
+            if (!$fichierLogAcces instanceof Fichier) {
                 throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
             }
 
@@ -29,12 +35,12 @@
         }
 
         /**
-         * @param \Serveur\Lib\Fichier $fichierLogErreur
+         * @param Fichier $fichierLogErreur
          * @throws \InvalidArgumentException
          */
         public function setFichierLogErreur($fichierLogErreur)
         {
-            if (!$fichierLogErreur instanceof \Serveur\Lib\Fichier) {
+            if (!$fichierLogErreur instanceof Fichier) {
                 throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
             }
 
@@ -42,17 +48,17 @@
         }
 
         /**
-         * @param \Serveur\Requete\RequeteManager $restRequete
+         * @param RequeteManager $restRequete
          * @throws \InvalidArgumentException
          * @throws \Exception
          */
         protected function logRequete($restRequete)
         {
-            if (!$restRequete instanceof \Serveur\Requete\RequeteManager) {
+            if (!$restRequete instanceof RequeteManager) {
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restRequete)));
             }
 
-            if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()
+            if (!($this->_fichierLogAcces instanceof Fichier) || !$this->_fichierLogAcces->fichierExiste()
             ) {
                 throw new \Exception('Invalid log access file or file not found.');
             }
@@ -76,17 +82,17 @@
         }
 
         /**
-         * @param \Serveur\Reponse\ReponseManager $restReponse
+         * @param ReponseManager $restReponse
          * @throws \InvalidArgumentException
          * @throws \Exception
          */
         protected function logReponse($restReponse)
         {
-            if (!$restReponse instanceof \Serveur\Reponse\ReponseManager) {
+            if (!$restReponse instanceof ReponseManager) {
                 throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restReponse)));
             }
 
-            if (!($this->_fichierLogAcces instanceof \Serveur\Lib\Fichier) || !$this->_fichierLogAcces->fichierExiste()
+            if (!($this->_fichierLogAcces instanceof Fichier) || !$this->_fichierLogAcces->fichierExiste()
             ) {
                 throw new \Exception('Invalid log access file or file not found.');
             }
@@ -100,22 +106,21 @@
         }
 
         /**
-         * @param \Serveur\GestionErreurs\Types\AbstractTypeErreur $uneErreur
+         * @param AbstractTypeErreur $uneErreur
          * @throws \InvalidArgumentException
          * @throws \Exception
          */
         protected function ecrireMessageErreur($uneErreur)
         {
-            if ($uneErreur instanceof \Serveur\GestionErreurs\Types\Error) {
+            if ($uneErreur instanceof Error) {
                 $message = '{trad.fatalerror}: ' . $uneErreur->getMessage();
-            } elseif ($uneErreur instanceof \Serveur\GestionErreurs\Types\Notice) {
+            } elseif ($uneErreur instanceof Notice) {
                 $message = '{trad.notice}: ' . $uneErreur->getMessage();
             } else {
                 throw new \InvalidArgumentException(sprintf('Invalid error type %s.', get_class($uneErreur)));
             }
 
-            if (!($this->_fichierLogErreur instanceof \Serveur\Lib\Fichier) ||
-                !$this->_fichierLogErreur->fichierExiste()
+            if (!($this->_fichierLogErreur instanceof Fichier) || !$this->_fichierLogErreur->fichierExiste()
             ) {
                 throw new \Exception('Invalid log error file or file not found.');
             }

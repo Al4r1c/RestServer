@@ -67,7 +67,7 @@
                         break;
                 }
             } else {
-                $objetReponse = new \Serveur\Lib\ObjetReponse();
+                $objetReponse = new ObjetReponse();
                 $objetReponse->setErreurHttp(404);
             }
 

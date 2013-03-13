@@ -3,8 +3,11 @@
 
     use Serveur\GestionErreurs\ErreurManager;
     use Serveur\GestionErreurs\Handler\ErreurHandler;
+    use Serveur\Reponse\Config\Config;
+    use Serveur\Reponse\Header\Header;
     use Serveur\Reponse\ReponseManager;
     use Serveur\Requete\RequeteManager;
+    use Serveur\Requete\Server\Server;
     use Serveur\Traitement\TraitementManager;
     use Serveur\Utils\FileManager;
 
@@ -20,14 +23,6 @@
             $this->buildConteneur();
         }
 
-        /**
-         * @return string[]
-         */
-        public function getConteneur()
-        {
-            return $this->_conteneur;
-        }
-
         private function buildConteneur()
         {
             $conteneur = new \Pimple();
@@ -40,7 +35,7 @@
             };
 
             $conteneur['Server'] = function () {
-                $server = new \Serveur\Requete\Server\Server();
+                $server = new Server();
                 $server->setVarServeur($_SERVER);
 
                 return $server;
@@ -76,14 +71,14 @@
             $conteneur['Config'] = function () {
                 $fichier = FileManager::getFichier();
                 $fichier->setFichierParametres('config.yaml', '/config');
-                $configurationManager = new \Serveur\Reponse\Config\Config();
+                $configurationManager = new Config();
                 $configurationManager->chargerConfiguration($fichier);
 
                 return $configurationManager;
             };
 
             $conteneur['Header'] = function () {
-                return new \Serveur\Reponse\Header\Header();
+                return new Header();
             };
 
 
@@ -101,6 +96,14 @@
             };
 
             $this->_conteneur = $conteneur;
+        }
+
+        /**
+         * @return string[]
+         */
+        public function getConteneur()
+        {
+            return $this->_conteneur;
         }
 
         /**

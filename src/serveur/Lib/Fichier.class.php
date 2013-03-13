@@ -7,7 +7,7 @@
     class Fichier
     {
         /**
-         * @var \Serveur\Lib\FileSystem
+         * @var FileSystem
          */
         private $_fileSystemInstance;
 
@@ -27,12 +27,12 @@
         }
 
         /**
-         * @param \Serveur\Lib\FileSystem $fileSystem
+         * @param FileSystem $fileSystem
          * @throws ArgumentTypeException
          */
         public function setFileSystem($fileSystem)
         {
-            if (!$fileSystem instanceof \Serveur\Lib\FileSystem) {
+            if (!$fileSystem instanceof FileSystem) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\FileSystem', $fileSystem);
             }
 

@@ -1,18 +1,20 @@
 <?php
     namespace Logging\Displayer;
 
+    use Logging\I18n\TradManager;
+
     abstract class AbstractDisplayer
     {
-        /** @var \Logging\I18n\TradManager */
+        /** @var TradManager */
         protected $_tradManager;
 
         /**
-         * @param \Logging\I18n\TradManager $tradManager
+         * @param TradManager $tradManager
          * @throws \InvalidArgumentException
          */
         public function setTradManager($tradManager)
         {
-            if (!$tradManager instanceof \Logging\I18n\TradManager) {
+            if (!$tradManager instanceof TradManager) {
                 throw new \InvalidArgumentException();
             }
 

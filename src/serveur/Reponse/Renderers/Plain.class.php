@@ -1,7 +1,7 @@
 <?php
     namespace Serveur\Reponse\Renderers;
 
-    class Plain extends \Serveur\Reponse\Renderers\AbstractRenderer
+    class Plain extends AbstractRenderer
     {
         /**
          * @param array $donnees

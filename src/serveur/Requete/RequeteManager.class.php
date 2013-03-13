@@ -4,6 +4,8 @@
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
     use Serveur\GestionErreurs\Exceptions\MainException;
     use Serveur\Lib\TypeDetector;
+    use Serveur\Requete\Server\Server;
+    use Serveur\Utils\Constante;
 
     class RequeteManager
     {
@@ -38,12 +40,12 @@
         private $_dateRequete;
 
         /**
-         * @param \Serveur\Requete\Server\Server $server
+         * @param Server $server
          * @throws ArgumentTypeException
          */
         public function parseServer($server)
         {
-            if (!$server instanceof \Serveur\Requete\Server\Server) {
+            if (!$server instanceof Server) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Requete\Server\Server', $server);
             }
 
@@ -138,7 +140,7 @@
                 throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $format);
             }
 
-            $typeDetector = new TypeDetector(\Serveur\Utils\Constante::chargerConfig('mimes'));
+            $typeDetector = new TypeDetector(Constante::chargerConfig('mimes'));
             $formatsTrouves = $typeDetector->extraireMimesTypeHeader($format);
 
             if (isNull($formatsTrouves)) {

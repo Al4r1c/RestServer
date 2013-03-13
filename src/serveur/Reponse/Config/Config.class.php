@@ -3,30 +3,29 @@
 
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
     use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\Lib\Fichier;
 
     class Config
     {
-
-        /**
-         * @var array
-         */
-        private $_applicationConfiguration = array();
-
         /**
          * @var array
          */
         private static $_clefMinimales = array('config',
             'config.default_render',
             'render');
+        /**
+         * @var array
+         */
+        private $_applicationConfiguration = array();
 
         /**
-         * @param \Serveur\Lib\Fichier $fichierFramework
+         * @param Fichier $fichierFramework
          * @throws ArgumentTypeException
          * @throws MainException
          */
         public function chargerConfiguration($fichierFramework)
         {
-            if (!$fichierFramework instanceof \Serveur\Lib\Fichier) {
+            if (!$fichierFramework instanceof Fichier) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
             }
 
