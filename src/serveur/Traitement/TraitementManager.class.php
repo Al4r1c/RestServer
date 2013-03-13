@@ -5,9 +5,37 @@
     use Serveur\Traitement\Ressource\AbstractRessource;
     use Serveur\Lib\ObjetReponse;
     use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class TraitementManager
     {
+        /**
+         * @var callable
+         */
+        private $_factoryRessource;
+
+        /**
+         * @param callable $callableFactoryRessource
+         * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+         */
+        public function setFactoryRessource($callableFactoryRessource)
+        {
+            if (!is_callable($callableFactoryRessource)) {
+                throw new ArgumentTypeException(1000, 400, __METHOD__, 'callable', $callableFactoryRessource);
+            }
+
+            $this->_factoryRessource = $callableFactoryRessource;
+        }
+
+        public function recupererNouvelleInstanceRessource($nomRessource)
+        {
+            if (isNull($this->_factoryRessource)) {
+                throw new MainException(30001, 500);
+            }
+
+            return call_user_func($this->_factoryRessource, $nomRessource);
+        }
+
         /**
          * @param RequeteManager $requete
          * @throws MainException
@@ -16,15 +44,14 @@
         public function traiterRequeteEtRecupererResultat($requete)
         {
             /** @var $ressourceObjet AbstractRessource */
-            if (($ressourceObjet = $this->getRessourceClass($requete->getUriVariable(0))) !== false) {
+            if (($ressourceObjet = $this->recupererNouvelleInstanceRessource($requete->getUriVariable(0))) !== false) {
                 switch (strtoupper($requete->getMethode())) {
                     case 'GET':
-                        $objetReponse =
-                            $ressourceObjet->doGet(
-                                $requete->getUriVariable(1),
-                                $requete->getParametres(),
-                                $requete->getUriVariable(2)
-                            );
+                        $objetReponse = $ressourceObjet->doGet(
+                            $requete->getUriVariable(1),
+                            $requete->getParametres(),
+                            $requete->getUriVariable(2)
+                        );
                         break;
                     case 'POST':
                         $objetReponse = $ressourceObjet->doPost($requete->getUriVariable(1), $requete->getParametres());
@@ -45,19 +72,5 @@
             }
 
             return $objetReponse;
-        }
-
-        /**
-         * @param $nomRessourceDemandee
-         * @return AbstractRessource
-         * @codeCoverageIgnore
-         */
-        protected function getRessourceClass($nomRessourceDemandee)
-        {
-            if (class_exists($classeRessource = '\\Ressource\\' . ucfirst(strtolower($nomRessourceDemandee)))) {
-                return new $classeRessource();
-            } else {
-                return false;
-            }
         }
     }

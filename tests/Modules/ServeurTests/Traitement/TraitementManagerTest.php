@@ -8,6 +8,67 @@
 
     class TraitementManagerTest extends TestCase
     {
+        /**
+         * @var TraitementManager
+         */
+        private $_traitementManager;
+
+        public function setUp()
+        {
+            $this->_traitementManager = new TraitementManager();
+        }
+
+        public function setFakeCallable($mockArg)
+        {
+            $callable = function () use ($mockArg) {
+                $abstractRessource = $this->createMock('AbstractRessource', $mockArg);
+
+                return $abstractRessource;
+            };
+
+            $this->_traitementManager->setFactoryRessource($callable);
+        }
+
+        public function testSetFactoryRessource()
+        {
+            $callable = function () {
+            };
+
+            $this->_traitementManager->setFactoryRessource($callable);
+            $this->assertAttributeEquals($callable, '_factoryRessource', $this->_traitementManager);
+        }
+
+        /**
+         * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+         */
+        public function testSetFactoryOnlyCallable()
+        {
+            $this->_traitementManager->setFactoryRessource(array());
+        }
+
+        public function testRecupererRessource()
+        {
+            $callable = function ($ressName) {
+                return $ressName;
+            };
+
+            $this->_traitementManager->setFactoryRessource($callable);
+
+            $this->assertEquals(
+                'myRessName',
+                $this->_traitementManager->recupererNouvelleInstanceRessource('myRessName')
+            );
+        }
+
+        /**
+         * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+         * @expectedExceptionCode 30001
+         */
+        public function testRecupererSansAvoirSetFactory()
+        {
+            $this->_traitementManager->recupererNouvelleInstanceRessource('Gonna bug down');
+        }
+
         public function testTraiterGet()
         {
             $requete = new RequeteManager();
@@ -20,20 +81,11 @@
                 new MockArg('getDonneesReponse', array('here' => 'some data'))
             );
 
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('doGet', $objetReponse, array(1, array('data1' => 'var1')))
-            );
-
-            /** @var TraitementManager $traitementManager */
-            $traitementManager = $this->createMock(
-                'TraitementManager',
-                new MockArg('getRessourceClass', $abstractRessource, array('path'))
-            );
+            $this->setFakeCallable(new MockArg('doGet', $objetReponse, array(1, array('data1' => 'var1'))));
 
             $this->assertEquals(
                 array('here' => 'some data'),
-                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+                $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
             );
         }
 
@@ -49,20 +101,11 @@
                 new MockArg('getDonneesReponse', array('here' => 'some data'))
             );
 
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('doPut', $objetReponse, array(1, array('data1' => 'var1')))
-            );
-
-            /** @var TraitementManager $traitementManager */
-            $traitementManager = $this->createMock(
-                'TraitementManager',
-                new MockArg('getRessourceClass', $abstractRessource, array('path'))
-            );
+            $this->setFakeCallable(new MockArg('doPut', $objetReponse, array(1, array('data1' => 'var1'))));
 
             $this->assertEquals(
                 array('here' => 'some data'),
-                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+                $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
             );
         }
 
@@ -78,20 +121,11 @@
                 new MockArg('getDonneesReponse', array('here' => 'some data'))
             );
 
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('doPost', $objetReponse, array(1, array('data1' => 'var1')))
-            );
-
-            /** @var TraitementManager $traitementManager */
-            $traitementManager = $this->createMock(
-                'TraitementManager',
-                new MockArg('getRessourceClass', $abstractRessource, array('path'))
-            );
+            $this->setFakeCallable(new MockArg('doPost', $objetReponse, array(1, array('data1' => 'var1'))));
 
             $this->assertEquals(
                 array('here' => 'some data'),
-                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+                $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
             );
         }
 
@@ -106,20 +140,11 @@
                 new MockArg('getDonneesReponse', array('here' => 'some data'))
             );
 
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('doDelete', $objetReponse, array(1))
-            );
-
-            /** @var TraitementManager $traitementManager */
-            $traitementManager = $this->createMock(
-                'TraitementManager',
-                new MockArg('getRessourceClass', $abstractRessource, array('path'))
-            );
+            $this->setFakeCallable(new MockArg('doDelete', $objetReponse, array(1)));
 
             $this->assertEquals(
                 array('here' => 'some data'),
-                $traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
+                $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getDonneesReponse()
             );
         }
 
@@ -129,13 +154,18 @@
             $requete->setMethode('GET');
             $requete->setVariableUri('/unknown');
 
-            /** @var TraitementManager $traitementManager */
-            $traitementManager = $this->createMock(
-                'TraitementManager',
-                new MockArg('getRessourceClass', false, array('unknown'))
-            );
+            $callable = function ($arg) {
+                $this->assertEquals('unknown', $arg);
 
-            $this->assertEquals(404, $traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp());
+                return false;
+            };
+
+            $this->_traitementManager->setFactoryRessource($callable);
+
+            $this->assertEquals(
+                404,
+                $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
+            );
         }
 
         /**
@@ -150,11 +180,14 @@
             );
             $requete->setVariableUri('/path/1');
 
-            $traitementManager = $this->createMock(
-                'TraitementManager',
-                new MockArg('getRessourceClass', $this->getMockAbstractRessource())
-            );
+            $callable = function ($arg) {
+                $this->assertEquals('path', $arg);
 
-            $traitementManager->traiterRequeteEtRecupererResultat($requete);
+                return true;
+            };
+
+            $this->_traitementManager->setFactoryRessource($callable);
+
+            $this->_traitementManager->traiterRequeteEtRecupererResultat($requete);
         }
     }

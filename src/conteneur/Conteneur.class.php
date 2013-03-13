@@ -42,8 +42,19 @@
 
             $conteneur['TraitementManager'] = function ($c) {
                 $traitementManager = new \Serveur\Traitement\TraitementManager();
+                $traitementManager->setFactoryRessource($c['FactoryRessource']);
 
                 return $traitementManager;
+            };
+
+            $conteneur['FactoryRessource'] = function () {
+                return function ($nomRessourceDemandee) {
+                    if (class_exists($classeRessource = '\\Ressource\\' . ucfirst(strtolower($nomRessourceDemandee)))) {
+                        return new $classeRessource();
+                    } else {
+                        return false;
+                    }
+                };
             };
 
 
