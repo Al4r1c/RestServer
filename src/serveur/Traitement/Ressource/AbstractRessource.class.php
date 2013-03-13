@@ -6,16 +6,21 @@
         /**
          * @param int $id
          * @param array $donnees
+         * @param string $champs
          * @return \Serveur\Lib\ObjetReponse
          */
-        public function doGet($id, $donnees)
+        public function doGet($id, $donnees, $champs)
         {
+            if (!isNull($champs)) {
+                $champs = explode(',', $champs);
+            }
+
             if (!isNull($id)) {
-                return $this->getSingle($id);
-            } elseif (!isNull($donnees)) {
-                return $this->search($donnees);
+                return $this->recuperer($id, $champs);
+            } elseif (isNull($id) && !isNull($donnees)) {
+                return $this->rechercher($donnees, $champs);
             } else {
-                return $this->getAll();
+                return $this->recupererCollection($champs);
             }
         }
 
@@ -29,7 +34,7 @@
             if (isNull($id)) {
                 return $this->missingArgument();
             } else {
-                return $this->update($id, $donnees);
+                return $this->mettreAJour($id, $donnees);
             }
         }
 
@@ -39,7 +44,7 @@
          */
         public function doPost($donnees)
         {
-            return $this->create($donnees);
+            return $this->creer($donnees);
         }
 
         /**
@@ -51,7 +56,7 @@
             if (isNull($id)) {
                 return $this->missingArgument();
             } else {
-                return $this->delete($id);
+                return $this->supprimer($id);
             }
         }
 
@@ -81,35 +86,38 @@
          * @param array $donnees
          * @return \Serveur\Lib\ObjetReponse
          */
-        protected abstract function create($donnees);
+        protected abstract function creer($donnees);
 
         /**
+         * @param array $champs
          * @return \Serveur\Lib\ObjetReponse
          */
-        protected abstract function getAll();
+        protected abstract function recupererCollection($champs);
 
         /**
          * @param int $id
+         * @param array $champs
          * @return \Serveur\Lib\ObjetReponse
          */
-        protected abstract function getSingle($id);
+        protected abstract function recuperer($id, $champs);
 
         /**
          * @param int $id
          * @param array $donnees
          * @return \Serveur\Lib\ObjetReponse
          */
-        protected abstract function update($id, $donnees);
+        protected abstract function mettreAJour($id, $donnees);
 
         /**
          * @param int $id
          * @return \Serveur\Lib\ObjetReponse
          */
-        protected abstract function delete($id);
+        protected abstract function supprimer($id);
 
         /**
          * @param array $filtres
+         * @param array $champs
          * @return \Serveur\Lib\ObjetReponse
          */
-        protected abstract function search($filtres);
+        protected abstract function rechercher($filtres, $champs);
     }

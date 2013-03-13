@@ -19,7 +19,12 @@
             if (($ressourceObjet = $this->getRessourceClass($requete->getUriVariable(0))) !== false) {
                 switch (strtoupper($requete->getMethode())) {
                     case 'GET':
-                        $objetReponse = $ressourceObjet->doGet($requete->getUriVariable(1), $requete->getParametres());
+                        $objetReponse =
+                            $ressourceObjet->doGet(
+                                $requete->getUriVariable(1),
+                                $requete->getParametres(),
+                                $requete->getUriVariable(2)
+                            );
                         break;
                     case 'POST':
                         $objetReponse = $ressourceObjet->doPost($requete->getUriVariable(1), $requete->getParametres());
