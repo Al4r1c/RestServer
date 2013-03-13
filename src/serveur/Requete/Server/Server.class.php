@@ -1,8 +1,8 @@
 <?php
     namespace Serveur\Requete\Server;
 
-    use Serveur\GestionErreurs\Exceptions\MainException;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\MainException;
 
     class Server
     {

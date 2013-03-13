@@ -1,8 +1,8 @@
 <?php
     namespace Tests\ServeurTests\Requete;
 
-    use Tests\TestCase;
     use Serveur\Requete\Server\Server;
+    use Tests\TestCase;
 
     class ServerTest extends TestCase
     {

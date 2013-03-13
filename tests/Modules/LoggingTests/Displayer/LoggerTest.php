@@ -1,13 +1,13 @@
 <?php
     namespace Tests\LoggingTests\Displayer;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
-    use org\bovigo\vfs\vfsStreamWrapper;
-    use org\bovigo\vfs\vfsStream;
-    use Serveur\Lib\Fichier;
     use Serveur\GestionErreurs\Types\Error;
     use Serveur\GestionErreurs\Types\Notice;
+    use Serveur\Lib\Fichier;
+    use Tests\MockArg;
+    use Tests\TestCase;
+    use org\bovigo\vfs\vfsStream;
+    use org\bovigo\vfs\vfsStreamWrapper;
 
     class LoggerTest extends TestCase
     {

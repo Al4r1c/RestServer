@@ -1,9 +1,9 @@
 <?php
     namespace Tests\ServeurTests\Lib;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Lib\ObjetReponse;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class ObjetReponseTest extends TestCase
     {

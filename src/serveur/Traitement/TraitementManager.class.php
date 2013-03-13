@@ -1,11 +1,11 @@
 <?php
     namespace Serveur\Traitement;
 
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\Lib\ObjetReponse;
     use Serveur\Requete\RequeteManager;
     use Serveur\Traitement\Ressource\AbstractRessource;
-    use Serveur\Lib\ObjetReponse;
-    use Serveur\GestionErreurs\Exceptions\MainException;
-    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class TraitementManager
     {

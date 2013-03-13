@@ -1,9 +1,9 @@
 <?php
     namespace Tests\ServeurTests\GestionErreurs;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\GestionErreurs\Handler\ErreurHandler;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class ErreurHandlerTest extends TestCase
     {

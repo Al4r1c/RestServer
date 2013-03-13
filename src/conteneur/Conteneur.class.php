@@ -1,6 +1,13 @@
 <?php
     namespace Conteneur;
 
+    use Serveur\GestionErreurs\ErreurManager;
+    use Serveur\GestionErreurs\Handler\ErreurHandler;
+    use Serveur\Reponse\ReponseManager;
+    use Serveur\Requete\RequeteManager;
+    use Serveur\Traitement\TraitementManager;
+    use Serveur\Utils\FileManager;
+
     class Conteneur
     {
         /**
@@ -26,7 +33,7 @@
             $conteneur = new \Pimple();
 
             $conteneur['RequeteManager'] = function ($c) {
-                $restRequete = new \Serveur\Requete\RequeteManager();
+                $restRequete = new RequeteManager();
                 $restRequete->parseServer($c['Server']);
 
                 return $restRequete;
@@ -41,7 +48,7 @@
 
 
             $conteneur['TraitementManager'] = function ($c) {
-                $traitementManager = new \Serveur\Traitement\TraitementManager();
+                $traitementManager = new TraitementManager();
                 $traitementManager->setFactoryRessource($c['FactoryRessource']);
 
                 return $traitementManager;
@@ -59,7 +66,7 @@
 
 
             $conteneur['ReponseManager'] = function ($c) {
-                $restReponse = new \Serveur\Reponse\ReponseManager();
+                $restReponse = new ReponseManager();
                 $restReponse->setConfig($c['Config']);
                 $restReponse->setHeader($c['Header']);
 
@@ -67,7 +74,7 @@
             };
 
             $conteneur['Config'] = function () {
-                $fichier = \Serveur\Utils\FileManager::getFichier();
+                $fichier = FileManager::getFichier();
                 $fichier->setFichierParametres('config.yaml', '/config');
                 $configurationManager = new \Serveur\Reponse\Config\Config();
                 $configurationManager->chargerConfiguration($fichier);
@@ -82,7 +89,7 @@
 
             $conteneur['ErreurManager'] = $conteneur->share(
                 function ($c) {
-                    $errorManager = new \Serveur\GestionErreurs\ErreurManager();
+                    $errorManager = new ErreurManager();
                     $errorManager->setErrorHandler($c['ErreurHandler']);
 
                     return $errorManager;
@@ -90,14 +97,14 @@
             );
 
             $conteneur['ErreurHandler'] = function () {
-                return new \Serveur\GestionErreurs\Handler\ErreurHandler();
+                return new ErreurHandler();
             };
 
             $this->_conteneur = $conteneur;
         }
 
         /**
-         * @return \Serveur\Requete\RequeteManager
+         * @return RequeteManager
          */
         public function getRequeteManager()
         {
@@ -105,7 +112,7 @@
         }
 
         /**
-         * @return \Serveur\Traitement\TraitementManager
+         * @return TraitementManager
          */
         public function getTraitementManager()
         {
@@ -113,7 +120,7 @@
         }
 
         /**
-         * @return \Serveur\Reponse\ReponseManager
+         * @return ReponseManager
          */
         public function getReponseManager()
         {
@@ -121,7 +128,7 @@
         }
 
         /**
-         * @return \Serveur\GestionErreurs\ErreurManager
+         * @return ErreurManager
          */
         public function getErrorManager()
         {

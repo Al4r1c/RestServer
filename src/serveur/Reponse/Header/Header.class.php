@@ -1,9 +1,9 @@
 <?php
     namespace Serveur\Reponse\Header;
 
-    use Serveur\Utils\Tools;
-    use Serveur\GestionErreurs\Exceptions\MainException;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\Utils\Tools;
 
     class Header
     {

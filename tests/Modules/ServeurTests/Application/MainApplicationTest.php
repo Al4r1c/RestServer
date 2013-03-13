@@ -1,10 +1,10 @@
 <?php
     namespace Tests\ServeurTests\Application;
 
-    use Serveur\MainApplication;
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\MainApplication;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class MainApplicationTest extends TestCase
     {

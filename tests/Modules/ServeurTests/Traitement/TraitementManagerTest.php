@@ -1,10 +1,10 @@
 <?php
     namespace Tests\ServeurTests\Traitement;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Requete\RequeteManager;
     use Serveur\Traitement\TraitementManager;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class TraitementManagerTest extends TestCase
     {

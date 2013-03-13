@@ -1,9 +1,9 @@
 <?php
     namespace Tests\ServeurTests\Lib;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Lib\TypeDetector;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class TypeDetectorTest extends TestCase
     {

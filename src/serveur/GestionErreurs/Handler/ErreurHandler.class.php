@@ -1,8 +1,8 @@
 <?php
     namespace Serveur\GestionErreurs\Handler;
 
-    use Serveur\GestionErreurs\Types\Notice;
     use Serveur\GestionErreurs\Types\Error;
+    use Serveur\GestionErreurs\Types\Notice;
 
     class ErreurHandler
     {

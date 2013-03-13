@@ -1,8 +1,8 @@
 <?php
     namespace Tests\ServeurTests\Reponse;
 
-    use Tests\TestCase;
     use Serveur\Reponse\Header\Header;
+    use Tests\TestCase;
 
     class HeaderManagerTest extends TestCase
     {

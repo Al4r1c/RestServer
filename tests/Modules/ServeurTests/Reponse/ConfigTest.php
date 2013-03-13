@@ -1,9 +1,9 @@
 <?php
     namespace Tests\ServeurTests\Reponse;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Reponse\Config\Config;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class ConfigTest extends TestCase
     {

@@ -2,8 +2,8 @@
     namespace Tests\ServeurTests\Lib;
 
     use Tests\TestCase;
-    use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
+    use org\bovigo\vfs\vfsStreamWrapper;
 
     class FichierChargementTest extends TestCase
     {

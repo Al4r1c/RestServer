@@ -1,8 +1,8 @@
 <?php
     namespace Serveur\Lib\XMLParser;
 
-    use Serveur\Lib\XMLParser\XMLElement;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+    use Serveur\Lib\XMLParser\XMLElement;
 
     class XMLParser
     {

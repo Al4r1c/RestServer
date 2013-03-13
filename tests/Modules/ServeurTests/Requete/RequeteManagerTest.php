@@ -1,9 +1,9 @@
 <?php
     namespace Tests\ServeurTests\Requete;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Requete\RequeteManager;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class RequeteManagerTest extends TestCase
     {

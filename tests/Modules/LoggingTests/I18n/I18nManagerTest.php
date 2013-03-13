@@ -1,8 +1,8 @@
 <?php
     namespace Tests\LoggingTests\I18n;
 
-    use Tests\TestCase;
     use Tests\MockArg;
+    use Tests\TestCase;
 
     class I18nManagerTest extends TestCase
     {

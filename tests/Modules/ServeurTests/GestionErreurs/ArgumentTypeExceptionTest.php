@@ -1,8 +1,8 @@
 <?php
     namespace Tests\ServeurTests\GestionErreurs;
 
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
     use Tests\TestCase;
-    use \Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 
     class ArgumentTypeExceptionTest extends TestCase
     {

@@ -1,9 +1,9 @@
 <?php
     namespace Tests\ServeurTests\Traitement;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Traitement\Ressource\AbstractRessource;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class AbstractRessourceTest extends TestCase
     {

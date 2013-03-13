@@ -1,9 +1,9 @@
 <?php
     namespace Serveur\Requete;
 
-    use Serveur\Lib\TypeDetector;
-    use Serveur\GestionErreurs\Exceptions\MainException;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+    use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\Lib\TypeDetector;
 
     class RequeteManager
     {

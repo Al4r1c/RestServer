@@ -1,10 +1,10 @@
 <?php
     namespace Serveur\Lib;
 
-    use Serveur\Utils\Tools;
-    use Serveur\Utils\Constante;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
     use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\Utils\Constante;
+    use Serveur\Utils\Tools;
 
     class ObjetReponse
     {

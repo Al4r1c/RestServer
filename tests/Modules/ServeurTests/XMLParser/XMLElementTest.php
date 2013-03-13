@@ -1,8 +1,8 @@
 <?php
     namespace Tests\ServeurTests\XMLParser;
 
-    use Tests\TestCase;
     use Serveur\Lib\XMLParser\XMLElement;
+    use Tests\TestCase;
 
     class XMLElementTest extends TestCase
     {

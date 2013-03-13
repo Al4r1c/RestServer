@@ -1,11 +1,11 @@
 <?php
     namespace Tests\ServeurTests\Lib;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Lib\FileSystem;
-    use org\bovigo\vfs\vfsStreamWrapper;
+    use Tests\MockArg;
+    use Tests\TestCase;
     use org\bovigo\vfs\vfsStream;
+    use org\bovigo\vfs\vfsStreamWrapper;
 
     class FileSystemTest extends TestCase
     {

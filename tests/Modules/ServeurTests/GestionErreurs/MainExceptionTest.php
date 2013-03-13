@@ -1,8 +1,8 @@
 <?php
     namespace Tests\ServeurTests\GestionErreurs;
 
-    use Tests\TestCase;
     use Serveur\GestionErreurs\Exceptions\MainException;
+    use Tests\TestCase;
 
     class MainExceptionTest extends TestCase
     {

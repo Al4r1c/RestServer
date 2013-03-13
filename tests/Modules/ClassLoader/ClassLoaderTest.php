@@ -2,8 +2,8 @@
     namespace Tests\ClassLoader;
 
     use Tests\TestCase;
-    use org\bovigo\vfs\vfsStreamWrapper;
     use org\bovigo\vfs\vfsStream;
+    use org\bovigo\vfs\vfsStreamWrapper;
 
     class ClassLoaderTest extends TestCase
     {

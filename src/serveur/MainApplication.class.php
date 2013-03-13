@@ -1,8 +1,8 @@
 <?php
     namespace Serveur;
 
-    use Serveur\Utils\Constante;
     use Serveur\GestionErreurs\Exceptions\MainException;
+    use Serveur\Utils\Constante;
 
     class MainApplication
     {

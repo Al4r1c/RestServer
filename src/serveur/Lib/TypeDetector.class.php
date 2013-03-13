@@ -1,8 +1,8 @@
 <?php
     namespace Serveur\Lib;
 
-    use Serveur\Utils\Constante;
     use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+    use Serveur\Utils\Constante;
 
     class TypeDetector
     {

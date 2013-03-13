@@ -1,9 +1,9 @@
 <?php
     namespace Tests\ServeurTests\Lib;
 
-    use Tests\TestCase;
-    use Tests\MockArg;
     use Serveur\Lib\Fichier;
+    use Tests\MockArg;
+    use Tests\TestCase;
 
     class FichierTest extends TestCase
     {
