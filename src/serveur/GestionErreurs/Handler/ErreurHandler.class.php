@@ -11,6 +11,18 @@
          */
         private $_observeursLoggerErreurs;
 
+        private static $_noticeCodes = array(E_COMPILE_ERROR, E_ERROR, E_CORE_ERROR, E_USER_ERROR, E_PARSE);
+        private static $_erreurCodes = array(E_WARNING,
+            E_CORE_WARNING,
+            E_COMPILE_WARNING,
+            E_USER_WARNING,
+            E_NOTICE,
+            E_USER_NOTICE,
+            E_STRICT,
+            E_DEPRECATED,
+            E_USER_DEPRECATED,
+            E_RECOVERABLE_ERROR);
+
         /**
          * @param \Serveur\GestionErreurs\Types\AbstractTypeErreur $erreur
          */
@@ -88,42 +100,23 @@
                 return null;
             }
 
-            switch ($codeErreur) {
-                case E_COMPILE_ERROR:
-                case E_ERROR:
-                case E_CORE_ERROR:
-                case E_USER_ERROR:
-                case E_PARSE:
-                    $erreur = new Error($codeErreur);
-                    $erreur->setMessage(
-                        '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                        $messageErreur
-                    );
-                    $this->ecrireErreur($erreur);
-                    throw new \Exception();
-                    break;
-
-                case E_WARNING:
-                case E_CORE_WARNING:
-                case E_COMPILE_WARNING:
-                case E_USER_WARNING:
-                case E_NOTICE:
-                case E_USER_NOTICE:
-                case E_STRICT:
-                case E_DEPRECATED:
-                case E_USER_DEPRECATED:
-                case E_RECOVERABLE_ERROR:
-                    $erreur = new Notice($codeErreur);
-                    $erreur->setMessage(
-                        '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                        $messageErreur
-                    );
-                    $this->ecrireErreur($erreur);
-                    break;
-
-                default:
-                    throw new \Exception('Type d\'erreur inconnu : [' . $codeErreur . '] ' . $messageErreur);
-                    break;
+            if (in_array($codeErreur, self::$_noticeCodes)) {
+                $erreur = new Error($codeErreur);
+                $erreur->setMessage(
+                    '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
+                    $messageErreur
+                );
+                $this->ecrireErreur($erreur);
+                throw new \Exception();
+            } elseif (in_array($codeErreur, self::$_erreurCodes)) {
+                $erreur = new Notice($codeErreur);
+                $erreur->setMessage(
+                    '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
+                    $messageErreur
+                );
+                $this->ecrireErreur($erreur);
+            } else {
+                throw new \Exception('Type d\'erreur inconnu : [' . $codeErreur . '] ' . $messageErreur);
             }
 
             return true;
