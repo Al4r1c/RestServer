@@ -21,7 +21,7 @@
         public function setFactoryRessource($callableFactoryRessource)
         {
             if (!is_callable($callableFactoryRessource)) {
-                throw new ArgumentTypeException(1000, 400, __METHOD__, 'callable', $callableFactoryRessource);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, 'callable', $callableFactoryRessource);
             }
 
             $this->_factoryRessource = $callableFactoryRessource;
