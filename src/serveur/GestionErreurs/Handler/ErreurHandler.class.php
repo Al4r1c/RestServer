@@ -59,7 +59,7 @@
          */
         public function global_ajouterErreur($erreurNumber, $codeErreur)
         {
-            $arguments = array_slice(func_get_args(), 2);
+            $arguments = func_get_arg(2);
 
             switch ($erreurNumber) {
                 case E_USER_ERROR:
