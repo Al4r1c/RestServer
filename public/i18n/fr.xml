@@ -25,6 +25,7 @@
 		<message code="200">Requête</message>
 		<message code="201">Variables de serveur et d'exécution</message>
 		<message code="300">Gestionnaire de traitement</message>
+		<message code="301">Configuraton de la base de données</message>
 		<message code="400">Réponse</message>
 		<message code="401">Gestionnaire des entêtes</message>
 		<message code="402">Fichier de configuration</message>
@@ -53,6 +54,7 @@
 		<message code="20101">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 		<message code="30000">Méthode HTML "%s" invalide.</message>
 		<message code="30001">La ressource factory n'a pas été paramétrée.</message>
+		<message code="30100">Numéro de port invalide %s. [0-65535]</message>
 		<message code="40000">Le format de retour configuré (%s) n'existe pas dans les rendus disponibles.</message>
 		<message code="40001">Les formats de retour acceptés sont invalides.</message>
 		<message code="40002">Charset %s invalide.</message>

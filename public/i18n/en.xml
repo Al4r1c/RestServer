@@ -25,6 +25,7 @@
 		<message code="200">Request</message>
 		<message code="201">Server and execution environment information</message>
 		<message code="300">Handling manager</message>
+		<message code="301">Database configuration</message>
 		<message code="400">Response</message>
 		<message code="401">Header Manager</message>
 		<message code="402">Configuration file</message>
@@ -53,6 +54,7 @@
 		<message code="20101">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 		<message code="30000">Invalid HTML method "%s".</message>
 		<message code="30001">Resource Factory is not set.</message>
+		<message code="30100">Invalid port number %s. [0-65535]</message>
 		<message code="40000">Output format set (%s) does not exist in available outputs.</message>
 		<message code="40001">Accepted output format are invalid.</message>
 		<message code="40002">Invalid charset %s.</message>
