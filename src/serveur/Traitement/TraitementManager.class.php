@@ -54,7 +54,7 @@
                         );
                         break;
                     case 'POST':
-                        $objetReponse = $ressourceObjet->doPost($requete->getUriVariable(1), $requete->getParametres());
+                        $objetReponse = $ressourceObjet->doPost($requete->getParametres());
                         break;
                     case 'PUT':
                         $objetReponse = $ressourceObjet->doPut($requete->getUriVariable(1), $requete->getParametres());
