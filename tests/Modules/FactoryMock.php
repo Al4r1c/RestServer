@@ -12,6 +12,9 @@
                 case 'abstractchargeurfichier':
                     $mock = $this->getMockAbstractChargeur($methodes);
                     break;
+                case 'abstractdatabase':
+                    $mock = $this->getMockAbstractDatabase($methodes);
+                    break;
                 case 'abstractdisplayer':
                     $mock = $this->getMockAbstractDisplayer($methodes);
                     break;
@@ -98,6 +101,15 @@
         protected function getMockAbstractChargeur($methodes = array())
         {
             return $this->getMockAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Data\AbstractDatabase
+         */
+        protected function getMockAbstractDatabase($methodes = array())
+        {
+            return $this->getMockAbstractClass('Serveur\Traitement\Data\AbstractDatabase', $methodes);
         }
 
         /**

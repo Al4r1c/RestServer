@@ -1,18 +1,22 @@
 <?php
-    function  trigger_error_app($erreurNumber, $codeErreur) {
+    function trigger_error_app($erreurNumber, $codeErreur)
+    {
         call_user_func_array($GLOBALS['global_function_ajouterErreur'], func_get_args());
     }
 
-    function isNull(&$donnee) {
+    function isNull(&$donnee)
+    {
         return (!isset($donnee) || is_null($donnee) || ((is_string($donnee)) && trim($donnee) == '') ||
-            ((is_array($donnee) || is_object($donnee)) && empty($donnee)));
+                ((is_array($donnee) || is_object($donnee)) && empty($donnee)));
     }
 
-    function startsWith($string, $stringRecherche) {
+    function startsWith($string, $stringRecherche)
+    {
         return !strncmp($string, $stringRecherche, strlen($stringRecherche));
     }
 
-    function array_keys_exist(array $keys, array $array) {
+    function array_keys_exist(array $keys, array $array)
+    {
         if (count(array_intersect($keys, array_keys($array))) == count($keys)) {
             return true;
         }
@@ -20,7 +24,8 @@
         return false;
     }
 
-    function array_search_recursif($needle, array $haystack) {
+    function array_search_recursif($needle, array $haystack)
+    {
         foreach ($haystack as $key => $value) {
             $current_key = $key;
             if ($needle === $value OR (is_array($value) && array_search_recursif($needle, $value) !== false)) {
@@ -31,7 +36,8 @@
         return false;
     }
 
-    function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues) {
+    function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues)
+    {
         if (count($tabKey) == 1) {
             if (array_key_exists($tabKey[0], $arrayValues)) {
                 return $arrayValues[$tabKey[0]];
