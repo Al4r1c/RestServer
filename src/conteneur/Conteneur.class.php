@@ -70,7 +70,7 @@
             $conteneur['DatabaseConfig'] = function () {
                 $dbConfig = new DatabaseConfig();
                 $fichier = FileManager::getFichier();
-                $fichier->setFichierParametres('database.yaml', 'config');
+                $fichier->setFichierParametres('databaseConfig.yaml', 'config');
                 $dbConfig->recupererInformationFichier($fichier);
 
                 return $dbConfig;
