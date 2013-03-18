@@ -1,64 +1,87 @@
 <?php
     namespace Serveur\Traitement\Ressource;
 
+    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
     use Serveur\Lib\ObjetReponse;
+    use Serveur\Traitement\Data\AbstractDatabase;
 
-    abstract class AbstractRessource
+    abstract class AbstractRessource implements IRessource
     {
         /**
-         * @param int $id
-         * @param array $donnees
-         * @param string $champs
-         * @return ObjetReponse
+         * @var AbstractDatabase
          */
-        public function doGet($id, $donnees, $champs)
+        private $_connectionDatabase;
+
+        /**
+         * @return AbstractDatabase
+         */
+        public function getConnectionDatabase()
         {
-            if (!isNull($champs)) {
-                $champs = explode(',', $champs);
+            return $this->_connectionDatabase;
+        }
+
+        /**
+         * @param AbstractDatabase $dbConnection
+         * @throws ArgumentTypeException
+         */
+        public function setConnectionDatabase($dbConnection)
+        {
+            if (!$dbConnection instanceof AbstractDatabase) {
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Traitement\Data\AbstractDatabase', $dbConnection);
             }
 
+            $this->_connectionDatabase = $dbConnection;
+        }
+
+        /**
+         * @param string $id
+         * @param array $parametres
+         * @return ObjetReponse
+         */
+        public function doGet($id, $parametres)
+        {
             if (!isNull($id)) {
-                return $this->recuperer($id, $champs);
-            } elseif (isNull($id) && !isNull($donnees)) {
-                return $this->rechercher($donnees, $champs);
+                return $this->getOne($id);
             } else {
-                return $this->recupererCollection($champs);
+                return $this->getAll($parametres);
             }
         }
 
         /**
-         * @param int $id
-         * @param array $donnees
+         * @param string $id
+         * @param array $parametres
          * @return ObjetReponse
          */
-        public function doPut($id, $donnees)
+        public function doPut($id, $parametres)
+        {
+            return $this->createOrUpdateIdempotent($id, $parametres);
+        }
+
+        /**
+         * @param string $id
+         * @param array $parametres
+         * @return ObjetReponse
+         */
+        public function doPost($id, $parametres)
         {
             if (isNull($id)) {
-                return $this->missingArgument();
+                return $this->createOne($parametres);
             } else {
-                return $this->mettreAJour($id, $donnees);
+                return $this->updateOne($id, $parametres);
             }
         }
 
         /**
-         * @param array $donnees
+         * @param string $id
+         * @param array $parametres
          * @return ObjetReponse
          */
-        public function doPost($donnees)
+        public function doDelete($id, $parametres)
         {
-            return $this->creer($donnees);
-        }
-
-        /**
-         * @param int $id
-         * @return ObjetReponse
-         */
-        public function doDelete($id)
-        {
-            if (isNull($id)) {
-                return $this->missingArgument();
+            if (!isNull($id)) {
+                return $this->deleteOne($id);
             } else {
-                return $this->supprimer($id);
+                return $this->deleteAll($parametres);
             }
         }
 
@@ -72,54 +95,4 @@
 
             return $objetReponse;
         }
-
-        /**
-         * @return ObjetReponse
-         */
-        protected function missingArgument()
-        {
-            $objetReponse = new ObjetReponse();
-            $objetReponse->setErreurHttp(400);
-
-            return $objetReponse;
-        }
-
-        /**
-         * @param array $donnees
-         * @return ObjetReponse
-         */
-        protected abstract function creer($donnees);
-
-        /**
-         * @param array $champs
-         * @return ObjetReponse
-         */
-        protected abstract function recupererCollection($champs);
-
-        /**
-         * @param int $id
-         * @param array $champs
-         * @return ObjetReponse
-         */
-        protected abstract function recuperer($id, $champs);
-
-        /**
-         * @param int $id
-         * @param array $donnees
-         * @return ObjetReponse
-         */
-        protected abstract function mettreAJour($id, $donnees);
-
-        /**
-         * @param int $id
-         * @return ObjetReponse
-         */
-        protected abstract function supprimer($id);
-
-        /**
-         * @param array $filtres
-         * @param array $champs
-         * @return ObjetReponse
-         */
-        protected abstract function rechercher($filtres, $champs);
     }

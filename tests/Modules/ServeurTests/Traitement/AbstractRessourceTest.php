@@ -1,37 +1,41 @@
 <?php
     namespace Tests\ServeurTests\Traitement;
 
+    use Serveur\Lib\ObjetReponse;
     use Serveur\Traitement\Ressource\AbstractRessource;
     use Tests\MockArg;
     use Tests\TestCase;
 
     class AbstractRessourceTest extends TestCase
     {
+        public function testSetDatabase()
+        {
+            $abstractDatabase = $this->createMock('AbstractDatabase');
+            $abstractRessource = $this->createMock('AbstractRessource');
+
+            $abstractRessource->setConnectionDatabase($abstractDatabase);
+            $this->assertEquals($abstractDatabase, $abstractRessource->getConnectionDatabase($abstractDatabase));
+        }
+
+        /**
+         * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+         */
+        public function testSetDatabaseEronnne()
+        {
+            $abstractRessource = $this->createMock('AbstractRessource');
+
+            $abstractRessource->setConnectionDatabase(50);
+        }
+
         public function testDoGetPourSingle()
         {
             /**
              * @var $abstractRessource AbstractRessource
              */
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('recuperer', new \Serveur\Lib\ObjetReponse(200, array('my' => 'object')), array(1, null))
-            );
+            $abstractRessource = $this->createMock('AbstractRessource',
+                new MockArg('getOne', new ObjetReponse(200), array(1)));
 
-            $this->assertEquals(200, $abstractRessource->doGet(1, null, null)->getStatusHttp());
-        }
-
-        public function testDoGetChamps()
-        {
-            /**
-             * @var $abstractRessource AbstractRessource
-             */
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('recuperer', new \Serveur\Lib\ObjetReponse(404, array('my' => 'object')), array(1,
-                    array('champs1', 'champs2')))
-            );
-
-            $this->assertEquals(404, $abstractRessource->doGet(1, null, 'champs1,champs2')->getStatusHttp());
+            $this->assertEquals(200, $abstractRessource->doGet(1, null)->getStatusHttp());
         }
 
         public function testDoGetPourRecherche()
@@ -39,26 +43,10 @@
             /**
              * @var $abstractRessource AbstractRessource
              */
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('rechercher', new \Serveur\Lib\ObjetReponse(404, array('my' => 'object')), array(array('var1 => filter1'),
-                    null))
-            );
+            $abstractRessource = $this->createMock('AbstractRessource',
+                new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1'))));
 
-            $this->assertEquals(404, $abstractRessource->doGet(null, array('var1 => filter1'), null)->getStatusHttp());
-        }
-
-        public function testDoGetPourColection()
-        {
-            /**
-             * @var $abstractRessource AbstractRessource
-             */
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('recupererCollection', new \Serveur\Lib\ObjetReponse(200, array('my' => 'object'), null))
-            );
-
-            $this->assertEquals(200, $abstractRessource->doGet(null, null, null)->getStatusHttp());
+            $this->assertEquals(404, $abstractRessource->doGet(null, array('var1 => filter1'))->getStatusHttp());
         }
 
         public function testDoPut()
@@ -66,35 +54,32 @@
             /**
              * @var $abstractRessource AbstractRessource
              */
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('mettreAJour', new \Serveur\Lib\ObjetReponse(201), array(4, array('nom' => 'nouveauNom')))
-            );
+            $abstractRessource = $this->createMock('AbstractRessource',
+                new MockArg('createOrUpdateIdempotent', new ObjetReponse(201), array(4, array('nom' => 'nouveauNom'))));
 
             $this->assertEquals(201, $abstractRessource->doPut(4, array('nom' => 'nouveauNom'))->getStatusHttp());
         }
 
-        public function testDoPutMissingArgument()
+        public function testDoPostUpdate()
         {
             /**
              * @var $abstractRessource AbstractRessource
              */
-            $abstractRessource = $this->createMock('AbstractRessource');
+            $abstractRessource = $this->createMock('AbstractRessource',
+                new MockArg('updateOne', new ObjetReponse(200), array(5, array('adresse' => 'adresseddd'))));
 
-            $this->assertEquals(400, $abstractRessource->doPut(null, array('nom' => 'nouveauNom'))->getStatusHttp());
+            $this->assertEquals(200, $abstractRessource->doPost(5, array('adresse' => 'adresseddd'))->getStatusHttp());
         }
 
-        public function testDoPost()
+        public function testDoPostCreate()
         {
             /**
              * @var $abstractRessource AbstractRessource
              */
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('creer', new \Serveur\Lib\ObjetReponse(201, array(1)), array(array('adresse' => 'adresseddd')))
-            );
+            $abstractRessource = $this->createMock('AbstractRessource',
+                new MockArg('createOne', new ObjetReponse(201), array(array('nom' => 'named'))));
 
-            $this->assertEquals(201, $abstractRessource->doPost(array('adresse' => 'adresseddd'))->getStatusHttp());
+            $this->assertEquals(201, $abstractRessource->doPost(null, array('nom' => 'named'))->getStatusHttp());
         }
 
         public function testDoDelete()
@@ -102,22 +87,22 @@
             /**
              * @var $abstractRessource AbstractRessource
              */
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg('supprimer', new \Serveur\Lib\ObjetReponse(200), array(200500))
-            );
+            $abstractRessource = $this->createMock('AbstractRessource',
+                new MockArg('deleteOne', new ObjetReponse(200), array(200500)));
 
-            $this->assertEquals(200, $abstractRessource->doDelete(200500)->getStatusHttp());
+            $this->assertEquals(200, $abstractRessource->doDelete(200500, array())->getStatusHttp());
         }
 
-        public function testDoDeleteMissingArgument()
+        public function testDoDeleteAll()
         {
             /**
              * @var $abstractRessource AbstractRessource
              */
-            $abstractRessource = $this->createMock('AbstractRessource');
+            $abstractRessource = $this->createMock('AbstractRessource',
+                new MockArg('deleteAll', new ObjetReponse(200), array(array('champs1' => 'valeur1'))));
 
-            $this->assertEquals(400, $abstractRessource->doDelete(null)->getStatusHttp());
+            $this->assertEquals(200,
+                $abstractRessource->doDelete(null, array('champs1' => 'valeur1'))->getStatusHttp());
         }
 
         public function testForbidden()
