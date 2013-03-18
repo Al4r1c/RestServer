@@ -28,7 +28,8 @@
         {
             if (!$dbConnection instanceof AbstractDatabase) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Traitement\Data\AbstractDatabase',
-                    $dbConnection);
+                    $dbConnection
+                );
             }
 
             $this->_connectionDatabase = $dbConnection;

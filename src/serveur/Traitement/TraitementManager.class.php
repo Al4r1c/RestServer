@@ -47,7 +47,8 @@
         {
             if (!$databaseFactory instanceof DatabaseFactory) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseFactory',
-                    $databaseFactory);
+                    $databaseFactory
+                );
             }
 
             $this->_databaseFactory = $databaseFactory;
@@ -61,7 +62,8 @@
         {
             if (!$databaseConfig instanceof DatabaseConfig) {
                 throw new ArgumentTypeException(1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseConfig',
-                    $databaseConfig);
+                    $databaseConfig
+                );
             }
 
             $this->_databaseConfig = $databaseConfig;
