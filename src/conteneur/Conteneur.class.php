@@ -8,6 +8,8 @@
     use Serveur\Reponse\ReponseManager;
     use Serveur\Requete\RequeteManager;
     use Serveur\Requete\Server\Server;
+    use Serveur\Traitement\Data\DatabaseConfig;
+    use Serveur\Traitement\Data\DatabaseFactory;
     use Serveur\Traitement\TraitementManager;
     use Serveur\Utils\FileManager;
 
@@ -44,7 +46,9 @@
 
             $conteneur['TraitementManager'] = function ($c) {
                 $traitementManager = new TraitementManager();
-                $traitementManager->setFactoryRessource($c['FactoryRessource']);
+                $traitementManager->setRessourceFactory($c['FactoryRessource']);
+                $traitementManager->setDatabaseFactory($c['DatabaseFactory']);
+                $traitementManager->setDatabaseConfig($c['DatabaseConfig']);
 
                 return $traitementManager;
             };
@@ -57,6 +61,19 @@
                         return false;
                     }
                 };
+            };
+
+            $conteneur['DatabaseFactory'] = function () {
+                return new DatabaseFactory();
+            };
+
+            $conteneur['DatabaseConfig'] = function () {
+                $dbConfig = new DatabaseConfig();
+                $fichier = FileManager::getFichier();
+                $fichier->setFichierParametres('database.yaml', 'config');
+                $dbConfig->recupererInformationFichier($fichier);
+
+                return $dbConfig;
             };
 
 

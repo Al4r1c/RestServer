@@ -1,6 +1,33 @@
 <?php
     namespace Tests;
 
+    use Conteneur\Conteneur;
+    use Logging\Displayer\AbstractDisplayer;
+    use Logging\I18n\I18nManager;
+    use Logging\I18n\TradManager;
+    use Serveur\GestionErreurs\ErreurManager;
+    use Serveur\GestionErreurs\Handler\ErreurHandler;
+    use Serveur\GestionErreurs\Types\Error;
+    use Serveur\GestionErreurs\Types\Notice;
+    use Serveur\Lib\Fichier;
+    use Serveur\Lib\FichierChargement\AbstractChargeurFichier;
+    use Serveur\Lib\FileSystem;
+    use Serveur\Lib\ObjetReponse;
+    use Serveur\Lib\XMLParser\XMLElement;
+    use Serveur\Lib\XMLParser\XMLParser;
+    use Serveur\Reponse\Config\Config;
+    use Serveur\Reponse\Header\Header;
+    use Serveur\Reponse\Renderers\AbstractRenderer;
+    use Serveur\Reponse\ReponseManager;
+    use Serveur\Requete\RequeteManager;
+    use Serveur\Requete\Server\Server;
+    use Serveur\Traitement\Data\AbstractDatabase;
+    use Serveur\Traitement\Data\DatabaseConfig;
+    use Serveur\Traitement\Data\DatabaseFactory;
+    use Serveur\Traitement\Ressource\AbstractRessource;
+    use Serveur\Traitement\TraitementManager;
+    use Serveur\Utils\Constante;
+
     class FactoryMock extends \PHPUnit_Framework_TestCase
     {
         /** @return \PHPUnit_Framework_MockObject_MockObject */
@@ -29,6 +56,12 @@
                     break;
                 case 'constante':
                     $mock = $this->getMockConstante($methodes);
+                    break;
+                case 'databaseconfig':
+                    $mock = $this->getMockDatabaseConfig($methodes);
+                    break;
+                case 'databasefactory':
+                    $mock = $this->getMockDatabaseFactory($methodes);
                     break;
                 case 'erreur':
                     $mock = $this->getMockErreur($methodes);
@@ -96,7 +129,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FichierChargement\AbstractChargeurFichier
+         * @return \PHPUnit_Framework_MockObject_MockObject|AbstractChargeurFichier
          */
         protected function getMockAbstractChargeur($methodes = array())
         {
@@ -105,7 +138,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Data\AbstractDatabase
+         * @return \PHPUnit_Framework_MockObject_MockObject|AbstractDatabase
          */
         protected function getMockAbstractDatabase($methodes = array())
         {
@@ -114,7 +147,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Logging\Displayer\AbstractDisplayer
+         * @return \PHPUnit_Framework_MockObject_MockObject|AbstractDisplayer
          */
         protected function getMockAbstractDisplayer($methodes = array())
         {
@@ -123,7 +156,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Renderers\AbstractRenderer
+         * @return \PHPUnit_Framework_MockObject_MockObject|AbstractRenderer
          */
         protected function getMockAbstractRenderer($methodes = array())
         {
@@ -132,7 +165,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\Ressource\AbstractRessource
+         * @return \PHPUnit_Framework_MockObject_MockObject|AbstractRessource
          */
         protected function getMockAbstractRessource($methodes = array())
         {
@@ -141,7 +174,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Config\Config
+         * @return \PHPUnit_Framework_MockObject_MockObject|Config
          */
         protected function getMockConfig($methodes = array())
         {
@@ -150,7 +183,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Utils\Constante
+         * @return \PHPUnit_Framework_MockObject_MockObject|Constante
          */
         protected function getMockConstante($methodes = array())
         {
@@ -159,70 +192,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\Types\Error
-         */
-        protected function getMockErreur($methodes = array())
-        {
-            return $this->getMock('Serveur\GestionErreurs\Types\Error', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\Handler\ErreurHandler
-         */
-        protected function getMockErreurHandler($methodes)
-        {
-            return $this->getMock('Serveur\GestionErreurs\Handler\ErreurHandler', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\ErreurManager
-         */
-        protected function getMockErrorManager($methodes)
-        {
-            return $this->getMock('Serveur\GestionErreurs\ErrorManager', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\Fichier
-         */
-        protected function getMockFichier($methodes = array())
-        {
-            return $this->getMock('Serveur\Lib\Fichier', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\FileSystem
-         */
-        protected function getMockFileSystem($methodes = array())
-        {
-            return $this->getMock('Serveur\Lib\FileSystem', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\Header\Header
-         */
-        protected function getMockHeaders($methodes = array())
-        {
-            return $this->getMock('Serveur\Reponse\Header\Header', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Logging\I18n\I18nManager
-         */
-        protected function getMockI18nManager($methodes = array())
-        {
-            return $this->getMock('Logging\I18n\I18nManager', $methodes);
-        }
-
-        /**
-         * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Conteneur\Conteneur
+         * @return \PHPUnit_Framework_MockObject_MockObject|Conteneur
          */
         protected function getMockConteneur($methodes = array())
         {
@@ -231,7 +201,88 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\GestionErreurs\Types\Notice
+         * @return \PHPUnit_Framework_MockObject_MockObject|DatabaseConfig
+         */
+        protected function getMockDatabaseConfig($methodes = array())
+        {
+            return $this->getMock('Serveur\Traitement\Data\DatabaseConfig', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|DatabaseFactory
+         */
+        protected function getMockDatabaseFactory($methodes = array())
+        {
+            return $this->getMock('Serveur\Traitement\Data\DatabaseFactory', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|Error
+         */
+        protected function getMockErreur($methodes = array())
+        {
+            return $this->getMock('Serveur\GestionErreurs\Types\Error', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|ErreurHandler
+         */
+        protected function getMockErreurHandler($methodes)
+        {
+            return $this->getMock('Serveur\GestionErreurs\Handler\ErreurHandler', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|ErreurManager
+         */
+        protected function getMockErrorManager($methodes)
+        {
+            return $this->getMock('Serveur\GestionErreurs\ErrorManager', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|Fichier
+         */
+        protected function getMockFichier($methodes = array())
+        {
+            return $this->getMock('Serveur\Lib\Fichier', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|FileSystem
+         */
+        protected function getMockFileSystem($methodes = array())
+        {
+            return $this->getMock('Serveur\Lib\FileSystem', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|Header
+         */
+        protected function getMockHeaders($methodes = array())
+        {
+            return $this->getMock('Serveur\Reponse\Header\Header', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|I18nManager
+         */
+        protected function getMockI18nManager($methodes = array())
+        {
+            return $this->getMock('Logging\I18n\I18nManager', $methodes);
+        }
+
+        /**
+         * @param array $methodes
+         * @return \PHPUnit_Framework_MockObject_MockObject|Notice
          */
         protected function getMockNotice($methodes = array())
         {
@@ -240,7 +291,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\ObjetReponse
+         * @return \PHPUnit_Framework_MockObject_MockObject|ObjetReponse
          */
         protected function getMockObjetReponse($methodes = array())
         {
@@ -249,7 +300,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Requete\RequeteManager
+         * @return \PHPUnit_Framework_MockObject_MockObject|RequeteManager
          */
         protected function getMockRestRequete($methodes = array())
         {
@@ -258,7 +309,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Reponse\ReponseManager
+         * @return \PHPUnit_Framework_MockObject_MockObject|ReponseManager
          */
         protected function getMockRestReponse($methodes = array())
         {
@@ -267,7 +318,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Requete\Server\Server
+         * @return \PHPUnit_Framework_MockObject_MockObject|Server
          */
         protected function getMockServer($methodes = array())
         {
@@ -276,7 +327,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Logging\I18n\TradManager
+         * @return \PHPUnit_Framework_MockObject_MockObject|TradManager
          */
         protected function getMockTradManager($methodes = array())
         {
@@ -285,7 +336,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Traitement\TraitementManager
+         * @return \PHPUnit_Framework_MockObject_MockObject|TraitementManager
          */
         protected function getMockTraitementManager($methodes = array())
         {
@@ -294,7 +345,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLElement
+         * @return \PHPUnit_Framework_MockObject_MockObject|XMLElement
          */
         protected function getMockXmlElement($methodes = array())
         {
@@ -303,7 +354,7 @@
 
         /**
          * @param array $methodes
-         * @return \PHPUnit_Framework_MockObject_MockObject|\Serveur\Lib\XMLParser\XMLParser
+         * @return \PHPUnit_Framework_MockObject_MockObject|XMLParser
          */
         protected function getMockXmlParser($methodes = array())
         {
