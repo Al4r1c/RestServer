@@ -54,7 +54,7 @@ class MainApplicationTest extends TestCase
 
         $reponse = $this->createMock(
             'ReponseManager', new MockArg('fabriquerReponse', null, array($objetReponse, array('htm'))),
-            new MockArg('getContenu', 'variable1 => valeur1')
+            new MockArg('getContenuReponse', 'variable1 => valeur1')
         );
 
         $conteneur = $this->createMock(
