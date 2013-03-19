@@ -166,9 +166,9 @@ class XMLParser
         if (trim($valeur) != '') {
             end($this->_donneesParsees);
             if (!isset($this->_donneesParsees[key($this->_donneesParsees)]['data'])) {
-                $this->_donneesParsees[key($this->_donneesParsees)]['data'] = trim(str_replace("\n", '', $valeur));
+                $this->_donneesParsees[key($this->_donneesParsees)]['data'] = ltrim(str_replace("\n", '', $valeur));
             } else {
-                $this->_donneesParsees[key($this->_donneesParsees)]['data'] .= trim(str_replace("\n", '', $valeur));
+                $this->_donneesParsees[key($this->_donneesParsees)]['data'] .= str_replace("\n", '', $valeur);
             }
             $this->_donneesParsees[key($this->_donneesParsees)]['children'] = false;
         }
