@@ -55,11 +55,10 @@ class ErreurHandler
      * @param int $erreurNumber
      * @param int $codeErreur
      * @throws \InvalidArgumentException
-     * @internal param array $arguments
      */
     public function global_ajouterErreur($erreurNumber, $codeErreur)
     {
-        $arguments = func_get_arg(2);
+        $arguments = array_slice(func_get_args(), -2);
 
         switch ($erreurNumber) {
             case E_USER_ERROR:
@@ -104,7 +103,7 @@ class ErreurHandler
             $erreur = new Error($codeErreur);
             $erreur->setMessage(
                 '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                $messageErreur
+                    $messageErreur
             );
             $this->ecrireErreur($erreur);
             throw new \Exception();
@@ -112,7 +111,7 @@ class ErreurHandler
             $erreur = new Notice($codeErreur);
             $erreur->setMessage(
                 '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                $messageErreur
+                    $messageErreur
             );
             $this->ecrireErreur($erreur);
         } else {
