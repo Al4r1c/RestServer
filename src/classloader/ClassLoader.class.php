@@ -57,11 +57,11 @@ class ClassLoader
     public function loaderFunction($className)
     {
         foreach ($this->_namespaces as $unNamespace => $configNamespace) {
+            $fileName = $configNamespace['path'] . DIRECTORY_SEPARATOR;
+            $fileName .= substr($className, strpos($unNamespace, $className) + strlen($unNamespace) + 1);
+            $fileName .= $configNamespace['extension'];
             if (!isNull($unNamespace) && substr_count(strtolower($className), $unNamespace) > 0 && file_exists(
                 $fileName
-                    = $configNamespace['path'] . DIRECTORY_SEPARATOR .
-                      substr($className, strpos($unNamespace, $className) + strlen($unNamespace) + 1) .
-                      $configNamespace['extension']
             )
             ) {
                 include_once($fileName);

@@ -82,9 +82,7 @@ class ReponseManager
     public function setHeader($headerManager)
     {
         if (!$headerManager instanceof Header) {
-            throw new ArgumentTypeException(
-                1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager', $headerManager
-            );
+            throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager', $headerManager);
         }
 
         $this->_header = $headerManager;
@@ -176,7 +174,7 @@ class ReponseManager
         http_response_code($codeHttp);
         $this->_header->ajouterHeader(
             'Content-type', Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' .
-                            strtolower($this->_charset)
+            strtolower($this->_charset)
         );
         $this->_header->envoyerHeaders();
     }
