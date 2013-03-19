@@ -104,7 +104,9 @@ class TraitementManager
      */
     public function traiterRequeteEtRecupererResultat($requete)
     {
-        if (($ressourceObjet = $this->recupererNouvelleInstanceRessource($requete->getUriVariable(0))) !== false) {
+        $nomRessource = $requete->getUriVariable(0);
+
+        if (($ressourceObjet = $this->recupererNouvelleInstanceRessource($nomRessource)) !== false) {
             if (($dbConn = $this->recupererNouvelleInstanceConnexion($this->_databaseConfig->getDriver())) !== false
             ) {
                 $dbConn->ouvrirConnectionDepuisFichier($this->_databaseConfig);
@@ -128,6 +130,9 @@ class TraitementManager
             } else {
                 throw new MainException(30000, 500, $this->_databaseConfig->getDriver());
             }
+        } elseif (isNull($nomRessource)) {
+            $objetReponse = new ObjetReponse();
+            $objetReponse->setErreurHttp(400);
         } else {
             $objetReponse = new ObjetReponse();
             $objetReponse->setErreurHttp(404);

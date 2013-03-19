@@ -231,4 +231,22 @@ class TraitementManagerTest extends TestCase
             404, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
         );
     }
+
+    public function testTraiterRessourceNonInformee()
+    {
+        $requete = $this->getRequete('GET', '/');
+
+        $callable = function ($arg) {
+            $this->assertEquals('', $arg);
+
+            return false;
+        };
+
+        $this->_traitementManager->setRessourceFactory($callable);
+
+        $this->assertEquals(
+            400, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
+        );
+    }
+
 }
