@@ -20,4 +20,9 @@ class Tools
     {
         return in_array(strtolower($header), array_map('strtolower', Constante::chargerConfig('headers')));
     }
+
+    public static function isValideFormat($format)
+    {
+        return in_array(strtolower($format), array_map('strtolower', Constante::chargerConfig('mimes')));
+    }
 }

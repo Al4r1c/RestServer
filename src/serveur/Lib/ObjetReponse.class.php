@@ -18,6 +18,11 @@ class ObjetReponse
      */
     private $_donneesReponse;
 
+    /**
+     * @var string
+     */
+    private $_format;
+
     public function __construct($statusHttp = 200, $donneesReponse = array())
     {
         $this->setStatusHttp($statusHttp);
@@ -32,15 +37,26 @@ class ObjetReponse
         return $this->_statusHttp;
     }
 
+    /**
+     * @return array
+     */
     public function getDonneesReponse()
     {
         return $this->_donneesReponse;
     }
 
     /**
+     * @return string
+     */
+    public function getFormat()
+    {
+        return $this->_format;
+    }
+
+    /**
      * @param int $statusHttp
-     * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
-     * @throws \Serveur\GestionErreurs\Exceptions\MainException
+     * @throws ArgumentTypeException
+     * @throws MainException
      */
     public function setStatusHttp($statusHttp)
     {
@@ -57,7 +73,7 @@ class ObjetReponse
 
     /**
      * @param array $donneesReponse
-     * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @throws ArgumentTypeException
      */
     public function setDonneesReponse($donneesReponse)
     {
@@ -68,6 +84,9 @@ class ObjetReponse
         $this->_donneesReponse = $donneesReponse;
     }
 
+    /**
+     * @param int $statusHttp
+     */
     public function setErreurHttp($statusHttp)
     {
         $infoHttpCode = Constante::chargerConfig('httpcode')[$statusHttp];
@@ -76,5 +95,18 @@ class ObjetReponse
         $this->setDonneesReponse(
             array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1])
         );
+    }
+
+    /**
+     * @param string $format
+     * @throws MainException
+     */
+    public function setFormat($format)
+    {
+        if (!Tools::isValideFormat($format)) {
+            throw new MainException(10301, 500, $format);
+        }
+
+        $this->_format = $format;
     }
 }

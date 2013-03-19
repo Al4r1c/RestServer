@@ -63,4 +63,20 @@ class ObjetReponseTest extends TestCase
         $this->assertArrayHasKey('Status', $this->_objetReponse->getDonneesReponse());
         $this->assertArrayHasKey('Message', $this->_objetReponse->getDonneesReponse());
     }
+
+    public function testFormat()
+    {
+        $this->_objetReponse->setFormat('application/json');
+
+        $this->assertEquals('application/json', $this->_objetReponse->getFormat());
+    }
+
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 10301
+     */
+    public function testFormatErrone()
+    {
+        $this->_objetReponse->setFormat('application/fake');
+    }
 }
