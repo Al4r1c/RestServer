@@ -104,14 +104,16 @@ class ErreurHandler
             $erreur = new Error($codeErreur);
             $erreur->setMessage(
                 '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                $messageErreur);
+                $messageErreur
+            );
             $this->ecrireErreur($erreur);
             throw new \Exception();
         } elseif (in_array($codeErreur, self::$_erreurCodes)) {
             $erreur = new Notice($codeErreur);
             $erreur->setMessage(
                 '{trad.file}: ' . $fichierErreur . ', {trad.line}: ' . $ligneErreur . ' | {trad.warning}: ' .
-                $messageErreur);
+                $messageErreur
+            );
             $this->ecrireErreur($erreur);
         } else {
             throw new \Exception('Type d\'erreur inconnu : [' . $codeErreur . '] ' . $messageErreur);

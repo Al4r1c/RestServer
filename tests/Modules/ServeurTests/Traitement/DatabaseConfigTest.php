@@ -106,7 +106,8 @@ class DatabaseConfigTest extends TestCase
                 'Password' => 'mdp',
                 'Host' => 'monHost',
                 'Port' => 10500,
-                'Database' => 'maDb')));
+                'Database' => 'maDb'))
+        );
 
         $this->_databaseInformations->recupererInformationFichier($fichierConfigDb);
 
@@ -121,7 +122,8 @@ class DatabaseConfigTest extends TestCase
     public function testInformationManquante()
     {
         $fichierConfigDb = $this->createMock(
-            'Fichier', new MockArg('chargerFichier', array('wowowowbug')));
+            'Fichier', new MockArg('chargerFichier', array('wowowowbug'))
+        );
 
         $this->_databaseInformations->recupererInformationFichier($fichierConfigDb);
     }

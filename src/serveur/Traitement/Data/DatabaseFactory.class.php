@@ -11,7 +11,8 @@ class DatabaseFactory
     {
         if (class_exists(
             $nomClasseDatabase =
-            '\\Serveur\\Traitement\\Data\\Drivers\\Database' . ucfirst(strtolower($nomDriverDatabase)))
+                '\\Serveur\\Traitement\\Data\\Drivers\\Database' . ucfirst(strtolower($nomDriverDatabase))
+        )
         ) {
             return new $nomClasseDatabase();
         } else {

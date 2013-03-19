@@ -114,7 +114,8 @@ class XMLElementTest extends TestCase
             array('element' => 'nom',
                 'attr' => array('attr1' => 'val1'),
                 'children' => array(new \Serveur\Lib\XMLParser\XMLElement()),
-                'data' => 'value'));
+                'data' => 'value')
+        );
 
         $this->assertEquals('nom', $this->_xmlElement->getNom());
         $this->assertEquals(array('attr1' => 'val1'), $this->_xmlElement->getAttributs());

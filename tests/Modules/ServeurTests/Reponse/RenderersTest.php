@@ -24,7 +24,8 @@ class RenderersTest extends TestCase
 
         $sortie = sprintf(
             $renderer->getTemplateHtml(),
-            "<ul>\n\t<li><strong>param1:</strong> 1</li>\n\t<li><strong>param2:</strong> <ul>\n\t<li><strong>one:</strong> onevar2</li>\n</ul>\n</li>\n\t<li><strong>0:</strong> <ul>\n\t<li><strong>0:</strong> yosh</li>\n\t<li><strong>1:</strong> yosh2</li>\n</ul>\n</li>\n</ul>\n");
+            "<ul>\n\t<li><strong>param1:</strong> 1</li>\n\t<li><strong>param2:</strong> <ul>\n\t<li><strong>one:</strong> onevar2</li>\n</ul>\n</li>\n\t<li><strong>0:</strong> <ul>\n\t<li><strong>0:</strong> yosh</li>\n\t<li><strong>1:</strong> yosh2</li>\n</ul>\n</li>\n</ul>\n"
+        );
 
         $this->assertEquals($sortie, $renderer->render(self::$donnee));
     }
@@ -34,7 +35,8 @@ class RenderersTest extends TestCase
         $renderer = new \Serveur\Reponse\Renderers\Json();
 
         $this->assertEquals(
-            '{"param1":1,"param2":{"one":"onevar2"},"0":["yosh","yosh2"]}', $renderer->render(self::$donnee));
+            '{"param1":1,"param2":{"one":"onevar2"},"0":["yosh","yosh2"]}', $renderer->render(self::$donnee)
+        );
     }
 
     public function testPlain()
@@ -43,7 +45,8 @@ class RenderersTest extends TestCase
 
         $this->assertEquals(
             "param1 => 1\nparam2 => \n\tone => onevar2\n0 => \n\t0 => yosh\n\t1 => yosh2\n",
-            $renderer->render(self::$donnee));
+            $renderer->render(self::$donnee)
+        );
     }
 
     public function testXml()
@@ -53,6 +56,7 @@ class RenderersTest extends TestCase
         $this->assertEquals(
             '<?xml version="1.0"?>' . "\n" .
             '<root><param1>1</param1><param2><one>onevar2</one></param2><0>yosh</0><1>yosh2</1></root>' . "\n",
-            $renderer->render(self::$donnee));
+            $renderer->render(self::$donnee)
+        );
     }
 }

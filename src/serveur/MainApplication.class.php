@@ -50,7 +50,8 @@ class MainApplication
 
             $traitementRequete = $this->_conteneur->getTraitementManager();
             $reponse = $this->fabriquerEtRecupererReponse(
-                $traitementRequete->traiterRequeteEtRecupererResultat($requete), $requete->getFormatsDemandes());
+                $traitementRequete->traiterRequeteEtRecupererResultat($requete), $requete->getFormatsDemandes()
+            );
         } catch (MainException $e) {
             $reponse = $this->fabriquerEtRecupererReponse($e->getObjetReponseErreur());
         }

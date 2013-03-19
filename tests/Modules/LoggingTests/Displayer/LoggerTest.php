@@ -99,7 +99,8 @@ class LoggerTest extends TestCase
         $restRequete = $this->createMock(
             'RequeteManager', new MockArg('getDateRequete', $dateRequete), new MockArg('getIp', '127.0.0.1'),
             new MockArg('getMethode', 'GET'), new MockArg('getUriVariables', array('edit')),
-            new MockArg('getParametres', array('param1' => 'var1')));
+            new MockArg('getParametres', array('param1' => 'var1'))
+        );
 
         $fichierAcces = new Fichier();
         $fichierAcces->setFileSystem($this->getFakeFileSystem());
@@ -138,7 +139,8 @@ class LoggerTest extends TestCase
     public function testEcrireReponse()
     {
         $restReponse = $this->createMock(
-            'ReponseManager', new MockArg('getStatus', 200), new MockArg('getFormatRetour', 'json'));
+            'ReponseManager', new MockArg('getStatus', 200), new MockArg('getFormatRetour', 'json')
+        );
 
         $fichierAcces = new Fichier();
         $fichierAcces->setFileSystem($this->getFakeFileSystem());

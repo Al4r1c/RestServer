@@ -67,6 +67,8 @@ class TypeDetectorTest extends TestCase
     {
         $this->assertEquals(
             array('html', 'xhtml', 'xml'), $this->typeDetector->extraireMimesTypeHeader(
-                'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'));
+                'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+            )
+        );
     }
 }

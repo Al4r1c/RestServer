@@ -47,7 +47,8 @@ class XMLParser
         } else {
             return sprintf(
                 'XML error at line %d column %d: %s', $this->_erreur['line'], $this->_erreur['column'],
-                $this->_erreur['message']);
+                $this->_erreur['message']
+            );
         }
     }
 
@@ -58,7 +59,8 @@ class XMLParser
     public function getConfigValeur($clefConfig)
     {
         if (false !== $valeur = $this->rechercheValeurTableauMultidim(
-            explode('.', strtolower($clefConfig)), $this->_donneesParsees->getChildren())
+            explode('.', strtolower($clefConfig)), $this->_donneesParsees->getChildren()
+        )
         ) {
             return $valeur;
         } else {

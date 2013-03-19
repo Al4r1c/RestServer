@@ -105,7 +105,8 @@ class Conteneur
                 $errorManager->setErrorHandler($c['ErreurHandler']);
 
                 return $errorManager;
-            });
+            }
+        );
 
         $conteneur['ErreurHandler'] = function () {
             return new ErreurHandler();

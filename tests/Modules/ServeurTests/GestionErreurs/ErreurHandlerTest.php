@@ -18,7 +18,8 @@ class ErreurHandlerTest extends TestCase
     private function expectEcrireErreur()
     {
         $abstractDisplayer = $this->createMock(
-            'AbstractDisplayer', new MockArg('ecrireMessageErreur'));
+            'AbstractDisplayer', new MockArg('ecrireMessageErreur')
+        );
 
         $this->_erreurHandler->ajouterUnLogger($abstractDisplayer);
     }

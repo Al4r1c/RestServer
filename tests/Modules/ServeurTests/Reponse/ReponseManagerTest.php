@@ -124,7 +124,8 @@ class ReponseManagerTest extends TestCase
         $config = $this->createMock(
             'Config', new MockArg('getConfigValeur', 'JSON', array('config.default_render')),
             new MockArg('getConfigValeur', array('JSON' => 'json', 'HTML' => 'html'), array('render')),
-            new MockArg('getConfigValeur', 'utf-8', array('config.charset')));
+            new MockArg('getConfigValeur', 'utf-8', array('config.charset'))
+        );
 
         $this->restReponse->setConfig($config);
         $this->assertEquals('utf-8', $this->restReponse->getCharset());
@@ -153,18 +154,22 @@ class ReponseManagerTest extends TestCase
     public function testRestRenderAbstract()
     {
         $abstractrender = $this->createMock(
-            'AbstractRenderer', new MockArg('genererRendu', '{"getKey":"getVar"}', array(array('getKey' => 'getVar'))));
+            'AbstractRenderer', new MockArg('genererRendu', '{"getKey":"getVar"}', array(array('getKey' => 'getVar')))
+        );
 
         /** @var $restReponse ReponseManager|\PHPUnit_Framework_MockObject_MockObject */
         $restReponse = $this->createMock(
-            'ReponseManager', new MockArg('getRenderClass', $abstractrender, array('Json')));
+            'ReponseManager', new MockArg('getRenderClass', $abstractrender, array('Json'))
+        );
 
         $headerManager = $this->createMock(
-            'Header', new MockArg('ajouterHeader'), new MockArg('envoyerHeaders'));
+            'Header', new MockArg('ajouterHeader'), new MockArg('envoyerHeaders')
+        );
 
         $objetReponse = $this->createMock(
             'ObjetReponse', new MockArg('getStatusHttp', 200),
-            new MockArg('getDonneesReponse', array('getKey' => 'getVar')));
+            new MockArg('getDonneesReponse', array('getKey' => 'getVar'))
+        );
 
         $restReponse->setHeader($headerManager);
         $restReponse->setFormats('JSON', array('JSON' => 'json'));
@@ -178,18 +183,22 @@ class ReponseManagerTest extends TestCase
     public function testRestRenderNonTrouveUtiliseAutre()
     {
         $abstractrender = $this->createMock(
-            'AbstractRenderer', new MockArg('genererRendu', '{"param1":"var1"}', array(array('param1' => 'var1'))));
+            'AbstractRenderer', new MockArg('genererRendu', '{"param1":"var1"}', array(array('param1' => 'var1')))
+        );
 
         /** @var $restReponse ReponseManager|\PHPUnit_Framework_MockObject_MockObject */
         $restReponse = $this->createMock(
-            'ReponseManager', new MockArg('getRenderClass', $abstractrender, array('Json')));
+            'ReponseManager', new MockArg('getRenderClass', $abstractrender, array('Json'))
+        );
 
         $headerManager = $this->createMock(
-            'Header', new MockArg('ajouterHeader'), new MockArg('envoyerHeaders'));
+            'Header', new MockArg('ajouterHeader'), new MockArg('envoyerHeaders')
+        );
 
         $objetReponse = $this->createMock(
             'ObjetReponse', new MockArg('getStatusHttp', 200),
-            new MockArg('getDonneesReponse', array('param1' => 'var1')));
+            new MockArg('getDonneesReponse', array('param1' => 'var1'))
+        );
 
         $restReponse->setHeader($headerManager);
         $restReponse->setFormats('JSON', array('JSON' => 'json'));

@@ -11,10 +11,12 @@ class MainApplicationTest extends TestCase
     public function testSetHandlers()
     {
         $errorManager = $this->createMock(
-            'ErrorManager', new MockArg('setHandlers'));
+            'ErrorManager', new MockArg('setHandlers')
+        );
 
         $conteneur = $this->createMock(
-            'Conteneur', new MockArg('getErrorManager', $errorManager));
+            'Conteneur', new MockArg('getErrorManager', $errorManager)
+        );
 
         $mainApp = new MainApplication($conteneur);
         $mainApp->setHandlers();
@@ -25,10 +27,12 @@ class MainApplicationTest extends TestCase
         $abstractDisplayer = $this->createMock('AbstractDisplayer');
 
         $errorManager = $this->createMock(
-            'ErrorManager', new MockArg('ajouterObserveur'));
+            'ErrorManager', new MockArg('ajouterObserveur')
+        );
 
         $conteneur = $this->createMock(
-            'Conteneur', new MockArg('getErrorManager', $errorManager));
+            'Conteneur', new MockArg('getErrorManager', $errorManager)
+        );
 
         $mainApp = new MainApplication($conteneur);
         $mainApp->ajouterObserveur($abstractDisplayer);
@@ -39,20 +43,24 @@ class MainApplicationTest extends TestCase
     public function testRun()
     {
         $requete = $this->createMock(
-            'RequeteManager', new MockArg('getFormatsDemandes', array('htm')));
+            'RequeteManager', new MockArg('getFormatsDemandes', array('htm'))
+        );
 
         $objetReponse = $this->getMockObjetReponse();
 
         $traitementManager = $this->createMock(
-            'TraitementManager', new MockArg('traiterRequeteEtRecupererResultat', $objetReponse, array($requete)));
+            'TraitementManager', new MockArg('traiterRequeteEtRecupererResultat', $objetReponse, array($requete))
+        );
 
         $reponse = $this->createMock(
             'ReponseManager', new MockArg('fabriquerReponse', null, array($objetReponse, array('htm'))),
-            new MockArg('getContenu', 'variable1 => valeur1'));
+            new MockArg('getContenu', 'variable1 => valeur1')
+        );
 
         $conteneur = $this->createMock(
             'Conteneur', new MockArg('getRequeteManager', $requete),
-            new MockArg('getTraitementManager', $traitementManager), new MockArg('getReponseManager', $reponse));
+            new MockArg('getTraitementManager', $traitementManager), new MockArg('getReponseManager', $reponse)
+        );
 
         $mainApp = new MainApplication($conteneur);
         $this->assertEquals('variable1 => valeur1', $mainApp->run());
@@ -64,7 +72,8 @@ class MainApplicationTest extends TestCase
 
         $conteneur = $this->createMock(
             'Conteneur', new MockArg('getRequeteManager', new MainException(10000, 505)),
-            new MockArg('getReponseManager', $reponse));
+            new MockArg('getReponseManager', $reponse)
+        );
 
         $mainApp = new MainApplication($conteneur);
         $mainApp->run();
@@ -78,15 +87,18 @@ class MainApplicationTest extends TestCase
 
         $abstractDisplayer = $this->createMock(
             'AbstractDisplayer', new MockArg('logRequete', null, array($requete)),
-            new MockArg('logReponse', null, array($reponse)));
+            new MockArg('logReponse', null, array($reponse))
+        );
 
         $errorManager = $this->createMock(
-            'ErrorManager', new MockArg('ajouterObserveur'));
+            'ErrorManager', new MockArg('ajouterObserveur')
+        );
 
         $conteneur = $this->createMock(
             'Conteneur', new MockArg('getRequeteManager', $requete),
             new MockArg('getTraitementManager', $traitementManager), new MockArg('getReponseManager', $reponse),
-            new MockArg('getErrorManager', $errorManager));
+            new MockArg('getErrorManager', $errorManager)
+        );
 
         $mainApp = new MainApplication($conteneur);
         $mainApp->ajouterObserveur($abstractDisplayer);

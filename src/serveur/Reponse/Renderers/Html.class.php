@@ -70,7 +70,8 @@ $retour
 EOT;
     }
 
-    public function getTemplateHtml() {
+    public function getTemplateHtml()
+    {
         return self::$templateHtml;
     }
 }

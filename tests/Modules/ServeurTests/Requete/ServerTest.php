@@ -107,7 +107,8 @@ class ServerTest extends TestCase
 
         $this->assertAttributeCount(2, '_serveurDonnees', $this->server);
         $this->assertAttributeEquals(
-            array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server);
+            array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server
+        );
     }
 
     public function testSetServeurDonneesPutPostDelete()
@@ -119,7 +120,8 @@ class ServerTest extends TestCase
 
         $this->assertCount(2, $this->server->getServeurDonnees());
         $this->assertEquals(
-            array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'), $this->server->getServeurDonnees());
+            array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'), $this->server->getServeurDonnees()
+        );
     }
 
     /**
@@ -139,7 +141,8 @@ class ServerTest extends TestCase
         $this->assertAttributeEquals(self::$donneesServer, '_serveurVariable', $this->server);
 
         $this->assertAttributeEquals(
-            array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server);
+            array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server
+        );
     }
 
     public function testGetServeurMethode()
@@ -159,7 +162,8 @@ class ServerTest extends TestCase
     {
         $this->server->setVarServeur(self::$donneesServer);
         $this->assertEquals(
-            'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', $this->server->getServeurHttpAccept());
+            'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', $this->server->getServeurHttpAccept()
+        );
     }
 
     public function testGetRemoteIp()

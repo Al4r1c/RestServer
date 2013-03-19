@@ -74,6 +74,7 @@ class ObjetReponse
 
         $this->setStatusHttp($statusHttp);
         $this->setDonneesReponse(
-            array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1]));
+            array('Code' => $statusHttp, 'Status' => $infoHttpCode[0], 'Message' => $infoHttpCode[1])
+        );
     }
 }

@@ -99,7 +99,8 @@ class ReponseManager
         }
 
         $this->setFormats(
-            $configuration->getConfigValeur('config.default_render'), $configuration->getConfigValeur('render'));
+            $configuration->getConfigValeur('config.default_render'), $configuration->getConfigValeur('render')
+        );
         $this->setCharset($configuration->getConfigValeur('config.charset'));
     }
 
@@ -173,7 +174,8 @@ class ReponseManager
         http_response_code($codeHttp);
         $this->_header->ajouterHeader(
             'Content-type', Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' .
-                            strtolower($this->_charset));
+                            strtolower($this->_charset)
+        );
         $this->_header->envoyerHeaders();
     }
 
@@ -231,7 +233,9 @@ class ReponseManager
         /* @var $view \Serveur\Reponse\Renderers\AbstractRenderer */
         $view = $this->getRenderClass(
             $this->trouverFormatRetourCorrect(
-                $formatsDemandes, $this->_formatsAcceptes, $this->_formatRetour));
+                $formatsDemandes, $this->_formatsAcceptes, $this->_formatRetour
+            )
+        );
 
         $this->envoyerHeaders($objetReponse->getStatusHttp());
 

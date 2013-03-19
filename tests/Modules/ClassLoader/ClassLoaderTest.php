@@ -20,15 +20,16 @@ class ClassLoaderTest extends TestCase
         $this->_classLoader->ajouterNamespace('myNamespace', '/path/');
         $this->assertAttributeEquals(
             array('mynamespace' => array('path' => '/path/', 'extension' => '.class.php')), '_namespaces',
-            $this->_classLoader);
+            $this->_classLoader
+        );
     }
 
     public function testAjouterNamespaceRajoutePointSiExtension()
     {
         $this->_classLoader->ajouterNamespace('myNamespace', '/path/', 'php');
         $this->assertAttributeEquals(
-            array('mynamespace' => array('path' => '/path/', 'extension' => '.php')), '_namespaces',
-            $this->_classLoader);
+            array('mynamespace' => array('path' => '/path/', 'extension' => '.php')), '_namespaces', $this->_classLoader
+        );
     }
 
     public function testLoaderFunction()

@@ -46,18 +46,21 @@ class TraitementManagerTest extends TestCase
             $abstractRessource = $this->createMock(
                 'AbstractRessource',
                 new MockArg($doMethod, $this->getMockObjetReponse(), array($requete->getUriVariables(),
-                    $requete->getParametres())));
+                    $requete->getParametres()))
+            );
 
             return $abstractRessource;
         };
 
         $databaseConfig = $this->createMock(
-            'DatabaseConfig', new MockArg('getDriver', 'myDriver'));
+            'DatabaseConfig', new MockArg('getDriver', 'myDriver')
+        );
 
         $abstractRessource = $this->getMockAbstractDatabase();
 
         $databaseFactory = $this->createMock(
-            'DatabaseFactory', new MockArg('getConnexionDatabase', $abstractRessource, array('myDriver')));
+            'DatabaseFactory', new MockArg('getConnexionDatabase', $abstractRessource, array('myDriver'))
+        );
 
         $this->_traitementManager->setRessourceFactory($callable);
         $this->_traitementManager->setDatabaseFactory($databaseFactory);
@@ -122,7 +125,8 @@ class TraitementManagerTest extends TestCase
         $this->_traitementManager->setRessourceFactory($callable);
 
         $this->assertEquals(
-            'myRessName', $this->_traitementManager->recupererNouvelleInstanceRessource('myRessName'));
+            'myRessName', $this->_traitementManager->recupererNouvelleInstanceRessource('myRessName')
+        );
     }
 
     /**
@@ -138,10 +142,12 @@ class TraitementManagerTest extends TestCase
         };
 
         $databaseConfig = $this->createMock(
-            'DatabaseConfig', new MockArg('getDriver', 'myDriver'));
+            'DatabaseConfig', new MockArg('getDriver', 'myDriver')
+        );
 
         $databaseFactory = $this->createMock(
-            'DatabaseFactory', new MockArg('getConnexionDatabase', false, array('myDriver')));
+            'DatabaseFactory', new MockArg('getConnexionDatabase', false, array('myDriver'))
+        );
 
         $this->_traitementManager->setRessourceFactory($callable);
         $this->_traitementManager->setDatabaseFactory($databaseFactory);
@@ -165,7 +171,8 @@ class TraitementManagerTest extends TestCase
         $this->setFakeDatabase('doGet', $requete);
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));
+            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+        );
     }
 
     public function testTraiterPut()
@@ -174,7 +181,8 @@ class TraitementManagerTest extends TestCase
         $this->setFakeDatabase('doPut', $requete);
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));
+            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+        );
     }
 
     public function testTraiterPost()
@@ -183,7 +191,8 @@ class TraitementManagerTest extends TestCase
         $this->setFakeDatabase('doPost', $requete);
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));
+            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+        );
     }
 
     public function testTraiterDelete()
@@ -192,7 +201,8 @@ class TraitementManagerTest extends TestCase
         $this->setFakeDatabase('doDelete', $requete);
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));
+            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+        );
     }
 
     public function testTraiterRessourceInconnue()
@@ -208,6 +218,7 @@ class TraitementManagerTest extends TestCase
         $this->_traitementManager->setRessourceFactory($callable);
 
         $this->assertEquals(
-            404, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp());
+            404, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
+        );
     }
 }

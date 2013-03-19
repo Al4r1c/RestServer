@@ -61,7 +61,8 @@ class ClassLoader
                 $fileName =
                     $configNamespace['path'] . DIRECTORY_SEPARATOR .
                     substr($className, strpos($unNamespace, $className) + strlen($unNamespace) + 1) .
-                    $configNamespace['extension'])
+                    $configNamespace['extension']
+            )
             ) {
                 include_once($fileName);
 
