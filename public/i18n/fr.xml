@@ -18,6 +18,7 @@
 	</trad>
 
 	<errorType>
+		<message code="1">Erreur PHP</message>
 		<message code="10">Paramètre invalide</message>
 		<message code="101">Système de fichier</message>
 		<message code="102">Fichier</message>

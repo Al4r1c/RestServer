@@ -125,13 +125,19 @@ class Logger extends AbstractDisplayer
             throw new \Exception('Invalid log error file or file not found.');
         }
 
+        if (($uneErreur->getCodeErreur() & ($uneErreur->getCodeErreur() - 1)) == 0) {
+            $errorType = 1;
+        } else {
+            $errorType = substr($uneErreur->getCodeErreur(), 0, 3);
+        }
+
         $this->_fichierLogErreur->ecrireDansFichier($uneErreur->getDate()->format('d-m-Y H:i:s') . ": \n");
         $this->_fichierLogErreur->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables(
-                "{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." .
-                substr($uneErreur->getCodeErreur(), 0, -2) . "}\n"
+                "{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." . $errorType . "}\n"
             )
         );
+
         $this->_fichierLogErreur->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\n"
         );
