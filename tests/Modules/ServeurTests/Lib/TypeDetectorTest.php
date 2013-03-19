@@ -23,10 +23,8 @@
         public function setUp()
         {
             /** @var $constantes \Serveur\Utils\Constante * */
-            $constantes = $this->createStaticMock(
-                'Constante',
-                new MockArg('chargerConfig', self::$mimeFichier, array('mimes'))
-            );
+            $constantes = $this->createStaticMock('Constante',
+                new MockArg('chargerConfig', self::$mimeFichier, array('mimes')));
 
             $this->typeDetector = new TypeDetector($constantes::chargerConfig('mimes'));
         }
@@ -67,11 +65,7 @@
 
         public function testExtraiteMimesQualite()
         {
-            $this->assertEquals(
-                array('html', 'xhtml', 'xml'),
-                $this->typeDetector->extraireMimesTypeHeader(
-                    'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-                )
-            );
+            $this->assertEquals(array('html', 'xhtml', 'xml'),
+                $this->typeDetector->extraireMimesTypeHeader('text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'));
         }
     }

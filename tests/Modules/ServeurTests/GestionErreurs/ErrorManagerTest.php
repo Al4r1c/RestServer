@@ -26,10 +26,8 @@
 
         public function testSetHandlers()
         {
-            $errorHandler = $this->createMock(
-                'ErreurHandler',
-                new MockArg('setHandlers')
-            );
+            $errorHandler = $this->createMock('ErreurHandler',
+                new MockArg('setHandlers'));
 
             $this->_errorManager->setErrorHandler($errorHandler);
             $this->_errorManager->setHandlers();
@@ -38,10 +36,8 @@
         public function testAjouterObserveur()
         {
             $abstractDisplayer = $this->getMockAbstractDisplayer();
-            $errorHandler = $this->createMock(
-                'ErreurHandler',
-                new MockArg('ajouterUnLogger', null, array($abstractDisplayer))
-            );
+            $errorHandler = $this->createMock('ErreurHandler',
+                new MockArg('ajouterUnLogger', null, array($abstractDisplayer)));
 
             $this->_errorManager->setErrorHandler($errorHandler);
             $this->_errorManager->ajouterObserveur($abstractDisplayer);

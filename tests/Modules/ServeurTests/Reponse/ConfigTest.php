@@ -23,18 +23,14 @@
         public function testChargerFichier()
         {
             /** @var $fichier \Serveur\Lib\Fichier */
-            $fichier = $this->createMock(
-                'Fichier',
-                new MockArg('chargerFichier', self::$donneesConfig)
-            );
+            $fichier = $this->createMock('Fichier',
+                new MockArg('chargerFichier', self::$donneesConfig));
 
             $this->configuration->chargerConfiguration($fichier);
 
-            $this->assertAttributeEquals(
-                array_change_key_case(self::$donneesConfig, CASE_UPPER),
+            $this->assertAttributeEquals(array_change_key_case(self::$donneesConfig, CASE_UPPER),
                 '_applicationConfiguration',
-                $this->configuration
-            );
+                $this->configuration);
         }
 
         /**
@@ -52,10 +48,8 @@
          */
         public function testChargerFichierInexistant()
         {
-            $fichier = $this->createMock(
-                'Fichier',
-                new MockArg('fichierExiste', false)
-            );
+            $fichier = $this->createMock('Fichier',
+                new MockArg('fichierExiste', false));
 
             $this->configuration->chargerConfiguration($fichier);
         }
@@ -68,20 +62,16 @@
         {
             $donnees = self::$donneesConfig;
             unset($donnees['Render']);
-            $fichier = $this->createMock(
-                'Fichier',
-                new MockArg('chargerFichier', $donnees)
-            );
+            $fichier = $this->createMock('Fichier',
+                new MockArg('chargerFichier', $donnees));
 
             $this->configuration->chargerConfiguration($fichier);
         }
 
         public function testGetValeur()
         {
-            $fichier = $this->createMock(
-                'Fichier',
-                new MockArg('chargerFichier', self::$donneesConfig)
-            );
+            $fichier = $this->createMock('Fichier',
+                new MockArg('chargerFichier', self::$donneesConfig));
 
             $this->configuration->chargerConfiguration($fichier);
 

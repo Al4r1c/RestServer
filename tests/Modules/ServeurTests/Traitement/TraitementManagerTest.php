@@ -80,7 +80,8 @@
             $this->_traitementManager->setRessourceFactory(array());
         }
 
-        public function testSetDatabaseFactory() {
+        public function testSetDatabaseFactory()
+        {
             $databaseFactory = new DatabaseFactory();
 
             $this->_traitementManager->setDatabaseFactory($databaseFactory);
@@ -95,7 +96,8 @@
             $this->_traitementManager->setDatabaseFactory(null);
         }
 
-        public function testSetDatabaseConfig() {
+        public function testSetDatabaseConfig()
+        {
             $databaseConfig = new DatabaseConfig();
 
             $this->_traitementManager->setDatabaseConfig($databaseConfig);

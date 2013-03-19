@@ -96,14 +96,12 @@
         {
             $dateRequete = new \DateTime();
 
-            $restRequete = $this->createMock(
-                'RequeteManager',
+            $restRequete = $this->createMock('RequeteManager',
                 new MockArg('getDateRequete', $dateRequete),
                 new MockArg('getIp', '127.0.0.1'),
                 new MockArg('getMethode', 'GET'),
                 new MockArg('getUriVariables', array('edit')),
-                new MockArg('getParametres', array('param1' => 'var1'))
-            );
+                new MockArg('getParametres', array('param1' => 'var1')));
 
             $fichierAcces = new Fichier();
             $fichierAcces->setFileSystem($this->getFakeFileSystem());
@@ -141,11 +139,9 @@
 
         public function testEcrireReponse()
         {
-            $restReponse = $this->createMock(
-                'ReponseManager',
+            $restReponse = $this->createMock('ReponseManager',
                 new MockArg('getStatus', 200),
-                new MockArg('getFormatRetour', 'json')
-            );
+                new MockArg('getFormatRetour', 'json'));
 
             $fichierAcces = new Fichier();
             $fichierAcces->setFileSystem($this->getFakeFileSystem());

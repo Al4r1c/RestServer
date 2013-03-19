@@ -17,10 +17,8 @@
 
         private function expectEcrireErreur()
         {
-            $abstractDisplayer = $this->createMock(
-                'AbstractDisplayer',
-                new MockArg('ecrireMessageErreur')
-            );
+            $abstractDisplayer = $this->createMock('AbstractDisplayer',
+                new MockArg('ecrireMessageErreur'));
 
             $this->_erreurHandler->ajouterUnLogger($abstractDisplayer);
         }
