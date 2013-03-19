@@ -44,8 +44,38 @@
         public function deleteOne($id);
 
         /**
-         * @param array $filters
          * @return ObjetReponse
          */
-        public function deleteAll($filters);
+        public function deleteAll();
+
+        /**
+         * @param string $id
+         * @param string $collectionName
+         * @param array $listeObjects
+         * @return ObjetReponse
+         */
+        public function putCollection($id, $collectionName, $listeObjects);
+
+        /**
+         * @param string $id
+         * @param string $collectionName
+         * @param string $idObject
+         * @return ObjetReponse
+         */
+        public function putInCollection($id, $collectionName, $idObject);
+
+        /**
+         * @param string $id
+         * @param string $collectionName
+         * @return ObjetReponse
+         */
+        public function deleteCollection($id, $collectionName);
+
+        /**
+         * @param string $id
+         * @param string $collectionName
+         * @param string $idObject
+         * @return ObjetReponse
+         */
+        public function deleteInCollection($id, $collectionName, $idObject);
     }

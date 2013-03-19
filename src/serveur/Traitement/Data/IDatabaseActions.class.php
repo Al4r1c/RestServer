@@ -17,39 +17,84 @@
         public function fermerConnection($connection);
 
         /**
-         * @param string $table
+         * @param string $id
+         * @return ObjetReponse
+         */
+        public function recupererId($id);
+
+        /**
          * @param array $filtres
          * @return ObjetReponse
          */
-        public function recuperer($table, $filtres = array());
+        public function recuperer($filtres);
 
         /**
-         * @param string $table
          * @param array $champs
          * @return ObjetReponse
          */
-        public function inserer($table, $champs);
+        public function inserer($champs);
 
         /**
-         * @param string $table
          * @param string $idObjet
          * @param array $champs
          * @return ObjetReponse
          */
-        public function insererIdempotent($table, $idObjet, $champs);
+        public function insererIdempotent($idObjet, $champs);
 
         /**
-         * @param string $table
+         * @param string $id
          * @param array $champs
+         * @return ObjetReponse
+         */
+        public function mettreAJourId($id, $champs);
+
+        /**
+         * @param array $filtres
+         * @param array $champs
+         * @return ObjetReponse
+         */
+        public function mettreAJour($filtres, $champs);
+
+        /**
+         * @param string $id
+         * @return ObjetReponse
+         */
+        public function supprimerId($id);
+
+        /**
          * @param array $filtres
          * @return ObjetReponse
          */
-        public function mettreAJour($table, $champs, $filtres = array());
+        public function supprimer($filtres = array());
 
         /**
-         * @param string $table
-         * @param $filtres
+         * @param string $id
+         * @param string $nomCollection
+         * @param string $idNouvelObjet
          * @return ObjetReponse
          */
-        public function supprimer($table, $filtres);
+        public function ajouterUnDansCollection($id, $nomCollection, $idNouvelObjet);
+
+        /**
+         * @param array $filtres
+         * @param string $nomCollection
+         * @param string $idNouvelObjet
+         * @return ObjetReponse
+         */
+        public function ajouterDansCollection($filtres, $nomCollection, $idNouvelObjet);
+
+        /**
+         * @param string $id
+         * @param string $nomCollection
+         * @param string $idObjetCollection
+         * @return ObjetReponse
+         */
+        public function supprimerDansCollection($id, $nomCollection, $idObjetCollection);
+
+        /**
+         * @param string $id
+         * @param string $nomCollection
+         * @return ObjetReponse
+         */
+        public function supprimerCollection($id, $nomCollection);
     }

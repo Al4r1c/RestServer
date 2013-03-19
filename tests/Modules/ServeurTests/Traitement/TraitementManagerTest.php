@@ -36,12 +36,16 @@
             return $requete;
         }
 
-        public function setFakeDatabase($doMethod)
+        /**
+         * @param string $doMethod
+         * @param RequeteManager $requete
+         */
+        public function setFakeDatabase($doMethod, $requete)
         {
-            $callable = function () use ($doMethod) {
+            $callable = function () use ($doMethod, $requete) {
                 $abstractRessource = $this->createMock('AbstractRessource',
-                    new MockArg($doMethod, $this->getMockObjetReponse(), array(1,
-                        array('data1' => 'var1'))));
+                    new MockArg($doMethod, $this->getMockObjetReponse(), array($requete->getUriVariables(),
+                        $requete->getParametres())));
 
                 return $abstractRessource;
             };
@@ -155,7 +159,7 @@
         public function testTraiterGet()
         {
             $requete = $this->getRequete('GET', '/path/1', array('data1' => 'var1'));
-            $this->setFakeDatabase('doGet');
+            $this->setFakeDatabase('doGet', $requete);
 
             $this->assertInstanceOf('Serveur\Lib\ObjetReponse',
                 $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));
@@ -164,7 +168,7 @@
         public function testTraiterPut()
         {
             $requete = $this->getRequete('PUT', '/path/1', array('data1' => 'var1'));
-            $this->setFakeDatabase('doPut');
+            $this->setFakeDatabase('doPut', $requete);
 
             $this->assertInstanceOf('Serveur\Lib\ObjetReponse',
                 $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));
@@ -173,7 +177,7 @@
         public function testTraiterPost()
         {
             $requete = $this->getRequete('POST', '/path/1', array('data1' => 'var1'));
-            $this->setFakeDatabase('doPost');
+            $this->setFakeDatabase('doPost', $requete);
 
             $this->assertInstanceOf('Serveur\Lib\ObjetReponse',
                 $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));
@@ -182,7 +186,7 @@
         public function testTraiterDelete()
         {
             $requete = $this->getRequete('DELETE', '/path/1', array('data1' => 'var1'));
-            $this->setFakeDatabase('doDelete');
+            $this->setFakeDatabase('doDelete', $requete);
 
             $this->assertInstanceOf('Serveur\Lib\ObjetReponse',
                 $this->_traitementManager->traiterRequeteEtRecupererResultat($requete));

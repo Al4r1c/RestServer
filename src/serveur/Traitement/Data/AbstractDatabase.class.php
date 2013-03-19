@@ -9,6 +9,11 @@
         private $_connection;
 
         /**
+         * @var string
+         */
+        private $_nomTable;
+
+        /**
          * @return resource|object
          */
         public function getConnection()
@@ -17,11 +22,27 @@
         }
 
         /**
+         * @return string
+         */
+        public function getNomTable()
+        {
+            return $this->_nomTable;
+        }
+
+        /**
          * @param resource|object $connection
          */
         public function setConnection($connection)
         {
             $this->_connection = $connection;
+        }
+
+        /**
+         * @param string $nomTable
+         */
+        public function setNomTable($nomTable)
+        {
+            $this->_nomTable = $nomTable;
         }
 
         public function __destruct()

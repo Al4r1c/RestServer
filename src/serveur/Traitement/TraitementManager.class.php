@@ -100,19 +100,19 @@
                     switch (strtoupper($requete->getMethode())) {
                         case 'GET':
                             $objetReponse =
-                                $ressourceObjet->doGet($requete->getUriVariable(1), $requete->getParametres());
+                                $ressourceObjet->doGet($requete->getUriVariables(), $requete->getParametres());
                             break;
                         case 'POST':
                             $objetReponse =
-                                $ressourceObjet->doPost($requete->getUriVariable(1), $requete->getParametres());
+                                $ressourceObjet->doPost($requete->getUriVariables(), $requete->getParametres());
                             break;
                         case 'PUT':
                             $objetReponse =
-                                $ressourceObjet->doPut($requete->getUriVariable(1), $requete->getParametres());
+                                $ressourceObjet->doPut($requete->getUriVariables(), $requete->getParametres());
                             break;
                         case 'DELETE':
                             $objetReponse =
-                                $ressourceObjet->doDelete($requete->getUriVariable(1), $requete->getParametres());
+                                $ressourceObjet->doDelete($requete->getUriVariables(), $requete->getParametres());
                             break;
                     }
                 } else {
