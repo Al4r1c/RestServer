@@ -1,22 +1,22 @@
 <?php
-    namespace Serveur\Utils;
+namespace Serveur\Utils;
 
-    use Serveur\Lib\Fichier;
-    use Serveur\Lib\FileSystem;
+use Serveur\Lib\Fichier;
+use Serveur\Lib\FileSystem;
 
-    class FileManager
+class FileManager
+{
+    /**
+     * @return \Serveur\Lib\Fichier
+     */
+    public static function getFichier()
     {
-        /**
-         * @return \Serveur\Lib\Fichier
-         */
-        public static function getFichier()
-        {
-            $fileSystem = new FileSystem();
-            $fileSystem->initialiser(php_uname('s'), BASE_PATH);
+        $fileSystem = new FileSystem();
+        $fileSystem->initialiser(php_uname('s'), BASE_PATH);
 
-            $fichier = new Fichier();
-            $fichier->setFileSystem($fileSystem);
+        $fichier = new Fichier();
+        $fichier->setFileSystem($fileSystem);
 
-            return $fichier;
-        }
+        return $fichier;
     }
+}

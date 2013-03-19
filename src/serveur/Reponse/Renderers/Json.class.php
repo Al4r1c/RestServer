@@ -1,14 +1,14 @@
 <?php
-    namespace Serveur\Reponse\Renderers;
+namespace Serveur\Reponse\Renderers;
 
-    class Json extends AbstractRenderer
+class Json extends AbstractRenderer
+{
+    /**
+     * @param array $donnees
+     * @return string
+     */
+    protected function genererRendu(array $donnees)
     {
-        /**
-         * @param array $donnees
-         * @return string
-         */
-        protected function genererRendu(array $donnees)
-        {
-            return json_encode($donnees);
-        }
+        return json_encode($donnees);
     }
+}

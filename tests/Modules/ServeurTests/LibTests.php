@@ -1,34 +1,34 @@
 <?php
-    namespace Tests\ServeurTests;
+namespace Tests\ServeurTests;
 
-    if (!defined('PHPUnit_MAIN_METHOD')) {
-        define('PHPUnit_MAIN_METHOD', 'LibTests::main');
-    }
+if (!defined('PHPUnit_MAIN_METHOD')) {
+    define('PHPUnit_MAIN_METHOD', 'LibTests::main');
+}
 
-    class LibTests
+class LibTests
+{
+
+    public static function main()
     {
-
-        public static function main()
-        {
-            \PHPUnit_TextUI_TestRunner::run(self::suite());
-        }
-
-        public static function suite()
-        {
-            $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
-
-            $suite->addTestSuite('Tests\ServeurTests\Lib\ObjetReponseTest');
-            $suite->addTestSuite('Tests\ServeurTests\Lib\FichierTest');
-            $suite->addTestSuite('Tests\ServeurTests\Lib\FileSystemTest');
-            $suite->addTestSuite('Tests\ServeurTests\Lib\FichierChargementTest');
-            $suite->addTestSuite('Tests\ServeurTests\Lib\TypeDetectorTest');
-            $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLElementTest');
-            $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLParserTest');
-
-            return $suite;
-        }
+        \PHPUnit_TextUI_TestRunner::run(self::suite());
     }
 
-    if (PHPUnit_MAIN_METHOD == 'LibTests::main') {
-        LibTests::main();
+    public static function suite()
+    {
+        $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
+
+        $suite->addTestSuite('Tests\ServeurTests\Lib\ObjetReponseTest');
+        $suite->addTestSuite('Tests\ServeurTests\Lib\FichierTest');
+        $suite->addTestSuite('Tests\ServeurTests\Lib\FileSystemTest');
+        $suite->addTestSuite('Tests\ServeurTests\Lib\FichierChargementTest');
+        $suite->addTestSuite('Tests\ServeurTests\Lib\TypeDetectorTest');
+        $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLElementTest');
+        $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLParserTest');
+
+        return $suite;
     }
+}
+
+if (PHPUnit_MAIN_METHOD == 'LibTests::main') {
+    LibTests::main();
+}

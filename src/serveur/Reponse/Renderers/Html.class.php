@@ -1,10 +1,10 @@
 <?php
-    namespace Serveur\Reponse\Renderers;
+namespace Serveur\Reponse\Renderers;
 
-    class Html extends AbstractRenderer
-    {
+class Html extends AbstractRenderer
+{
 
-        public static $templateHtml = "<!DOCTYPE html>
+    public static $templateHtml = "<!DOCTYPE html>
 <html>
 <head>
 	<title>Data</title>
@@ -27,46 +27,50 @@
 </body>
 </html>";
 
-        /**
-         * @param array $donnees
-         * @return string
-         */
-        protected function genererRendu(array $donnees)
-        {
-            return $this->templateHtml($this->convertTableauToListeHtml($donnees));
-        }
+    /**
+     * @param array $donnees
+     * @return string
+     */
+    protected function genererRendu(array $donnees)
+    {
+        return $this->templateHtml($this->convertTableauToListeHtml($donnees));
+    }
 
-        /**
-         * @param array $array
-         * @return string
-         */
-        private function convertTableauToListeHtml(array $array)
-        {
-            $list = "<ul>\n";
+    /**
+     * @param array $array
+     * @return string
+     */
+    private function convertTableauToListeHtml(array $array)
+    {
+        $list = "<ul>\n";
 
-            foreach ($array as $clef => $valeur) {
-                $list .= "\t<li><strong>" . $clef . ":</strong> ";
-                if (is_array($valeur)) {
-                    $list .= $this->convertTableauToListeHtml($valeur);
-                } else {
-                    $list .= $valeur;
-                }
-                $list .= "</li>\n";
+        foreach ($array as $clef => $valeur) {
+            $list .= "\t<li><strong>" . $clef . ":</strong> ";
+            if (is_array($valeur)) {
+                $list .= $this->convertTableauToListeHtml($valeur);
+            } else {
+                $list .= $valeur;
             }
-
-            return $list . "</ul>\n";
+            $list .= "</li>\n";
         }
 
-        /**
-         * @param string $donneesFormatListeHtml
-         * @return string
-         */
-        private function templateHtml($donneesFormatListeHtml)
-        {
-            $retour = sprintf(self::$templateHtml, $donneesFormatListeHtml);
+        return $list . "</ul>\n";
+    }
 
-            return <<<EOT
+    /**
+     * @param string $donneesFormatListeHtml
+     * @return string
+     */
+    private function templateHtml($donneesFormatListeHtml)
+    {
+        $retour = sprintf(self::$templateHtml, $donneesFormatListeHtml);
+
+        return <<<EOT
 $retour
 EOT;
-        }
     }
+
+    public function getTemplateHtml() {
+        return self::$templateHtml;
+    }
+}

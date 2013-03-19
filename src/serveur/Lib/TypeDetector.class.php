@@ -1,63 +1,63 @@
 <?php
-    namespace Serveur\Lib;
+namespace Serveur\Lib;
 
-    use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
-    use Serveur\Utils\Constante;
+use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+use Serveur\Utils\Constante;
 
-    class TypeDetector
+class TypeDetector
+{
+    /**
+     * @var array
+     */
+    private $_constanteMimes;
+
+    /**
+     * @param array $mimesTypes
+     * @throws ArgumentTypeException
+     */
+    public function __construct($mimesTypes)
     {
-        /**
-         * @var array
-         */
-        private $_constanteMimes;
-
-        /**
-         * @param array $mimesTypes
-         * @throws ArgumentTypeException
-         */
-        public function __construct($mimesTypes)
-        {
-            if (!is_array($mimesTypes)) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $mimesTypes);
-            }
-
-            $this->_constanteMimes = $mimesTypes;
+        if (!is_array($mimesTypes)) {
+            throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $mimesTypes);
         }
 
-        /**
-         * @param string $clefMimeExtension
-         * @return string
-         */
-        public function getMimeType($clefMimeExtension)
-        {
-            if (!isNull($this->_constanteMimes[$clefMimeExtension])) {
-                return $this->_constanteMimes[$clefMimeExtension];
-            } else {
-                return '*/*';
-            }
-        }
+        $this->_constanteMimes = $mimesTypes;
+    }
 
-        /**
-         * @param string $enteteHttpAccept
-         * @return array
-         */
-        public function extraireMimesTypeHeader($enteteHttpAccept)
-        {
-            $allType = explode(',', $enteteHttpAccept);
-            $tabTypesTrouves = array();
-
-            foreach ($allType as $unType) {
-                if (strpos($unType = strtolower($unType), ';') !== false) {
-                    $unType = substr($unType, 0, strpos($unType, ';'));
-                }
-
-                foreach ($this->_constanteMimes as $uneExtension => $unFormatMime) {
-                    if (strcmp($unFormatMime, $unType) === 0) {
-                        $tabTypesTrouves[] = $uneExtension;
-                    }
-                }
-            }
-
-            return $tabTypesTrouves;
+    /**
+     * @param string $clefMimeExtension
+     * @return string
+     */
+    public function getMimeType($clefMimeExtension)
+    {
+        if (!isNull($this->_constanteMimes[$clefMimeExtension])) {
+            return $this->_constanteMimes[$clefMimeExtension];
+        } else {
+            return '*/*';
         }
     }
+
+    /**
+     * @param string $enteteHttpAccept
+     * @return array
+     */
+    public function extraireMimesTypeHeader($enteteHttpAccept)
+    {
+        $allType = explode(',', $enteteHttpAccept);
+        $tabTypesTrouves = array();
+
+        foreach ($allType as $unType) {
+            if (strpos($unType = strtolower($unType), ';') !== false) {
+                $unType = substr($unType, 0, strpos($unType, ';'));
+            }
+
+            foreach ($this->_constanteMimes as $uneExtension => $unFormatMime) {
+                if (strcmp($unFormatMime, $unType) === 0) {
+                    $tabTypesTrouves[] = $uneExtension;
+                }
+            }
+        }
+
+        return $tabTypesTrouves;
+    }
+}

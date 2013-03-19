@@ -1,8 +1,8 @@
 <?php
-    namespace Serveur\GestionErreurs\Types;
+namespace Serveur\GestionErreurs\Types;
 
-    use Serveur\GestionErreurs\Types\AbstractTypeErreur;
+use Serveur\GestionErreurs\Types\AbstractTypeErreur;
 
-    class Notice extends AbstractTypeErreur
-    {
-    }
+class Notice extends AbstractTypeErreur
+{
+}

@@ -1,14 +1,14 @@
 <?php
-    namespace Serveur\Lib\FichierChargement;
+namespace Serveur\Lib\FichierChargement;
 
-    class Yaml extends AbstractChargeurFichier
+class Yaml extends AbstractChargeurFichier
+{
+    /**
+     * @param string $locationFichier
+     * @return array
+     */
+    public function chargerFichier($locationFichier)
     {
-        /**
-         * @param string $locationFichier
-         * @return array
-         */
-        public function chargerFichier($locationFichier)
-        {
-            return \Spyc::YAMLLoad($locationFichier);
-        }
+        return \Spyc::YAMLLoad($locationFichier);
     }
+}

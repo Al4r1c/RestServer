@@ -1,14 +1,14 @@
 <?php
-    namespace Serveur\Lib\FichierChargement;
+namespace Serveur\Lib\FichierChargement;
 
-    class Php extends AbstractChargeurFichier
+class Php extends AbstractChargeurFichier
+{
+    /**
+     * @param string $locationFichier
+     * @return mixed
+     */
+    public function chargerFichier($locationFichier)
     {
-        /**
-         * @param string $locationFichier
-         * @return mixed
-         */
-        public function chargerFichier($locationFichier)
-        {
-            return include $locationFichier;
-        }
+        return include $locationFichier;
     }
+}

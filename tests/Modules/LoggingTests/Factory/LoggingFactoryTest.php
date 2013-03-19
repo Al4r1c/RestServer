@@ -1,21 +1,21 @@
 <?php
-    namespace Tests\LoggingTests\Factory;
+namespace Tests\LoggingTests\Factory;
 
-    use Tests\TestCase;
+use Tests\TestCase;
 
-    class LoggingFactoryTest extends TestCase
+class LoggingFactoryTest extends TestCase
+{
+    public function testRecupererLogger()
     {
-        public function testRecupererLogger()
-        {
-            $factory = \Logging\LoggingFactory::getLogger('logger');
-            $this->assertInstanceOf("Logging\\Displayer\\AbstractDisplayer", $factory);
-        }
-
-        /**
-         * @expectedException \Exception
-         */
-        public function testRecupererInexistant()
-        {
-            \Logging\LoggingFactory::getLogger('WRONG_ONE');
-        }
+        $factory = \Logging\LoggingFactory::getLogger('logger');
+        $this->assertInstanceOf("Logging\\Displayer\\AbstractDisplayer", $factory);
     }
+
+    /**
+     * @expectedException \Exception
+     */
+    public function testRecupererInexistant()
+    {
+        \Logging\LoggingFactory::getLogger('WRONG_ONE');
+    }
+}
