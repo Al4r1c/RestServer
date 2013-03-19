@@ -124,6 +124,14 @@ class ServerTest extends TestCase
         );
     }
 
+    public function testSetServeurDonneesDelete()
+    {
+        $this->server->setServeurVariable(self::$donneesServer);
+        $this->server->setServeurDonnees('DELETE');
+
+        $this->assertAttributeEmpty('_serveurDonnees', $this->server);
+    }
+
     /**
      * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20101

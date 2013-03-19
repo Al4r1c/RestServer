@@ -117,8 +117,10 @@ class Server
                 break;
             case 'POST':
             case 'PUT':
-            case 'DELETE':
                 parse_str($this->_serveurVariable['PHP_INPUT'], $this->_serveurDonnees);
+                break;
+            case 'DELETE':
+                $this->_serveurDonnees = array();
                 break;
             default:
                 throw new MainException(20101, 405, $methode);
