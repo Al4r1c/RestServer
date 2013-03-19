@@ -27,7 +27,9 @@
         public function setConnectionDatabase($dbConnection)
         {
             if (!$dbConnection instanceof AbstractDatabase) {
-                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Traitement\Data\AbstractDatabase', $dbConnection);
+                throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Traitement\Data\AbstractDatabase',
+                    $dbConnection
+                );
             }
 
             $this->_connectionDatabase = $dbConnection;
