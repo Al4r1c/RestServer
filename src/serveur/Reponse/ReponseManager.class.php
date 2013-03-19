@@ -35,6 +35,11 @@ class ReponseManager
      */
     private $_contenu;
 
+    public function __construct()
+    {
+        http_response_code(500);
+    }
+
     /**
      * @return \string[]
      */
