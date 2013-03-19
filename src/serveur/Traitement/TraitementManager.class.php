@@ -60,7 +60,9 @@ class TraitementManager
     public function setDatabaseConfig($databaseConfig)
     {
         if (!$databaseConfig instanceof DatabaseConfig) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseConfig', $databaseConfig);
+            throw new ArgumentTypeException(
+                1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseConfig', $databaseConfig
+            );
         }
 
         $this->_databaseConfig = $databaseConfig;
