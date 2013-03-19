@@ -33,7 +33,7 @@ class TradManager
         $xmlElementsCorrespondants =
             $this->_fichierTraductionDefaut->getConfigValeur($section . '.message[code=' . $identifier . ']');
 
-        if (isset($xmlElementsCorrespondants)) {
+        if (!empty($xmlElementsCorrespondants)) {
             return $xmlElementsCorrespondants[0]->getValeur();
         } else {
             return '{' . $section . '.' . $identifier . '}';
