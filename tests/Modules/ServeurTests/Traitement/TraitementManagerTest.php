@@ -42,7 +42,7 @@ class TraitementManagerTest extends TestCase
      */
     public function setFakeDatabase($doMethod, $requete)
     {
-        $callable = function () use ($doMethod, $requete) {
+        $callableRessourceFactory = function () use ($doMethod, $requete) {
             $abstractRessource = $this->createMock(
                 'AbstractRessource',
                 new MockArg($doMethod, $this->getMockObjetReponse(), array($requete->getUriVariables(),
@@ -56,14 +56,14 @@ class TraitementManagerTest extends TestCase
             'DatabaseConfig', new MockArg('getDriver', 'myDriver')
         );
 
-        $abstractRessource = $this->getMockAbstractDatabase();
+        $callableDatabaseFactory = function () use ($databaseConfig) {
+            $this->assertEquals('myDriver', $databaseConfig->getDriver());
 
-        $databaseFactory = $this->createMock(
-            'DatabaseFactory', new MockArg('getConnexionDatabase', $abstractRessource, array('myDriver'))
-        );
+            return $this->getMockAbstractDatabase();
+        };
 
-        $this->_traitementManager->setRessourceFactory($callable);
-        $this->_traitementManager->setDatabaseFactory($databaseFactory);
+        $this->_traitementManager->setRessourceFactory($callableRessourceFactory);
+        $this->_traitementManager->setDatabaseFactory($callableDatabaseFactory);
         $this->_traitementManager->setDatabaseConfig($databaseConfig);
     }
 
@@ -86,7 +86,8 @@ class TraitementManagerTest extends TestCase
 
     public function testSetDatabaseFactory()
     {
-        $databaseFactory = new DatabaseFactory();
+        $databaseFactory = function () {
+        };
 
         $this->_traitementManager->setDatabaseFactory($databaseFactory);
         $this->assertAttributeEquals($databaseFactory, '_databaseFactory', $this->_traitementManager);
@@ -95,7 +96,7 @@ class TraitementManagerTest extends TestCase
     /**
      * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
-    public function testSetDatabaseFactoryErrone()
+    public function testSetDatabaseFactoryOnlyCallable()
     {
         $this->_traitementManager->setDatabaseFactory(null);
     }
@@ -145,12 +146,12 @@ class TraitementManagerTest extends TestCase
             'DatabaseConfig', new MockArg('getDriver', 'myDriver')
         );
 
-        $databaseFactory = $this->createMock(
-            'DatabaseFactory', new MockArg('getConnexionDatabase', false, array('myDriver'))
-        );
+        $callableDatabaseFactory = function () {
+            return false;
+        };
 
         $this->_traitementManager->setRessourceFactory($callable);
-        $this->_traitementManager->setDatabaseFactory($databaseFactory);
+        $this->_traitementManager->setDatabaseFactory($callableDatabaseFactory);
         $this->_traitementManager->setDatabaseConfig($databaseConfig);
 
         $this->_traitementManager->traiterRequeteEtRecupererResultat($requete);
@@ -160,9 +161,18 @@ class TraitementManagerTest extends TestCase
      * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30001
      */
-    public function testRecupererSansAvoirSetFactory()
+    public function testRecupererSansAvoirSetRessourceFactory()
     {
         $this->_traitementManager->recupererNouvelleInstanceRessource('Gonna bug down');
+    }
+
+    /**
+     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 30002
+     */
+    public function testRecupererSansAvoirSetDatabaseFactory()
+    {
+        $this->_traitementManager->recupererNouvelleInstanceConnexion('Gonna bug down');
     }
 
     public function testTraiterGet()

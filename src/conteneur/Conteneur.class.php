@@ -9,7 +9,6 @@ use Serveur\Reponse\ReponseManager;
 use Serveur\Requete\RequeteManager;
 use Serveur\Requete\Server\Server;
 use Serveur\Traitement\Data\DatabaseConfig;
-use Serveur\Traitement\Data\DatabaseFactory;
 use Serveur\Traitement\TraitementManager;
 use Serveur\Utils\FileManager;
 
@@ -64,7 +63,16 @@ class Conteneur
         };
 
         $conteneur['DatabaseFactory'] = function () {
-            return new DatabaseFactory();
+            return function ($nomDriverDatabase) {
+                $nomClasseDatabase =
+                    '\\Serveur\\Traitement\\Data\\Drivers\\Database' . ucfirst(strtolower($nomDriverDatabase));
+
+                if (class_exists($nomClasseDatabase)) {
+                    return new $nomClasseDatabase();
+                } else {
+                    return false;
+                }
+            };
         };
 
         $conteneur['DatabaseConfig'] = function () {

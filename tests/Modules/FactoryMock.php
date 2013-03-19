@@ -23,7 +23,6 @@ use Serveur\Requete\RequeteManager;
 use Serveur\Requete\Server\Server;
 use Serveur\Traitement\Data\AbstractDatabase;
 use Serveur\Traitement\Data\DatabaseConfig;
-use Serveur\Traitement\Data\DatabaseFactory;
 use Serveur\Traitement\Ressource\AbstractRessource;
 use Serveur\Traitement\TraitementManager;
 use Serveur\Utils\Constante;
@@ -59,9 +58,6 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
                 break;
             case 'databaseconfig':
                 $mock = $this->getMockDatabaseConfig($methodes);
-                break;
-            case 'databasefactory':
-                $mock = $this->getMockDatabaseFactory($methodes);
                 break;
             case 'erreur':
                 $mock = $this->getMockErreur($methodes);
@@ -206,15 +202,6 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
     protected function getMockDatabaseConfig($methodes = array())
     {
         return $this->getMock('Serveur\Traitement\Data\DatabaseConfig', $methodes);
-    }
-
-    /**
-     * @param array $methodes
-     * @return \PHPUnit_Framework_MockObject_MockObject|DatabaseFactory
-     */
-    protected function getMockDatabaseFactory($methodes = array())
-    {
-        return $this->getMock('Serveur\Traitement\Data\DatabaseFactory', $methodes);
     }
 
     /**

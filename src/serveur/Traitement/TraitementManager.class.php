@@ -5,6 +5,7 @@ use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\ObjetReponse;
 use Serveur\Requete\RequeteManager;
+use Serveur\Traitement\Data\AbstractDatabase;
 use Serveur\Traitement\Data\DatabaseConfig;
 use Serveur\Traitement\Data\DatabaseFactory;
 use Serveur\Traitement\Ressource\AbstractRessource;
@@ -17,7 +18,7 @@ class TraitementManager
     private $_ressourceFactory;
 
     /**
-     * @var DatabaseFactory
+     * @var callable
      */
     private $_databaseFactory;
 
@@ -40,18 +41,16 @@ class TraitementManager
     }
 
     /**
-     * @param DatabaseFactory $databaseFactory
+     * @param callable $callableDatabaseFactory
      * @throws ArgumentTypeException
      */
-    public function setDatabaseFactory($databaseFactory)
+    public function setDatabaseFactory($callableDatabaseFactory)
     {
-        if (!$databaseFactory instanceof DatabaseFactory) {
-            throw new ArgumentTypeException(
-                1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseFactory', $databaseFactory
-            );
+        if (!is_callable($callableDatabaseFactory)) {
+            throw new ArgumentTypeException(1000, 500, __METHOD__, 'callable', $callableDatabaseFactory);
         }
 
-        $this->_databaseFactory = $databaseFactory;
+        $this->_databaseFactory = $callableDatabaseFactory;
     }
 
     /**
@@ -61,16 +60,14 @@ class TraitementManager
     public function setDatabaseConfig($databaseConfig)
     {
         if (!$databaseConfig instanceof DatabaseConfig) {
-            throw new ArgumentTypeException(
-                1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseConfig', $databaseConfig
-            );
+            throw new ArgumentTypeException(1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseConfig', $databaseConfig);
         }
 
         $this->_databaseConfig = $databaseConfig;
     }
 
     /**
-     * @param $nomRessource
+     * @param string $nomRessource
      * @return AbstractRessource
      * @throws MainException
      */
@@ -84,6 +81,21 @@ class TraitementManager
     }
 
     /**
+     * @param string $nomDriver
+     * @throws MainException
+     * @return AbstractDatabase
+     */
+    public function recupererNouvelleInstanceConnexion($nomDriver)
+    {
+        if (isNull($this->_databaseFactory)) {
+            throw new MainException(30002, 500);
+        }
+
+        return call_user_func($this->_databaseFactory, $nomDriver);
+    }
+
+
+    /**
      * @param RequeteManager $requete
      * @throws MainException
      * @return ObjetReponse
@@ -91,7 +103,7 @@ class TraitementManager
     public function traiterRequeteEtRecupererResultat($requete)
     {
         if (($ressourceObjet = $this->recupererNouvelleInstanceRessource($requete->getUriVariable(0))) !== false) {
-            if (($dbConn = $this->_databaseFactory->getConnexionDatabase($this->_databaseConfig->getDriver())) !== false
+            if (($dbConn = $this->recupererNouvelleInstanceConnexion($this->_databaseConfig->getDriver())) !== false
             ) {
                 $dbConn->ouvrirConnectionDepuisFichier($this->_databaseConfig);
                 $ressourceObjet->setConnectionDatabase($dbConn);

@@ -54,6 +54,7 @@
 		<message code="20101">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 		<message code="30000">Classe de la base de données %s non trouvée.</message>
 		<message code="30001">La ressource factory n'a pas été paramétrée.</message>
+		<message code="30002">La factory de connexion à la base de données n'a pas été paramétrée.</message>
 		<message code="30100">Numéro de port invalide %s. [0-65535]</message>
 		<message code="40000">Le format de retour configuré (%s) n'existe pas dans les rendus disponibles.</message>
 		<message code="40001">Les formats de retour acceptés sont invalides.</message>
