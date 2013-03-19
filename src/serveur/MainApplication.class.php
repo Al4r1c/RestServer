@@ -55,9 +55,7 @@ class MainApplication
             $reponse = $this->fabriquerEtRecupererReponse($e->getObjetReponseErreur());
         }
 
-        $this->ecrireReponseLog($reponse);
-
-        return $reponse->getContenu();
+        return $reponse->getContenuReponse();
     }
 
     /**
@@ -69,6 +67,8 @@ class MainApplication
     {
         $reponse = $this->_conteneur->getReponseManager();
         $reponse->fabriquerReponse($objetReponse, $formatsDemandees);
+
+        $this->ecrireReponseLog($reponse);
 
         return $reponse;
     }

@@ -75,7 +75,7 @@ class ReponseManager
     /**
      * @return string
      */
-    public function getContenu()
+    public function getContenuReponse()
     {
         return $this->_contenu;
     }

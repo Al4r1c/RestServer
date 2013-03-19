@@ -176,7 +176,7 @@ class ReponseManagerTest extends TestCase
 
         $restReponse->fabriquerReponse($objetReponse, array('json'));
 
-        $this->assertEquals('{"getKey":"getVar"}', $restReponse->getContenu());
+        $this->assertEquals('{"getKey":"getVar"}', $restReponse->getContenuReponse());
         $this->assertEquals('json', $restReponse->getFormatRetour());
     }
 
@@ -205,7 +205,7 @@ class ReponseManagerTest extends TestCase
 
         $restReponse->fabriquerReponse($objetReponse, array('fake'));
 
-        $this->assertEquals('{"param1":"var1"}', $restReponse->getContenu());
+        $this->assertEquals('{"param1":"var1"}', $restReponse->getContenuReponse());
     }
 
     /**
