@@ -9,11 +9,9 @@ class DatabaseFactory
      */
     public function getConnexionDatabase($nomDriverDatabase)
     {
-        if (class_exists(
-            $nomClasseDatabase =
-                '\\Serveur\\Traitement\\Data\\Drivers\\Database' . ucfirst(strtolower($nomDriverDatabase))
-        )
-        ) {
+        $nomClasseDatabase = '\\Serveur\\Traitement\\Data\\Drivers\\Database' . ucfirst(strtolower($nomDriverDatabase));
+
+        if (class_exists($nomClasseDatabase)) {
             return new $nomClasseDatabase();
         } else {
             return false;
