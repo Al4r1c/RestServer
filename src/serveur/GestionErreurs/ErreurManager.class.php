@@ -1,15 +1,18 @@
 <?php
 namespace Serveur\GestionErreurs;
 
+use Logging\Displayer\AbstractDisplayer;
+use Serveur\GestionErreurs\Handler\ErreurHandler;
+
 class ErreurManager
 {
     /**
-     * @var \Serveur\GestionErreurs\Handler\ErreurHandler
+     * @var ErreurHandler
      */
     private $_errorHandler;
 
     /**
-     * @param \Serveur\GestionErreurs\Handler\ErreurHandler $errorHandler
+     * @param ErreurHandler $errorHandler
      */
     public function setErrorHandler($errorHandler)
     {
@@ -22,7 +25,7 @@ class ErreurManager
     }
 
     /**
-     * @param \Logging\Displayer\AbstractDisplayer $logger
+     * @param AbstractDisplayer $logger
      */
     public function ajouterObserveur($logger)
     {
