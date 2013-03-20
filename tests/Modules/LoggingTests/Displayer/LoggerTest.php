@@ -175,7 +175,7 @@ class LoggerTest extends TestCase
 
     public function testEcrireErreur()
     {
-        $uneErreur = new Error(10000);
+        $uneErreur = new Error(20000);
         $uneErreur->setMessage("Mon message erreur");
 
         $fichierErreurs = new Fichier();
@@ -190,14 +190,15 @@ class LoggerTest extends TestCase
         $contenu = file_get_contents($fichierErreurs->getCheminCompletFichier());
 
         $this->assertContains('{trad.fatalerror}', $contenu);
+        $this->assertContains('{errorType.200}', $contenu);
         $this->assertContains($uneErreur->getDate()->format('d-m-Y H:i:s'), $contenu);
         $this->assertContains('Mon message erreur', $contenu);
-        $this->assertContains('10000', $contenu);
+        $this->assertContains('20000', $contenu);
     }
 
     public function testEcrireNotice()
     {
-        $uneErreur = new Notice(10000);
+        $uneErreur = new Notice(E_USER_NOTICE);
         $uneErreur->setMessage("Ma notice");
 
         $fichierErreurs = new Fichier();
@@ -212,9 +213,10 @@ class LoggerTest extends TestCase
         $contenu = file_get_contents($fichierErreurs->getCheminCompletFichier());
 
         $this->assertContains('{trad.notice}', $contenu);
+        $this->assertContains('{errorType.1}', $contenu);
         $this->assertContains($uneErreur->getDate()->format('d-m-Y H:i:s'), $contenu);
         $this->assertContains('Ma notice', $contenu);
-        $this->assertContains('10000', $contenu);
+        $this->assertContains('1024', $contenu);
     }
 
     /**
