@@ -66,7 +66,7 @@ class Config
         ) {
             return $valeur;
         } else {
-            trigger_error_app(E_USER_NOTICE, 40202, $clefConfig);
+            trigger_error_app(E_USER_NOTICE, 40202, array($clefConfig));
 
             return null;
         }

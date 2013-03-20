@@ -54,12 +54,11 @@ class ErreurHandler
     /**
      * @param int $erreurNumber
      * @param int $codeErreur
+     * @param array $arguments
      * @throws \InvalidArgumentException
      */
-    public function global_ajouterErreur($erreurNumber, $codeErreur)
+    public function global_ajouterErreur($erreurNumber, $codeErreur, $arguments)
     {
-        $arguments = array_slice(func_get_args(), 2);
-
         switch ($erreurNumber) {
             case E_USER_ERROR:
                 $this->ecrireErreur(new Error($codeErreur, $arguments));

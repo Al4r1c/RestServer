@@ -158,7 +158,7 @@ class FileSystem
         }
 
         if (!$leFichier = @fopen($urlFichier, 'wb')) {
-            trigger_error_app(E_USER_NOTICE, 10104, $urlFichier);
+            trigger_error_app(E_USER_NOTICE, 10104, array($urlFichier));
 
             return false;
         }
