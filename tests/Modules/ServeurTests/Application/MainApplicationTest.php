@@ -79,28 +79,4 @@ class MainApplicationTest extends TestCase
         $mainApp->run();
     }
 
-    public function testEcrireLogAcces()
-    {
-        $requete = $this->getMockRestRequete();
-        $traitementManager = $this->getMockTraitementManager();
-        $reponse = $this->getMockRestReponse();
-
-        $abstractDisplayer = $this->createMock(
-            'AbstractDisplayer', new MockArg('logRequete', null, array($requete))
-        );
-
-        $errorManager = $this->createMock(
-            'ErrorManager', new MockArg('ajouterObserveur')
-        );
-
-        $conteneur = $this->createMock(
-            'Conteneur', new MockArg('getRequeteManager', $requete),
-            new MockArg('getTraitementManager', $traitementManager), new MockArg('getReponseManager', $reponse),
-            new MockArg('getErrorManager', $errorManager)
-        );
-
-        $mainApp = new MainApplication($conteneur);
-        $mainApp->ajouterObserveur($abstractDisplayer);
-        $mainApp->run();
-    }
 }

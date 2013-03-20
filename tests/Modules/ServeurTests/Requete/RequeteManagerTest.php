@@ -226,4 +226,13 @@ class RequeteManagerTest extends TestCase
 
         $this->assertEquals('8000::123:4567:89AB:CDEF', $this->restRequete->getIp());
     }
+
+    public function testLogRequete()
+    {
+        $abstractDisplayer = $this->createMock(
+            'AbstractDisplayer', new MockArg('logRequete', null, array($this->restRequete))
+        );
+
+        $this->restRequete->logRequete(array($abstractDisplayer));
+    }
 }

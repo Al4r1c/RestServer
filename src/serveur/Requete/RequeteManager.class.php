@@ -1,6 +1,7 @@
 <?php
 namespace Serveur\Requete;
 
+use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\TypeDetector;
@@ -215,5 +216,15 @@ class RequeteManager
         }
 
         $this->_ip = $ip;
+    }
+
+    /**
+     * @param AbstractDisplayer[] $_observeurs
+     */
+    public function logRequete($_observeurs)
+    {
+        foreach ($_observeurs as $unObserveur) {
+            $unObserveur->ecrireLogRequete($this);
+        }
     }
 }

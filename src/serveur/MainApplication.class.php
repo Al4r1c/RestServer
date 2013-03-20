@@ -1,9 +1,9 @@
 <?php
 namespace Serveur;
 
+use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\ObjetReponse;
-use Serveur\Requete\RequeteManager;
 use Serveur\Utils\Constante;
 
 class MainApplication
@@ -14,7 +14,7 @@ class MainApplication
     private $_conteneur;
 
     /**
-     * @var \Logging\Displayer\AbstractDisplayer[]
+     * @var AbstractDisplayer[]
      */
     private $_observeurs = array();
 
@@ -32,7 +32,7 @@ class MainApplication
     }
 
     /**
-     * @param \Logging\Displayer\AbstractDisplayer $observeur
+     * @param AbstractDisplayer $observeur
      */
     public function ajouterObserveur($observeur)
     {
@@ -47,7 +47,7 @@ class MainApplication
     {
         try {
             $requete = $this->_conteneur->getRequeteManager();
-            $this->ecrireRequeteLog($requete);
+            $requete->logRequete($this->_observeurs);
 
             $traitementRequete = $this->_conteneur->getTraitementManager();
             $contenu = $this->fabriquerEtRecupererReponse(
@@ -61,9 +61,9 @@ class MainApplication
     }
 
     /**
-     * @param \Serveur\Lib\ObjetReponse $objetReponse
+     * @param ObjetReponse $objetReponse
      * @param array $formatsDemandees
-     * @return \Serveur\Reponse\ReponseManager
+     * @return string
      */
     private function fabriquerEtRecupererReponse($objetReponse, $formatsDemandees = array())
     {
@@ -72,15 +72,5 @@ class MainApplication
         $reponse->fabriquerReponse($objetReponse, $formatsDemandees);
 
         return $reponse->getContenuReponse();
-    }
-
-    /**
-     * @param RequeteManager $requete
-     */
-    private function ecrireRequeteLog($requete)
-    {
-        foreach ($this->_observeurs as $unObserveur) {
-            $unObserveur->ecrireLogRequete($requete);
-        }
     }
 }
