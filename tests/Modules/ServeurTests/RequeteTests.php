@@ -17,6 +17,7 @@ class RequeteTests
     {
         $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
+        $suite->addTestSuite('Tests\ServeurTests\Requete\RequeteHeadersTest');
         $suite->addTestSuite('Tests\ServeurTests\Requete\ServerTest');
         $suite->addTestSuite('Tests\ServeurTests\Requete\RequeteManagerTest');
 
