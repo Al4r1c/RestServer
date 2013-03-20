@@ -3,7 +3,6 @@ namespace Tests\ServeurTests\Traitement;
 
 use Serveur\Requete\RequeteManager;
 use Serveur\Traitement\Data\DatabaseConfig;
-use Serveur\Traitement\Data\DatabaseFactory;
 use Serveur\Traitement\TraitementManager;
 use Tests\MockArg;
 use Tests\TestCase;
