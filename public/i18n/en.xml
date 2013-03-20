@@ -19,7 +19,7 @@
 
 	<errorType>
 		<message code="1">PHP Error</message>
-		<message code="10">Invalid Argument</message>
+		<message code="100">Invalid Argument</message>
 		<message code="101">File system</message>
 		<message code="102">File</message>
 		<message code="103">Response Object</message>
