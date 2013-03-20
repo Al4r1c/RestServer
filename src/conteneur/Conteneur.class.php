@@ -31,7 +31,7 @@ class Conteneur
 
         $conteneur['RequeteManager'] = function ($c) {
             $restRequete = new RequeteManager();
-            $restRequete->parseServer($c['Server']);
+            $restRequete->setServer($c['Server']);
             $restRequete->setRequeteHeader($c['RequeteHeaders']);
 
             return $restRequete;

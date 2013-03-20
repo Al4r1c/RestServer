@@ -20,22 +20,6 @@ class TraitementManagerTest extends TestCase
     }
 
     /**
-     * @param string $methode
-     * @param array $param
-     * @param string $vuri
-     * @return RequeteManager
-     */
-    public function getRequete($methode, $vuri, $param = array())
-    {
-        $requete = new RequeteManager();
-        $requete->setMethode($methode);
-        $requete->setParametres($param);
-        $requete->setVariableUri($vuri);
-
-        return $requete;
-    }
-
-    /**
      * @param string $doMethod
      * @param RequeteManager $requete
      */
@@ -135,7 +119,10 @@ class TraitementManagerTest extends TestCase
      */
     public function testTraiterImpossibleConnexionDatabase()
     {
-        $requete = $this->getRequete('GET', '/path/1');
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getUriVariables', array('path', '1'))
+        );
 
         $callable = function () {
             return true;
@@ -176,7 +163,12 @@ class TraitementManagerTest extends TestCase
 
     public function testTraiterGet()
     {
-        $requete = $this->getRequete('GET', '/path/1', array('data1' => 'var1'));
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getMethode', 'GET'),
+            new MockArg('getParametres', array('data1' => 'var1')),
+            new MockArg('getUriVariables', array('path', '1'))
+        );
         $this->setFakeDatabase('doGet', $requete);
 
         $this->assertInstanceOf(
@@ -186,7 +178,12 @@ class TraitementManagerTest extends TestCase
 
     public function testTraiterPut()
     {
-        $requete = $this->getRequete('PUT', '/path/1', array('data1' => 'var1'));
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getMethode', 'PUT'),
+            new MockArg('getParametres', array('data1' => 'var1')),
+            new MockArg('getUriVariables', array('path', '1'))
+        );
         $this->setFakeDatabase('doPut', $requete);
 
         $this->assertInstanceOf(
@@ -196,7 +193,12 @@ class TraitementManagerTest extends TestCase
 
     public function testTraiterPost()
     {
-        $requete = $this->getRequete('POST', '/path/1', array('data1' => 'var1'));
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getMethode', 'POST'),
+            new MockArg('getParametres', array('data1' => 'var1')),
+            new MockArg('getUriVariables', array('path', '1'))
+        );
         $this->setFakeDatabase('doPost', $requete);
 
         $this->assertInstanceOf(
@@ -206,7 +208,12 @@ class TraitementManagerTest extends TestCase
 
     public function testTraiterDelete()
     {
-        $requete = $this->getRequete('DELETE', '/path/1', array('data1' => 'var1'));
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getMethode', 'DELETE'),
+            new MockArg('getParametres', array('data1' => 'var1')),
+            new MockArg('getUriVariables', array('path', '1'))
+        );
         $this->setFakeDatabase('doDelete', $requete);
 
         $this->assertInstanceOf(
@@ -216,7 +223,10 @@ class TraitementManagerTest extends TestCase
 
     public function testTraiterRessourceInconnue()
     {
-        $requete = $this->getRequete('GET', '/unknown');
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getUriVariables', array('unknown'))
+        );
 
         $callable = function ($arg) {
             $this->assertEquals('unknown', $arg);
@@ -233,7 +243,10 @@ class TraitementManagerTest extends TestCase
 
     public function testTraiterRessourceNonInformee()
     {
-        $requete = $this->getRequete('GET', '/');
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getUriVariables', array(''))
+        );
 
         $callable = function ($arg) {
             $this->assertEquals('', $arg);

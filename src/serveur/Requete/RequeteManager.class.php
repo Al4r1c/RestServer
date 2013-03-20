@@ -17,34 +17,9 @@ class RequeteManager
     private $_requeteHeader;
 
     /**
-     * @var string
+     * @var Server
      */
-    private $_methode = 'GET';
-
-    /**
-     * @var string[]
-     */
-    private $_formatsDemandes;
-
-    /**
-     * @var string[]
-     */
-    private $_dataUri;
-
-    /**
-     * @var string[]
-     */
-    private $_parametres = array();
-
-    /**
-     * @var string
-     */
-    private $_ip;
-
-    /**
-     * @var \DateTime
-     */
-    private $_dateRequete;
+    private $_server;
 
     public function setRequeteHeader($headerRequete)
     {
@@ -61,18 +36,13 @@ class RequeteManager
      * @param Server $server
      * @throws ArgumentTypeException
      */
-    public function parseServer($server)
+    public function setServer($server)
     {
         if (!$server instanceof Server) {
             throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Requete\Server\Server', $server);
         }
 
-        $this->setMethode($server->getServeurMethode());
-        $this->setFormat($server->getServeurHttpAccept());
-        $this->setVariableUri($server->getServeurUri());
-        $this->setParametres($server->getServeurDonnees());
-        $this->setIp($server->getRemoteIp());
-        $this->setDateRequete($server->getRequestTime());
+        $this->_server = $server;
     }
 
     /**
@@ -89,84 +59,29 @@ class RequeteManager
     }
 
     /**
+     * @throws MainException
      * @return string
      */
     public function getMethode()
     {
-        return $this->_methode;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getFormatsDemandes()
-    {
-        return $this->_formatsDemandes;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getUriVariables()
-    {
-        return $this->_dataUri;
-    }
-
-    public function getUriVariable($clef)
-    {
-        if (array_key_exists($clef, $this->_dataUri)) {
-            return $this->_dataUri[$clef];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getParametres()
-    {
-        return $this->_parametres;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getDateRequete()
-    {
-        return $this->_dateRequete;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIp()
-    {
-        return $this->_ip;
-    }
-
-    /**
-     * @param string $method
-     * @throws MainException
-     */
-    public function setMethode($method)
-    {
-        $method = strtoupper(trim($method));
+        $method = $this->_server->getUneVariableServeur('REQUEST_METHOD');
 
         if (!in_array($method, array('GET', 'POST', 'PUT', 'DELETE'))) {
             throw new MainException(20000, 400, $method);
         }
 
-        $this->_methode = $method;
+        return $method;
     }
 
     /**
-     * @param string $format
      * @throws ArgumentTypeException
      * @throws MainException
+     * @return array
      */
-    public function setFormat($format)
+    public function getFormatsDemandes()
     {
+        $format = $this->_server->getUneVariableServeur('HTTP_ACCEPT');
+
         if (!is_string($format)) {
             throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $format);
         }
@@ -178,64 +93,84 @@ class RequeteManager
             throw new MainException(20001, 400);
         }
 
-        $this->_formatsDemandes = $formatsTrouves;
+        return $formatsTrouves;
     }
 
     /**
-     * @param string $uri
      * @throws ArgumentTypeException
+     * @return array
      */
-    public function setVariableUri($uri)
+    public function getUriVariables()
     {
-        if (!isNull($uri)) {
-            if (!is_string($uri)) {
-                throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $uri);
-            }
+        $uri = $this->_server->getUneVariableServeur('REQUEST_URI');
 
-            if (($pos = strpos($uri, '?')) !== false) {
-                $uri = substr($uri, 0, $pos);
-            }
+        if (!is_string($uri)) {
+            throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $uri);
+        }
 
-            $this->_dataUri =
-                array_map('rawurlencode', explode('/', trim(preg_replace('%([^:])([/]{2,})%', '\\1/', $uri), '/')));
+        if (($pos = strpos($uri, '?')) !== false) {
+            $uri = substr($uri, 0, $pos);
+        }
+
+        return
+            array_map('rawurlencode', explode('/', trim(preg_replace('%([^:])([/]{2,})%', '\\1/', $uri), '/')));
+    }
+
+    /**
+     * @param string $clef
+     * @return string|null
+     */
+    public function getUriVariable($clef)
+    {
+        if (array_key_exists($clef, $this->getUriVariables())) {
+            return $this->getUriVariables()[$clef];
+        } else {
+            return null;
         }
     }
 
     /**
-     * @param array $donnee
      * @throws ArgumentTypeException
+     * @return array
      */
-    public function setParametres($donnee)
+    public function getParametres()
     {
-        if (!is_array($donnee)) {
-            throw new ArgumentTypeException(1000, 400, __METHOD__, 'array', $donnee);
+        $donnees = $this->_server->getServeurDonnees();
+
+        if (!is_array($donnees)) {
+            throw new ArgumentTypeException(1000, 400, __METHOD__, 'array', $donnees);
         }
 
-        $this->_parametres = $donnee;
+        return $donnees;
     }
 
     /**
-     * @param int $dateRequeteTimestamp
      * @throws ArgumentTypeException
+     * @return \DateTime
      */
-    public function setDateRequete($dateRequeteTimestamp)
+    public function getDateRequete()
     {
+        $dateRequeteTimestamp = $this->_server->getUneVariableServeur('REQUEST_TIME');
+
         if (!is_int($dateRequeteTimestamp)) {
             throw new ArgumentTypeException(1000, 400, __METHOD__, 'int', $dateRequeteTimestamp);
         }
 
         $datetime = new \DateTime();
         $datetime->setTimestamp($dateRequeteTimestamp);
-        $this->_dateRequete = $datetime;
+
+        return $datetime;
     }
 
     /**
-     * @param string $ip
      * @throws ArgumentTypeException
      * @throws MainException
+     * @return string
      */
-    public function setIp($ip)
+    public function getIp()
     {
+        $ip = $this->_server->getUneVariableServeur('REMOTE_ADDR');
+
         if (!is_string($ip)) {
             throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $ip);
         }
@@ -244,7 +179,7 @@ class RequeteManager
             throw new MainException(20002, 400);
         }
 
-        $this->_ip = $ip;
+        return $ip;
     }
 
     /**

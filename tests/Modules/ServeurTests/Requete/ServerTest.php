@@ -7,7 +7,8 @@ use Tests\TestCase;
 class ServerTest extends TestCase
 {
     /** @var Server */
-    private $server;
+    private $_server;
+
     private static $donneesServer = array('REDIRECT_HTTP_CONTENT_TYPE' => '',
         'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs',
         'REDIRECT_MYSQL_HOME' => '\xampp\mysql\bin',
@@ -61,14 +62,14 @@ class ServerTest extends TestCase
 
     public function setUp()
     {
-        $this->server = new Server();
+        $this->_server = new Server();
     }
 
     public function testSetServeurVariable()
     {
-        $this->server->setServeurVariable(self::$donneesServer);
+        $this->_server->setServeurVariables(self::$donneesServer);
 
-        $this->assertAttributeEquals(self::$donneesServer, '_serveurVariable', $this->server);
+        $this->assertEquals(self::$donneesServer, $this->_server->getServeurVariables());
     }
 
     /**
@@ -79,7 +80,7 @@ class ServerTest extends TestCase
     {
         $donnees = self::$donneesServer;
         unset($donnees['REQUEST_METHOD']);
-        $this->server->setServeurVariable($donnees);
+        $this->_server->setServeurVariables($donnees);
     }
 
     /**
@@ -88,7 +89,7 @@ class ServerTest extends TestCase
      */
     public function testSetServeurDonneesErronee()
     {
-        $this->server->setVarServeur(null);
+        $this->_server->setVarServeur(null);
     }
 
     /**
@@ -97,39 +98,37 @@ class ServerTest extends TestCase
      */
     public function testSetServeurVariableErronee()
     {
-        $this->server->setServeurVariable(null);
+        $this->_server->setServeurVariables(null);
     }
 
     public function testSetServeurDonnees()
     {
-        $this->server->setServeurVariable(self::$donneesServer);
-        $this->server->setServeurDonnees('GET');
+        $this->_server->setServeurVariables(self::$donneesServer);
+        $this->_server->setServeurDonnees('GET');
 
-        $this->assertAttributeCount(2, '_serveurDonnees', $this->server);
-        $this->assertAttributeEquals(
-            array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server
-        );
+        $this->assertCount(2, $this->_server->getServeurDonnees());
+        $this->assertEquals(array('param1' => 'var1', 'param2' => 'var2'), $this->_server->getServeurDonnees());
     }
 
     public function testSetServeurDonneesPutPostDelete()
     {
         $donnees = self::$donneesServer;
         $donnees['PHP_INPUT'] = 'numberOne=ParamOne&numberTwo=ParamTwo';
-        $this->server->setServeurVariable($donnees);
-        $this->server->setServeurDonnees('PUT');
+        $this->_server->setServeurVariables($donnees);
+        $this->_server->setServeurDonnees('PUT');
 
-        $this->assertCount(2, $this->server->getServeurDonnees());
+        $this->assertCount(2, $this->_server->getServeurDonnees());
         $this->assertEquals(
-            array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'), $this->server->getServeurDonnees()
+            array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'), $this->_server->getServeurDonnees()
         );
     }
 
     public function testSetServeurDonneesDelete()
     {
-        $this->server->setServeurVariable(self::$donneesServer);
-        $this->server->setServeurDonnees('DELETE');
+        $this->_server->setServeurVariables(self::$donneesServer);
+        $this->_server->setServeurDonnees('DELETE');
 
-        $this->assertAttributeEmpty('_serveurDonnees', $this->server);
+        $this->assertAttributeEmpty('_serveurDonnees', $this->_server);
     }
 
     /**
@@ -138,53 +137,30 @@ class ServerTest extends TestCase
      */
     public function testSetServeurDonneesMethodeInvalide()
     {
-        $this->server->setServeurVariable(self::$donneesServer);
-        $this->server->setServeurDonnees('FAKE');
+        $this->_server->setServeurVariables(self::$donneesServer);
+        $this->_server->setServeurDonnees('FAKE');
     }
 
     public function testSetVarServeur()
     {
-        $this->server->setVarServeur(self::$donneesServer);
+        $this->_server->setVarServeur(self::$donneesServer);
 
-        $this->assertAttributeEquals(self::$donneesServer, '_serveurVariable', $this->server);
+        $this->assertEquals(self::$donneesServer, $this->_server->getServeurVariables());
 
-        $this->assertAttributeEquals(
-            array('param1' => 'var1', 'param2' => 'var2'), '_serveurDonnees', $this->server
-        );
-    }
-
-    public function testGetServeurMethode()
-    {
-        $this->server->setVarServeur(self::$donneesServer);
-
-        $this->assertEquals('GET', $this->server->getServeurMethode());
-    }
-
-    public function testGetServeurUri()
-    {
-        $this->server->setVarServeur(self::$donneesServer);
-        $this->assertEquals('/?param1=var1&param2=var2', $this->server->getServeurUri());
-    }
-
-    public function testGetServeurHttpAccept()
-    {
-        $this->server->setVarServeur(self::$donneesServer);
         $this->assertEquals(
-            'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', $this->server->getServeurHttpAccept()
+            array('param1' => 'var1', 'param2' => 'var2'), $this->_server->getServeurDonnees()
         );
     }
 
-    public function testGetRemoteIp()
-    {
-        $this->server->setVarServeur(self::$donneesServer);
+    public function testGetUneVariableServeur() {
+        $this->_server->setVarServeur(self::$donneesServer);
 
-        $this->assertEquals('127.0.0.1', $this->server->getRemoteIp());
+        $this->assertEquals('server.com', $this->_server->getUneVariableServeur('HTTP_HOST'));
     }
 
-    public function testGetRequestTime()
-    {
-        $this->server->setVarServeur(self::$donneesServer);
+    public function testGetUneVariableServeurNonTrouveRenvoiNull() {
+        $this->_server->setVarServeur(self::$donneesServer);
 
-        $this->assertEquals(1361285069, $this->server->getRequestTime());
+        $this->assertNull($this->_server->getUneVariableServeur('NO_NO_NO'));
     }
 }

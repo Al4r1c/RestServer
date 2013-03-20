@@ -9,7 +9,7 @@ class Server
     /**
      * @var array
      */
-    private $_serveurVariable;
+    private $_serveurVariables;
 
     /**
      * @var array
@@ -26,48 +26,37 @@ class Server
             throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $varServeur);
         }
 
-        $this->setServeurVariable($varServeur);
+        $this->setServeurVariables($varServeur);
         $this->setServeurDonnees($varServeur['REQUEST_METHOD']);
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getServeurHttpAccept()
+    public function getServeurVariables()
     {
-        return $this->_serveurVariable['HTTP_ACCEPT'];
+        return $this->_serveurVariables;
     }
 
     /**
-     * @return string
+     * @param string $clef
+     * @return string|null
      */
-    public function getRemoteIp()
+    public function getUneVariableServeur($clef)
     {
-        return $this->_serveurVariable['REMOTE_ADDR'];
+        if (array_key_exists($clef, $this->_serveurVariables)) {
+            return $this->_serveurVariables[$clef];
+        } else {
+            return null;
+        }
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getServeurMethode()
+    public function getServeurDonnees()
     {
-        return $this->_serveurVariable['REQUEST_METHOD'];
-    }
-
-    /**
-     * @return int
-     */
-    public function getRequestTime()
-    {
-        return $this->_serveurVariable['REQUEST_TIME'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getServeurUri()
-    {
-        return $this->_serveurVariable['REQUEST_URI'];
+        return $this->_serveurDonnees;
     }
 
     /**
@@ -75,7 +64,7 @@ class Server
      * @throws ArgumentTypeException
      * @throws MainException
      */
-    public function setServeurVariable($serverVar)
+    public function setServeurVariables($serverVar)
     {
         if (!is_array($serverVar)) {
             throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
@@ -94,15 +83,7 @@ class Server
             throw new MainException(20100, 500);
         }
 
-        $this->_serveurVariable = $serverVar;
-    }
-
-    /**
-     * @return array
-     */
-    public function getServeurDonnees()
-    {
-        return $this->_serveurDonnees;
+        $this->_serveurVariables = $serverVar;
     }
 
     /**
@@ -113,11 +94,11 @@ class Server
     {
         switch (strtoupper($methode)) {
             case 'GET':
-                parse_str($this->_serveurVariable['QUERY_STRING'], $this->_serveurDonnees);
+                parse_str($this->_serveurVariables['QUERY_STRING'], $this->_serveurDonnees);
                 break;
             case 'POST':
             case 'PUT':
-                parse_str($this->_serveurVariable['PHP_INPUT'], $this->_serveurDonnees);
+                parse_str($this->_serveurVariables['PHP_INPUT'], $this->_serveurDonnees);
                 break;
             case 'DELETE':
                 $this->_serveurDonnees = array();
