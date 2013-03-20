@@ -1,6 +1,5 @@
 Config:
   CHARSET: utf-8
-  DEFAULT_RENDER: JSON
 
 Render:
   JSON: json

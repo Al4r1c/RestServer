@@ -11,7 +11,6 @@ class Config
      * @var array
      */
     private static $_clefMinimales = array('config',
-        'config.default_render',
         'render');
     /**
      * @var array

@@ -2,6 +2,8 @@
 namespace Serveur;
 
 use Serveur\GestionErreurs\Exceptions\MainException;
+use Serveur\Lib\ObjetReponse;
+use Serveur\Requete\RequeteManager;
 use Serveur\Utils\Constante;
 
 class MainApplication
@@ -48,14 +50,14 @@ class MainApplication
             $this->ecrireRequeteLog($requete);
 
             $traitementRequete = $this->_conteneur->getTraitementManager();
-            $reponse = $this->fabriquerEtRecupererReponse(
+            $contenu = $this->fabriquerEtRecupererReponse(
                 $traitementRequete->traiterRequeteEtRecupererResultat($requete), $requete->getFormatsDemandes()
             );
         } catch (MainException $e) {
-            $reponse = $this->fabriquerEtRecupererReponse($e->getObjetReponseErreur());
+            $contenu = $this->fabriquerEtRecupererReponse($e->getObjetReponseErreur());
         }
 
-        return $reponse->getContenuReponse();
+        return $contenu;
     }
 
     /**
@@ -66,30 +68,19 @@ class MainApplication
     private function fabriquerEtRecupererReponse($objetReponse, $formatsDemandees = array())
     {
         $reponse = $this->_conteneur->getReponseManager();
+        $reponse->setObserveurs($this->_observeurs);
         $reponse->fabriquerReponse($objetReponse, $formatsDemandees);
 
-        $this->ecrireReponseLog($reponse);
-
-        return $reponse;
+        return $reponse->getContenuReponse();
     }
 
     /**
-     * @param \Serveur\Requete\RequeteManager $requete
+     * @param RequeteManager $requete
      */
     private function ecrireRequeteLog($requete)
     {
         foreach ($this->_observeurs as $unObserveur) {
             $unObserveur->ecrireLogRequete($requete);
-        }
-    }
-
-    /**
-     * @param \Serveur\Reponse\ReponseManager $reponse
-     */
-    private function ecrireReponseLog($reponse)
-    {
-        foreach ($this->_observeurs as $unObserveur) {
-            $unObserveur->ecrireLogReponse($reponse);
         }
     }
 }

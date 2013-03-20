@@ -1,6 +1,7 @@
 <?php
 namespace Serveur\Reponse;
 
+use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\ObjetReponse;
@@ -14,11 +15,6 @@ class ReponseManager
      * @var Header
      */
     private $_header;
-
-    /**
-     * @var string
-     */
-    private $_formatRetour;
 
     /**
      * @var string[]
@@ -35,25 +31,22 @@ class ReponseManager
      */
     private $_contenu;
 
+    /**
+     * @var AbstractDisplayer[]
+     */
+    private $_observeurs = array();
+
     public function __construct()
     {
         http_response_code(500);
     }
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getFormatsAcceptes()
     {
         return $this->_formatsAcceptes;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFormatRetour()
-    {
-        return $this->_formatRetour;
     }
 
     /**
@@ -65,6 +58,7 @@ class ReponseManager
     }
 
     /**
+     * @return int
      * @codeCoverageIgnore
      */
     public function getStatus()
@@ -87,9 +81,7 @@ class ReponseManager
     public function setHeader($headerManager)
     {
         if (!$headerManager instanceof Header) {
-            throw new ArgumentTypeException(
-                1000, 500, __METHOD__, '\Serveur\Reponse\Rest\HeaderManager', $headerManager
-            );
+            throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Header\Header', $headerManager);
         }
 
         $this->_header = $headerManager;
@@ -105,39 +97,8 @@ class ReponseManager
             throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Reponse\Config\Config', $configuration);
         }
 
-        $this->setFormats(
-            $configuration->getConfigValeur('config.default_render'), $configuration->getConfigValeur('render')
-        );
+        $this->setFormatsAcceptes($configuration->getConfigValeur('render'));
         $this->setCharset($configuration->getConfigValeur('config.charset'));
-    }
-
-    /**
-     * @param string $formatRetourDefaut
-     * @param string[] $formatsAcceptes
-     */
-    public function setFormats($formatRetourDefaut, $formatsAcceptes)
-    {
-        $this->setFormatsAcceptes($formatsAcceptes);
-
-        if (array_key_exists(strtoupper($formatRetourDefaut), $formatsAcceptes)) {
-            $this->setFormatRetour($formatRetourDefaut);
-        } else {
-            $this->setFormatRetour(key($formatsAcceptes));
-            trigger_error_app(40000, $formatRetourDefaut);
-        }
-    }
-
-    /**
-     * @param string $formatRetourDefaut
-     * @throws ArgumentTypeException
-     */
-    public function setFormatRetour($formatRetourDefaut)
-    {
-        if (!is_string($formatRetourDefaut)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $formatRetourDefaut);
-        }
-
-        $this->_formatRetour = $formatRetourDefaut;
     }
 
     /**
@@ -152,7 +113,7 @@ class ReponseManager
         }
 
         if (isNull($formatsAcceptes)) {
-            throw new MainException(40001, 400);
+            throw new MainException(40000, 400);
         }
 
         $this->_formatsAcceptes = $formatsAcceptes;
@@ -170,44 +131,43 @@ class ReponseManager
         }
 
         if (!in_array(strtoupper($charset), array_map('strtoupper', mb_list_encodings()))) {
-            throw new MainException(40002, 500, $charset);
+            throw new MainException(40001, 500, $charset);
         }
 
         $this->_charset = strtolower($charset);
     }
 
-    private function envoyerHeaders($codeHttp)
+    /**
+     * @param AbstractDisplayer[] $observeurs
+     * @throws ArgumentTypeException
+     */
+    public function setObserveurs($observeurs)
     {
-        http_response_code($codeHttp);
-        $this->_header->ajouterHeader(
-            'Content-type', Constante::chargerConfig('mimes')[strtolower($this->_formatRetour)] . '; charset=' .
-            strtolower($this->_charset)
-        );
-        $this->_header->envoyerHeaders();
+        if (!is_array($observeurs)) {
+            throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $observeurs);
+        }
+
+        foreach ($observeurs as $unObserveur) {
+            if (!$unObserveur instanceof AbstractDisplayer) {
+                throw new ArgumentTypeException(
+                    1000, 500, __METHOD__, '\Logging\Displayer\AbstractDisplayer', $unObserveur
+                );
+            }
+        }
+
+        $this->_observeurs = $observeurs;
     }
 
-    private function trouverFormatRetourCorrect(array $formatsDemandes, array $formatsAcceptes, $formatDefaut)
+    /**
+     * @param ObjetReponse $objetReponse
+     */
+    private function envoyerHeaders($objetReponse)
     {
-        $nomClassFormatRetour = null;
-
-        foreach ($formatsDemandes as $unFormatDemande) {
-            if (false !== $temp = array_search_recursif($unFormatDemande, $formatsAcceptes)) {
-                $this->_formatRetour = $unFormatDemande;
-                $nomClassFormatRetour = ucfirst(strtolower($temp));
-                break;
-            }
-        }
-
-        if (isNull($nomClassFormatRetour)) {
-            if (!isNull($formatDefaut) && array_key_exists($formatDefaut, $formatsAcceptes)) {
-                $this->_formatRetour = $formatsAcceptes[$formatDefaut];
-                $nomClassFormatRetour = ucfirst(strtolower($formatDefaut));
-            } else {
-                throw new MainException(40003, 500, $formatDefaut);
-            }
-        }
-
-        return $nomClassFormatRetour;
+        http_response_code($objetReponse->getStatusHttp());
+        $this->_header->ajouterHeader(
+            'Content-type', $objetReponse->getFormat() . '; charset=' . strtolower($this->_charset)
+        );
+        $this->_header->envoyerHeaders();
     }
 
     /**
@@ -219,7 +179,7 @@ class ReponseManager
     protected function getRenderClass($renderClassName)
     {
         if (!class_exists($nomVue = '\\' . __NAMESPACE__ . '\Renderers\\' . $renderClassName)) {
-            throw new MainException(40004, 415, $renderClassName);
+            throw new MainException(40002, 415, $renderClassName);
         }
 
         return new $nomVue();
@@ -229,7 +189,6 @@ class ReponseManager
      * @param ObjetReponse $objetReponse
      * @param array $formatsDemandes
      * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
-     * @return string
      */
     public function fabriquerReponse($objetReponse, $formatsDemandes)
     {
@@ -237,15 +196,35 @@ class ReponseManager
             throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
         }
 
-        /* @var $view \Serveur\Reponse\Renderers\AbstractRenderer */
-        $view = $this->getRenderClass(
-            $this->trouverFormatRetourCorrect(
-                $formatsDemandes, $this->_formatsAcceptes, $this->_formatRetour
-            )
-        );
+        foreach ($formatsDemandes as $unFormatDemande) {
+            if (false !== $tempNomClassRendu = array_search_recursif($unFormatDemande, $this->_formatsAcceptes)) {
+                $objetReponse->setFormat(Constante::chargerConfig('mimes')[strtolower($unFormatDemande)]);
 
-        $this->envoyerHeaders($objetReponse->getStatusHttp());
+                $nomClassRendu = $tempNomClassRendu;
+                break;
+            }
+        }
 
-        $this->_contenu = $view->render($objetReponse->getDonneesReponse());
+        if (isset($nomClassRendu)) {
+            /* @var $view \Serveur\Reponse\Renderers\AbstractRenderer */
+            $view = $this->getRenderClass(ucfirst(strtolower($nomClassRendu)));
+
+            $this->_contenu = $view->render($objetReponse->getDonneesReponse());
+        } else {
+            $objetReponse->setErreurHttp(406);
+        }
+
+        $this->envoyerHeaders($objetReponse);
+        $this->ecrireReponseLog($objetReponse);
+    }
+
+    /**
+     * @param ObjetReponse $reponse
+     */
+    private function ecrireReponseLog($reponse)
+    {
+        foreach ($this->_observeurs as $unObserveur) {
+            $unObserveur->ecrireLogReponse($reponse);
+        }
     }
 }

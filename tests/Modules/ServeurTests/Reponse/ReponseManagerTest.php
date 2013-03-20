@@ -34,20 +34,6 @@ class ReponseManagerTest extends TestCase
         $this->restReponse->setHeader(null);
     }
 
-    public function testRestSetFormatDefaut()
-    {
-        $this->restReponse->setFormatRetour('JSON');
-        $this->assertEquals('JSON', $this->restReponse->getFormatRetour());
-    }
-
-    /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
-     * @expectedExceptionCode 1000
-     */
-    public function testRestSetFormatDefautErronee()
-    {
-        $this->restReponse->setFormatRetour(null);
-    }
 
     public function testRestSetFormatAcceptes()
     {
@@ -66,33 +52,11 @@ class ReponseManagerTest extends TestCase
 
     /**
      * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 40001
+     * @expectedExceptionCode 40000
      */
     public function testRestSetFormatAcceptesVide()
     {
         $this->restReponse->setFormatsAcceptes(array());
-    }
-
-    public function testRestSetFormat()
-    {
-        $this->restReponse->setFormats('PLAIN', array('PLAIN' => 'txt'));
-        $this->assertEquals('PLAIN', $this->restReponse->getFormatRetour());
-        $this->assertCount(1, $this->restReponse->getFormatsAcceptes());
-    }
-
-    public function testRestSetFormatDefautInexistant()
-    {
-        $this->restReponse->setFormats('PLAIN', array('HTML' => 'html'));
-        $this->assertEquals('HTML', $this->restReponse->getFormatRetour());
-    }
-
-    /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 40001
-     */
-    public function testRestFormatDefaut()
-    {
-        $this->restReponse->setFormats('PLAIN', array());
     }
 
     public function testRestSetCharset()
@@ -112,7 +76,7 @@ class ReponseManagerTest extends TestCase
 
     /**
      * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 40002
+     * @expectedExceptionCode 40001
      */
     public function testRestSetCharsetInvalid()
     {
@@ -122,19 +86,17 @@ class ReponseManagerTest extends TestCase
     public function testRestSetConfig()
     {
         $config = $this->createMock(
-            'Config', new MockArg('getConfigValeur', 'JSON', array('config.default_render')),
-            new MockArg('getConfigValeur', array('JSON' => 'json', 'HTML' => 'html'), array('render')),
+            'Config', new MockArg('getConfigValeur', array('JSON' => 'json', 'HTML' => 'html'), array('render')),
             new MockArg('getConfigValeur', 'utf-8', array('config.charset'))
         );
 
         $this->restReponse->setConfig($config);
         $this->assertEquals('utf-8', $this->restReponse->getCharset());
-        $this->assertEquals('JSON', $this->restReponse->getFormatRetour());
         $this->assertCount(2, $this->restReponse->getFormatsAcceptes());
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestSetConfigInvalide()
@@ -162,9 +124,7 @@ class ReponseManagerTest extends TestCase
             'ReponseManager', new MockArg('getRenderClass', $abstractrender, array('Json'))
         );
 
-        $headerManager = $this->createMock(
-            'Header', new MockArg('ajouterHeader'), new MockArg('envoyerHeaders')
-        );
+        $headerManager = $this->getMockHeaders();
 
         $objetReponse = $this->createMock(
             'ObjetReponse', new MockArg('getStatusHttp', 200),
@@ -172,62 +132,74 @@ class ReponseManagerTest extends TestCase
         );
 
         $restReponse->setHeader($headerManager);
-        $restReponse->setFormats('JSON', array('JSON' => 'json'));
+        $restReponse->setFormatsAcceptes(array('JSON' => 'json'));
 
         $restReponse->fabriquerReponse($objetReponse, array('json'));
 
         $this->assertEquals('{"getKey":"getVar"}', $restReponse->getContenuReponse());
-        $this->assertEquals('json', $restReponse->getFormatRetour());
     }
 
-    public function testRestRenderNonTrouveUtiliseAutre()
+    public function testRestRenderNonTrouveRenvoi406()
     {
-        $abstractrender = $this->createMock(
-            'AbstractRenderer', new MockArg('genererRendu', '{"param1":"var1"}', array(array('param1' => 'var1')))
-        );
-
-        /** @var $restReponse ReponseManager|\PHPUnit_Framework_MockObject_MockObject */
-        $restReponse = $this->createMock(
-            'ReponseManager', new MockArg('getRenderClass', $abstractrender, array('Json'))
-        );
-
-        $headerManager = $this->createMock(
-            'Header', new MockArg('ajouterHeader'), new MockArg('envoyerHeaders')
-        );
+        $headerManager = $this->getMockHeaders();
 
         $objetReponse = $this->createMock(
-            'ObjetReponse', new MockArg('getStatusHttp', 200),
-            new MockArg('getDonneesReponse', array('param1' => 'var1'))
+            'ObjetReponse', new MockArg('setErreurHttp', 406)
         );
 
-        $restReponse->setHeader($headerManager);
-        $restReponse->setFormats('JSON', array('JSON' => 'json'));
-
-        $restReponse->fabriquerReponse($objetReponse, array('fake'));
-
-        $this->assertEquals('{"param1":"var1"}', $restReponse->getContenuReponse());
-    }
-
-    /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 40003
-     */
-    public function testRestRenderNonTrouveDefautNonPlus()
-    {
-        $this->restReponse->setFormatRetour('HTML');
+        $this->restReponse->setHeader($headerManager);
         $this->restReponse->setFormatsAcceptes(array('JSON' => 'json'));
 
-        $this->restReponse->fabriquerReponse($this->getMockObjetReponse(), array('fake'));
+        $this->restReponse->fabriquerReponse($objetReponse, array('fake'));
+
+        $this->assertNull($this->restReponse->getContenuReponse());
+    }
+
+    public function testSetObserveurs()
+    {
+        $abstractDisplayer = $this->getMockAbstractDisplayer();
+
+        $this->restReponse->setObserveurs(array($abstractDisplayer));
+        $this->assertAttributeCount(1, '_observeurs', $this->restReponse);
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 40004
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedExceptionCode 1000
      */
-    public function testRestRenderNonTrouve()
+    public function testSetObserveursErrone()
     {
-        $this->restReponse->setFormats('FAKE', array('FAKE' => 'fake'));
+        $this->restReponse->setObserveurs(50);
+        $this->assertAttributeCount(1, '_observeurs', $this->restReponse);
+    }
 
-        $this->restReponse->fabriquerReponse($this->getMockObjetReponse(), array('fake'));
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedExceptionCode 1000
+     */
+    public function testSetObserveursErroneDansArray()
+    {
+        $this->restReponse->setObserveurs(array(1));
+        $this->assertAttributeCount(1, '_observeurs', $this->restReponse);
+    }
+
+    public function testEcrireReponse()
+    {
+        $headerManager = $this->getMockHeaders();
+
+        $objetReponse = $this->createMock(
+            'ObjetReponse', new MockArg('getStatusHttp', 200), new MockArg('getFormat')
+        );
+
+        $abstractDisplayer = $this->createMock(
+            'AbstractDisplayer', new MockArg('logReponse', null, array($objetReponse))
+        );
+
+        $this->restReponse->setObserveurs(array($abstractDisplayer));
+
+        $this->restReponse->setHeader($headerManager);
+        $this->restReponse->setFormatsAcceptes(array('JSON' => 'json'));
+
+        $this->restReponse->fabriquerReponse($objetReponse, array('fake'));
     }
 }

@@ -139,7 +139,7 @@ class LoggerTest extends TestCase
     public function testEcrireReponse()
     {
         $restReponse = $this->createMock(
-            'ReponseManager', new MockArg('getStatus', 200), new MockArg('getFormatRetour', 'json')
+            'ObjetReponse', new MockArg('getStatusHttp', 200), new MockArg('getFormat', 'json')
         );
 
         $fichierAcces = new Fichier();
@@ -170,7 +170,7 @@ class LoggerTest extends TestCase
      */
     public function testEcrireReponseFileError()
     {
-        $this->_logger->ecrireLogReponse($this->createMock('ReponseManager'));
+        $this->_logger->ecrireLogReponse($this->getMockObjetReponse());
     }
 
     public function testEcrireErreur()

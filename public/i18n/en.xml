@@ -58,11 +58,9 @@
 		<message code="30001">Resource Factory is not set.</message>
 		<message code="30002">Database Factory is not set.</message>
 		<message code="30100">Invalid port number %s. [0-65535]</message>
-		<message code="40000">Output format set (%s) does not exist in available outputs.</message>
-		<message code="40001">Accepted output format are invalid.</message>
-		<message code="40002">Invalid charset %s.</message>
-		<message code="40003">Default output format "%s" not found in configuration.</message>
-		<message code="40004">Specified output rendering class (%s) not found.</message>
+		<message code="40000">Accepted output format are invalid.</message>
+		<message code="40001">Invalid charset %s.</message>
+		<message code="40002">Specified output rendering class (%s) not found.</message>
 		<message code="40100">Response header "%s" is invalid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html for more informations about headers.</message>
 		<message code="40200">Framework's configuration file not found. (Should be located: %s)</message>
 		<message code="40201">Key %s must be present but does not exist in the configuration.</message>

@@ -6,7 +6,7 @@ use Serveur\GestionErreurs\Types\AbstractTypeErreur;
 use Serveur\GestionErreurs\Types\Error;
 use Serveur\GestionErreurs\Types\Notice;
 use Serveur\Lib\Fichier;
-use Serveur\Reponse\ReponseManager;
+use Serveur\Lib\ObjetReponse;
 use Serveur\Requete\RequeteManager;
 
 class Logger extends AbstractDisplayer
@@ -70,7 +70,7 @@ class Logger extends AbstractDisplayer
         $this->_fichierLogAcces->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.method}: " . $restRequete->getMethode() . " -- URI: /" .
-                implode('/', $restRequete->getUriVariables()) . ""
+                    implode('/', $restRequete->getUriVariables()) . ""
             ) . "\n"
         );
         $this->_fichierLogAcces->ecrireDansFichier(
@@ -82,14 +82,14 @@ class Logger extends AbstractDisplayer
     }
 
     /**
-     * @param ReponseManager $restReponse
+     * @param ObjetReponse $objetReponse
      * @throws \InvalidArgumentException
      * @throws \Exception
      */
-    protected function logReponse($restReponse)
+    protected function logReponse($objetReponse)
     {
-        if (!$restReponse instanceof ReponseManager) {
-            throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restReponse)));
+        if (!$objetReponse instanceof ObjetReponse) {
+            throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($objetReponse)));
         }
 
         if (!($this->_fichierLogAcces instanceof Fichier) || !$this->_fichierLogAcces->fichierExiste()
@@ -99,8 +99,8 @@ class Logger extends AbstractDisplayer
 
         $this->_fichierLogAcces->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables(
-                "{trad.reponseCode}: " . $restReponse->getStatus() . " - {trad.reponseFormat}: " .
-                $restReponse->getFormatRetour()
+                "{trad.reponseCode}: " . $objetReponse->getStatusHttp() . " - {trad.reponseFormat}: " .
+                    $objetReponse->getFormat()
             ) . "\n"
         );
     }

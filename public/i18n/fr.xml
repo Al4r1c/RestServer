@@ -58,11 +58,9 @@
 		<message code="30001">La ressource factory n'a pas été paramétrée.</message>
 		<message code="30002">La factory de connexion à la base de données n'a pas été paramétrée.</message>
 		<message code="30100">Numéro de port invalide %s. [0-65535]</message>
-		<message code="40000">Le format de retour configuré (%s) n'existe pas dans les rendus disponibles.</message>
-		<message code="40001">Les formats de retour acceptés sont invalides.</message>
-		<message code="40002">Charset %s invalide.</message>
-		<message code="40003">Le format de sortie par défaut "%s" n'a pas été trouvé dans la configuration.</message>
-		<message code="40004">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
+		<message code="40000">Les formats de retour acceptés sont invalides.</message>
+		<message code="40001">Charset %s invalide.</message>
+		<message code="40002">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
 		<message code="40100">L'entête HTTP "%s" pour la réponse est invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html pour plus d'information sur les entêtes.</message>
 		<message code="40200">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
 		<message code="40201">La clef %s est obligatoire dans la configuration mais n'existe pas.</message>

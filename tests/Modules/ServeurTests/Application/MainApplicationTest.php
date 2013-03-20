@@ -86,8 +86,7 @@ class MainApplicationTest extends TestCase
         $reponse = $this->getMockRestReponse();
 
         $abstractDisplayer = $this->createMock(
-            'AbstractDisplayer', new MockArg('logRequete', null, array($requete)),
-            new MockArg('logReponse', null, array($reponse))
+            'AbstractDisplayer', new MockArg('logRequete', null, array($requete))
         );
 
         $errorManager = $this->createMock(
