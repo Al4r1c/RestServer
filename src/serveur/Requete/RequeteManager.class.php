@@ -131,14 +131,22 @@ class RequeteManager
 
     /**
      * @throws ArgumentTypeException
+     * @throws MainException
      * @return array
      */
     public function getParametres()
     {
-        $donnees = $this->_server->getServeurDonnees();
-
-        if (!is_array($donnees)) {
-            throw new ArgumentTypeException(1000, 400, __METHOD__, 'array', $donnees);
+        switch (strtoupper($this->getMethode())) {
+            case 'GET':
+                parse_str($this->_server->getUneVariableServeur('QUERY_STRING'), $donnees);
+                break;
+            case 'POST':
+            case 'PUT':
+                parse_str($this->_server->getUneVariableServeur('PHP_INPUT'), $donnees);
+                break;
+            case 'DELETE':
+                $donnees = array();
+                break;
         }
 
         return $donnees;

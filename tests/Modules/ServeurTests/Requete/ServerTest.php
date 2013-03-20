@@ -101,57 +101,6 @@ class ServerTest extends TestCase
         $this->_server->setServeurVariables(null);
     }
 
-    public function testSetServeurDonnees()
-    {
-        $this->_server->setServeurVariables(self::$donneesServer);
-        $this->_server->setServeurDonnees('GET');
-
-        $this->assertCount(2, $this->_server->getServeurDonnees());
-        $this->assertEquals(array('param1' => 'var1', 'param2' => 'var2'), $this->_server->getServeurDonnees());
-    }
-
-    public function testSetServeurDonneesPutPostDelete()
-    {
-        $donnees = self::$donneesServer;
-        $donnees['PHP_INPUT'] = 'numberOne=ParamOne&numberTwo=ParamTwo';
-        $this->_server->setServeurVariables($donnees);
-        $this->_server->setServeurDonnees('PUT');
-
-        $this->assertCount(2, $this->_server->getServeurDonnees());
-        $this->assertEquals(
-            array('numberOne' => 'ParamOne', 'numberTwo' => 'ParamTwo'), $this->_server->getServeurDonnees()
-        );
-    }
-
-    public function testSetServeurDonneesDelete()
-    {
-        $this->_server->setServeurVariables(self::$donneesServer);
-        $this->_server->setServeurDonnees('DELETE');
-
-        $this->assertAttributeEmpty('_serveurDonnees', $this->_server);
-    }
-
-    /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 20101
-     */
-    public function testSetServeurDonneesMethodeInvalide()
-    {
-        $this->_server->setServeurVariables(self::$donneesServer);
-        $this->_server->setServeurDonnees('FAKE');
-    }
-
-    public function testSetVarServeur()
-    {
-        $this->_server->setVarServeur(self::$donneesServer);
-
-        $this->assertEquals(self::$donneesServer, $this->_server->getServeurVariables());
-
-        $this->assertEquals(
-            array('param1' => 'var1', 'param2' => 'var2'), $this->_server->getServeurDonnees()
-        );
-    }
-
     public function testGetUneVariableServeur() {
         $this->_server->setVarServeur(self::$donneesServer);
 

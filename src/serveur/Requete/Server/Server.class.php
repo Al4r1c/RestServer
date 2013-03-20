@@ -27,7 +27,6 @@ class Server
         }
 
         $this->setServeurVariables($varServeur);
-        $this->setServeurDonnees($varServeur['REQUEST_METHOD']);
     }
 
     /**
@@ -49,14 +48,6 @@ class Server
         } else {
             return null;
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function getServeurDonnees()
-    {
-        return $this->_serveurDonnees;
     }
 
     /**
@@ -84,27 +75,5 @@ class Server
         }
 
         $this->_serveurVariables = $serverVar;
-    }
-
-    /**
-     * @param string $methode
-     * @throws MainException
-     */
-    public function setServeurDonnees($methode)
-    {
-        switch (strtoupper($methode)) {
-            case 'GET':
-                parse_str($this->_serveurVariables['QUERY_STRING'], $this->_serveurDonnees);
-                break;
-            case 'POST':
-            case 'PUT':
-                parse_str($this->_serveurVariables['PHP_INPUT'], $this->_serveurDonnees);
-                break;
-            case 'DELETE':
-                $this->_serveurDonnees = array();
-                break;
-            default:
-                throw new MainException(20101, 405, $methode);
-        }
     }
 }

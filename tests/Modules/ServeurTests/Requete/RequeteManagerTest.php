@@ -24,12 +24,6 @@ class RequeteManagerTest extends TestCase
         $this->restRequete->setServer($mockServer);
     }
 
-    private function setFakeServerDonnees($returnValue)
-    {
-        $mockServer = $this->createMock('Server', new MockArg('getServeurDonnees', $returnValue));
-        $this->restRequete->setServer($mockServer);
-    }
-
     /**
      * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20000
@@ -133,31 +127,67 @@ class RequeteManagerTest extends TestCase
 
     public function testRestDonnee()
     {
-        $this->setFakeServerDonnees(array('myArray'));
+        $mockServer = $this->createMock('Server',
+            new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', '', array('QUERY_STRING'))
+        );
+        $this->restRequete->setServer($mockServer);
 
         $this->assertInternalType('array', $this->restRequete->getParametres());
     }
 
-    /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
-     * @expectedExceptionCode 1000
-     */
-    public function testRestDonneeSeulementTableau()
-    {
-        $this->setFakeServerDonnees('GO_GO_ERREUR');
-        $this->restRequete->getParametres('GO_GO_ERREUR');
-    }
-
     public function testParametreSauvegardes()
     {
-        $this->setFakeServerDonnees(array("param1" => "valeur1", "data" => 1));
+        $mockServer = $this->createMock('Server',
+            new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'param1=valeur1&data=1', array('QUERY_STRING'))
+        );
+        $this->restRequete->setServer($mockServer);
+        $this->restRequete->setServer($mockServer);
         $this->assertCount(2, $this->restRequete->getParametres());
     }
 
     public function testRecupererParametre()
     {
-        $this->setFakeServerDonnees(array("param1" => "valeur1", "data" => 1));
+        $mockServer = $this->createMock('Server',
+            new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'param1=valeur1&data=1', array('QUERY_STRING'))
+        );
+        $this->restRequete->setServer($mockServer);
+
         $this->assertEquals('valeur1', $this->restRequete->getParametres()['param1']);
+    }
+
+    public function testRecupererPost()
+    {
+        $mockServer = $this->createMock('Server',
+            new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'once=var1&twice=var2', array('PHP_INPUT'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
+    }
+
+    public function testRecupererPut()
+    {
+        $mockServer = $this->createMock('Server',
+            new MockArg('getUneVariableServeur', 'PUT', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'once=var1&twice=var2', array('PHP_INPUT'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
+    }
+
+    public function testRecupererDelete()
+    {
+        $mockServer = $this->createMock('Server',
+            new MockArg('getUneVariableServeur', 'DELETE', array('REQUEST_METHOD'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals(array(), $this->restRequete->getParametres());
     }
 
     public function testSetHeaderRequete()
