@@ -168,6 +168,26 @@ class RequeteManagerTest extends TestCase
         $this->restRequete->setRequeteHeader(array());
     }
 
+    public function testGetUnHeader()
+    {
+        $headerRequete =
+            $this->createMock(
+                'RequeteHeaders', new MockArg('getHeaders', array('Host' => 'http://www.somewhere.com/'))
+            );
+        $this->restRequete->setRequeteHeader($headerRequete);
+        $this->assertEquals('http://www.somewhere.com/', $this->restRequete->getUnHeader('Host'));
+    }
+
+    public function testGetUnHeaderIUnexistantDonneNull()
+    {
+        $headerRequete =
+            $this->createMock(
+                'RequeteHeaders', new MockArg('getHeaders', array('Host' => 'http://www.somewhere.com/'))
+            );
+        $this->restRequete->setRequeteHeader($headerRequete);
+        $this->assertNull($this->restRequete->getUnHeader('Date'));
+    }
+
     public function testRestSetServer()
     {
         $serveur = $this->createMock(

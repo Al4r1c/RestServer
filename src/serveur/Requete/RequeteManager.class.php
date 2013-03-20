@@ -76,6 +76,19 @@ class RequeteManager
     }
 
     /**
+     * @param string $clef
+     * @return string|null
+     */
+    public function getUnHeader($clef)
+    {
+        if (array_key_exists($clef, $this->_requeteHeader->getHeaders())) {
+            return $this->_requeteHeader->getHeaders()[$clef];
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * @return string
      */
     public function getMethode()
