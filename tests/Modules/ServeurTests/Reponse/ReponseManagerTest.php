@@ -10,19 +10,19 @@ class ReponseManagerTest extends TestCase
     /**
      * @var ReponseManager $restRequete
      */
-    private $restReponse;
+    private $_restReponse;
 
     protected function setUp()
     {
-        $this->restReponse = new ReponseManager();
+        $this->_restReponse = new ReponseManager();
     }
 
     public function testRestSetHeader()
     {
         $header = $this->getMockHeaders();
 
-        $this->restReponse->setHeader($header);
-        $this->assertAttributeEquals($header, '_header', $this->restReponse);
+        $this->_restReponse->setHeader($header);
+        $this->assertAttributeEquals($header, '_header', $this->_restReponse);
     }
 
     /**
@@ -31,14 +31,14 @@ class ReponseManagerTest extends TestCase
      */
     public function testRestSetHeaderInvalide()
     {
-        $this->restReponse->setHeader(null);
+        $this->_restReponse->setHeader(null);
     }
 
 
     public function testRestSetFormatAcceptes()
     {
-        $this->restReponse->setFormatsAcceptes(array('JSON' => 'json', 'TEXT' => 'txt'));
-        $this->assertCount(2, $this->restReponse->getFormatsAcceptes());
+        $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json', 'TEXT' => 'txt'));
+        $this->assertCount(2, $this->_restReponse->getFormatsAcceptes());
     }
 
     /**
@@ -47,7 +47,7 @@ class ReponseManagerTest extends TestCase
      */
     public function testRestSetFormatAcceptesInvalid()
     {
-        $this->restReponse->setFormatsAcceptes('ERROR');
+        $this->_restReponse->setFormatsAcceptes('ERROR');
     }
 
     /**
@@ -56,13 +56,13 @@ class ReponseManagerTest extends TestCase
      */
     public function testRestSetFormatAcceptesVide()
     {
-        $this->restReponse->setFormatsAcceptes(array());
+        $this->_restReponse->setFormatsAcceptes(array());
     }
 
     public function testRestSetCharset()
     {
-        $this->restReponse->setCharset('utf-8');
-        $this->assertEquals('utf-8', $this->restReponse->getCharset());
+        $this->_restReponse->setCharset('utf-8');
+        $this->assertEquals('utf-8', $this->_restReponse->getCharset());
     }
 
     /**
@@ -71,7 +71,7 @@ class ReponseManagerTest extends TestCase
      */
     public function testRestSetCharsetInvalide()
     {
-        $this->restReponse->setCharset(9);
+        $this->_restReponse->setCharset(9);
     }
 
     /**
@@ -80,7 +80,7 @@ class ReponseManagerTest extends TestCase
      */
     public function testRestSetCharsetInvalid()
     {
-        $this->restReponse->setCharset('UTF-9999999999');
+        $this->_restReponse->setCharset('UTF-9999999999');
     }
 
     public function testRestSetConfig()
@@ -90,9 +90,9 @@ class ReponseManagerTest extends TestCase
             new MockArg('getConfigValeur', 'utf-8', array('config.charset'))
         );
 
-        $this->restReponse->setConfig($config);
-        $this->assertEquals('utf-8', $this->restReponse->getCharset());
-        $this->assertCount(2, $this->restReponse->getFormatsAcceptes());
+        $this->_restReponse->setConfig($config);
+        $this->assertEquals('utf-8', $this->_restReponse->getCharset());
+        $this->assertCount(2, $this->_restReponse->getFormatsAcceptes());
     }
 
     /**
@@ -101,7 +101,24 @@ class ReponseManagerTest extends TestCase
      */
     public function testRestSetConfigInvalide()
     {
-        $this->restReponse->setConfig(null);
+        $this->_restReponse->setConfig(null);
+    }
+
+    public function testSetFactoryRender()
+    {
+        $callable = function () {
+        };
+
+        $this->_restReponse->setRenderFactory($callable);
+        $this->assertAttributeEquals($callable, '_renderFactory', $this->_restReponse);
+    }
+
+    /**
+     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     */
+    public function testSetFactoryOnlyCallable()
+    {
+        $this->_restReponse->setRenderFactory(array());
     }
 
     /**
@@ -110,19 +127,19 @@ class ReponseManagerTest extends TestCase
      */
     public function testRestRenderBug()
     {
-        $this->restReponse->fabriquerReponse($this->getMockObjetReponse(), 'boum');
+        $this->_restReponse->fabriquerReponse($this->getMockObjetReponse(), 'boum');
     }
 
     public function testRestRenderAbstract()
     {
-        $abstractrender = $this->createMock(
-            'AbstractRenderer', new MockArg('genererRendu', '{"getKey":"getVar"}', array(array('getKey' => 'getVar')))
-        );
+        $renderFactory = function () {
+            $abstractrender = $this->createMock(
+                'AbstractRenderer',
+                new MockArg('genererRendu', '{"getKey":"getVar"}', array(array('getKey' => 'getVar')))
+            );
 
-        /** @var $restReponse ReponseManager|\PHPUnit_Framework_MockObject_MockObject */
-        $restReponse = $this->createMock(
-            'ReponseManager', new MockArg('getRenderClass', $abstractrender, array('Json'))
-        );
+            return $abstractrender;
+        };
 
         $headerManager = $this->getMockHeaders();
 
@@ -131,12 +148,13 @@ class ReponseManagerTest extends TestCase
             new MockArg('getDonneesReponse', array('getKey' => 'getVar'))
         );
 
-        $restReponse->setHeader($headerManager);
-        $restReponse->setFormatsAcceptes(array('JSON' => 'json'));
+        $this->_restReponse->setHeader($headerManager);
+        $this->_restReponse->setRenderFactory($renderFactory);
+        $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json'));
 
-        $restReponse->fabriquerReponse($objetReponse, array('json'));
+        $this->_restReponse->fabriquerReponse($objetReponse, array('json'));
 
-        $this->assertEquals('{"getKey":"getVar"}', $restReponse->getContenuReponse());
+        $this->assertEquals('{"getKey":"getVar"}', $this->_restReponse->getContenuReponse());
     }
 
     public function testRestRenderNonTrouveRenvoi406()
@@ -147,20 +165,43 @@ class ReponseManagerTest extends TestCase
             'ObjetReponse', new MockArg('setErreurHttp', 406)
         );
 
-        $this->restReponse->setHeader($headerManager);
-        $this->restReponse->setFormatsAcceptes(array('JSON' => 'json'));
+        $this->_restReponse->setHeader($headerManager);
+        $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json'));
 
-        $this->restReponse->fabriquerReponse($objetReponse, array('fake'));
+        $this->_restReponse->fabriquerReponse($objetReponse, array('fake'));
 
-        $this->assertNull($this->restReponse->getContenuReponse());
+        $this->assertNull($this->_restReponse->getContenuReponse());
+    }
+
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 40002
+     */
+    public function testClasseRenderNexistePas() {
+        $renderFactory = function () {
+            return false;
+        };
+
+        $this->_restReponse->setRenderFactory($renderFactory);
+        $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json'));
+        $this->_restReponse->fabriquerReponse($this->getMockObjetReponse(), array('json'));
+    }
+
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 40003
+     */
+    public function testRenderFactoryNonDefini() {
+        $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json'));
+        $this->_restReponse->fabriquerReponse($this->getMockObjetReponse(), array('json'));
     }
 
     public function testSetObserveurs()
     {
         $abstractDisplayer = $this->getMockAbstractDisplayer();
 
-        $this->restReponse->setObserveurs(array($abstractDisplayer));
-        $this->assertAttributeCount(1, '_observeurs', $this->restReponse);
+        $this->_restReponse->setObserveurs(array($abstractDisplayer));
+        $this->assertAttributeCount(1, '_observeurs', $this->_restReponse);
     }
 
     /**
@@ -169,8 +210,8 @@ class ReponseManagerTest extends TestCase
      */
     public function testSetObserveursErrone()
     {
-        $this->restReponse->setObserveurs(50);
-        $this->assertAttributeCount(1, '_observeurs', $this->restReponse);
+        $this->_restReponse->setObserveurs(50);
+        $this->assertAttributeCount(1, '_observeurs', $this->_restReponse);
     }
 
     /**
@@ -179,8 +220,8 @@ class ReponseManagerTest extends TestCase
      */
     public function testSetObserveursErroneDansArray()
     {
-        $this->restReponse->setObserveurs(array(1));
-        $this->assertAttributeCount(1, '_observeurs', $this->restReponse);
+        $this->_restReponse->setObserveurs(array(1));
+        $this->assertAttributeCount(1, '_observeurs', $this->_restReponse);
     }
 
     public function testEcrireReponse()
@@ -195,11 +236,11 @@ class ReponseManagerTest extends TestCase
             'AbstractDisplayer', new MockArg('logReponse', null, array($objetReponse))
         );
 
-        $this->restReponse->setObserveurs(array($abstractDisplayer));
+        $this->_restReponse->setObserveurs(array($abstractDisplayer));
 
-        $this->restReponse->setHeader($headerManager);
-        $this->restReponse->setFormatsAcceptes(array('JSON' => 'json'));
+        $this->_restReponse->setHeader($headerManager);
+        $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json'));
 
-        $this->restReponse->fabriquerReponse($objetReponse, array('fake'));
+        $this->_restReponse->fabriquerReponse($objetReponse, array('fake'));
     }
 }

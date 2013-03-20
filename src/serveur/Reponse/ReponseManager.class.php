@@ -27,6 +27,11 @@ class ReponseManager
     private $_charset;
 
     /**
+     * @var callable
+     */
+    private $_renderFactory;
+
+    /**
      * @var string
      */
     private $_contenu;
@@ -102,6 +107,19 @@ class ReponseManager
     }
 
     /**
+     * @param callable $renderFactory
+     * @throws ArgumentTypeException
+     */
+    public function setRenderFactory($renderFactory)
+    {
+        if (!is_callable($renderFactory)) {
+            throw new ArgumentTypeException(1000, 500, __METHOD__, 'callable', $renderFactory);
+        }
+
+        $this->_renderFactory = $renderFactory;
+    }
+
+    /**
      * @param string[] $formatsAcceptes
      * @throws ArgumentTypeException
      * @throws MainException
@@ -171,24 +189,24 @@ class ReponseManager
     }
 
     /**
-     * @param string $renderClassName
-     * @return mixed
-     * @throws MainException
-     * @codeCoverageIgnore
+     * @param string $nomClasseRendu
+     * @return bool|string
      */
-    protected function getRenderClass($renderClassName)
+    private function getRenderClass($nomClasseRendu)
     {
-        if (!class_exists($nomVue = '\\' . __NAMESPACE__ . '\Renderers\\' . $renderClassName)) {
-            throw new MainException(40002, 415, $renderClassName);
+        if (isNull($this->_renderFactory)) {
+            throw new MainException(40003, 500);
         }
 
-        return new $nomVue();
+        return call_user_func($this->_renderFactory, $nomClasseRendu);
     }
 
     /**
      * @param ObjetReponse $objetReponse
+     * @param $formatsDemandes
+     * @throws ArgumentTypeException
+     * @throws MainException
      * @param array $formatsDemandes
-     * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function fabriquerReponse($objetReponse, $formatsDemandes)
     {
@@ -207,9 +225,11 @@ class ReponseManager
 
         if (isset($nomClassRendu)) {
             /* @var $view \Serveur\Reponse\Renderers\AbstractRenderer */
-            $view = $this->getRenderClass(ucfirst(strtolower($nomClassRendu)));
-
-            $this->_contenu = $view->render($objetReponse->getDonneesReponse());
+            if (false !== $view = $this->getRenderClass($nomClassRendu)) {
+                $this->_contenu = $view->render($objetReponse->getDonneesReponse());
+            } else {
+                throw new MainException(40002, 415, ucfirst(strtolower($nomClassRendu)));
+            }
         } else {
             $objetReponse->setErreurHttp(406);
         }

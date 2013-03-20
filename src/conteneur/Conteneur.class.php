@@ -89,6 +89,7 @@ class Conteneur
             $restReponse = new ReponseManager();
             $restReponse->setConfig($c['Config']);
             $restReponse->setHeader($c['Header']);
+            $restReponse->setRenderFactory($c['RenderFactory']);
 
             return $restReponse;
         };
@@ -104,6 +105,16 @@ class Conteneur
 
         $conteneur['Header'] = function () {
             return new Header();
+        };
+
+        $conteneur['RenderFactory'] = function () {
+            return function ($nomClasseRendu) {
+                if (class_exists($nomVue = '\\Serveur\\Reponse\\Renderers\\' . ucfirst(strtolower($nomClasseRendu)))) {
+                    return new $nomVue();
+                } else {
+                    return false;
+                }
+            };
         };
 
 
