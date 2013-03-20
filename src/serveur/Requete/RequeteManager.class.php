@@ -204,7 +204,6 @@ class RequeteManager
     /**
      * @param int $dateRequeteTimestamp
      * @throws ArgumentTypeException
-     * @internal param \DateTime $dateRequete
      */
     public function setDateRequete($dateRequeteTimestamp)
     {
