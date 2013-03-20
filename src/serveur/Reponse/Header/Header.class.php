@@ -28,7 +28,7 @@ class Header
             throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
         }
 
-        if (!Tools::isValideHeader($champ)) {
+        if (!Tools::isValideResponseHeader($champ)) {
             throw new MainException(40100, 500, $champ);
         }
 

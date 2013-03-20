@@ -16,10 +16,20 @@ class Tools
      * @param string $header
      * @return bool
      */
-    public static function isValideHeader($header)
+    public static function isValideRequestHeader($header)
     {
-        return in_array(strtolower($header), array_map('strtolower', Constante::chargerConfig('headers')));
+        return in_array(strtolower($header), array_map('strtolower', Constante::chargerConfig('requestheaders')));
     }
+
+    /**
+     * @param string $header
+     * @return bool
+     */
+    public static function isValideResponseHeader($header)
+    {
+        return in_array(strtolower($header), array_map('strtolower', Constante::chargerConfig('responseheaders')));
+    }
+
 
     public static function isValideFormat($format)
     {

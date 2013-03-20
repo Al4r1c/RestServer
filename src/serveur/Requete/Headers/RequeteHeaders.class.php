@@ -26,8 +26,8 @@ class RequeteHeaders
     public function setHeaders($headers)
     {
         foreach ($headers as $header => $valeurHeader) {
-            if (!Tools::isValideHeader($header)) {
-                throw new MainException(20200, 400);
+            if (!Tools::isValideRequestHeader($header)) {
+                throw new MainException(20200, 400, $header, $valeurHeader);
             }
         }
 
