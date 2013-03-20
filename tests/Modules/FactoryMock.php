@@ -19,6 +19,7 @@ use Serveur\Reponse\Config\Config;
 use Serveur\Reponse\Header\Header;
 use Serveur\Reponse\Renderers\AbstractRenderer;
 use Serveur\Reponse\ReponseManager;
+use Serveur\Requete\Headers\RequeteHeaders;
 use Serveur\Requete\RequeteManager;
 use Serveur\Requete\Server\Server;
 use Serveur\Traitement\Data\AbstractDatabase;
@@ -76,6 +77,9 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
                 break;
             case 'header':
                 $mock = $this->getMockHeaders($methodes);
+                break;
+            case 'requeteheaders':
+                $mock = $this->getMockRequeteHeaders($methodes);
                 break;
             case 'i18nmanager':
                 $mock = $this->getMockI18nManager($methodes);
@@ -256,6 +260,15 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
     protected function getMockHeaders($methodes = array())
     {
         return $this->getMock('Serveur\Reponse\Header\Header', $methodes);
+    }
+
+    /**
+     * @param array $methodes
+     * @return \PHPUnit_Framework_MockObject_MockObject|RequeteHeaders
+     */
+    protected function getMockRequeteHeaders($methodes = array())
+    {
+        return $this->getMock('Serveur\Requete\Headers\RequeteHeaders', $methodes);
     }
 
     /**

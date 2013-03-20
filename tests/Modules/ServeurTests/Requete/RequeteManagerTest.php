@@ -152,6 +152,22 @@ class RequeteManagerTest extends TestCase
         $this->assertEquals('valeur1', $this->restRequete->getParametres()['param1']);
     }
 
+    public function testSetHeaderRequete()
+    {
+        $headerRequete = $this->getMockRequeteHeaders();
+        $this->restRequete->setRequeteHeader($headerRequete);
+        $this->assertAttributeEquals($headerRequete, '_requeteHeader', $this->restRequete);
+    }
+
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedExceptionCode 1000
+     */
+    public function testSetHeaderRequeteErrone()
+    {
+        $this->restRequete->setRequeteHeader(array());
+    }
+
     public function testRestSetServer()
     {
         $serveur = $this->createMock(

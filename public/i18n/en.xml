@@ -25,6 +25,7 @@
 		<message code="103">Response Object</message>
 		<message code="200">Request</message>
 		<message code="201">Server and execution environment information</message>
+		<message code="202">Request headers</message>
 		<message code="300">Handling manager</message>
 		<message code="301">Database configuration</message>
 		<message code="400">Response</message>
@@ -54,6 +55,7 @@
 		<message code="20002">Remote client ip is not valid.</message>
 		<message code="20100">Missing server variables.</message>
 		<message code="20101">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
+		<message code="20200">Invalid header "%s: %s".</message>
 		<message code="30000">Database class %s not found.</message>
 		<message code="30001">Resource Factory is not set.</message>
 		<message code="30002">Database Factory is not set.</message>

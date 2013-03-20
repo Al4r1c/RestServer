@@ -6,6 +6,7 @@ use Serveur\GestionErreurs\Handler\ErreurHandler;
 use Serveur\Reponse\Config\Config;
 use Serveur\Reponse\Header\Header;
 use Serveur\Reponse\ReponseManager;
+use Serveur\Requete\Headers\RequeteHeaders;
 use Serveur\Requete\RequeteManager;
 use Serveur\Requete\Server\Server;
 use Serveur\Traitement\Data\DatabaseConfig;
@@ -31,6 +32,7 @@ class Conteneur
         $conteneur['RequeteManager'] = function ($c) {
             $restRequete = new RequeteManager();
             $restRequete->parseServer($c['Server']);
+            $restRequete->setRequeteHeader($c['RequeteHeaders']);
 
             return $restRequete;
         };
@@ -40,6 +42,13 @@ class Conteneur
             $server->setVarServeur($_SERVER);
 
             return $server;
+        };
+
+        $conteneur['RequeteHeaders'] = function () {
+            $headers = new RequeteHeaders();
+            $headers->setHeaders(apache_request_headers());
+
+            return $headers;
         };
 
 

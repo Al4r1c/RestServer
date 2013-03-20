@@ -5,11 +5,17 @@ use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\TypeDetector;
+use Serveur\Requete\Headers\RequeteHeaders;
 use Serveur\Requete\Server\Server;
 use Serveur\Utils\Constante;
 
 class RequeteManager
 {
+    /**
+     * @var RequeteHeaders
+     */
+    private $_requeteHeader;
+
     /**
      * @var string
      */
@@ -39,6 +45,17 @@ class RequeteManager
      * @var \DateTime
      */
     private $_dateRequete;
+
+    public function setRequeteHeader($headerRequete)
+    {
+        if (!$headerRequete instanceof RequeteHeaders) {
+            throw new ArgumentTypeException(
+                1000, 500, __METHOD__, '\Serveur\Requete\Headers\RequeteHeaders', $headerRequete
+            );
+        }
+
+        $this->_requeteHeader = $headerRequete;
+    }
 
     /**
      * @param Server $server
