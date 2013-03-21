@@ -48,10 +48,11 @@
 		<message code="10204">Le dossier de destination "%s" n'existe pas.</message>
 		<message code="10205">Erreur lors de la tentative de créer le fichier "%s".</message>
 		<message code="10300">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
-		<message code="10301">Format %s invalide.</message>
+		<message code="10301">Format "%s" invalide.</message>
 		<message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 		<message code="20001">Aucun format de retour valide trouvé.</message>
-		<message code="20002">L'IP du client distant est invalide.</message>
+		<message code="20002">L'IP du client distant "%s" est invalide.</message>
+		<message code="20003">Format "%s" invalide.</message>
 		<message code="20100">Des variables serveurs manquent.</message>
 		<message code="20101">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 		<message code="30000">Classe de la base de données %s non trouvée.</message>

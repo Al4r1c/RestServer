@@ -7,6 +7,7 @@ use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\TypeDetector;
 use Serveur\Requete\Server\Server;
 use Serveur\Utils\Constante;
+use Serveur\Utils\Tools;
 
 class RequeteManager
 {
@@ -154,10 +155,25 @@ class RequeteManager
         }
 
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {
-            throw new MainException(20002, 400);
+            throw new MainException(20002, 400, $ip);
         }
 
         return $ip;
+    }
+
+    public function getContentType()
+    {
+        $contentType = $this->_server->getUneVariableServeur('CONTENT_TYPE');
+
+        if (strcmp($contentType, '*/*') == 0) {
+            $contentType = 'text/plain';
+        }
+
+        if (!Tools::isValideFormat($contentType)) {
+            throw new MainException(20003, 400, $contentType);
+        }
+
+        return $contentType;
     }
 
     /**

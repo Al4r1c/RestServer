@@ -127,7 +127,8 @@ class RequeteManagerTest extends TestCase
 
     public function testRestDonnee()
     {
-        $mockServer = $this->createMock('Server',
+        $mockServer = $this->createMock(
+            'Server',
             new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
             new MockArg('getUneVariableServeur', '', array('QUERY_STRING'))
         );
@@ -138,7 +139,8 @@ class RequeteManagerTest extends TestCase
 
     public function testParametreSauvegardes()
     {
-        $mockServer = $this->createMock('Server',
+        $mockServer = $this->createMock(
+            'Server',
             new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
             new MockArg('getUneVariableServeur', 'param1=valeur1&data=1', array('QUERY_STRING'))
         );
@@ -149,7 +151,8 @@ class RequeteManagerTest extends TestCase
 
     public function testRecupererParametre()
     {
-        $mockServer = $this->createMock('Server',
+        $mockServer = $this->createMock(
+            'Server',
             new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
             new MockArg('getUneVariableServeur', 'param1=valeur1&data=1', array('QUERY_STRING'))
         );
@@ -160,7 +163,8 @@ class RequeteManagerTest extends TestCase
 
     public function testRecupererPost()
     {
-        $mockServer = $this->createMock('Server',
+        $mockServer = $this->createMock(
+            'Server',
             new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
             new MockArg('getUneVariableServeur', 'once=var1&twice=var2', array('PHP_INPUT'))
         );
@@ -171,7 +175,8 @@ class RequeteManagerTest extends TestCase
 
     public function testRecupererPut()
     {
-        $mockServer = $this->createMock('Server',
+        $mockServer = $this->createMock(
+            'Server',
             new MockArg('getUneVariableServeur', 'PUT', array('REQUEST_METHOD')),
             new MockArg('getUneVariableServeur', 'once=var1&twice=var2', array('PHP_INPUT'))
         );
@@ -182,7 +187,8 @@ class RequeteManagerTest extends TestCase
 
     public function testRecupererDelete()
     {
-        $mockServer = $this->createMock('Server',
+        $mockServer = $this->createMock(
+            'Server',
             new MockArg('getUneVariableServeur', 'DELETE', array('REQUEST_METHOD'))
         );
         $this->restRequete->setServer($mockServer);
@@ -270,5 +276,30 @@ class RequeteManagerTest extends TestCase
         );
 
         $this->restRequete->logRequete(array($abstractDisplayer));
+    }
+
+    public function testGetContentType()
+    {
+        $this->setFakeServerVariables('CONTENT_TYPE', 'application/xml');
+
+        $this->assertEquals('application/xml', $this->restRequete->getContentType());
+    }
+
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 20003
+     */
+    public function testGetContentTypeErrone()
+    {
+        $this->setFakeServerVariables('CONTENT_TYPE', 'fake_one');
+
+        $this->restRequete->getContentType();
+    }
+
+    public function testGetContentTypeEtoileDevientPlain()
+    {
+        $this->setFakeServerVariables('CONTENT_TYPE', '*/*');
+
+        $this->assertEquals('text/plain', $this->restRequete->getContentType());
     }
 }
