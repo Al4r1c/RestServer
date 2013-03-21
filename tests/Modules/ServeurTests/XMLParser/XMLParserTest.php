@@ -116,4 +116,15 @@ class XMLParserTest extends TestCase
 
         $this->assertNull($this->_xmlParser->getConfigValeur('fake.elem'));
     }
+
+    public function testGetDonneesParseesAssocArray()
+    {
+        $this->_xmlParser->setContenuInitial("<root><elem>tttt</elem><elem2><elem3>Yuleh</elem3></elem2></root>");
+        $this->_xmlParser->parse();
+
+        $this->assertEquals(
+            array('elem' => 'tttt', 'elem2' => array('elem3' => 'Yuleh')),
+            $this->_xmlParser->getDonneesParseesAssocArray()
+        );
+    }
 }

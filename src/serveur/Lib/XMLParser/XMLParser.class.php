@@ -38,6 +38,35 @@ class XMLParser
     }
 
     /**
+     * @return array
+     */
+    public function getDonneesParseesAssocArray()
+    {
+        return $this->childrenToArray($this->_donneesParsees->getChildren());
+    }
+
+    /**
+     * @param $children XMLElement[]
+     * @return array
+     */
+    private function childrenToArray($children)
+    {
+        $result = array();
+
+        foreach ($children as $unElementFils) {
+            $fils = $unElementFils->getChildren();
+
+            if (!empty($fils)) {
+                $result[$unElementFils->getNom()] = $this->childrenToArray($unElementFils->getChildren());
+            } else {
+                $result[$unElementFils->getNom()] = $unElementFils->getValeur();
+            }
+        }
+
+        return $result;
+    }
+
+    /**
      * @return string
      */
     public function getErreurMessage()
