@@ -51,7 +51,7 @@ class RequeteManager
      */
     public function getUnHeader($clef)
     {
-        if (array_key_exists($clef, $this->_requeteHeader->getHeaders())) {
+        if (array_key_exists($clef = strtolower($clef), $this->_requeteHeader->getHeaders())) {
             return $this->_requeteHeader->getHeaders()[$clef];
         } else {
             return null;

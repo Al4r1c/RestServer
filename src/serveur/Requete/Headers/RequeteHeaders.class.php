@@ -31,6 +31,6 @@ class RequeteHeaders
             }
         }
 
-        $this->_headers = $headers;
+        $this->_headers = array_change_key_case($headers, CASE_LOWER);
     }
 }
