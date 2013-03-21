@@ -166,6 +166,7 @@ class RequeteManagerTest extends TestCase
         $mockServer = $this->createMock(
             'Server',
             new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', null, array('CONTENT_TYPE')),
             new MockArg('getUneVariableServeur', 'once=var1&twice=var2', array('PHP_INPUT'))
         );
         $this->restRequete->setServer($mockServer);
@@ -178,6 +179,7 @@ class RequeteManagerTest extends TestCase
         $mockServer = $this->createMock(
             'Server',
             new MockArg('getUneVariableServeur', 'PUT', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', null, array('CONTENT_TYPE')),
             new MockArg('getUneVariableServeur', 'once=var1&twice=var2', array('PHP_INPUT'))
         );
         $this->restRequete->setServer($mockServer);
@@ -301,5 +303,60 @@ class RequeteManagerTest extends TestCase
         $this->setFakeServerVariables('CONTENT_TYPE', '*/*');
 
         $this->assertEquals('text/plain', $this->restRequete->getContentType());
+    }
+
+    public function testRecupererPutPostContentTypeSet()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'text/plain', array('CONTENT_TYPE')),
+            new MockArg('getUneVariableServeur', 'once=var1&twice=var2', array('PHP_INPUT'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
+    }
+
+    public function testRecupererPutPostContentTypeJson()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'application/json', array('CONTENT_TYPE')),
+            new MockArg('getUneVariableServeur', '{"once":"var1","twice":"var2"}', array('PHP_INPUT'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
+    }
+
+    public function testRecupererPutPostContentTypeXML()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'application/xml', array('CONTENT_TYPE')),
+            new MockArg('getUneVariableServeur', '<root><once>var1</once><twice>var2</twice></root>', array('PHP_INPUT'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
+    }
+
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 20004
+     */
+    public function testRecupererPutPostContentTypeInconnu()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'image/jpeg', array('CONTENT_TYPE'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->restRequete->getParametres();
     }
 }

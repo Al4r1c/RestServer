@@ -5,6 +5,7 @@ use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\TypeDetector;
+use Serveur\Lib\XMLParser\XMLParser;
 use Serveur\Requete\Server\Server;
 use Serveur\Utils\Constante;
 use Serveur\Utils\Tools;
@@ -107,16 +108,29 @@ class RequeteManager
      */
     public function getParametres()
     {
+        $donnees = array();
+
         switch (strtoupper($this->getMethode())) {
             case 'GET':
                 parse_str($this->_server->getUneVariableServeur('QUERY_STRING'), $donnees);
                 break;
             case 'POST':
             case 'PUT':
-                parse_str($this->_server->getUneVariableServeur('PHP_INPUT'), $donnees);
+                if (is_null($contentType = $this->getContentType()) || strcmp($contentType, 'text/plain') == 0) {
+                    parse_str($this->_server->getUneVariableServeur('PHP_INPUT'), $donnees);
+                } elseif (strcmp($contentType, 'application/json') == 0) {
+                    $donnees = json_decode($this->_server->getUneVariableServeur('PHP_INPUT'), true);
+                } elseif (strcmp($contentType, 'application/xml') == 0) {
+                    $xmlParsee = new XMLParser();
+                    $xmlParsee->setContenuInitial($this->_server->getUneVariableServeur('PHP_INPUT'));
+                    $xmlParsee->parse();
+
+                    $donnees = $xmlParsee->getDonneesParseesAssocArray();
+                } else {
+                    throw new MainException(20004, 400, $contentType);
+                }
                 break;
             case 'DELETE':
-                $donnees = array();
                 break;
         }
 
@@ -169,7 +183,7 @@ class RequeteManager
             $contentType = 'text/plain';
         }
 
-        if (!Tools::isValideFormat($contentType)) {
+        if (!is_null($contentType) && !Tools::isValideFormat($contentType)) {
             throw new MainException(20003, 400, $contentType);
         }
 

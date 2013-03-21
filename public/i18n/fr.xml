@@ -53,6 +53,7 @@
 		<message code="20001">Aucun format de retour valide trouvé.</message>
 		<message code="20002">L'IP du client distant "%s" est invalide.</message>
 		<message code="20003">Format "%s" invalide.</message>
+		<message code="20004">Format de la requête "%s" inconnu.</message>
 		<message code="20100">Des variables serveurs manquent.</message>
 		<message code="20101">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 		<message code="30000">Classe de la base de données %s non trouvée.</message>
