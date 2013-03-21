@@ -11,16 +11,6 @@ class Tools
     {
         return array_key_exists($codeHttp, Constante::chargerConfig('httpcode'));
     }
-
-    /**
-     * @param string $header
-     * @return bool
-     */
-    public static function isValideRequestHeader($header)
-    {
-        return in_array(strtolower($header), array_map('strtolower', Constante::chargerConfig('requestheaders')));
-    }
-
     /**
      * @param string $header
      * @return bool

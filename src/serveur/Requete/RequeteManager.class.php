@@ -5,32 +5,15 @@ use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\TypeDetector;
-use Serveur\Requete\Headers\RequeteHeaders;
 use Serveur\Requete\Server\Server;
 use Serveur\Utils\Constante;
 
 class RequeteManager
 {
     /**
-     * @var RequeteHeaders
-     */
-    private $_requeteHeader;
-
-    /**
      * @var Server
      */
     private $_server;
-
-    public function setRequeteHeader($headerRequete)
-    {
-        if (!$headerRequete instanceof RequeteHeaders) {
-            throw new ArgumentTypeException(
-                1000, 500, __METHOD__, '\Serveur\Requete\Headers\RequeteHeaders', $headerRequete
-            );
-        }
-
-        $this->_requeteHeader = $headerRequete;
-    }
 
     /**
      * @param Server $server
@@ -43,19 +26,6 @@ class RequeteManager
         }
 
         $this->_server = $server;
-    }
-
-    /**
-     * @param string $clef
-     * @return string|null
-     */
-    public function getUnHeader($clef)
-    {
-        if (array_key_exists($clef = strtolower($clef), $this->_requeteHeader->getHeaders())) {
-            return $this->_requeteHeader->getHeaders()[$clef];
-        } else {
-            return null;
-        }
     }
 
     /**
