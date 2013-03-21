@@ -98,7 +98,7 @@ class Logger extends AbstractDisplayer
         $this->_fichierLogAcces->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.reponseCode}: " . $objetReponse->getStatusHttp() . " - {trad.reponseFormat}: " .
-                    $objetReponse->getFormat()
+                $objetReponse->getFormat()
             ) . "\n"
         );
     }
@@ -132,7 +132,7 @@ class Logger extends AbstractDisplayer
         $this->_fichierLogErreur->ecrireDansFichier($uneErreur->getDate()->format('d-m-Y H:i:s') . ": \n");
         $this->_fichierLogErreur->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables(
-                "{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." . $errorType . "}\n"
+            "{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." . $errorType . "}\n"
             )
         );
 
