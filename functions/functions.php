@@ -90,7 +90,7 @@ function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues)
  * @param array $array
  * @return array
  */
-function array_map_recursive($fonction, $array)
+function array_map_recursive($fonction, array $array)
 {
     $rarr = array();
     foreach ($array as $k => $v) {
@@ -98,4 +98,28 @@ function array_map_recursive($fonction, $array)
     }
 
     return $rarr;
+}
+
+/**
+ * @param array $donnees
+ * @param int $level
+ * @return string
+ */
+function arrayToString(array $donnees, $level = 0)
+{
+    $valeurs = '';
+
+    foreach ($donnees as $clef => $valeur) {
+        for ($i = 0; $i < $level; $i++) {
+            $valeurs .= "\t";
+        }
+
+        if (is_array($valeur)) {
+            $valeurs .= $clef . " => \n" . arrayToString($valeur, ($level + 1));
+        } else {
+            $valeurs .= $clef . " => " . $valeur . "\n";
+        }
+    }
+
+    return $valeurs;
 }

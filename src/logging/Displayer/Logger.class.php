@@ -70,15 +70,13 @@ class Logger extends AbstractDisplayer
         $this->_fichierLogAcces->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.method}: " . $restRequete->getMethode() . " -- URI: /" .
-                implode('/', $restRequete->getUriVariables()) . ""
+                    implode('/', $restRequete->getUriVariables()) . ""
             ) . "\n"
         );
         $this->_fichierLogAcces->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\n"
         );
-        foreach ($restRequete->getParametres() as $clefParam => $unParam) {
-            $this->_fichierLogAcces->ecrireDansFichier("\t\t" . $clefParam . " => " . $unParam . "\n");
-        }
+        $this->_fichierLogAcces->ecrireDansFichier(arrayToString($restRequete->getParametres(), 2));
     }
 
     /**
@@ -100,7 +98,7 @@ class Logger extends AbstractDisplayer
         $this->_fichierLogAcces->ecrireDansFichier(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.reponseCode}: " . $objetReponse->getStatusHttp() . " - {trad.reponseFormat}: " .
-                $objetReponse->getFormat()
+                    $objetReponse->getFormat()
             ) . "\n"
         );
     }
