@@ -134,7 +134,7 @@ class RequeteManager
                 break;
         }
 
-        return $donnees;
+        return array_map_recursive('strval', $donnees);
     }
 
     /**

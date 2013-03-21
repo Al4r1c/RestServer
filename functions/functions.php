@@ -84,3 +84,18 @@ function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues)
         }
     }
 }
+
+/**
+ * @param callable $fonction
+ * @param array $array
+ * @return array
+ */
+function array_map_recursive($fonction, $array)
+{
+    $rarr = array();
+    foreach ($array as $k => $v) {
+        $rarr[$k] = is_array($v) ? array_map_recursive($fonction, $v) : $fonction($v);
+    }
+
+    return $rarr;
+}
