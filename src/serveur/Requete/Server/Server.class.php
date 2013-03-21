@@ -12,11 +12,6 @@ class Server
     private $_serveurVariables;
 
     /**
-     * @var array
-     */
-    private $_serveurDonnees;
-
-    /**
      * @param array $varServeur
      * @throws ArgumentTypeException
      */
