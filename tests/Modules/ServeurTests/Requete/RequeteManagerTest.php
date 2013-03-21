@@ -143,7 +143,7 @@ class RequeteManagerTest extends TestCase
             new MockArg('getUneVariableServeur', 'param1=valeur1&data=1', array('QUERY_STRING'))
         );
         $this->restRequete->setServer($mockServer);
-        $this->restRequete->setServer($mockServer);
+
         $this->assertCount(2, $this->restRequete->getParametres());
     }
 
