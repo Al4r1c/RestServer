@@ -1,16 +1,8 @@
 {
 	"repositories": [
 		{
-			"type": "package",
-			"package": {
-				"name": "alarox/AlaroxClassLoader",
-				"version": "dev-master",
-				"source": {
-					"url": "https://github.com/Al4r1c/AlaroxClassLoader",
-					"type": "git",
-					"reference": "master"
-				}
-			}
+			"type": "vcs",
+			"url": "https://github.com/Al4r1c/AlaroxClassLoader"
 		}
 	],
 	"require": {
