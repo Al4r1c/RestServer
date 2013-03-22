@@ -1,10 +1,25 @@
 {
-	"require":{
-		"pimple/pimple":"v1.0.1",
-		"lespoilus/spyc":"dev-master",
-		"mikey179/vfsStream":"dev-master"
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "alarox/AlaroxClassLoader",
+				"version": "dev-master",
+				"source": {
+					"url": "https://github.com/Al4r1c/AlaroxClassLoader",
+					"type": "git",
+					"reference": "master"
+				}
+			}
+		}
+	],
+	"require": {
+		"alarox/AlaroxClassLoader": "dev-master",
+		"pimple/pimple": "v1.0.1",
+		"lespoilus/spyc": "dev-master",
+		"mikey179/vfsStream": "dev-master"
 	},
-	"config":{
-		"vendor-dir":"libraries"
+	"config": {
+		"vendor-dir": "libraries"
 	}
 }

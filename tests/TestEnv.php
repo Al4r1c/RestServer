@@ -13,17 +13,14 @@ include_once(BASE_PATH . '/functions/functions.php');
 
 include_once(BASE_PATH . '/libraries/autoload.php');
 
-include_once(BASE_PATH . '/src/classloader/ClassLoader.class.php');
-
 
 $GLOBALS['global_function_ajouterErreur'] = 'throwExceptionEnvTest';
 function throwExceptionEnvTest($erreurNumber, $codeErreur)
 {
-    // Ajouter en global et tester ?
 }
 
 
-$classLoader = new \ClassLoader\ClassLoader();
+$classLoader = new ClassLoader();
 $classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src/serveur');
 $classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src/conteneur');
 $classLoader->ajouterNamespace('Logging', BASE_PATH . '/src/logging');
