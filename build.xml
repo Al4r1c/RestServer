@@ -31,7 +31,7 @@
 
 		<exec executable="php" description="Installe les paquets prérequis via Composer">
 			<arg value="composer.phar"/>
-			<arg value="install"/>
+			<arg value="update"/>
 			<arg value="-d"/>
 			<arg value="${sources}"/>
 		</exec>
