@@ -32,7 +32,7 @@ class FichierChargementTest extends TestCase
         $chargeur = new \Serveur\Lib\FichierChargement\Xml();
         $this->assertThat(
             $chargeur->chargerFichier(vfsStream::url('testPath/fichier.xml')), $this->logicalAnd(
-                $this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')
+                $this->logicalNot($this->isNull()), $this->isInstanceOf('\XMLParser')
             )
         );
     }

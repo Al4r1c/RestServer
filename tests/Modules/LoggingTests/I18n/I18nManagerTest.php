@@ -60,7 +60,7 @@ class I18nManagerTest extends TestCase
     public function testGetFichierTraduction()
     {
         $xmlParser = $this->createMock(
-            'xmlparser', new MockArg('isValide', true)
+            'xmlparser', new MockArg('isValidXML', true)
         );
 
         $fichier = $this->createMock(
@@ -84,7 +84,7 @@ class I18nManagerTest extends TestCase
     public function testGetFichierTraductionDefautInexistant()
     {
         $xmlParser = $this->createMock(
-            'xmlparser', new MockArg('isValide', true)
+            'xmlparser', new MockArg('isValidXML', true)
         );
 
         $fichier = $this->createMock(
@@ -108,11 +108,11 @@ class I18nManagerTest extends TestCase
     public function testGetFichierTraductionDefautInvalide()
     {
         $xmlParserCn = $this->createMock(
-            'xmlparser', new MockArg('isValide', true)
+            'xmlparser', new MockArg('isValidXML', true)
         );
 
         $xmlParserFr = $this->createMock(
-            'xmlparser', new MockArg('isValide', false)
+            'xmlparser', new MockArg('isValidXML', false)
         );
 
         $fichierCn = $this->createMock(
@@ -141,11 +141,11 @@ class I18nManagerTest extends TestCase
     public function testGetFichierTraductionPlusieursFichierInexistantOuBugges()
     {
         $xmlParserIt = $this->createMock(
-            'xmlparser', new MockArg('isValide', false)
+            'xmlparser', new MockArg('isValidXML', false)
         );
 
         $xmlParserFr = $this->createMock(
-            'xmlparser', new MockArg('isValide', true)
+            'xmlparser', new MockArg('isValidXML', true)
         );
 
         $fichierEn = $this->createMock(

@@ -5,7 +5,6 @@ use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\TypeDetector;
-use Serveur\Lib\XMLParser\XMLParser;
 use Serveur\Requete\Server\Server;
 use Serveur\Utils\Constante;
 use Serveur\Utils\Tools;
@@ -121,11 +120,10 @@ class RequeteManager
                 } elseif (strcmp($contentType, 'application/json') == 0) {
                     $donnees = json_decode($this->_server->getUneVariableServeur('PHP_INPUT'), true);
                 } elseif (strcmp($contentType, 'application/xml') == 0) {
-                    $xmlParsee = new XMLParser();
-                    $xmlParsee->setContenuInitial($this->_server->getUneVariableServeur('PHP_INPUT'));
-                    $xmlParsee->parse();
+                    $xmlParsee = new \XMLParser();
+                    $xmlParsee->setAndParseContent($this->_server->getUneVariableServeur('PHP_INPUT'));
 
-                    $donnees = $xmlParsee->getDonneesParseesAssocArray();
+                    $donnees = $xmlParsee->getParsedDataAsAssocArray();
                 } else {
                     throw new MainException(20004, 400, $contentType);
                 }

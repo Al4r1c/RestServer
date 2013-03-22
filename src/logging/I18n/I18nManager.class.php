@@ -2,7 +2,6 @@
 namespace Logging\I18n;
 
 use Serveur\Lib\Fichier;
-use Serveur\Lib\XMLParser\XMLParser;
 use Serveur\Utils\FileManager;
 
 class I18nManager
@@ -53,7 +52,7 @@ class I18nManager
     }
 
     /**
-     * @return XMLParser
+     * @return \XMLParser
      * @throws \Exception
      * */
     public function getFichierTraduction()
@@ -67,7 +66,7 @@ class I18nManager
         $fichierTraductionParDefaut = $this->getFichier($nomFichierLangueDefaut);
 
         if ($fichierTraductionParDefaut->fichierExiste() &&
-            $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValide()
+            $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValidXML()
         ) {
             return $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut);
         } else {
@@ -93,7 +92,7 @@ class I18nManager
 
     /**
      * @param Fichier $fichier
-     * @return XMLParser
+     * @return \XMLParser
      */
     private function recupererXmlParserDepuisFichier(Fichier $fichier)
     {
@@ -109,7 +108,7 @@ class I18nManager
             $traductionDisponible = $this->getFichier($classeLangue);
 
             if ($traductionDisponible->fichierExiste() &&
-                $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValide()
+                $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValidXML()
             ) {
                 return array($uneLangueDispo => $traductionDisponible);
             }

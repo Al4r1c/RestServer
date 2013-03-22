@@ -13,8 +13,6 @@ use Serveur\Lib\Fichier;
 use Serveur\Lib\FichierChargement\AbstractChargeurFichier;
 use Serveur\Lib\FileSystem;
 use Serveur\Lib\ObjetReponse;
-use Serveur\Lib\XMLParser\XMLElement;
-use Serveur\Lib\XMLParser\XMLParser;
 use Serveur\Reponse\Config\Config;
 use Serveur\Reponse\Header\Header;
 use Serveur\Reponse\Renderers\AbstractRenderer;
@@ -26,6 +24,8 @@ use Serveur\Traitement\Data\DatabaseConfig;
 use Serveur\Traitement\Ressource\AbstractRessource;
 use Serveur\Traitement\TraitementManager;
 use Serveur\Utils\Constante;
+use XMLElement;
+use XMLParser;
 
 class FactoryMock extends \PHPUnit_Framework_TestCase
 {

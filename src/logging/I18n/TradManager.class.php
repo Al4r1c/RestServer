@@ -1,25 +1,23 @@
 <?php
 namespace Logging\I18n;
 
-use Serveur\Lib\XMLParser\XMLParser;
-
 class TradManager
 {
     /**
-     * @var XMLParser
+     * @var \XMLParser
      */
     private $_fichierTraductionDefaut;
 
     /**
-     * @param \Serveur\Lib\XMLParser\XMLParser $fichierTradDef
+     * @param \XMLParser $fichierTradDef
      * @throws \Exception
      */
-    public function setFichierTraduction(XMLParser $fichierTradDef)
+    public function setFichierTraduction($fichierTradDef)
     {
-        if (!$fichierTradDef->isValide()) {
+        if (!$fichierTradDef->isValidXML()) {
             throw new \Exception('Traduction object is invalid.');
         }
-
+        ;
         $this->_fichierTraductionDefaut = $fichierTradDef;
     }
 
@@ -31,10 +29,10 @@ class TradManager
     private function getTraduction($section, $identifier)
     {
         $xmlElementsCorrespondants =
-            $this->_fichierTraductionDefaut->getConfigValeur($section . '.message[code=' . $identifier . ']');
+            $this->_fichierTraductionDefaut->getValue($section . '.message[code=' . $identifier . ']');
 
         if (!empty($xmlElementsCorrespondants)) {
-            return $xmlElementsCorrespondants[0]->getValeur();
+            return $xmlElementsCorrespondants[0]->getValue();
         } else {
             return '{' . $section . '.' . $identifier . '}';
         }

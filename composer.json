@@ -3,13 +3,18 @@
 		{
 			"type": "vcs",
 			"url": "https://github.com/Al4r1c/AlaroxClassLoader"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/Al4r1c/AlaroxXMLParser"
 		}
 	],
 	"require": {
 		"alarox/AlaroxClassLoader": "dev-master",
+		"alarox/AlaroxXMLParser": "dev-master",
 		"pimple/pimple": "v1.0.2",
 		"lespoilus/spyc": "dev-master",
-		"mikey179/vfsStream": "dev-master"
+		"mikey179/vfsStream": "v1.1.0"
 	},
 	"config": {
 		"vendor-dir": "libraries"

@@ -22,8 +22,6 @@ class LibTests
         $suite->addTestSuite('Tests\ServeurTests\Lib\FileSystemTest');
         $suite->addTestSuite('Tests\ServeurTests\Lib\FichierChargementTest');
         $suite->addTestSuite('Tests\ServeurTests\Lib\TypeDetectorTest');
-        $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLElementTest');
-        $suite->addTestSuite('Tests\ServeurTests\XMLParser\XMLParserTest');
 
         return $suite;
     }
