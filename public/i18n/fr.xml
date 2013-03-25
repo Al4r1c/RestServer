@@ -20,9 +20,7 @@
 	<errorType>
 		<message code="1">Erreur PHP</message>
 		<message code="100">Paramètre invalide</message>
-		<message code="101">Système de fichier</message>
-		<message code="102">Fichier</message>
-		<message code="103">Objet de réponse</message>
+		<message code="101">Objet de réponse</message>
 		<message code="200">Requête</message>
 		<message code="201">Variables de serveur et d'exécution</message>
 		<message code="300">Gestionnaire de traitement</message>
@@ -34,21 +32,8 @@
 
 	<errorMessage>
 		<message code="1000">Paramètre de la fonction %s() doit être du type %s, %s obtenu.</message>
-		<message code="10100">L'OS "%s" n'est pas supporté ou est invalide.</message>
-		<message code="10101">Le chemin de base "%s" n'est pas absolu.</message>
-		<message code="10102">Le chemin de base "%s" n'existe pas.</message>
-		<message code="10103">Le fichier "%s" n'existe pas, impossible d'en récupérer les droits.</message>
-		<message code="10104">Le fichier "%s" n'a pas pu être créé (problème de permission ?).</message>
-		<message code="10105">Le fichier "%s" n'existe pas et rien n'a été chargé.</message>
-		<message code="10106">Les fichiers avec l'extension "%s" ne peuvent être chargés. (Fichier: %s)</message>
-		<message code="10200">Le nom du fichier est vide.</message>
-		<message code="10201">Le fichier %s est dépourvue d'extension.</message>
-		<message code="10202">Le nom du répertoire est vide.</message>
-		<message code="10203">Le fichier "%s" n'existe pas.</message>
-		<message code="10204">Le dossier de destination "%s" n'existe pas.</message>
-		<message code="10205">Erreur lors de la tentative de créer le fichier "%s".</message>
-		<message code="10300">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
-		<message code="10301">Format "%s" invalide.</message>
+		<message code="10100">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
+		<message code="10101">Format "%s" invalide.</message>
 		<message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 		<message code="20001">Aucun format de retour valide trouvé.</message>
 		<message code="20002">L'IP du client distant "%s" est invalide.</message>

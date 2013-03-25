@@ -32,7 +32,7 @@ class ObjetReponseTest extends TestCase
 
     /**
      * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 10300
+     * @expectedExceptionCode 10100
      */
     public function testCodeHttpInvalide()
     {
@@ -73,7 +73,7 @@ class ObjetReponseTest extends TestCase
 
     /**
      * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 10301
+     * @expectedExceptionCode 10101
      */
     public function testFormatErrone()
     {

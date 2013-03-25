@@ -1,6 +1,7 @@
 <?php
 namespace Conteneur;
 
+use AlaroxFileManager\AlaroxFile;
 use Serveur\GestionErreurs\ErreurManager;
 use Serveur\GestionErreurs\Handler\ErreurHandler;
 use Serveur\Reponse\Config\Config;
@@ -10,7 +11,6 @@ use Serveur\Requete\RequeteManager;
 use Serveur\Requete\Server\Server;
 use Serveur\Traitement\Data\DatabaseConfig;
 use Serveur\Traitement\TraitementManager;
-use Serveur\Utils\FileManager;
 
 class Conteneur
 {
@@ -76,9 +76,10 @@ class Conteneur
         };
 
         $conteneur['DatabaseConfig'] = function () {
+            $alaroxFileManager = new AlaroxFile();
+            $fichier = $alaroxFileManager->getFile(BASE_PATH . '/config/databaseConfig.yaml');
+
             $dbConfig = new DatabaseConfig();
-            $fichier = FileManager::getFichier();
-            $fichier->setFichierParametres('databaseConfig.yaml', 'config');
             $dbConfig->recupererInformationFichier($fichier);
 
             return $dbConfig;
@@ -95,8 +96,9 @@ class Conteneur
         };
 
         $conteneur['Config'] = function () {
-            $fichier = FileManager::getFichier();
-            $fichier->setFichierParametres('config.yaml', '/config');
+            $alaroxFileManager = new AlaroxFile();
+            $fichier = $alaroxFileManager->getFile(BASE_PATH . '/config/config.yaml');
+
             $configurationManager = new Config();
             $configurationManager->chargerConfiguration($fichier);
 

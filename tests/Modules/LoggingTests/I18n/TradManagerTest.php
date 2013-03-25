@@ -1,18 +1,19 @@
 <?php
 namespace Tests\LoggingTests\I18n;
 
+use Logging\I18n\TradManager;
 use Tests\MockArg;
 use Tests\TestCase;
 
 class TradManagerTest extends TestCase
 {
 
-    /** @var \Logging\I18n\TradManager */
+    /** @var TradManager */
     private $tradManager;
 
     public function setUp()
     {
-        $this->tradManager = new \Logging\I18n\TradManager();
+        $this->tradManager = new TradManager();
     }
 
     public function testSetXmlObjet()

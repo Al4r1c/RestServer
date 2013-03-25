@@ -1,22 +1,36 @@
 <?php
 namespace Tests\LoggingTests\Displayer;
 
+use AlaroxFileManager\AlaroxFile;
+use AlaroxFileManager\FileManager\File;
+use Logging\Displayer\Logger;
 use Serveur\GestionErreurs\Types\Error;
 use Serveur\GestionErreurs\Types\Notice;
-use Serveur\Lib\Fichier;
 use Tests\MockArg;
 use Tests\TestCase;
 use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStreamWrapper;
 
 class LoggerTest extends TestCase
 {
-    /** @var \Logging\Displayer\Logger */
+    /** @var Logger */
     private $_logger;
 
     public function setUp()
     {
-        $this->_logger = new \Logging\Displayer\Logger();
+        $this->_logger = new Logger();
+    }
+
+    /**
+     * @param $chemin
+     * @return File
+     */
+    public function getFile($chemin)
+    {
+        $alaroxFileManager = new AlaroxFile();
+
+        return $alaroxFileManager->getFile($chemin);
     }
 
     public function getFakeTradManager()
@@ -30,19 +44,15 @@ class LoggerTest extends TestCase
         return $tradManager;
     }
 
-    public function getFakeFileSystem()
+    public function activeFakeFileSystem()
     {
         vfsStreamWrapper::register();
-        vfsStreamWrapper::setRoot(new \org\bovigo\vfs\vfsStreamDirectory('root'));
-
-        $fileSystem = new \Serveur\Lib\FileSystem();
-        $fileSystem->setBasePath(vfsStream::url('root'));
-
-        return $fileSystem;
+        vfsStreamWrapper::setRoot(new vfsStreamDirectory('root'));
     }
 
     public function testSetFichierLogAcces()
     {
+        /** @var $fichierAcces File */
         $fichierAcces = $this->createMock('Fichier');
 
         $this->_logger->setFichierLogAcces($fichierAcces);
@@ -102,16 +112,15 @@ class LoggerTest extends TestCase
             new MockArg('getParametres', array('param1' => 'var1'))
         );
 
-        $fichierAcces = new Fichier();
-        $fichierAcces->setFileSystem($this->getFakeFileSystem());
-        $fichierAcces->setFichierParametres('acces.log', vfsStream::url('root'));
-        $fichierAcces->creerFichier();
+        $this->activeFakeFileSystem();
+        $fichierAcces = $this->getFile(vfsStream::url('root') . '/acces.log');
+        $fichierAcces->createFile();
         $this->_logger->setFichierLogAcces($fichierAcces);
         $this->_logger->setTradManager($this->getFakeTradManager());
 
         $this->_logger->ecrireLogRequete($restRequete);
 
-        $contenu = file_get_contents($fichierAcces->getCheminCompletFichier());
+        $contenu = file_get_contents($fichierAcces->getPathToFile());
 
         $this->assertContains($dateRequete->format('d-m-Y H:i:s'), $contenu);
         $this->assertContains('127.0.0.1', $contenu);
@@ -142,16 +151,15 @@ class LoggerTest extends TestCase
             'ObjetReponse', new MockArg('getStatusHttp', 200), new MockArg('getFormat', 'json')
         );
 
-        $fichierAcces = new Fichier();
-        $fichierAcces->setFileSystem($this->getFakeFileSystem());
-        $fichierAcces->setFichierParametres('acces.log', vfsStream::url('root'));
-        $fichierAcces->creerFichier();
+        $this->activeFakeFileSystem();
+        $fichierAcces = $this->getFile(vfsStream::url('root') . '/acces.log');
+        $fichierAcces->createFile();
         $this->_logger->setFichierLogAcces($fichierAcces);
         $this->_logger->setTradManager($this->getFakeTradManager());
 
         $this->_logger->ecrireLogReponse($restReponse);
 
-        $contenu = file_get_contents($fichierAcces->getCheminCompletFichier());
+        $contenu = file_get_contents($fichierAcces->getPathToFile());
 
         $this->assertContains('200', $contenu);
         $this->assertContains('json', $contenu);
@@ -178,16 +186,15 @@ class LoggerTest extends TestCase
         $uneErreur = new Error(20000);
         $uneErreur->setMessage("Mon message erreur");
 
-        $fichierErreurs = new Fichier();
-        $fichierErreurs->setFileSystem($this->getFakeFileSystem());
-        $fichierErreurs->setFichierParametres('erreur.log', vfsStream::url('root'));
-        $fichierErreurs->creerFichier();
+        $this->activeFakeFileSystem();
+        $fichierErreurs = $this->getFile(vfsStream::url('root') . '/erreur.log');
+        $fichierErreurs->createFile();
         $this->_logger->setFichierLogErreur($fichierErreurs);
         $this->_logger->setTradManager($this->getFakeTradManager());
 
         $this->_logger->ecrireErreurLog($uneErreur);
 
-        $contenu = file_get_contents($fichierErreurs->getCheminCompletFichier());
+        $contenu = file_get_contents($fichierErreurs->getPathToFile());
 
         $this->assertContains('{trad.fatalerror}', $contenu);
         $this->assertContains('{errorType.200}', $contenu);
@@ -201,16 +208,15 @@ class LoggerTest extends TestCase
         $uneErreur = new Notice(E_USER_NOTICE);
         $uneErreur->setMessage("Ma notice");
 
-        $fichierErreurs = new Fichier();
-        $fichierErreurs->setFileSystem($this->getFakeFileSystem());
-        $fichierErreurs->setFichierParametres('erreur.log', vfsStream::url('root'));
-        $fichierErreurs->creerFichier();
+        $this->activeFakeFileSystem();
+        $fichierErreurs = $this->getFile(vfsStream::url('root') . '/erreur.log');
+        $fichierErreurs->createFile();
         $this->_logger->setFichierLogErreur($fichierErreurs);
         $this->_logger->setTradManager($this->getFakeTradManager());
 
         $this->_logger->ecrireErreurLog($uneErreur);
 
-        $contenu = file_get_contents($fichierErreurs->getCheminCompletFichier());
+        $contenu = file_get_contents($fichierErreurs->getPathToFile());
 
         $this->assertContains('{trad.notice}', $contenu);
         $this->assertContains('{errorType.1}', $contenu);

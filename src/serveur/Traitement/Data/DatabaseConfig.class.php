@@ -1,9 +1,9 @@
 <?php
 namespace Serveur\Traitement\Data;
 
+use AlaroxFileManager\FileManager\File;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
-use Serveur\Lib\Fichier;
 
 class DatabaseConfig
 {
@@ -38,12 +38,12 @@ class DatabaseConfig
     private $_database;
 
     /**
-     * @param Fichier $fichier
+     * @param File $fichier
      * @throws \Serveur\GestionErreurs\Exceptions\MainException
      */
     public function recupererInformationFichier($fichier)
     {
-        if (!is_array($informations = $fichier->chargerFichier()) ||
+        if (!is_array($informations = $fichier->loadFile()) ||
             !array_keys_exist(array('Driver', 'User', 'Password', 'Host', 'Port', 'Database'), $informations)
         ) {
             throw new MainException(30101, 500);

@@ -18,9 +18,6 @@ class LibTests
         $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
         $suite->addTestSuite('Tests\ServeurTests\Lib\ObjetReponseTest');
-        $suite->addTestSuite('Tests\ServeurTests\Lib\FichierTest');
-        $suite->addTestSuite('Tests\ServeurTests\Lib\FileSystemTest');
-        $suite->addTestSuite('Tests\ServeurTests\Lib\FichierChargementTest');
         $suite->addTestSuite('Tests\ServeurTests\Lib\TypeDetectorTest');
 
         return $suite;

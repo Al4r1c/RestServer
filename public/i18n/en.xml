@@ -20,9 +20,7 @@
 	<errorType>
 		<message code="1">PHP Error</message>
 		<message code="100">Invalid Argument</message>
-		<message code="101">File system</message>
-		<message code="102">File</message>
-		<message code="103">Response Object</message>
+		<message code="101">Response Object</message>
 		<message code="200">Request</message>
 		<message code="201">Server and execution environment information</message>
 		<message code="300">Handling manager</message>
@@ -34,21 +32,8 @@
 
 	<errorMessage>
 		<message code="1000">Argument passed to %s() must be an instance of %s, %s given.</message>
-		<message code="10100">OS "%s" is not suported or is not valid.</message>
-		<message code="10101">Base path "%s" is not absolute.</message>
-		<message code="10102">Base path "%s" does not exist.</message>
-		<message code="10103">File "%s" does not exist, unable to get file perms.</message>
-		<message code="10104">File "%s" could not be created (permissions problem ?).</message>
-		<message code="10105">File "%s" does not exist and nothing got charged.</message>
-		<message code="10106">File with extension "%s" can't be loaded. (File: %s)</message>
-		<message code="10200">Empty filename.</message>
-		<message code="10201">The file %s has no extension.</message>
-		<message code="10202">Empty directory name.</message>
-		<message code="10203">File "%s" does not exist.</message>
-		<message code="10204">Destination folder "%s" does not exist.</message>
-		<message code="10205">Error while trying to create file "%s".</message>
-		<message code="10300">HTTP code "%s" is not valid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html for more informations about HTTP code.</message>
-		<message code="10301">Invalid format "%s".</message>
+		<message code="10100">HTTP code "%s" is not valid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html for more informations about HTTP code.</message>
+		<message code="10101">Invalid format "%s".</message>
 		<message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
 		<message code="20001">No valid return format found.</message>
 		<message code="20002">Remote client ip "%s" is not valid.</message>

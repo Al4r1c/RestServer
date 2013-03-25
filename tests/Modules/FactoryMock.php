@@ -1,6 +1,7 @@
 <?php
 namespace Tests;
 
+use AlaroxFileManager\FileManager\File;
 use Conteneur\Conteneur;
 use Logging\Displayer\AbstractDisplayer;
 use Logging\I18n\I18nManager;
@@ -9,9 +10,6 @@ use Serveur\GestionErreurs\ErreurManager;
 use Serveur\GestionErreurs\Handler\ErreurHandler;
 use Serveur\GestionErreurs\Types\Error;
 use Serveur\GestionErreurs\Types\Notice;
-use Serveur\Lib\Fichier;
-use Serveur\Lib\FichierChargement\AbstractChargeurFichier;
-use Serveur\Lib\FileSystem;
 use Serveur\Lib\ObjetReponse;
 use Serveur\Reponse\Config\Config;
 use Serveur\Reponse\Header\Header;
@@ -29,15 +27,16 @@ use XMLParser;
 
 class FactoryMock extends \PHPUnit_Framework_TestCase
 {
-    /** @return \PHPUnit_Framework_MockObject_MockObject */
+    /**
+     * @param string $type
+     * @param array $methodes
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
     protected function recupererMockSelonNom($type, $methodes = array())
     {
         $mock = null;
 
         switch (strtolower($type)) {
-            case 'abstractchargeurfichier':
-                $mock = $this->getMockAbstractChargeur($methodes);
-                break;
             case 'abstractdatabase':
                 $mock = $this->getMockAbstractDatabase($methodes);
                 break;
@@ -70,9 +69,6 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
                 break;
             case 'fichier':
                 $mock = $this->getMockFichier($methodes);
-                break;
-            case 'filesystem':
-                $mock = $this->getMockFileSystem($methodes);
                 break;
             case 'header':
                 $mock = $this->getMockHeaders($methodes);
@@ -121,15 +117,6 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
     protected function getMockAbstractClass($mockClass, $tabMethodes = array())
     {
         return $this->getMockForAbstractClass($mockClass, array(), '', true, true, true, $tabMethodes);
-    }
-
-    /**
-     * @param array $methodes
-     * @return \PHPUnit_Framework_MockObject_MockObject|AbstractChargeurFichier
-     */
-    protected function getMockAbstractChargeur($methodes = array())
-    {
-        return $this->getMockAbstractClass('Serveur\Lib\FichierChargement\AbstractChargeurFichier', $methodes);
     }
 
     /**
@@ -233,20 +220,11 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
 
     /**
      * @param array $methodes
-     * @return \PHPUnit_Framework_MockObject_MockObject|Fichier
+     * @return \PHPUnit_Framework_MockObject_MockObject|File
      */
     protected function getMockFichier($methodes = array())
     {
-        return $this->getMock('Serveur\Lib\Fichier', $methodes);
-    }
-
-    /**
-     * @param array $methodes
-     * @return \PHPUnit_Framework_MockObject_MockObject|FileSystem
-     */
-    protected function getMockFileSystem($methodes = array())
-    {
-        return $this->getMock('Serveur\Lib\FileSystem', $methodes);
+        return $this->getMock('AlaroxFileManager\FileManager\File', $methodes);
     }
 
     /**

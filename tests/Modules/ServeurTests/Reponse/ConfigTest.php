@@ -1,6 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Reponse;
 
+use AlaroxFileManager\FileManager\File;
 use Serveur\Reponse\Config\Config;
 use Tests\MockArg;
 use Tests\TestCase;
@@ -22,9 +23,9 @@ class ConfigTest extends TestCase
 
     public function testChargerFichier()
     {
-        /** @var $fichier \Serveur\Lib\Fichier */
+        /** @var $fichier File */
         $fichier = $this->createMock(
-            'Fichier', new MockArg('chargerFichier', self::$donneesConfig)
+            'Fichier', new MockArg('loadFile', self::$donneesConfig)
         );
 
         $this->configuration->chargerConfiguration($fichier);
@@ -47,10 +48,10 @@ class ConfigTest extends TestCase
      * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40200
      */
-    public function testChargerFichierInexistant()
+    public function testloadFileInexistant()
     {
         $fichier = $this->createMock(
-            'Fichier', new MockArg('fichierExiste', false)
+            'Fichier', new MockArg('fileExist', false)
         );
 
         $this->configuration->chargerConfiguration($fichier);
@@ -65,7 +66,7 @@ class ConfigTest extends TestCase
         $donnees = self::$donneesConfig;
         unset($donnees['Render']);
         $fichier = $this->createMock(
-            'Fichier', new MockArg('chargerFichier', $donnees)
+            'Fichier', new MockArg('loadFile', $donnees)
         );
 
         $this->configuration->chargerConfiguration($fichier);
@@ -74,7 +75,7 @@ class ConfigTest extends TestCase
     public function testGetValeur()
     {
         $fichier = $this->createMock(
-            'Fichier', new MockArg('chargerFichier', self::$donneesConfig)
+            'Fichier', new MockArg('loadFile', self::$donneesConfig)
         );
 
         $this->configuration->chargerConfiguration($fichier);

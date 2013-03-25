@@ -65,7 +65,7 @@ class ObjetReponse
         }
 
         if (!Tools::isValideHttpCode($statusHttp)) {
-            throw new MainException(10300, 500, $statusHttp);
+            throw new MainException(10100, 500, $statusHttp);
         }
 
         $this->_statusHttp = $statusHttp;
@@ -104,7 +104,7 @@ class ObjetReponse
     public function setFormat($format)
     {
         if (!Tools::isValideFormat($format)) {
-            throw new MainException(10301, 500, $format);
+            throw new MainException(10101, 500, $format);
         }
 
         $this->_format = $format;

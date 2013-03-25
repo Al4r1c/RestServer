@@ -101,7 +101,7 @@ class DatabaseConfigTest extends TestCase
     public function testRecupererInformationFichier()
     {
         $fichierConfigDb = $this->createMock(
-            'Fichier', new MockArg('chargerFichier', array('Driver' => 'monDriver',
+            'Fichier', new MockArg('loadFile', array('Driver' => 'monDriver',
                 'User' => 'nomCompte',
                 'Password' => 'mdp',
                 'Host' => 'monHost',
@@ -122,7 +122,7 @@ class DatabaseConfigTest extends TestCase
     public function testInformationManquante()
     {
         $fichierConfigDb = $this->createMock(
-            'Fichier', new MockArg('chargerFichier', array('wowowowbug'))
+            'Fichier', new MockArg('loadFile', array('wowowowbug'))
         );
 
         $this->_databaseInformations->recupererInformationFichier($fichierConfigDb);

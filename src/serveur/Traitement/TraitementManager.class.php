@@ -7,7 +7,6 @@ use Serveur\Lib\ObjetReponse;
 use Serveur\Requete\RequeteManager;
 use Serveur\Traitement\Data\AbstractDatabase;
 use Serveur\Traitement\Data\DatabaseConfig;
-use Serveur\Traitement\Data\DatabaseFactory;
 use Serveur\Traitement\Ressource\AbstractRessource;
 
 class TraitementManager

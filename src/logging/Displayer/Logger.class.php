@@ -1,47 +1,47 @@
 <?php
 namespace Logging\Displayer;
 
+use AlaroxFileManager\FileManager\File;
 use Logging\Displayer\AbstractDisplayer;
 use Serveur\GestionErreurs\Types\AbstractTypeErreur;
 use Serveur\GestionErreurs\Types\Error;
 use Serveur\GestionErreurs\Types\Notice;
-use Serveur\Lib\Fichier;
 use Serveur\Lib\ObjetReponse;
 use Serveur\Requete\RequeteManager;
 
 class Logger extends AbstractDisplayer
 {
     /**
-     * @var Fichier
+     * @var File
      */
     private $_fichierLogErreur;
 
     /**
-     * @var Fichier
+     * @var File
      */
     private $_fichierLogAcces;
 
     /**
-     * @param Fichier $fichierLogAcces
+     * @param File $fichierLogAcces
      * @throws \InvalidArgumentException
      */
     public function setFichierLogAcces($fichierLogAcces)
     {
-        if (!$fichierLogAcces instanceof Fichier) {
-            throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
+        if (!$fichierLogAcces instanceof File) {
+            throw new \InvalidArgumentException('Object "\AlaroxFileManager\File" required.');
         }
 
         $this->_fichierLogAcces = $fichierLogAcces;
     }
 
     /**
-     * @param Fichier $fichierLogErreur
+     * @param File $fichierLogErreur
      * @throws \InvalidArgumentException
      */
     public function setFichierLogErreur($fichierLogErreur)
     {
-        if (!$fichierLogErreur instanceof Fichier) {
-            throw new \InvalidArgumentException('Object "\Serveur\Lib\Fichier" required.');
+        if (!$fichierLogErreur instanceof File) {
+            throw new \InvalidArgumentException('Object "\AlaroxFileManager\File" required.');
         }
 
         $this->_fichierLogErreur = $fichierLogErreur;
@@ -58,25 +58,25 @@ class Logger extends AbstractDisplayer
             throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($restRequete)));
         }
 
-        if (!($this->_fichierLogAcces instanceof Fichier) || !$this->_fichierLogAcces->fichierExiste()
+        if (!($this->_fichierLogAcces instanceof File) || !$this->_fichierLogAcces->fileExist()
         ) {
             throw new \Exception('Invalid log access file or file not found.');
         }
 
-        $this->_fichierLogAcces->ecrireDansFichier($restRequete->getDateRequete()->format('d-m-Y H:i:s') . ": \n");
-        $this->_fichierLogAcces->ecrireDansFichier(
+        $this->_fichierLogAcces->writeInFile($restRequete->getDateRequete()->format('d-m-Y H:i:s') . ": \n");
+        $this->_fichierLogAcces->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables("{trad.remoteIp}: " . $restRequete->getIp()) . "\n"
         );
-        $this->_fichierLogAcces->ecrireDansFichier(
+        $this->_fichierLogAcces->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.method}: " . $restRequete->getMethode() . " -- URI: /" .
-                implode('/', $restRequete->getUriVariables()) . ""
+                    implode('/', $restRequete->getUriVariables()) . ""
             ) . "\n"
         );
-        $this->_fichierLogAcces->ecrireDansFichier(
+        $this->_fichierLogAcces->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables("{trad.arguments}:") . "\n"
         );
-        $this->_fichierLogAcces->ecrireDansFichier(arrayToString($restRequete->getParametres(), 2));
+        $this->_fichierLogAcces->writeInFile(arrayToString($restRequete->getParametres(), 2));
     }
 
     /**
@@ -90,15 +90,15 @@ class Logger extends AbstractDisplayer
             throw new \InvalidArgumentException(sprintf('Invalid argument type %s.', get_class($objetReponse)));
         }
 
-        if (!($this->_fichierLogAcces instanceof Fichier) || !$this->_fichierLogAcces->fichierExiste()
+        if (!($this->_fichierLogAcces instanceof File) || !$this->_fichierLogAcces->fileExist()
         ) {
             throw new \Exception('Invalid log access file or file not found.');
         }
 
-        $this->_fichierLogAcces->ecrireDansFichier(
+        $this->_fichierLogAcces->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.reponseCode}: " . $objetReponse->getStatusHttp() . " - {trad.reponseFormat}: " .
-                $objetReponse->getFormat()
+                    $objetReponse->getFormat()
             ) . "\n"
         );
     }
@@ -118,7 +118,7 @@ class Logger extends AbstractDisplayer
             throw new \InvalidArgumentException(sprintf('Invalid error type %s.', get_class($uneErreur)));
         }
 
-        if (!($this->_fichierLogErreur instanceof Fichier) || !$this->_fichierLogErreur->fichierExiste()
+        if (!($this->_fichierLogErreur instanceof File) || !$this->_fichierLogErreur->fileExist()
         ) {
             throw new \Exception('Invalid log error file or file not found.');
         }
@@ -129,14 +129,14 @@ class Logger extends AbstractDisplayer
             $errorType = substr($uneErreur->getCodeErreur(), 0, 3);
         }
 
-        $this->_fichierLogErreur->ecrireDansFichier($uneErreur->getDate()->format('d-m-Y H:i:s') . ": \n");
-        $this->_fichierLogErreur->ecrireDansFichier(
+        $this->_fichierLogErreur->writeInFile($uneErreur->getDate()->format('d-m-Y H:i:s') . ": \n");
+        $this->_fichierLogErreur->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.error}" . " n°" . $uneErreur->getCodeErreur() . ": {errorType." . $errorType . "}\n"
             )
         );
 
-        $this->_fichierLogErreur->ecrireDansFichier(
+        $this->_fichierLogErreur->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables($message, $uneErreur->getArguments()) . "\n"
         );
     }

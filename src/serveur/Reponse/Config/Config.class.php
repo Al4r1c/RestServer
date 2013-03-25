@@ -1,9 +1,9 @@
 <?php
 namespace Serveur\Reponse\Config;
 
+use AlaroxFileManager\FileManager\File;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
-use Serveur\Lib\Fichier;
 
 class Config
 {
@@ -18,20 +18,20 @@ class Config
     private $_applicationConfiguration = array();
 
     /**
-     * @param Fichier $fichierFramework
+     * @param File $fichierFramework
      * @throws ArgumentTypeException
      * @throws MainException
      */
     public function chargerConfiguration($fichierFramework)
     {
-        if (!$fichierFramework instanceof Fichier) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, '\Serveur\Lib\Fichier', $fichierFramework);
+        if (!$fichierFramework instanceof File) {
+            throw new ArgumentTypeException(1000, 500, __METHOD__, '\AlaroxFileManager\File', $fichierFramework);
         }
 
         try {
-            $this->_applicationConfiguration = array_change_key_case($fichierFramework->chargerFichier(), CASE_UPPER);
+            $this->_applicationConfiguration = array_change_key_case($fichierFramework->loadFile(), CASE_UPPER);
         } catch (\Exception $fe) {
-            throw new MainException(40200, 500, $fichierFramework->getCheminCompletFichier());
+            throw new MainException(40200, 500, $fichierFramework->getPathToFile());
         }
 
         $this->validerFichierConfiguration();

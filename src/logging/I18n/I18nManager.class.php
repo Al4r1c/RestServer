@@ -1,8 +1,8 @@
 <?php
 namespace Logging\I18n;
 
-use Serveur\Lib\Fichier;
-use Serveur\Utils\FileManager;
+use AlaroxFileManager\AlaroxFile;
+use AlaroxFileManager\FileManager\File;
 
 class I18nManager
 {
@@ -65,7 +65,7 @@ class I18nManager
 
         $fichierTraductionParDefaut = $this->getFichier($nomFichierLangueDefaut);
 
-        if ($fichierTraductionParDefaut->fichierExiste() &&
+        if ($fichierTraductionParDefaut->fileExist() &&
             $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut)->isValidXML()
         ) {
             return $this->recupererXmlParserDepuisFichier($fichierTraductionParDefaut);
@@ -80,23 +80,22 @@ class I18nManager
 
     /**
      * @param $nomFichier
-     * @return Fichier
+     * @return File
      */
     protected function getFichier($nomFichier)
     {
-        $fichier = FileManager::getFichier();
-        $fichier->setFichierParametres($nomFichier . '.xml', '/public/i18n');
+        $alaroxFileManager = new AlaroxFile();
 
-        return $fichier;
+        return $alaroxFileManager->getFile(BASE_PATH . '/public/i18n/' . $nomFichier . '.xml');
     }
 
     /**
-     * @param Fichier $fichier
+     * @param File $fichier
      * @return \XMLParser
      */
-    private function recupererXmlParserDepuisFichier(Fichier $fichier)
+    private function recupererXmlParserDepuisFichier(File $fichier)
     {
-        return $fichier->chargerFichier();
+        return $fichier->loadFile();
     }
 
     /**
@@ -107,7 +106,7 @@ class I18nManager
         foreach ($this->_languesDisponibles as $uneLangueDispo => $classeLangue) {
             $traductionDisponible = $this->getFichier($classeLangue);
 
-            if ($traductionDisponible->fichierExiste() &&
+            if ($traductionDisponible->fileExist() &&
                 $this->recupererXmlParserDepuisFichier($traductionDisponible)->isValidXML()
             ) {
                 return array($uneLangueDispo => $traductionDisponible);

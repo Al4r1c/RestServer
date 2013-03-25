@@ -1,6 +1,10 @@
 <?php
 namespace Tests\ServeurTests\Reponse;
 
+use Serveur\Reponse\Renderers\Html;
+use Serveur\Reponse\Renderers\Json;
+use Serveur\Reponse\Renderers\Plain;
+use Serveur\Reponse\Renderers\Xml;
 use Tests\TestCase;
 
 class RenderersTest extends TestCase
@@ -13,14 +17,14 @@ class RenderersTest extends TestCase
      */
     public function testRenderNonArrayDonnees()
     {
-        $renderer = new \Serveur\Reponse\Renderers\Html();
+        $renderer = new Html();
 
         $renderer->render('string');
     }
 
     public function testRenderHtml()
     {
-        $renderer = new \Serveur\Reponse\Renderers\Html();
+        $renderer = new Html();
 
         $sortie = sprintf(
             $renderer->getTemplateHtml(),
@@ -32,7 +36,7 @@ class RenderersTest extends TestCase
 
     public function testJson()
     {
-        $renderer = new \Serveur\Reponse\Renderers\Json();
+        $renderer = new Json();
 
         $this->assertEquals(
             '{"param1":1,"param2":{"one":"onevar2"},"0":["yosh","yosh2"]}', $renderer->render(self::$donnee)
@@ -41,7 +45,7 @@ class RenderersTest extends TestCase
 
     public function testPlain()
     {
-        $renderer = new \Serveur\Reponse\Renderers\Plain();
+        $renderer = new Plain();
 
         $this->assertEquals(
             "param1 => 1\nparam2 => \n\tone => onevar2\n0 => \n\t0 => yosh\n\t1 => yosh2\n",
@@ -51,7 +55,7 @@ class RenderersTest extends TestCase
 
     public function testXml()
     {
-        $renderer = new \Serveur\Reponse\Renderers\Xml();
+        $renderer = new Xml();
 
         $this->assertEquals(
             '<?xml version="1.0"?>' . "\n" .

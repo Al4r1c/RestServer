@@ -1,13 +1,14 @@
 <?php
 namespace Tests\LoggingTests\Factory;
 
+use Logging\LoggingFactory;
 use Tests\TestCase;
 
 class LoggingFactoryTest extends TestCase
 {
     public function testRecupererLogger()
     {
-        $factory = \Logging\LoggingFactory::getLogger('logger');
+        $factory = LoggingFactory::getLogger('logger');
         $this->assertInstanceOf("Logging\\Displayer\\AbstractDisplayer", $factory);
     }
 
@@ -16,6 +17,6 @@ class LoggingFactoryTest extends TestCase
      */
     public function testRecupererInexistant()
     {
-        \Logging\LoggingFactory::getLogger('WRONG_ONE');
+        LoggingFactory::getLogger('WRONG_ONE');
     }
 }

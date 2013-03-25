@@ -1,10 +1,11 @@
 <?php
 namespace Logging;
 
+use AlaroxFileManager\AlaroxFile;
+use AlaroxFileManager\FileManager\File;
 use Logging\Displayer\Logger;
 use Logging\I18n\I18nManager;
 use Logging\I18n\TradManager;
-use Serveur\Utils\FileManager;
 
 class LoggingFactory
 {
@@ -49,14 +50,12 @@ class LoggingFactory
 
     /**
      * @param string $nomFichier
-     * @return \Serveur\Lib\Fichier
+     * @return File
      */
     private static function creerFichierSiNexistePas($nomFichier)
     {
-        $fichier = FileManager::getFichier();
-        $fichier->setFichierParametres($nomFichier, BASE_PATH . '/log');
-        $fichier->creerFichier('0700');
+        $alaroxFileManager = new AlaroxFile();
 
-        return $fichier;
+        return $alaroxFileManager->getFile(BASE_PATH . '/log/' . $nomFichier);
     }
 }
