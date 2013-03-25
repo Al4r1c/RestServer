@@ -70,7 +70,7 @@ class Logger extends AbstractDisplayer
         $this->_fichierLogAcces->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.method}: " . $restRequete->getMethode() . " -- URI: /" .
-                    implode('/', $restRequete->getUriVariables()) . ""
+                implode('/', $restRequete->getUriVariables()) . ""
             ) . "\n"
         );
         $this->_fichierLogAcces->writeInFile(
@@ -98,7 +98,7 @@ class Logger extends AbstractDisplayer
         $this->_fichierLogAcces->writeInFile(
             "\t" . $this->traduireMessageEtRemplacerVariables(
                 "{trad.reponseCode}: " . $objetReponse->getStatusHttp() . " - {trad.reponseFormat}: " .
-                    $objetReponse->getFormat()
+                $objetReponse->getFormat()
             ) . "\n"
         );
     }
