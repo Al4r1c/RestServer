@@ -190,6 +190,7 @@ class ReponseManager
 
     /**
      * @param string $nomClasseRendu
+     * @throws MainException
      * @return bool|string
      */
     private function getRenderClass($nomClasseRendu)
