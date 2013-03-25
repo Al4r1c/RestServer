@@ -18,7 +18,6 @@
 		"alarox/AlaroxFileManager": "dev-master",
 		"alarox/AlaroxXMLParser": "dev-master",
 		"pimple/pimple": "v1.0.2",
-		"lespoilus/spyc": "dev-master",
 		"mikey179/vfsStream": "v1.1.0"
 	},
 	"config": {
