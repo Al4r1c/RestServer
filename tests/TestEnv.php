@@ -20,7 +20,7 @@ function throwExceptionEnvTest($erreurNumber, $codeErreur)
 }
 
 
-$classLoader = new ClassLoader();
+$classLoader = new ClassLoader('.class.php');
 $classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src/serveur');
 $classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src/conteneur');
 $classLoader->ajouterNamespace('Logging', BASE_PATH . '/src/logging');

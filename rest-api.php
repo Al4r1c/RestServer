@@ -6,11 +6,11 @@ include_once(BASE_PATH . '/functions/functions.php');
 include_once(BASE_PATH . '/libraries/autoload.php');
 
 
-$classLoader = new ClassLoader();
+$classLoader = new ClassLoader('.class.php');
 $classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src/serveur');
 $classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src/conteneur');
 $classLoader->ajouterNamespace('Logging', BASE_PATH . '/src/logging');
-$classLoader->ajouterNamespace('Ressource', BASE_PATH . '/ressource', 'php');
+$classLoader->ajouterNamespace('Ressource', BASE_PATH . '/ressource', '.php');
 $classLoader->register();
 
 
