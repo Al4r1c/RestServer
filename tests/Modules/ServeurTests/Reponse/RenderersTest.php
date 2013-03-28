@@ -59,7 +59,7 @@ class RenderersTest extends TestCase
 
         $this->assertEquals(
             '<?xml version="1.0"?>' . "\n" .
-            '<root><param1>1</param1><param2><one>onevar2</one></param2><0>yosh</0><1>yosh2</1></root>' . "\n",
+            '<root><element attr="param1">1</element><element attr="param2"><element attr="one">onevar2</element></element><element attr="0"><element attr="0">yosh</element><element attr="1">yosh2</element></element></root>' . "\n",
             $renderer->render(self::$donnee)
         );
     }

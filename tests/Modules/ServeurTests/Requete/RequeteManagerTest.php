@@ -341,7 +341,13 @@ class RequeteManagerTest extends TestCase
         );
         $this->restRequete->setServer($mockServer);
 
-        $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
+        $this->assertEquals(
+            array('root' => array('attr' => array(),
+                'children' => array(
+                    array('once' => array('attr' => array(), 'value' => 'var1')),
+                    array('twice' => array('attr' => array(), 'value' => 'var2')),
+                ))), $this->restRequete->getParametres()
+        );
     }
 
     /**
