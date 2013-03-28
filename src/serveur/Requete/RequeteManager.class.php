@@ -145,7 +145,8 @@ class RequeteManager
 
         foreach ($tabXmlElements as $unElement) {
             if ($unElement->hasChildren()) {
-                $result[$unElement->getUnAttribut('attr')] = $this->dataToAssocArrayCompatible($unElement->getChildren());
+                $result[$unElement->getUnAttribut('attr')] =
+                    $this->dataToAssocArrayCompatible($unElement->getChildren());
             } else {
                 $result[$unElement->getUnAttribut('attr')] = $unElement->getValue();
             }
