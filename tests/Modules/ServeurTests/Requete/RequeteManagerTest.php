@@ -337,16 +337,12 @@ class RequeteManagerTest extends TestCase
             'Server',
             new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
             new MockArg('getUneVariableServeur', 'application/xml', array('CONTENT_TYPE')),
-            new MockArg('getUneVariableServeur', '<root><once>var1</once><twice>var2</twice></root>', array('PHP_INPUT'))
+            new MockArg('getUneVariableServeur', '<root><element attr="first"><element attr="attri">var1</element></element><element attr="second">var2</element></root>', array('PHP_INPUT'))
         );
         $this->restRequete->setServer($mockServer);
 
         $this->assertEquals(
-            array('root' => array('attr' => array(),
-                'children' => array(
-                    array('once' => array('attr' => array(), 'value' => 'var1')),
-                    array('twice' => array('attr' => array(), 'value' => 'var2')),
-                ))), $this->restRequete->getParametres()
+            array('first' => array('attri' => 'var1'), 'second' => 'var2'), $this->restRequete->getParametres()
         );
     }
 

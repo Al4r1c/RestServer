@@ -123,7 +123,7 @@ class RequeteManager
                     $xmlParsee = new \XMLParser();
                     $xmlParsee->setAndParseContent($this->_server->getUneVariableServeur('PHP_INPUT'));
 
-                    $donnees = $xmlParsee->getParsedDataAsAssocArray();
+                    $donnees = $this->dataToAssocArrayCompatible($xmlParsee->getParsedData()->getChildren());
                 } else {
                     throw new MainException(20004, 400, $contentType);
                 }
@@ -133,6 +133,25 @@ class RequeteManager
         }
 
         return array_map_recursive('strval', $donnees);
+    }
+
+    /**
+     * @param \XMLElement[] $tabXmlElements
+     * @return array
+     */
+    private function dataToAssocArrayCompatible($tabXmlElements)
+    {
+        $result = array();
+
+        foreach ($tabXmlElements as $unElement) {
+            if ($unElement->hasChildren()) {
+                $result[$unElement->getUnAttribut('attr')] = $this->dataToAssocArrayCompatible($unElement->getChildren());
+            } else {
+                $result[$unElement->getUnAttribut('attr')] = $unElement->getValue();
+            }
+        }
+
+        return $result;
     }
 
     /**
