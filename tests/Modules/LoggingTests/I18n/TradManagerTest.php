@@ -2,7 +2,6 @@
 namespace Tests\LoggingTests\I18n;
 
 use Logging\I18n\TradManager;
-use Tests\MockArg;
 use Tests\TestCase;
 
 class TradManagerTest extends TestCase
@@ -18,7 +17,8 @@ class TradManagerTest extends TestCase
 
     public function testSetXmlObjet()
     {
-        $xmlParser = $this->createMock('XMLParser', new MockArg('isValidXML', true));
+        $xmlParser = new \XMLParser();
+        $xmlParser->setAndParseContent("<root></root>");
 
         $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -31,34 +31,31 @@ class TradManagerTest extends TestCase
      */
     public function testSetXmlObjetInvalide()
     {
-        $xmlParser = $this->createMock('XMLParser', new MockArg('isValidXML', false));
+        $xmlParser = new \XMLParser();
+        $xmlParser->setAndParseContent("<root></toor>");
 
         $this->tradManager->setFichierTraduction($xmlParser);
     }
 
     public function testTransformeMessage()
     {
-        $xmlElem1 = $this->createMock('XMLElement', new MockArg('getValue', 'goA'));
-
-        $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValue', 'MessParticulier'));
-
-        $xmlParser = $this->createMock(
-            'XMLParser', new MockArg('isValidXML', true),
-            new MockArg('getValue', array($xmlElem1), array('key.message[code=a]')),
-            new MockArg('getValue', array($xmlElem2), array('section.message[code=3]'))
+        $xmlParser = new \XMLParser();
+        $xmlParser->setAndParseContent(
+            "<root><maClef><message code=\"AbC\">goA</message></maClef><section><message code=\"3\">MessParticulier</message></section></root>"
         );
 
         $this->tradManager->setFichierTraduction($xmlParser);
 
         $this->assertEquals(
             "goA messagerie MessParticulier",
-            $this->tradManager->recupererChaineTraduite("{key.a} messagerie {section.3}")
+            $this->tradManager->recupererChaineTraduite("{maClef.AbC} messagerie {section.3}")
         );
     }
 
     public function testTransformeMessageRienModifie()
     {
-        $xmlParser = $this->createMock('XMLParser', new MockArg('isValidXML', true));
+        $xmlParser = new \XMLParser();
+        $xmlParser->setAndParseContent("<root></root>");
 
         $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -67,10 +64,8 @@ class TradManagerTest extends TestCase
 
     public function testTransformeMessageNonTrouvee()
     {
-        $xmlParser = $this->createMock(
-            'XMLParser', new MockArg('isValidXML', true),
-            new MockArg('getValue', null, array('fake.message[code=clef]'))
-        );
+        $xmlParser = new \XMLParser();
+        $xmlParser->setAndParseContent("<root></root>");
 
         $this->tradManager->setFichierTraduction($xmlParser);
 
@@ -81,14 +76,9 @@ class TradManagerTest extends TestCase
 
     public function testGetTraduction()
     {
-        $xmlElem1 = $this->createMock('XMLElement', new MockArg('getValue', 'goC'));
-
-        $xmlElem2 = $this->createMock('XMLElement', new MockArg('getValue', 'Mess2'));
-
-        $xmlParser = $this->createMock(
-            'XMLParser', new MockArg('isValidXML', true),
-            new MockArg('getValue', array($xmlElem1), array('maClef.message[code=code]')),
-            new MockArg('getValue', array($xmlElem2), array('section.message[code=2]'))
+        $xmlParser = new \XMLParser();
+        $xmlParser->setAndParseContent(
+            "<root><maClef><message code=\"code\">goC</message></maClef><section><message code=\"2\">Mess2</message></section></root>"
         );
 
         $this->tradManager->setFichierTraduction($xmlParser);
@@ -103,10 +93,8 @@ class TradManagerTest extends TestCase
 
     public function testGetTraductionNonTrouvee()
     {
-        $xmlParser = $this->createMock(
-            'XMLParser', new MockArg('isValidXML', true),
-            new MockArg('getValue', null, array('existe.message[code=pas]'))
-        );
+        $xmlParser = new \XMLParser();
+        $xmlParser->setAndParseContent("<root><existe><message code=\"hello\">World</message></existe></root>");
 
         $this->tradManager->setFichierTraduction($xmlParser);
 
