@@ -135,7 +135,7 @@ class TestCase extends FactoryMock
 
     private function arrayToStringPhp(array $array)
     {
-        $string = 'array(';
+        $string = 'array( ';
         foreach ($array as $clef => $valeur) {
             $string .= '"' . $clef . '" => ' . $this->getPlainVar($valeur) . ',';
         }
