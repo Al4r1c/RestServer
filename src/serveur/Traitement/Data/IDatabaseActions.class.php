@@ -24,9 +24,10 @@ interface IDatabaseActions
 
     /**
      * @param array $filtres
+     * @param array $tri
      * @return ObjetReponse
      */
-    public function recuperer($filtres);
+    public function recuperer($filtres, $tri = array());
 
     /**
      * @param array $champs

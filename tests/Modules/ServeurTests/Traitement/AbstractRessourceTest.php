@@ -41,7 +41,7 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1')))
+            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1'), array()))
         );
 
         $this->assertEquals(
@@ -169,4 +169,57 @@ class AbstractRessourceTest extends TestCase
 
         $this->assertEquals(403, $method->invoke($abstractRessource)->getStatusHttp());
     }
+
+    public function testDoGetPourRechercheTriResultat()
+    {
+        /** @var $abstractRessource AbstractRessource */
+        $abstractRessource = $this->createMock(
+            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1'),
+                array(
+                    'sort' => array(
+                        'champ' => 'orders',
+                        'sens' => 1
+                    ),
+                    'limit' => 3,
+                    'page' => 1)
+            ))
+        );
+
+        $this->assertEquals(
+            404, $abstractRessource->doGet(
+                array('resource', null),
+                array('var1 => filter1',
+                    'orderBy' => 'orders',
+                    'orderWay' => 'asc',
+                    'limitResult' => '3',
+                    'pageNum' => '1'
+                )
+            )->getStatusHttp()
+        );
+    }
+
+    public function testDoGetPourRechercheOrder()
+    {
+        /** @var $abstractRessource AbstractRessource */
+        $abstractRessource = $this->createMock(
+            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1'),
+                array(
+                    'sort' => array(
+                        'champ' => 'orders',
+                        'sens' => -1
+                    ))
+            ))
+        );
+
+        $this->assertEquals(
+            404, $abstractRessource->doGet(
+                array('resource', null),
+                array('var1 => filter1',
+                    'orderBy' => 'orders',
+                    'orderWay' => 'desc'
+                )
+            )->getStatusHttp()
+        );
+    }
+
 }

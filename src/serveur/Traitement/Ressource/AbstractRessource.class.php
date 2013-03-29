@@ -45,7 +45,34 @@ abstract class AbstractRessource implements IRessource
         if (!isNull($dataUri[1])) {
             return $this->getOne($dataUri[1]);
         } else {
-            return $this->getAll($parametres);
+            $triResultats = array();
+
+            if (array_key_exists('orderBy', $parametres)) {
+                if (array_key_exists('orderWay', $parametres) && strcmp($parametres['orderWay'], 'desc') === 0) {
+                    $order = -1;
+                } else {
+                    $order = 1;
+                }
+
+                $triResultats['sort'] = array('champ' => $parametres['orderBy'], 'sens' => $order);
+
+                unset($parametres['orderBy']);
+                unset($parametres['orderWay']);
+            }
+
+            if (array_key_exists('limitResult', $parametres)) {
+                $triResultats['limit'] = (int)$parametres['limitResult'];
+
+                unset($parametres['limitResult']);
+            }
+
+            if (array_key_exists('pageNum', $parametres)) {
+                $triResultats['page'] = (int)$parametres['pageNum'];
+
+                unset($parametres['pageNum']);
+            }
+
+            return $this->getAll($parametres, $triResultats);
         }
     }
 

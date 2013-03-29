@@ -13,9 +13,10 @@ interface IRessource
 
     /**
      * @param array $filters
+     * @param array $tri
      * @return ObjetReponse
      */
-    public function getAll($filters);
+    public function getAll($filters, $tri);
 
     /**
      * @param array $data
