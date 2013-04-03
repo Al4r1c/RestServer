@@ -14,9 +14,9 @@
 		}
 	],
 	"require": {
-		"alarox/AlaroxClassLoader": "dev-master",
-		"alarox/AlaroxFileManager": "dev-master",
-		"alarox/AlaroxXMLParser": "dev-master",
+		"alarox/AlaroxClassLoader": "v1.0",
+		"alarox/AlaroxFileManager": "v0.2",
+		"alarox/AlaroxXMLParser": "v0.3",
 		"pimple/pimple": "v1.0.2",
 		"mikey179/vfsStream": "v1.1.0"
 	},
