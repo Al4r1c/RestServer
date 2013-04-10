@@ -54,7 +54,7 @@ class MainApplication
                 $traitementRequete->traiterRequeteEtRecupererResultat($requete), $requete->getFormatsDemandes()
             );
         } catch (MainException $e) {
-            $contenu = $this->fabriquerEtRecupererReponse($e->getObjetReponseErreur());
+            $contenu = $this->fabriquerEtRecupererReponse($e->getObjetReponseErreur(), array('txt'));
         }
 
         return $contenu;
@@ -65,7 +65,7 @@ class MainApplication
      * @param array $formatsDemandees
      * @return string
      */
-    private function fabriquerEtRecupererReponse($objetReponse, $formatsDemandees = array())
+    private function fabriquerEtRecupererReponse($objetReponse, $formatsDemandees)
     {
         $reponse = $this->_conteneur->getReponseManager();
         $reponse->setObserveurs($this->_observeurs);
