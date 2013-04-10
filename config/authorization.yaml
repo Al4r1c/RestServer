@@ -1,0 +1,10 @@
+Activate: true
+
+Key_complexity:
+  Min_length: 8
+  Lower: true
+  Upper: true
+  Number: true
+  Special_char: true
+
+Authorized:

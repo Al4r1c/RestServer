@@ -5,6 +5,7 @@ use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
 use Serveur\Lib\ObjetReponse;
 use Serveur\Requete\RequeteManager;
+use Serveur\Traitement\Authorization\AuthorizationManager;
 use Serveur\Traitement\Data\AbstractDatabase;
 use Serveur\Traitement\Data\DatabaseConfig;
 use Serveur\Traitement\Ressource\AbstractRessource;
@@ -25,6 +26,11 @@ class TraitementManager
      * @var DatabaseConfig
      */
     private $_databaseConfig;
+
+    /**
+     * @var AuthorizationManager
+     */
+    private $_authManager;
 
     /**
      * @param callable $callableFactoryRessource
@@ -54,7 +60,7 @@ class TraitementManager
 
     /**
      * @param callable $databaseConfig
-     * @throws \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @throws ArgumentTypeException
      */
     public function setDatabaseConfig($databaseConfig)
     {
@@ -65,6 +71,21 @@ class TraitementManager
         }
 
         $this->_databaseConfig = $databaseConfig;
+    }
+
+    /**
+     * @param AuthorizationManager $authManager
+     * @throws ArgumentTypeException
+     */
+    public function setAuthManager($authManager)
+    {
+        if (!$authManager instanceof AuthorizationManager) {
+            throw new ArgumentTypeException(
+                1000, 500, __METHOD__, 'Serveur\Traitement\Data\DatabaseConfig', $authManager
+            );
+        }
+
+        $this->_authManager = $authManager;
     }
 
     /**
@@ -103,6 +124,7 @@ class TraitementManager
      */
     public function traiterRequeteEtRecupererResultat($requete)
     {
+        // Regardé si autorisé (se baser sur le fichier authorized.yaml. Fichier vide = all, sinon filtrer)
         $nomRessource = $requete->getUriVariable(0);
 
         if (($ressourceObjet = $this->recupererNouvelleInstanceRessource($nomRessource)) !== false) {

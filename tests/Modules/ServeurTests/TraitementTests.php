@@ -19,6 +19,8 @@ class TraitementTests
 
         $suite->addTestSuite('Tests\ServeurTests\Traitement\AbstractRessourceTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\AbstractDatabaseTest');
+        $suite->addTestSuite('Tests\ServeurTests\Traitement\AuthorizationManagerTest');
+        $suite->addTestSuite('Tests\ServeurTests\Traitement\AuthorizationTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\TraitementManagerTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\DatabaseConfigTest');
 

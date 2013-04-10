@@ -9,6 +9,7 @@ use Serveur\Reponse\Header\Header;
 use Serveur\Reponse\ReponseManager;
 use Serveur\Requete\RequeteManager;
 use Serveur\Requete\Server\Server;
+use Serveur\Traitement\Authorization\AuthorizationManager;
 use Serveur\Traitement\Data\DatabaseConfig;
 use Serveur\Traitement\TraitementManager;
 
@@ -48,8 +49,19 @@ class Conteneur
             $traitementManager->setRessourceFactory($c['FactoryRessource']);
             $traitementManager->setDatabaseFactory($c['DatabaseFactory']);
             $traitementManager->setDatabaseConfig($c['DatabaseConfig']);
+            $traitementManager->setAuthManager($c['AuthManager']);
 
             return $traitementManager;
+        };
+
+        $conteneur['AuthManager'] = function () {
+            $alaroxFileManager = new AlaroxFile();
+            $fichier = $alaroxFileManager->getFile(BASE_PATH . '/config/authorization.yaml');
+
+            $authManager = new AuthorizationManager();
+            $authManager->chargerFichierAuthorisations($fichier);
+
+            return $authManager;
         };
 
         $conteneur['FactoryRessource'] = function () {

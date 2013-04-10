@@ -100,6 +100,22 @@ class TraitementManagerTest extends TestCase
         $this->_traitementManager->setDatabaseConfig(5);
     }
 
+    public function testSetAuthManager()
+    {
+        $authManager = $this->getMockAuthManager();
+
+        $this->_traitementManager->setAuthManager($authManager);
+        $this->assertAttributeEquals($authManager, '_authManager', $this->_traitementManager);
+    }
+
+    /**
+     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     */
+    public function testSetAuthManagerErrone()
+    {
+        $this->_traitementManager->setAuthManager(5);
+    }
+
     public function testRecupererRessource()
     {
         $callable = function ($ressName) {

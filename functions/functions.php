@@ -44,6 +44,22 @@ function array_keys_exist(array $keys, array $array)
 }
 
 /**
+ * @param array $array
+ * @param int $case
+ * @param bool $flag_rec
+ */
+function array_change_key_case_recursive(&$array, $case = CASE_LOWER)
+{
+    $array = array_change_key_case($array, $case);
+
+    foreach ($array as $key => $value) {
+        if (is_array($value)) {
+            array_change_key_case_recursive($array[$key], $case, true);
+        }
+    }
+}
+
+/**
  * @param string $needle
  * @param array $haystack
  * @return bool|int|string
@@ -71,7 +87,7 @@ function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues)
         if (array_key_exists($tabKey[0], $arrayValues)) {
             return $arrayValues[$tabKey[0]];
         } else {
-            return false;
+            return null;
         }
     } else {
         if (array_key_exists($tabKey[0], $arrayValues)) {
@@ -80,9 +96,41 @@ function rechercheValeurTableauMultidim(array $tabKey, array $arrayValues)
 
             return rechercheValeurTableauMultidim($tabKey, $arrayValues);
         } else {
-            return false;
+            return null;
         }
     }
+}
+
+/**
+ * @param string $key
+ * @param array $arrayValues
+ * @param bool $insensitive
+ * @return bool
+ */
+function array_key_multi_exist($key, array $arrayValues, $insensitive = false)
+{
+    if ($insensitive === true) {
+        array_change_key_case_recursive($arrayValues, CASE_LOWER);
+        $key = strtolower($key);
+    }
+
+    return !is_null(rechercheValeurTableauMultidim(explode('.', $key), $arrayValues));
+}
+
+/**
+ * @param string $key
+ * @param array $arrayValues
+ * @param bool $insensitive
+ * @return mixed
+ */
+function array_key_multi_get($key, array $arrayValues, $insensitive = false)
+{
+    if ($insensitive === true) {
+        array_change_key_case_recursive($arrayValues, CASE_LOWER);
+        $key = strtolower($key);
+    }
+
+    return rechercheValeurTableauMultidim(explode('.', $key), $arrayValues);
 }
 
 /**

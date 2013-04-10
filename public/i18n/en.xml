@@ -25,6 +25,7 @@
 		<message code="201">Server and execution environment information</message>
 		<message code="300">Handling manager</message>
 		<message code="301">Database configuration</message>
+		<message code="302">Authorization Manager</message>
 		<message code="400">Response</message>
 		<message code="401">Header Manager</message>
 		<message code="402">Configuration file</message>
@@ -45,6 +46,14 @@
 		<message code="30001">Resource Factory is not set.</message>
 		<message code="30002">Database Factory is not set.</message>
 		<message code="30100">Invalid port number %s. [0-65535]</message>
+		<message code="30200">File "%s" does not exist.</message>
+		<message code="30201">Missing key %s. (%s)</message>
+		<message code="30202">Value "%s" for key "%s" invalid.</message>
+		<message code="30203">Private key "%s" is too short. [>=%s]</message>
+		<message code="30204">Private key "%s" must contains at least one lower case unicode letter.</message>
+		<message code="30205">Private key "%s" must contains at least one upper case unicode letter.</message>
+		<message code="30206">Private key "%s" must contains at least one number.</message>
+		<message code="30207">Private key "%s" must contains at least one non unicode alphanumerical character.</message>
 		<message code="40000">Accepted output format are invalid.</message>
 		<message code="40001">Invalid charset %s.</message>
 		<message code="40002">Specified output rendering class (%s) not found.</message>

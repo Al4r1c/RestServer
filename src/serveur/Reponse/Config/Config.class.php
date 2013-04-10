@@ -29,7 +29,8 @@ class Config
         }
 
         try {
-            $this->_applicationConfiguration = array_change_key_case($fichierFramework->loadFile(), CASE_UPPER);
+            $this->_applicationConfiguration = $fichierFramework->loadFile();
+            array_change_key_case_recursive($this->_applicationConfiguration, CASE_UPPER);
         } catch (\Exception $fe) {
             throw new MainException(40200, 500, $fichierFramework->getPathToFile());
         }
@@ -60,9 +61,7 @@ class Config
             throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
         }
 
-        if (false !==
-            $valeur =
-                rechercheValeurTableauMultidim(explode('.', strtoupper($clefConfig)), $this->_applicationConfiguration)
+        if (!is_null($valeur = array_key_multi_get($clefConfig, $this->_applicationConfiguration, true))
         ) {
             return $valeur;
         } else {
