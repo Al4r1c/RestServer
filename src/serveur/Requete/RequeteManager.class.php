@@ -49,16 +49,26 @@ class RequeteManager
      * @throws MainException
      * @return array
      */
-    public function getFormatsDemandes()
+    public function getHttpAccept()
     {
-        $format = $this->_server->getUneVariableServeur('HTTP_ACCEPT');
+        $httpAccept = $this->_server->getUneVariableServeur('HTTP_ACCEPT');
 
-        if (!is_string($format)) {
-            throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $format);
+        if (!is_string($httpAccept)) {
+            throw new ArgumentTypeException(1000, 400, __METHOD__, 'string', $httpAccept);
         }
 
+        return $httpAccept;
+    }
+
+    /**
+     * @throws ArgumentTypeException
+     * @throws MainException
+     * @return array
+     */
+    public function getFormatsDemandes()
+    {
         $typeDetector = new TypeDetector(Constante::chargerConfig('mimes'));
-        $formatsTrouves = $typeDetector->extraireMimesTypeHeader($format);
+        $formatsTrouves = $typeDetector->extraireMimesTypeHeader($this->getHttpAccept());
 
         if (isNull($formatsTrouves)) {
             throw new MainException(20001, 400);
@@ -103,36 +113,63 @@ class RequeteManager
     /**
      * @throws ArgumentTypeException
      * @throws MainException
+     * @return string|null
+     */
+    public function getPlainParametres()
+    {
+        return $this->getParametresForMethode($this->getMethode());
+    }
+
+    /**
+     * @throws ArgumentTypeException
+     * @throws MainException
      * @return array
      */
     public function getParametres()
     {
         $donnees = array();
 
-        switch (strtoupper($this->getMethode())) {
+        switch ($methode = strtoupper($this->getMethode())) {
             case 'GET':
-                parse_str($this->_server->getUneVariableServeur('QUERY_STRING'), $donnees);
+                parse_str($this->getParametresForMethode($methode), $donnees);
                 break;
             case 'POST':
             case 'PUT':
                 if (is_null($contentType = $this->getContentType()) || strcmp($contentType, 'text/plain') == 0) {
-                    parse_str($this->_server->getUneVariableServeur('PHP_INPUT'), $donnees);
+                    parse_str($this->getParametresForMethode($methode), $donnees);
                 } elseif (strcmp($contentType, 'application/json') == 0) {
-                    $donnees = json_decode($this->_server->getUneVariableServeur('PHP_INPUT'), true);
+                    $donnees = json_decode($this->getParametresForMethode($methode), true);
                 } elseif (strcmp($contentType, 'application/xml') == 0) {
                     $xmlParsee = new \XMLParser();
-                    $xmlParsee->setAndParseContent($this->_server->getUneVariableServeur('PHP_INPUT'));
+                    $xmlParsee->setAndParseContent($this->getParametresForMethode($methode));
 
                     $donnees = $this->dataToAssocArrayCompatible($xmlParsee->getParsedData()->getChildren());
                 } else {
                     throw new MainException(20004, 400, $contentType);
                 }
                 break;
-            case 'DELETE':
-                break;
         }
 
         return array_map_recursive('strval', $donnees);
+    }
+
+    /**
+     * @param string $methode
+     * @return null|string
+     */
+    private function getParametresForMethode($methode)
+    {
+        switch (strtoupper($methode)) {
+            case 'GET':
+                return $this->_server->getUneVariableServeur('QUERY_STRING');
+                break;
+            case 'POST':
+            case 'PUT':
+                return $this->_server->getUneVariableServeur('PHP_INPUT');
+                break;
+        }
+
+        return null;
     }
 
     /**
@@ -176,9 +213,7 @@ class RequeteManager
      */
     public function getDateRequete()
     {
-        $dateRequeteTimestamp = $this->_server->getUneVariableServeur('REQUEST_TIME');
-
-        if (!is_int($dateRequeteTimestamp)) {
+        if (!is_int($dateRequeteTimestamp = strtotime($this->_server->getUneVariableServeur('HTTP_DATE')))) {
             throw new ArgumentTypeException(1000, 400, __METHOD__, 'int', $dateRequeteTimestamp);
         }
 

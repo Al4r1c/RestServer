@@ -42,11 +42,11 @@ class RequeteManagerTest extends TestCase
         $this->assertEquals('POST', $this->restRequete->getMethode());
     }
 
-    public function testRestAcceptFormatJSON()
+    public function testRestHttpAccept()
     {
         $this->setFakeServerVariables('HTTP_ACCEPT', 'application/json');
 
-        $this->assertContains('json', $this->restRequete->getFormatsDemandes());
+        $this->assertEquals('application/json', $this->restRequete->getHttpAccept());
     }
 
     /**
@@ -57,7 +57,14 @@ class RequeteManagerTest extends TestCase
     {
         $this->setFakeServerVariables('HTTP_ACCEPT', 5);
 
-        $this->restRequete->getFormatsDemandes();
+        $this->restRequete->getHttpAccept();
+    }
+
+    public function testRestAcceptFormatJSON()
+    {
+        $this->setFakeServerVariables('HTTP_ACCEPT', 'application/json');
+
+        $this->assertContains('json', $this->restRequete->getFormatsDemandes());
     }
 
     /**
@@ -132,6 +139,7 @@ class RequeteManagerTest extends TestCase
             new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
             new MockArg('getUneVariableServeur', '', array('QUERY_STRING'))
         );
+
         $this->restRequete->setServer($mockServer);
 
         $this->assertInternalType('array', $this->restRequete->getParametres());
@@ -218,10 +226,12 @@ class RequeteManagerTest extends TestCase
 
     public function testRestDateRequete()
     {
-        $this->setFakeServerVariables('REQUEST_TIME', 1362000000);
+        $dateString = '	Wed, 01 Apr 2013 14:00:00 GMT';
+
+        $this->setFakeServerVariables('HTTP_DATE', $dateString);
 
         $this->assertInstanceOf('DateTime', $this->restRequete->getDateRequete());
-        $this->assertEquals($this->restRequete->getDateRequete()->getTimestamp(), 1362000000);
+        $this->assertEquals($this->restRequete->getDateRequete()->getTimestamp(), strtotime($dateString));
     }
 
     /**
@@ -230,7 +240,7 @@ class RequeteManagerTest extends TestCase
      */
     public function testRestDateRequeteErrone()
     {
-        $this->setFakeServerVariables('REQUEST_TIME', 'oops');
+        $this->setFakeServerVariables('HTTP_DATE', 'oops');
 
         $this->restRequete->getDateRequete();
     }
@@ -378,5 +388,30 @@ class RequeteManagerTest extends TestCase
         $this->setFakeServerVariables('REDIRECT_HTTP_AUTHORIZATION', 'Basic user:S0M3CRYPT3DK3Y');
 
         $this->restRequete->getAuthorization();
+    }
+
+    public function testGetPlainParametres()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'param1=valeur1&data=1', array('QUERY_STRING'))
+        );
+
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals('param1=valeur1&data=1', $this->restRequete->getPlainParametres());
+    }
+
+    public function testGetPlainParametresNotFound()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'DELETE', array('REQUEST_METHOD'))
+        );
+
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertNull($this->restRequete->getPlainParametres());
     }
 }

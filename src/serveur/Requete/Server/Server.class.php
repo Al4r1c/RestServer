@@ -58,11 +58,12 @@ class Server
 
         if (!array_keys_exist(
             array('HTTP_ACCEPT',
+                'CONTENT_TYPE',
+                'HTTP_DATE',
                 'PHP_INPUT',
                 'QUERY_STRING',
                 'REMOTE_ADDR',
                 'REQUEST_METHOD',
-                'REQUEST_TIME',
                 'REQUEST_URI',
                 'REDIRECT_HTTP_AUTHORIZATION'), $serverVar
         )

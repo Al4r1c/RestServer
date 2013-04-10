@@ -9,7 +9,7 @@ class ServerTest extends TestCase
     /** @var Server */
     private $_server;
 
-    private static $donneesServer = array('REDIRECT_HTTP_CONTENT_TYPE' => '',
+    private static $donneesServer = array(
         'REDIRECT_MIBDIRS' => 'C:/xampp/php/extras/mibs',
         'REDIRECT_MYSQL_HOME' => '\xampp\mysql\bin',
         'REDIRECT_OPENSSL_CONF' => 'C:/xampp/apache/bin/openssl.cnf',
@@ -30,6 +30,8 @@ class ServerTest extends TestCase
         'HTTP_ACCEPT_ENCODING' => 'gzip, deflate',
         'HTTP_CONNECTION' => 'keep-alive',
         'HTTP_CACHE_CONTROL' => 'max-age=0',
+        'HTTP_DATE' => 'Wed, 01 Apr 2013 14:00:00 GMT',
+        'CONTENT_TYPE' => 'application/json',
         'SystemRoot' => 'C:\Windows',
         'COMSPEC' => 'C:\Windows\system32\cmd.exe',
         'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC',
