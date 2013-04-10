@@ -361,4 +361,22 @@ class RequeteManagerTest extends TestCase
 
         $this->restRequete->getParametres();
     }
+
+    public function testGetAuthorizationHeader()
+    {
+        $this->setFakeServerVariables('REDIRECT_HTTP_AUTHORIZATION', 'ARS user:S0M3CRYPT3DK3Y');
+
+        $this->assertEquals('ARS user:S0M3CRYPT3DK3Y', $this->restRequete->getAuthorization());
+    }
+
+    /**
+     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 20005
+     */
+    public function testGetAuthorizationHeaderInvalid()
+    {
+        $this->setFakeServerVariables('REDIRECT_HTTP_AUTHORIZATION', 'Basic user:S0M3CRYPT3DK3Y');
+
+        $this->restRequete->getAuthorization();
+    }
 }

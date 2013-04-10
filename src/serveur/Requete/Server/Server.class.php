@@ -63,7 +63,8 @@ class Server
                 'REMOTE_ADDR',
                 'REQUEST_METHOD',
                 'REQUEST_TIME',
-                'REQUEST_URI'), $serverVar
+                'REQUEST_URI',
+                'REDIRECT_HTTP_AUTHORIZATION'), $serverVar
         )
         ) {
             throw new MainException(20100, 500);

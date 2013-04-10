@@ -58,7 +58,8 @@ class ServerTest extends TestCase
         'PHP_SELF' => '/rest-api.php',
         'REQUEST_TIME_FLOAT' => 1361285069.293,
         'REQUEST_TIME' => 1361285069,
-        'PHP_INPUT' => '');
+        'PHP_INPUT' => '',
+        'REDIRECT_HTTP_AUTHORIZATION' => '');
 
     public function setUp()
     {

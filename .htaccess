@@ -64,7 +64,7 @@ AddType text/x-vcard vcf
 DirectoryIndex index.php
 <IfModule mod_rewrite.c>
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ /rest-api.php [QSA,L]
+    RewriteRule ^(.*)$ /rest-api.php [QSA,L,E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
 
 # ----------------------------------------------------------------------

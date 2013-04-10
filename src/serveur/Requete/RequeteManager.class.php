@@ -136,6 +136,21 @@ class RequeteManager
     }
 
     /**
+     * @return string
+     * @throws MainException
+     */
+    public function getAuthorization()
+    {
+        $auth = $this->_server->getUneVariableServeur('REDIRECT_HTTP_AUTHORIZATION');
+
+        if (!empty($auth) && !startsWith($auth, 'ARS ')) {
+            throw new MainException(20005, 400, $auth);
+        }
+
+        return $auth;
+    }
+
+    /**
      * @param \XMLElement[] $tabXmlElements
      * @return array
      */
