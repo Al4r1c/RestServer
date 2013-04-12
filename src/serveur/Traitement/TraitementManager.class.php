@@ -125,8 +125,7 @@ class TraitementManager
             $objetReponse = new ObjetReponse();
             $objetReponse->setErreurHttp(410);
         } elseif (
-            ($authActive = $this->_authManager->isAuthActivated()) === true &&
-            $this->_authManager->authentifier($requete) === false
+            ($this->_authManager->isAuthActivated()) === true && $this->_authManager->authentifier($requete) === false
         ) {
             $objetReponse = new ObjetReponse();
             $objetReponse->setErreurHttp(401);

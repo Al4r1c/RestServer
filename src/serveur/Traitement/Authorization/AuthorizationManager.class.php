@@ -26,7 +26,7 @@ class AuthorizationManager
     /**
      * @var array
      */
-    private static $clefMinimales = array(
+    private static $_clefMinimales = array(
         'Hours_request_valid',
         'Key_complexity',
         'Key_complexity.Min_length',
@@ -81,8 +81,9 @@ class AuthorizationManager
     public function addAuthorization($authorization)
     {
         if (!$authorization instanceof Authorization) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__,
-                'Serveur\Traitement\Authorization\Authorization', $authorization);
+            throw new ArgumentTypeException(
+                1000, 500, __METHOD__, 'Serveur\Traitement\Authorization\Authorization', $authorization
+            );
         }
 
         $this->_couplesIdClef[] = $authorization;
@@ -124,7 +125,7 @@ class AuthorizationManager
         $this->_actif = $tabConf['Activate'];
 
         if ($this->_actif === true) {
-            foreach (self::$clefMinimales as $uneClefMinimale) {
+            foreach (self::$_clefMinimales as $uneClefMinimale) {
                 if (!array_key_multi_exist($uneClefMinimale, $tabConf, true)) {
                     throw new MainException(30201, 500, $uneClefMinimale, $fichierAuthorization->getPathToFile());
                 }
@@ -143,31 +144,7 @@ class AuthorizationManager
     private function verifierClefsPriveesValide($tabConf)
     {
         if (is_array($tabCoupleClefs = array_key_multi_get('Authorized', $tabConf, true))) {
-            $tabPatternsVerifications = array();
-
-            if (($tailleMini = array_key_multi_get('Key_complexity.min_length', $tabConf, true)) !== false) {
-                if (is_int($tailleMini) && $tailleMini >= 0) {
-                    $tabPatternsVerifications[] = array('pattern' => '(.){' . $tailleMini . ',}', 'message' => 30203);
-                } else {
-                    throw new MainException(30202, 500, $tailleMini, 'Min_length');
-                }
-            }
-
-            if (array_key_multi_get('Key_complexity.Lower', $tabConf, true)) {
-                $tabPatternsVerifications[] = array('pattern' => '\p{Ll}', 'message' => 30204);
-            }
-
-            if (array_key_multi_get('Key_complexity.Upper', $tabConf, true)) {
-                $tabPatternsVerifications[] = array('pattern' => '\p{Lu}', 'message' => 30205);
-            }
-
-            if (array_key_multi_get('Key_complexity.Number', $tabConf, true) === true) {
-                $tabPatternsVerifications[] = array('pattern' => '[0-9]', 'message' => 30206);
-            }
-
-            if (array_key_multi_get('Key_complexity.Special_char', $tabConf, true) === true) {
-                $tabPatternsVerifications[] = array('pattern' => '[^\pL\pM\p{Nd}\p{Nl}]', 'message' => 30207);
-            }
+            list($tabPatternsVerifications, $tailleMini) = $this->genererPatternTestsClefs($tabConf);
 
             foreach ($tabCoupleClefs as $id => $clefPrivee) {
                 foreach ($tabPatternsVerifications as $unPatternRequis) {
@@ -182,6 +159,44 @@ class AuthorizationManager
                 $this->addAuthorization($couple);
             }
         }
+    }
+
+    /**
+     * @param $tabConf
+     * @return array
+     * @throws \Serveur\GestionErreurs\Exceptions\MainException
+     */
+    private function genererPatternTestsClefs($tabConf)
+    {
+        $tabPatternsVerifications = array();
+
+        if (($tailleMini = array_key_multi_get('Key_complexity.min_length', $tabConf, true)) !== false) {
+            if (is_int($tailleMini) && $tailleMini >= 0) {
+                $tabPatternsVerifications[] = array('pattern' => '(.){' . $tailleMini . ',}', 'message' => 30203);
+            } else {
+                throw new MainException(30202, 500, $tailleMini, 'Min_length');
+            }
+        }
+
+        if (array_key_multi_get('Key_complexity.Lower', $tabConf, true)) {
+            $tabPatternsVerifications[] = array('pattern' => '\p{Ll}', 'message' => 30204);
+        }
+
+        if (array_key_multi_get('Key_complexity.Upper', $tabConf, true)) {
+            $tabPatternsVerifications[] = array('pattern' => '\p{Lu}', 'message' => 30205);
+        }
+
+        if (array_key_multi_get('Key_complexity.Number', $tabConf, true) === true) {
+            $tabPatternsVerifications[] = array('pattern' => '[0-9]', 'message' => 30206);
+        }
+
+        if (array_key_multi_get('Key_complexity.Special_char', $tabConf, true) === true) {
+            $tabPatternsVerifications[] = array('pattern' => '[^\pL\pM\p{Nd}\p{Nl}]', 'message' => 30207);
+
+            return array($tabPatternsVerifications, $tailleMini);
+        }
+
+        return array($tabPatternsVerifications, $tailleMini);
     }
 
     /**
