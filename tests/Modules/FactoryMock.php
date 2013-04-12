@@ -17,6 +17,7 @@ use Serveur\Reponse\Renderers\AbstractRenderer;
 use Serveur\Reponse\ReponseManager;
 use Serveur\Requete\RequeteManager;
 use Serveur\Requete\Server\Server;
+use Serveur\Traitement\Authorization\Authorization;
 use Serveur\Traitement\Authorization\AuthorizationManager;
 use Serveur\Traitement\Data\AbstractDatabase;
 use Serveur\Traitement\Data\DatabaseConfig;
@@ -49,6 +50,9 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
                 break;
             case 'abstractressource':
                 $mock = $this->getMockAbstractRessource($methodes);
+                break;
+            case 'auth':
+                $mock = $this->getMockAuth($methodes);
                 break;
             case 'authmanager':
                 $mock = $this->getMockAuthManager($methodes);
@@ -157,6 +161,15 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
     protected function getMockAbstractRessource($methodes = array())
     {
         return $this->getMockAbstractClass('Serveur\Traitement\Ressource\AbstractRessource', $methodes);
+    }
+
+    /**
+     * @param array $methodes
+     * @return \PHPUnit_Framework_MockObject_MockObject|Authorization
+     */
+    protected function getMockAuth($methodes = array())
+    {
+        return $this->getMock('Serveur\Traitement\Authorization\Authorization', $methodes);
     }
 
     /**

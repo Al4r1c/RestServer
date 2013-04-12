@@ -14,6 +14,7 @@ class AuthorizationManagerTest extends TestCase
 
     static $donneesFactives = array(
         'Activate' => true,
+        'Hours_request_valid' => 12,
         'Key_complexity' => array(
             'Min_length' => false,
             'Lower' => false,
@@ -45,6 +46,23 @@ class AuthorizationManagerTest extends TestCase
     public function testGetAddAuthorizationsType()
     {
         $this->_authorizationManager->addAuthorization(array());
+    }
+
+    public function testTimeActif()
+    {
+        $this->assertAttributeEquals(12, '_timeRequestValid', $this->_authorizationManager);
+
+        $this->_authorizationManager->setTimeRequestValid(24);
+
+        $this->assertAttributeEquals(24, '_timeRequestValid', $this->_authorizationManager);
+    }
+
+    /**
+     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     */
+    public function testTimeActifNumeric()
+    {
+        $this->_authorizationManager->setTimeRequestValid(array());
     }
 
     public function testChargerFichier()
@@ -225,5 +243,118 @@ class AuthorizationManagerTest extends TestCase
         );
 
         $this->_authorizationManager->chargerFichierAuthorisations($fichier);
+    }
+
+    public function testAuthentifierOk()
+    {
+        $user = 'myUserName';
+        $clef = 'PRIVATEK3Y==';
+        $methode = 'GET';
+        $format = 'application/json';
+        $data = '{"parameter":"data"}';
+        $dateTime = new \DateTime(gmdate('M d Y H:i:s T', time()));
+
+        //var_dump($dateTime->format('M d Y H:i:s T'));
+
+
+        $pass = base64_encode(hash_hmac('sha256', $data, $clef . $methode . $format . $dateTime->getTimestamp(), true));
+
+        $authorization = $this->createMock(
+            'Auth',
+            new MockArg('getEntityId', $user),
+            new MockArg('getClefPrivee', $clef)
+        );
+
+        $this->_authorizationManager->addAuthorization($authorization);
+
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getMethode', $methode),
+            new MockArg('getHttpAccept', $format),
+            new MockArg('getPlainParametres', $data),
+            new MockArg('getDateRequete', $dateTime),
+            new MockArg('getAuthorization', 'ARS ' . $user . ':' . $pass)
+        );
+
+        $this->assertTrue($this->_authorizationManager->authentifier($requete));
+    }
+
+    public function testAuthentifierTrouveMaisErreur()
+    {
+        $user = 'myUserName';
+        $clef = 'PRIVATEK3Y==';
+        $clef2 = 'AN0THER';
+        $methode = 'GET';
+        $format = 'application/json';
+        $data = '{"parameter":"data"}';
+        $dateTime = new \DateTime(gmdate('M d Y H:i:s T', 1365000000));
+
+
+        $pass = base64_encode(hash_hmac('sha256', $data, $clef . $methode . $format . $dateTime->getTimestamp(), true));
+
+        $authorization = $this->createMock(
+            'Auth',
+            new MockArg('getEntityId', $user),
+            new MockArg('getClefPrivee', $clef2)
+        );
+
+        $this->_authorizationManager->addAuthorization($authorization);
+
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getMethode', $methode),
+            new MockArg('getHttpAccept', $format),
+            new MockArg('getPlainParametres', $data),
+            new MockArg('getDateRequete', $dateTime),
+            new MockArg('getAuthorization', 'ARS ' . $user . ':' . $pass)
+        );
+
+        $this->assertFalse($this->_authorizationManager->authentifier($requete));
+    }
+
+    public function testAuthentifierNonTrouvee()
+    {
+        $user = 'myUserName';
+        $clef = 'PRIVATEK3Y==';
+        $user2 = 'itsanotheruser';
+        $methode = 'GET';
+        $format = 'application/json';
+        $data = '{"parameter":"data"}';
+        $dateTime = new \DateTime(gmdate('M d Y H:i:s T', 1365000000));
+
+
+        $pass = base64_encode(hash_hmac('sha256', $data, $clef . $methode . $format . $dateTime->getTimestamp(), true));
+
+        $authorization = $this->createMock(
+            'Auth',
+            new MockArg('getEntityId', $user2)
+        );
+
+        $this->_authorizationManager->addAuthorization($authorization);
+
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getAuthorization', 'ARS ' . $user . ':' . $pass)
+        );
+
+        $this->assertFalse($this->_authorizationManager->authentifier($requete));
+    }
+
+    public function testhasExpired()
+    {
+        $this->assertFalse($this->_authorizationManager->hasExpired(new \DateTime(gmdate('M d Y H:i:s T', time()))));
+        $this->assertTrue(
+            $this->_authorizationManager->hasExpired(
+                new \DateTime(gmdate('M d Y H:i:s T', time() - (60 * 60 * 12) - 1))
+            )
+        );
+
+        $this->_authorizationManager->setTimeRequestValid(24);
+
+        $this->assertFalse(
+            $this->_authorizationManager->hasExpired(
+                new \DateTime(gmdate('M d Y H:i:s T', time() - (60 * 60 * 12) - 1))
+            )
+        );
     }
 }

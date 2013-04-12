@@ -4,6 +4,7 @@ namespace Serveur\Traitement\Authorization;
 use AlaroxFileManager\FileManager\File;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\GestionErreurs\Exceptions\MainException;
+use Serveur\Requete\RequeteManager;
 
 class AuthorizationManager
 {
@@ -11,6 +12,11 @@ class AuthorizationManager
      * @var bool
      */
     private $_actif = false;
+
+    /**
+     * @var int
+     */
+    private $_timeRequestValid = 12;
 
     /**
      * @var Authorization[]
@@ -21,6 +27,7 @@ class AuthorizationManager
      * @var array
      */
     private static $clefMinimales = array(
+        'Hours_request_valid',
         'Key_complexity',
         'Key_complexity.Min_length',
         'Key_complexity.Lower',
@@ -47,16 +54,51 @@ class AuthorizationManager
     }
 
     /**
+     * @param string $nomEntitee
+     * @return null|Authorization
+     */
+    public function getUneAuthorization($nomEntitee)
+    {
+        $cpt = 0;
+        $found = null;
+
+        while ($cpt < count($this->_couplesIdClef) && is_null($found)) {
+            if (strcmp($this->_couplesIdClef[$cpt]->getEntityId(), $nomEntitee) == 0) {
+                $found = $this->_couplesIdClef[$cpt];
+                break;
+            }
+
+            $cpt++;
+        }
+
+        return $found;
+    }
+
+    /**
      * @param Authorization $authorization
      * @throws ArgumentTypeException
      */
     public function addAuthorization($authorization)
     {
         if (!$authorization instanceof Authorization) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'Serveur\Traitement\Authorization\Authorization', $authorization);
+            throw new ArgumentTypeException(1000, 500, __METHOD__,
+                'Serveur\Traitement\Authorization\Authorization', $authorization);
         }
 
         $this->_couplesIdClef[] = $authorization;
+    }
+
+    /**
+     * @param int $timeActif
+     * @throws ArgumentTypeException
+     */
+    public function setTimeRequestValid($timeActif)
+    {
+        if (!is_numeric($timeActif)) {
+            throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $timeActif);
+        }
+
+        $this->_timeRequestValid = $timeActif;
     }
 
     /**
@@ -87,6 +129,8 @@ class AuthorizationManager
                     throw new MainException(30201, 500, $uneClefMinimale, $fichierAuthorization->getPathToFile());
                 }
             }
+
+            $this->setTimeRequestValid(array_key_multi_get('Hours_request_valid', $tabConf, true));
 
             $this->verifierClefsPriveesValide($tabConf);
         }
@@ -138,5 +182,46 @@ class AuthorizationManager
                 $this->addAuthorization($couple);
             }
         }
+    }
+
+    /**
+     * @param \DateTime $timeRequete
+     * @return bool
+     */
+    public function hasExpired($timeRequete)
+    {
+        $tempsValide = 60 * 60 * $this->_timeRequestValid;
+        $expires = $timeRequete->getTimestamp() + $tempsValide;
+        $nowDateTime = new \DateTime(gmdate('M d Y H:i:s T', time()));
+
+        if ($expires - $nowDateTime->getTimestamp() < 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param RequeteManager $requete
+     * @return bool
+     */
+    public function authentifier($requete)
+    {
+        $couple = explode(':', substr($requete->getAuthorization(), 4));
+
+        if (!is_null($authorization = $this->getUneAuthorization($couple[0]))) {
+            $decoderBase64 = base64_decode($couple[1]);
+
+            $motDePasseEncode =
+                hash_hmac(
+                    'sha256', $requete->getPlainParametres(),
+                    $authorization->getClefPrivee() . $requete->getMethode() . $requete->getHttpAccept() .
+                        $requete->getDateRequete()->getTimestamp(), true
+                );
+
+            return strcmp($decoderBase64, $motDePasseEncode) == 0;
+        }
+
+        return false;
     }
 }

@@ -43,9 +43,8 @@
 		<message code="20005">Authorization header's method (%s) invalid. (should be ARS)</message>
 		<message code="20100">Missing server variables.</message>
 		<message code="20101">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
-		<message code="30000">Database class %s not found.</message>
-		<message code="30001">Resource Factory is not set.</message>
-		<message code="30002">Database Factory is not set.</message>
+		<message code="30000">Can't execute request: %s is not set.</message>
+		<message code="30001">Database class %s not found.</message>
 		<message code="30100">Invalid port number %s. [0-65535]</message>
 		<message code="30200">File "%s" does not exist.</message>
 		<message code="30201">Missing key %s. (%s)</message>

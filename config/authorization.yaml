@@ -1,4 +1,5 @@
 Activate: true
+Hours_request_valid: 12
 
 Key_complexity:
   Min_length: 8

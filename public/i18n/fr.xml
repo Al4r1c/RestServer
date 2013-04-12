@@ -43,9 +43,8 @@
 		<message code="20005">Méthode de l'entête Authorization (%s) invalide. (devrait être ARS)</message>
 		<message code="20100">Des variables serveurs manquent.</message>
 		<message code="20101">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
-		<message code="30000">Classe de la base de données %s non trouvée.</message>
-		<message code="30001">La ressource factory n'a pas été paramétrée.</message>
-		<message code="30002">La factory de connexion à la base de données n'a pas été paramétrée.</message>
+		<message code="30000">Impossible d'exécuter la requête: %s n'est pas paramétré.</message>
+		<message code="30001">Classe de la base de données %s non trouvée.</message>
 		<message code="30100">Numéro de port invalide %s. [0-65535]</message>
 		<message code="30200">Le fichier "%s" n'existe pas.</message>
 		<message code="30201">Clef "%s" absente. (%s)</message>

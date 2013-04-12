@@ -23,7 +23,7 @@ class TraitementManagerTest extends TestCase
      * @param string $doMethod
      * @param RequeteManager $requete
      */
-    public function setFakeDatabase($doMethod, $requete)
+    public function setFakeDatabaseAuthOk($doMethod, $requete)
     {
         $callableRessourceFactory = function () use ($doMethod, $requete) {
             $abstractRessource = $this->createMock(
@@ -39,6 +39,12 @@ class TraitementManagerTest extends TestCase
             'DatabaseConfig', new MockArg('getDriver', 'myDriver')
         );
 
+        $authManager = $this->createMock(
+            'AuthManager',
+            new MockArg('hasExpired', false),
+            new MockArg('isAuthActivated', false)
+        );
+
         $callableDatabaseFactory = function () use ($databaseConfig) {
             $this->assertEquals('myDriver', $databaseConfig->getDriver());
 
@@ -48,6 +54,7 @@ class TraitementManagerTest extends TestCase
         $this->_traitementManager->setRessourceFactory($callableRessourceFactory);
         $this->_traitementManager->setDatabaseFactory($callableDatabaseFactory);
         $this->_traitementManager->setDatabaseConfig($databaseConfig);
+        $this->_traitementManager->setAuthManager($authManager);
     }
 
     public function testSetFactoryRessource()
@@ -131,13 +138,14 @@ class TraitementManagerTest extends TestCase
 
     /**
      * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 30000
+     * @expectedExceptionCode 30001
      */
     public function testTraiterImpossibleConnexionDatabase()
     {
         $requete = $this->createMock(
             'RequeteManager',
-            new MockArg('getUriVariables', array('path', '1'))
+            new MockArg('getUriVariables', array('path', '1')),
+            new MockArg('getDateRequete')
         );
 
         $callable = function () {
@@ -148,6 +156,12 @@ class TraitementManagerTest extends TestCase
             'DatabaseConfig', new MockArg('getDriver', 'myDriver')
         );
 
+        $authManager = $this->createMock(
+            'AuthManager',
+            new MockArg('hasExpired', false),
+            new MockArg('isAuthActivated', false)
+        );
+
         $callableDatabaseFactory = function () {
             return false;
         };
@@ -155,26 +169,9 @@ class TraitementManagerTest extends TestCase
         $this->_traitementManager->setRessourceFactory($callable);
         $this->_traitementManager->setDatabaseFactory($callableDatabaseFactory);
         $this->_traitementManager->setDatabaseConfig($databaseConfig);
+        $this->_traitementManager->setAuthManager($authManager);
 
         $this->_traitementManager->traiterRequeteEtRecupererResultat($requete);
-    }
-
-    /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 30001
-     */
-    public function testRecupererSansAvoirSetRessourceFactory()
-    {
-        $this->_traitementManager->recupererNouvelleInstanceRessource('Gonna bug down');
-    }
-
-    /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
-     * @expectedExceptionCode 30002
-     */
-    public function testRecupererSansAvoirSetDatabaseFactory()
-    {
-        $this->_traitementManager->recupererNouvelleInstanceConnexion('Gonna bug down');
     }
 
     public function testTraiterGet()
@@ -183,9 +180,10 @@ class TraitementManagerTest extends TestCase
             'RequeteManager',
             new MockArg('getMethode', 'GET'),
             new MockArg('getParametres', array('data1' => 'var1')),
-            new MockArg('getUriVariables', array('path', '1'))
+            new MockArg('getUriVariables', array('path', '1')),
+            new MockArg('getDateRequete')
         );
-        $this->setFakeDatabase('doGet', $requete);
+        $this->setFakeDatabaseAuthOk('doGet', $requete);
 
         $this->assertInstanceOf(
             'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
@@ -198,9 +196,10 @@ class TraitementManagerTest extends TestCase
             'RequeteManager',
             new MockArg('getMethode', 'PUT'),
             new MockArg('getParametres', array('data1' => 'var1')),
-            new MockArg('getUriVariables', array('path', '1'))
+            new MockArg('getUriVariables', array('path', '1')),
+            new MockArg('getDateRequete')
         );
-        $this->setFakeDatabase('doPut', $requete);
+        $this->setFakeDatabaseAuthOk('doPut', $requete);
 
         $this->assertInstanceOf(
             'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
@@ -213,9 +212,10 @@ class TraitementManagerTest extends TestCase
             'RequeteManager',
             new MockArg('getMethode', 'POST'),
             new MockArg('getParametres', array('data1' => 'var1')),
-            new MockArg('getUriVariables', array('path', '1'))
+            new MockArg('getUriVariables', array('path', '1')),
+            new MockArg('getDateRequete')
         );
-        $this->setFakeDatabase('doPost', $requete);
+        $this->setFakeDatabaseAuthOk('doPost', $requete);
 
         $this->assertInstanceOf(
             'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
@@ -228,9 +228,10 @@ class TraitementManagerTest extends TestCase
             'RequeteManager',
             new MockArg('getMethode', 'DELETE'),
             new MockArg('getParametres', array('data1' => 'var1')),
-            new MockArg('getUriVariables', array('path', '1'))
+            new MockArg('getUriVariables', array('path', '1')),
+            new MockArg('getDateRequete')
         );
-        $this->setFakeDatabase('doDelete', $requete);
+        $this->setFakeDatabaseAuthOk('doDelete', $requete);
 
         $this->assertInstanceOf(
             'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
@@ -241,7 +242,8 @@ class TraitementManagerTest extends TestCase
     {
         $requete = $this->createMock(
             'RequeteManager',
-            new MockArg('getUriVariables', array('unknown'))
+            new MockArg('getUriVariables', array('unknown')),
+            new MockArg('getDateRequete')
         );
 
         $callable = function ($arg) {
@@ -250,7 +252,19 @@ class TraitementManagerTest extends TestCase
             return false;
         };
 
+        $authManager = $this->createMock(
+            'AuthManager',
+            new MockArg('hasExpired', false),
+            new MockArg('isAuthActivated', false)
+        );
+
         $this->_traitementManager->setRessourceFactory($callable);
+        $this->_traitementManager->setDatabaseFactory(
+            function () {
+            }
+        );
+        $this->_traitementManager->setDatabaseConfig($this->getMockDatabaseConfig());
+        $this->_traitementManager->setAuthManager($authManager);
 
         $this->assertEquals(
             404, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
@@ -261,7 +275,8 @@ class TraitementManagerTest extends TestCase
     {
         $requete = $this->createMock(
             'RequeteManager',
-            new MockArg('getUriVariables', array(''))
+            new MockArg('getUriVariables', array('')),
+            new MockArg('getDateRequete')
         );
 
         $callable = function ($arg) {
@@ -270,11 +285,87 @@ class TraitementManagerTest extends TestCase
             return false;
         };
 
+        $authManager = $this->createMock(
+            'AuthManager',
+            new MockArg('hasExpired', false),
+            new MockArg('isAuthActivated', false)
+        );
+
         $this->_traitementManager->setRessourceFactory($callable);
+        $this->_traitementManager->setDatabaseFactory(
+            function () {
+            }
+        );
+        $this->_traitementManager->setDatabaseConfig($this->getMockDatabaseConfig());
+        $this->_traitementManager->setAuthManager($authManager);
 
         $this->assertEquals(
             400, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
         );
     }
 
+    public function testTraiterAvecAuthNOk()
+    {
+        $requete = $this->getMockRestRequete(array('getDateRequete'));
+
+        $authManager = $this->createMock(
+            'AuthManager',
+            new MockArg('hasExpired', false),
+            new MockArg('isAuthActivated', true),
+            new MockArg('authentifier', false)
+        );
+
+
+        $this->_traitementManager->setRessourceFactory(
+            function () {
+            }
+        );
+        $this->_traitementManager->setDatabaseFactory(
+            function () {
+            }
+        );
+        $this->_traitementManager->setDatabaseConfig($this->getMockDatabaseConfig());
+        $this->_traitementManager->setAuthManager($authManager);
+
+        $this->assertEquals(
+            401, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
+        );
+    }
+
+    /**
+     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedExceptionCode 30000
+     */
+    public function testTraiterInstanceManquante()
+    {
+        $this->_traitementManager->traiterRequeteEtRecupererResultat($this->getMockRestRequete());
+    }
+
+    public function testTraiterRequeteExpired()
+    {
+        $requete = $this->createMock(
+            'RequeteManager',
+            new MockArg('getDateRequete', $time = new \DateTime())
+        );
+
+        $authManager = $this->createMock(
+            'AuthManager',
+            new MockArg('hasExpired', true, array($time))
+        );
+
+        $this->_traitementManager->setRessourceFactory(
+            function () {
+            }
+        );
+        $this->_traitementManager->setDatabaseFactory(
+            function () {
+            }
+        );
+        $this->_traitementManager->setDatabaseConfig($this->getMockDatabaseConfig());
+        $this->_traitementManager->setAuthManager($authManager);
+
+        $this->assertEquals(
+            410, $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)->getStatusHttp()
+        );
+    }
 }
