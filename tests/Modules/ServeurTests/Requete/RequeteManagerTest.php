@@ -234,17 +234,6 @@ class RequeteManagerTest extends TestCase
         $this->assertEquals($this->restRequete->getDateRequete()->getTimestamp(), strtotime($dateString));
     }
 
-    /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
-     * @expectedExceptionCode 1000
-     */
-    public function testRestDateRequeteErrone()
-    {
-        $this->setFakeServerVariables('HTTP_DATE', 'oops');
-
-        $this->restRequete->getDateRequete();
-    }
-
     public function testRestIp()
     {
         $this->setFakeServerVariables('REMOTE_ADDR', '192.168.0.250');

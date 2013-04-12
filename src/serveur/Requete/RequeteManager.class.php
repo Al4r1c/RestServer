@@ -213,14 +213,7 @@ class RequeteManager
      */
     public function getDateRequete()
     {
-        if (!is_int($dateRequeteTimestamp = strtotime($this->_server->getUneVariableServeur('HTTP_DATE')))) {
-            throw new ArgumentTypeException(1000, 400, __METHOD__, 'int', $dateRequeteTimestamp);
-        }
-
-        $datetime = new \DateTime();
-        $datetime->setTimestamp($dateRequeteTimestamp);
-
-        return $datetime;
+        return new \DateTime($this->_server->getUneVariableServeur('HTTP_DATE'));
     }
 
     /**
