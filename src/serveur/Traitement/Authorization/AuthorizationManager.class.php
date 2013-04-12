@@ -231,7 +231,7 @@ class AuthorizationManager
                 hash_hmac(
                     'sha256', $requete->getPlainParametres(),
                     $authorization->getClefPrivee() . $requete->getMethode() . $requete->getHttpAccept() .
-                        $requete->getDateRequete()->getTimestamp(), true
+                    $requete->getDateRequete()->getTimestamp(), true
                 );
 
             return strcmp($decoderBase64, $motDePasseEncode) == 0;
