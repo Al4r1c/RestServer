@@ -52,7 +52,7 @@ class TypeDetector
             }
 
             foreach ($this->_constanteMimes as $uneExtension => $unFormatMime) {
-                if (strcmp($unFormatMime, $unType) === 0) {
+                if (strcmp($unFormatMime, $unType) == 0) {
                     $tabTypesTrouves[] = $uneExtension;
                 }
             }

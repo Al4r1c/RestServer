@@ -48,7 +48,7 @@ abstract class AbstractRessource implements IRessource
             $triResultats = array();
 
             if (array_key_exists('orderBy', $parametres)) {
-                if (array_key_exists('orderWay', $parametres) && strcmp($parametres['orderWay'], 'desc') === 0) {
+                if (array_key_exists('orderWay', $parametres) && strcmp($parametres['orderWay'], 'desc') == 0) {
                     $order = -1;
                 } else {
                     $order = 1;
