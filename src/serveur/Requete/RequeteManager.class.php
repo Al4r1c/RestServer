@@ -150,7 +150,7 @@ class RequeteManager
                 break;
         }
 
-        return array_map_recursive('strval', $donnees);
+        return array_filter($donnees, 'strlen');
     }
 
     /**

@@ -72,6 +72,12 @@ abstract class AbstractRessource implements IRessource
                 unset($parametres['pageNum']);
             }
 
+            foreach ($parametres as $clef => $unParametres) {
+                if (strpos($unParametres, '|') !== false) {
+                    $parametres[$clef] = explode('|', $unParametres);
+                }
+            }
+
             return $this->getAll($parametres, $triResultats);
         }
     }

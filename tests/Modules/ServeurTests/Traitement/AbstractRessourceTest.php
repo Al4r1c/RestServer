@@ -41,11 +41,12 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1'), array()))
+            'AbstractRessource',
+            new MockArg('getAll', new ObjetReponse(404), array(array('var1' => 'filter1'), array()))
         );
 
         $this->assertEquals(
-            404, $abstractRessource->doGet(array('resource', null), array('var1 => filter1'))->getStatusHttp()
+            404, $abstractRessource->doGet(array('resource', null), array('var1' => 'filter1'))->getStatusHttp()
         );
     }
 
@@ -174,7 +175,7 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1'),
+            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1' => 'filter1'),
                 array(
                     'sort' => array(
                         'champ' => 'orders',
@@ -188,7 +189,7 @@ class AbstractRessourceTest extends TestCase
         $this->assertEquals(
             404, $abstractRessource->doGet(
                 array('resource', null),
-                array('var1 => filter1',
+                array('var1' => 'filter1',
                     'orderBy' => 'orders',
                     'orderWay' => 'asc',
                     'limitResult' => '3',
@@ -202,7 +203,7 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1 => filter1'),
+            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1' => 'filter1'),
                 array(
                     'sort' => array(
                         'champ' => 'orders',
@@ -214,7 +215,7 @@ class AbstractRessourceTest extends TestCase
         $this->assertEquals(
             404, $abstractRessource->doGet(
                 array('resource', null),
-                array('var1 => filter1',
+                array('var1' => 'filter1',
                     'orderBy' => 'orders',
                     'orderWay' => 'desc'
                 )
@@ -222,4 +223,22 @@ class AbstractRessourceTest extends TestCase
         );
     }
 
+    public function testDoGetPourMultiRecherche()
+    {
+        /** @var $abstractRessource AbstractRessource */
+        $abstractRessource = $this->createMock(
+            'AbstractRessource', new MockArg('getAll', new ObjetReponse(200), array(
+                    array('var1' => array('filter1', 'filter2')),
+                    array()
+                )
+            )
+        );
+
+        $this->assertEquals(
+            200, $abstractRessource->doGet(
+                array('resource', null),
+                array('var1' => 'filter1|filter2')
+            )->getStatusHttp()
+        );
+    }
 }

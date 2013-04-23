@@ -15,7 +15,6 @@ class Server
      * @var array
      */
     private static $_tabClefsMinimales = array('HTTP_ACCEPT',
-        'CONTENT_TYPE',
         'HTTP_DATE',
         'PHP_INPUT',
         'QUERY_STRING',
