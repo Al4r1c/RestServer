@@ -18,7 +18,7 @@
 		"alarox/AlaroxFileManager": "v0.2",
 		"alarox/AlaroxXMLParser": "v0.3",
 		"pimple/pimple": "v1.0.2",
-		"mikey179/vfsStream": "v1.1.0"
+		"mikey179/vfsStream": "v1.2.0"
 	},
 	"config": {
 		"vendor-dir": "libraries"
