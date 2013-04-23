@@ -12,6 +12,19 @@ class Server
     private $_serveurVariables;
 
     /**
+     * @var array
+     */
+    private static $_tabClefsMinimales = array('HTTP_ACCEPT',
+        'CONTENT_TYPE',
+        'HTTP_DATE',
+        'PHP_INPUT',
+        'QUERY_STRING',
+        'REMOTE_ADDR',
+        'REQUEST_METHOD',
+        'REQUEST_URI',
+        'REDIRECT_HTTP_AUTHORIZATION');
+
+    /**
      * @param array $varServeur
      * @throws ArgumentTypeException
      */
@@ -56,19 +69,10 @@ class Server
             throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $serverVar);
         }
 
-        if (!array_keys_exist(
-            array('HTTP_ACCEPT',
-                'CONTENT_TYPE',
-                'HTTP_DATE',
-                'PHP_INPUT',
-                'QUERY_STRING',
-                'REMOTE_ADDR',
-                'REQUEST_METHOD',
-                'REQUEST_URI',
-                'REDIRECT_HTTP_AUTHORIZATION'), $serverVar
-        )
-        ) {
-            throw new MainException(20100, 500);
+        foreach(self::$_tabClefsMinimales as $uneClefMini) {
+            if (!array_key_exists($uneClefMini, $serverVar)) {
+                throw new MainException(20100, 500, $uneClefMini);
+            }
         }
 
         $this->_serveurVariables = $serverVar;
