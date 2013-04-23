@@ -41,7 +41,7 @@
 		<message code="20003">Format "%s" invalide.</message>
 		<message code="20004">Format de la requête "%s" inconnu.</message>
 		<message code="20005">Méthode de l'entête Authorization (%s) invalide. (devrait être ARS)</message>
-		<message code="20100">Variable serveur "%" manquante.</message>
+		<message code="20100">Variable serveur "%s" manquante.</message>
 		<message code="20101">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
 		<message code="30000">Impossible d'exécuter la requête: %s n'est pas paramétré.</message>
 		<message code="30001">Classe de la base de données %s non trouvée.</message>
