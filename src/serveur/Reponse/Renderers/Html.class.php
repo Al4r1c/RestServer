@@ -45,9 +45,9 @@ class Html extends AbstractRenderer
         $list = "<ul>\n";
 
         foreach ($array as $clef => $valeur) {
-            $list .= "\t<li><strong>" . $clef . ":</strong> ";
+            $list .= "<li><strong>" . $clef . ":</strong>&nbsp;";
             if (is_array($valeur)) {
-                $list .= $this->convertTableauToListeHtml($valeur);
+                $list .= "\n" . $this->convertTableauToListeHtml($valeur);
             } else {
                 $list .= $valeur;
             }
