@@ -240,7 +240,7 @@ class RequeteManager
     {
         $contentType = $this->_server->getUneVariableServeur('CONTENT_TYPE');
 
-        if (strcmp($contentType, '*/*') == 0) {
+        if (startsWith('*/*', $contentType) == 0) {
             $contentType = 'text/plain';
         }
 
