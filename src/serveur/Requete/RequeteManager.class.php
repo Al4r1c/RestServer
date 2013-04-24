@@ -150,7 +150,15 @@ class RequeteManager
                 break;
         }
 
-        return array_filter($donnees, 'strlen');
+        foreach ($donnees as $clef => $uneDonnee) {
+            if (is_null($uneDonnee) || (is_string($uneDonnee) && $uneDonnee == '') ||
+                (is_array($uneDonnee) && count($uneDonnee) == 0)
+            ) {
+                unset($donnees[$clef]);
+            }
+        }
+
+        return $donnees;
     }
 
     /**
@@ -238,9 +246,7 @@ class RequeteManager
 
     public function getContentType()
     {
-        $contentType = $this->_server->getUneVariableServeur('CONTENT_TYPE');
-
-        if (startsWith('*/*', $contentType) == 0) {
+        if (startsWith($contentType = $this->_server->getUneVariableServeur('CONTENT_TYPE'), '*/*')) {
             $contentType = 'text/plain';
         }
 
