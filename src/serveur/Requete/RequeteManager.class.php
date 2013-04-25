@@ -154,7 +154,7 @@ class RequeteManager
             if (is_null($uneDonnee) || (is_string($uneDonnee) && $uneDonnee == '') ||
                 (is_array($uneDonnee) && count($uneDonnee) == 0)
             ) {
-                unset($donnees[$clef]);
+                $donnees[$clef] = null;
             }
         }
 

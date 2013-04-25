@@ -178,8 +178,8 @@ class RequeteManagerTest extends TestCase
         );
         $this->restRequete->setServer($mockServer);
 
-        $this->assertCount(1, $parametres = $this->restRequete->getParametres());
-        $this->assertEquals('exec', $parametres['test']);
+        $this->assertCount(2, $parametres = $this->restRequete->getParametres());
+        $this->assertNull($parametres['param1']);
     }
 
     public function testRecupererPost()
