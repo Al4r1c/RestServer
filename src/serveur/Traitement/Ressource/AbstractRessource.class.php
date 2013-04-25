@@ -4,6 +4,7 @@ namespace Serveur\Traitement\Ressource;
 use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Serveur\Lib\ObjetReponse;
 use Serveur\Traitement\Data\AbstractDatabase;
+use Serveur\Traitement\DonneeRequete\ParametresManager;
 
 abstract class AbstractRessource implements IRessource
 {
@@ -37,7 +38,7 @@ abstract class AbstractRessource implements IRessource
 
     /**
      * @param array $dataUri
-     * @param array $parametres
+     * @param ParametresManager $parametres
      * @return ObjetReponse
      */
     public function doGet($dataUri, $parametres)
@@ -45,46 +46,13 @@ abstract class AbstractRessource implements IRessource
         if (!isNull($dataUri[1])) {
             return $this->getOne($dataUri[1]);
         } else {
-            $triResultats = array();
-
-            if (array_key_exists('orderBy', $parametres)) {
-                if (array_key_exists('orderWay', $parametres) && strcmp($parametres['orderWay'], 'desc') == 0) {
-                    $order = -1;
-                } else {
-                    $order = 1;
-                }
-
-                $triResultats['sort'] = array('champ' => $parametres['orderBy'], 'sens' => $order);
-
-                unset($parametres['orderBy']);
-                unset($parametres['orderWay']);
-            }
-
-            if (array_key_exists('limitResult', $parametres)) {
-                $triResultats['limit'] = (int)$parametres['limitResult'];
-
-                unset($parametres['limitResult']);
-            }
-
-            if (array_key_exists('pageNum', $parametres)) {
-                $triResultats['page'] = (int)$parametres['pageNum'];
-
-                unset($parametres['pageNum']);
-            }
-
-            foreach ($parametres as $clef => $unParametres) {
-                if (strpos($unParametres, '|') !== false) {
-                    $parametres[$clef] = explode('|', $unParametres);
-                }
-            }
-
-            return $this->getAll($parametres, $triResultats);
+            return $this->getAll($parametres);
         }
     }
 
     /**
      * @param array $dataUri
-     * @param array $parametres
+     * @param ParametresManager $parametres
      * @return ObjetReponse
      */
     public function doPost($dataUri, $parametres)
@@ -98,7 +66,7 @@ abstract class AbstractRessource implements IRessource
 
     /**
      * @param array $dataUri
-     * @param array $parametres
+     * @param ParametresManager $parametres
      * @return ObjetReponse
      */
     public function doPut($dataUri, $parametres)
@@ -107,7 +75,7 @@ abstract class AbstractRessource implements IRessource
             if (isNull($dataUri[3])) {
                 return $this->putCollection($dataUri[1], $dataUri[2], $parametres);
             } else {
-                return $this->putInCollection($dataUri[1], $dataUri[2], $dataUri[3]);
+                return $this->putOneInCollection($dataUri[1], $dataUri[2], $dataUri[3]);
             }
         } else {
             return $this->createOrUpdateIdempotent($dataUri[1], $parametres);

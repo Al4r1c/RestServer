@@ -8,6 +8,7 @@ use Serveur\Requete\RequeteManager;
 use Serveur\Traitement\Authorization\AuthorizationManager;
 use Serveur\Traitement\Data\AbstractDatabase;
 use Serveur\Traitement\Data\DatabaseConfig;
+use Serveur\Traitement\DonneeRequete\ParametresManager;
 use Serveur\Traitement\Ressource\AbstractRessource;
 
 class TraitementManager
@@ -141,19 +142,30 @@ class TraitementManager
                     switch (strtoupper($requete->getMethode())) {
                         case 'GET':
                             $objetReponse =
-                                $ressourceObjet->doGet($requete->getUriVariables(), $requete->getParametres());
+                                $ressourceObjet->doGet(
+                                    $requete->getUriVariables(),
+                                    $this->formaliserFiltres($requete->getParametres())
+                                );
                             break;
                         case 'POST':
                             $objetReponse =
-                                $ressourceObjet->doPost($requete->getUriVariables(), $requete->getParametres());
+                                $ressourceObjet->doPost(
+                                    $requete->getUriVariables(),
+                                    $this->formaliserFiltres($requete->getParametres())
+                                );
                             break;
                         case 'PUT':
                             $objetReponse =
-                                $ressourceObjet->doPut($requete->getUriVariables(), $requete->getParametres());
+                                $ressourceObjet->doPut(
+                                    $requete->getUriVariables(),
+                                    $this->formaliserFiltres($requete->getParametres())
+                                );
                             break;
                         case 'DELETE':
                             $objetReponse =
-                                $ressourceObjet->doDelete($requete->getUriVariables(), $requete->getParametres());
+                                $ressourceObjet->doDelete(
+                                    $requete->getUriVariables()
+                                );
                             break;
                     }
                 } else {
@@ -169,5 +181,18 @@ class TraitementManager
         }
 
         return $objetReponse;
+    }
+
+    /**
+     * @param array $tabParametres
+     * @return ParametresManager
+     */
+    private function formaliserFiltres($tabParametres)
+    {
+        $donnesRequeteManager = new ParametresManager();
+
+        $donnesRequeteManager->parseTabParametres($tabParametres);
+
+        return $donnesRequeteManager;
     }
 }

@@ -169,6 +169,19 @@ class RequeteManagerTest extends TestCase
         $this->assertEquals('valeur1', $this->restRequete->getParametres()['param1']);
     }
 
+    public function testRecupererParametreDeleteEmpty()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'GET', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'param1=&test=exec', array('QUERY_STRING'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertCount(1, $parametres = $this->restRequete->getParametres());
+        $this->assertEquals('exec', $parametres['test']);
+    }
+
     public function testRecupererPost()
     {
         $mockServer = $this->createMock(

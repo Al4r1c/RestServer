@@ -39,40 +39,42 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoGetPourRecherche()
     {
+        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
             'AbstractRessource',
-            new MockArg('getAll', new ObjetReponse(404), array(array('var1' => 'filter1'), array()))
+            new MockArg('getAll', new ObjetReponse(404), array($paramManager))
         );
 
-        $this->assertEquals(
-            404, $abstractRessource->doGet(array('resource', null), array('var1' => 'filter1'))->getStatusHttp()
-        );
+        $this->assertEquals(404, $abstractRessource->doGet(array('resource', null), $paramManager)->getStatusHttp());
     }
 
     public function testDoPutCreateOrUpdate()
     {
+        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
             'AbstractRessource',
-            new MockArg('createOrUpdateIdempotent', new ObjetReponse(201), array(4, array('nom' => 'nouveauNom')))
+            new MockArg('createOrUpdateIdempotent', new ObjetReponse(201), array(4, $paramManager))
         );
 
-        $this->assertEquals(
-            201, $abstractRessource->doPut(array('resource', 4), array('nom' => 'nouveauNom'))->getStatusHttp()
-        );
+        $this->assertEquals(201, $abstractRessource->doPut(array('resource', 4), $paramManager)->getStatusHttp());
     }
 
     public function testDoPutCollection()
     {
+        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
             'AbstractRessource',
-            new MockArg('putCollection', new ObjetReponse(200), array(4, 'newCollection', array(50)))
+            new MockArg('putCollection', new ObjetReponse(200), array(4, 'newCollection', $paramManager))
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doPut(array('resource', 4, 'newCollection'), array(50))->getStatusHttp()
+            200, $abstractRessource->doPut(array('resource', 4, 'newCollection'), $paramManager)->getStatusHttp()
         );
     }
 
@@ -80,36 +82,40 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('putInCollection', new ObjetReponse(200), array(4, 'newCollection', 30))
+            'AbstractRessource', new MockArg('putOneInCollection', new ObjetReponse(200), array(4, 'newCollection', 30))
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doPut(array('resource', 4, 'newCollection', 30), array())->getStatusHttp()
+            200, $abstractRessource->doPut(array('resource', 4, 'newCollection', 30), null)->getStatusHttp()
         );
     }
 
     public function testDoPostUpdate()
     {
+        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
             'AbstractRessource',
-            new MockArg('updateOne', new ObjetReponse(200), array(5, array('adresse' => 'adresseddd')))
+            new MockArg('updateOne', new ObjetReponse(200), array(5, $paramManager))
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doPost(array('resource', 5), array('adresse' => 'adresseddd'))->getStatusHttp()
+            200, $abstractRessource->doPost(array('resource', 5), $paramManager)->getStatusHttp()
         );
     }
 
     public function testDoPostCreate()
     {
+        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('createOne', new ObjetReponse(201), array(array('nom' => 'named')))
+            'AbstractRessource', new MockArg('createOne', new ObjetReponse(201), array($paramManager))
         );
 
         $this->assertEquals(
-            201, $abstractRessource->doPost(array('resource', null), array('nom' => 'named'))->getStatusHttp()
+            201, $abstractRessource->doPost(array('resource', null), $paramManager)->getStatusHttp()
         );
     }
 
@@ -169,76 +175,5 @@ class AbstractRessourceTest extends TestCase
         $method->setAccessible(true);
 
         $this->assertEquals(403, $method->invoke($abstractRessource)->getStatusHttp());
-    }
-
-    public function testDoGetPourRechercheTriResultat()
-    {
-        /** @var $abstractRessource AbstractRessource */
-        $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1' => 'filter1'),
-                array(
-                    'sort' => array(
-                        'champ' => 'orders',
-                        'sens' => 1
-                    ),
-                    'limit' => 3,
-                    'page' => 1)
-            ))
-        );
-
-        $this->assertEquals(
-            404, $abstractRessource->doGet(
-                array('resource', null),
-                array('var1' => 'filter1',
-                    'orderBy' => 'orders',
-                    'orderWay' => 'asc',
-                    'limitResult' => '3',
-                    'pageNum' => '1'
-                )
-            )->getStatusHttp()
-        );
-    }
-
-    public function testDoGetPourRechercheOrder()
-    {
-        /** @var $abstractRessource AbstractRessource */
-        $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getAll', new ObjetReponse(404), array(array('var1' => 'filter1'),
-                array(
-                    'sort' => array(
-                        'champ' => 'orders',
-                        'sens' => -1
-                    ))
-            ))
-        );
-
-        $this->assertEquals(
-            404, $abstractRessource->doGet(
-                array('resource', null),
-                array('var1' => 'filter1',
-                    'orderBy' => 'orders',
-                    'orderWay' => 'desc'
-                )
-            )->getStatusHttp()
-        );
-    }
-
-    public function testDoGetPourMultiRecherche()
-    {
-        /** @var $abstractRessource AbstractRessource */
-        $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getAll', new ObjetReponse(200), array(
-                    array('var1' => array('filter1', 'filter2')),
-                    array()
-                )
-            )
-        );
-
-        $this->assertEquals(
-            200, $abstractRessource->doGet(
-                array('resource', null),
-                array('var1' => 'filter1|filter2')
-            )->getStatusHttp()
-        );
     }
 }

@@ -2,6 +2,7 @@
 namespace Serveur\Traitement\Data;
 
 use Serveur\Lib\ObjetReponse;
+use Serveur\Traitement\DonneeRequete\ParametresManager;
 
 interface IDatabaseActions
 {
@@ -23,35 +24,34 @@ interface IDatabaseActions
     public function recupererId($id);
 
     /**
-     * @param array $filtres
-     * @param array $tri
+     * @param ParametresManager $filtres
      * @return ObjetReponse
      */
-    public function recuperer($filtres, $tri = array());
+    public function recuperer($filtres);
 
     /**
-     * @param array $champs
+     * @param ParametresManager $champs
      * @return ObjetReponse
      */
     public function inserer($champs);
 
     /**
      * @param string $idObjet
-     * @param array $champs
+     * @param ParametresManager $champs
      * @return ObjetReponse
      */
     public function insererIdempotent($idObjet, $champs);
 
     /**
      * @param string $id
-     * @param array $champs
+     * @param ParametresManager $champs
      * @return ObjetReponse
      */
     public function mettreAJourId($id, $champs);
 
     /**
      * @param array $filtres
-     * @param array $champs
+     * @param ParametresManager $champs
      * @return ObjetReponse
      */
     public function mettreAJour($filtres, $champs);
@@ -69,20 +69,20 @@ interface IDatabaseActions
     public function supprimer($filtres = array());
 
     /**
-     * @param string $id
+     * @param array $id
      * @param string $nomCollection
-     * @param string $idNouvelObjet
+     * @param ParametresManager $nouveauxChamps
      * @return ObjetReponse
      */
-    public function ajouterUnDansCollection($id, $nomCollection, $idNouvelObjet);
+    public function setCollection($id, $nomCollection, $nouveauxChamps);
 
     /**
-     * @param array $filtres
+     * @param array $id
      * @param string $nomCollection
      * @param string $idNouvelObjet
      * @return ObjetReponse
      */
-    public function ajouterDansCollection($filtres, $nomCollection, $idNouvelObjet);
+    public function ajouterDansCollection($id, $nomCollection, $idNouvelObjet);
 
     /**
      * @param string $id

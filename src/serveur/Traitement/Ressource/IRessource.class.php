@@ -2,6 +2,7 @@
 namespace Serveur\Traitement\Ressource;
 
 use Serveur\Lib\ObjetReponse;
+use Serveur\Traitement\DonneeRequete\ParametresManager;
 
 interface IRessource
 {
@@ -12,28 +13,27 @@ interface IRessource
     public function getOne($id);
 
     /**
-     * @param array $filters
-     * @param array $tri
+     * @param ParametresManager $filters
      * @return ObjetReponse
      */
-    public function getAll($filters, $tri);
+    public function getAll($filters);
 
     /**
-     * @param array $data
+     * @param ParametresManager $data
      * @return ObjetReponse
      */
     public function createOne($data);
 
     /**
      * @param string $id
-     * @param array $data
+     * @param ParametresManager $data
      * @return ObjetReponse
      */
     public function updateOne($id, $data);
 
     /**
      * @param string $id
-     * @param array $data
+     * @param ParametresManager $data
      * @return ObjetReponse
      */
     public function createOrUpdateIdempotent($id, $data);
@@ -52,7 +52,7 @@ interface IRessource
     /**
      * @param string $id
      * @param string $collectionName
-     * @param array $listeObjects
+     * @param ParametresManager $listeObjects
      * @return ObjetReponse
      */
     public function putCollection($id, $collectionName, $listeObjects);
@@ -63,7 +63,7 @@ interface IRessource
      * @param string $idObject
      * @return ObjetReponse
      */
-    public function putInCollection($id, $collectionName, $idObject);
+    public function putOneInCollection($id, $collectionName, $idObject);
 
     /**
      * @param string $id

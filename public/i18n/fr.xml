@@ -26,6 +26,7 @@
 		<message code="300">Gestionnaire de traitement</message>
 		<message code="301">Configuration de la base de données</message>
 		<message code="302">Gestionnaire des authorisations</message>
+		<message code="303">Opérateur</message>
 		<message code="400">Réponse</message>
 		<message code="401">Gestionnaire des entêtes</message>
 		<message code="402">Fichier de configuration</message>
@@ -54,6 +55,7 @@
 		<message code="30205">La clef privée "%s" doit contenir au moins une lettre majuscule unicode.</message>
 		<message code="30206">La clef privée "%s" doit contenir au moins un chiffre.</message>
 		<message code="30207">La clef privée "%s" doit contenir au moins un caractère unicode non alphanumérique.</message>
+		<message code="30300">Opérateur "%s" invalide.</message>
 		<message code="40000">Les formats de retour acceptés sont invalides.</message>
 		<message code="40001">Charset %s invalide.</message>
 		<message code="40002">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>

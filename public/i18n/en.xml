@@ -26,6 +26,7 @@
 		<message code="300">Handling manager</message>
 		<message code="301">Database configuration</message>
 		<message code="302">Authorization Manager</message>
+		<message code="303">Operator</message>
 		<message code="400">Response</message>
 		<message code="401">Header Manager</message>
 		<message code="402">Configuration file</message>
@@ -54,6 +55,7 @@
 		<message code="30205">Private key "%s" must contains at least one upper case unicode letter.</message>
 		<message code="30206">Private key "%s" must contains at least one number.</message>
 		<message code="30207">Private key "%s" must contains at least one non unicode alphanumerical character.</message>
+		<message code="30300">Invalid operator "%s".</message>
 		<message code="40000">Accepted output format are invalid.</message>
 		<message code="40001">Invalid charset %s.</message>
 		<message code="40002">Specified output rendering class (%s) not found.</message>

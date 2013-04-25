@@ -26,13 +26,17 @@ class TraitementManagerTest extends TestCase
     public function setFakeDatabaseAuthOk($doMethod, $requete)
     {
         $callableRessourceFactory = function () use ($doMethod, $requete) {
-            $abstractRessource = $this->createMock(
-                'AbstractRessource',
-                new MockArg($doMethod, $this->getMockObjetReponse(), array($requete->getUriVariables(),
-                    $requete->getParametres()))
-            );
+            $mock = $this->getMockAbstractRessource(array($doMethod));
 
-            return $abstractRessource;
+            $mock->expects($this->once())
+                ->method($doMethod)
+                ->with(
+                    $this->equalTo($requete->getUriVariables()),
+                    $this->isInstanceOf('\Serveur\Traitement\DonneeRequete\ParametresManager')
+                )
+                ->will($this->returnValue($this->getMockObjetReponse()));
+
+            return $mock;
         };
 
         $databaseConfig = $this->createMock(
@@ -227,11 +231,42 @@ class TraitementManagerTest extends TestCase
         $requete = $this->createMock(
             'RequeteManager',
             new MockArg('getMethode', 'DELETE'),
-            new MockArg('getParametres', array('data1' => 'var1')),
             new MockArg('getUriVariables', array('path', '1')),
             new MockArg('getDateRequete')
         );
-        $this->setFakeDatabaseAuthOk('doDelete', $requete);
+
+        $callableRessourceFactory = function () use ($requete) {
+            $mock = $this->getMockAbstractRessource(array('doDelete'));
+
+            $mock->expects($this->once())
+                ->method('doDelete')
+                ->with($this->equalTo($requete->getUriVariables()))
+                ->will($this->returnValue($this->getMockObjetReponse()));
+
+            return $mock;
+        };
+
+        $databaseConfig = $this->createMock(
+            'DatabaseConfig', new MockArg('getDriver', 'myDriver')
+        );
+
+        $authManager = $this->createMock(
+            'AuthManager',
+            new MockArg('hasExpired', false),
+            new MockArg('isAuthActivated', false)
+        );
+
+        $callableDatabaseFactory = function () use ($databaseConfig) {
+            $this->assertEquals('myDriver', $databaseConfig->getDriver());
+
+            return $this->getMockAbstractDatabase();
+        };
+
+        $this->_traitementManager->setRessourceFactory($callableRessourceFactory);
+        $this->_traitementManager->setDatabaseFactory($callableDatabaseFactory);
+        $this->_traitementManager->setDatabaseConfig($databaseConfig);
+        $this->_traitementManager->setAuthManager($authManager);
+
 
         $this->assertInstanceOf(
             'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
