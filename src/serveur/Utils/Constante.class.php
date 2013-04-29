@@ -15,7 +15,7 @@ class Constante
     {
         $alaroxFileManager = new AlaroxFile();
         $fichier =
-            $alaroxFileManager->getFile(BASE_PATH . '/public/constantes/' . $nomConfig . '.' . self::$_extension);
+            $alaroxFileManager->getFile(BASE_PATH . '/config/constantes/' . $nomConfig . '.' . self::$_extension);
 
         return $fichier->loadFile();
     }
