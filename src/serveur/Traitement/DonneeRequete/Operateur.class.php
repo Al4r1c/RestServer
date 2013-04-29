@@ -30,7 +30,7 @@ class Operateur
     public function setType($types)
     {
         if (!in_array($types, self::$_motsClef)) {
-            throw new MainException(30300, 500);
+            throw new MainException(30300, 500, $types);
         }
 
         $this->_type = $types;
