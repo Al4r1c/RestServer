@@ -33,7 +33,7 @@ return array(
     409 => array('Conflict',
         'The request could not be completed due to a conflict with the current state of the resource.'),
     410 => array('Gone',
-        'he requested resource is no longer available at the server and no forwarding address is known.'),
+        'The requested resource is no longer available at the server and no forwarding address is known.'),
     411 => array('Length Required',
         'The request did not specify the length of its content, which is required by the requested resource.'),
     412 => array('Precondition Failed',
