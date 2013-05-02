@@ -1,4 +1,5 @@
 {
+	"name": "alarox-restserver/RestServer",
 	"repositories": [
 		{
 			"type": "vcs",
@@ -22,5 +23,8 @@
 	},
 	"config": {
 		"vendor-dir": "libraries"
+	},
+	"autoload": {
+		"files": [ "src/serveur/Main.php" ]
 	}
 }
