@@ -35,9 +35,9 @@ class Main
         $conteneur = new Conteneur();
         $conteneur->buildConteneur($arrayConfig + array('logFolder' => '.'));
 
-        $main = new MainApplication($conteneur);
-        $main->ajouterObserveur(LoggingFactory::getLogger('logger', $arrayConfig['logFolder']));
-        $main->setHandlers();
+        $this->_main = new MainApplication($conteneur);
+        $this->_main->ajouterObserveur(LoggingFactory::getLogger('logger', $arrayConfig['logFolder']));
+        $this->_main->setHandlers();
     }
 
     public function output()
