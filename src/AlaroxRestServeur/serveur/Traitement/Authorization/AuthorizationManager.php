@@ -16,7 +16,7 @@ class AuthorizationManager
     /**
      * @var int
      */
-    private $_timeRequestValid = 12;
+    private $_timeRequestValid;
 
     /**
      * @var Authorization[]
@@ -206,6 +206,10 @@ class AuthorizationManager
      */
     public function hasExpired($timeRequete)
     {
+        if (is_null($this->_timeRequestValid)) {
+            return false;
+        }
+
         $tempsValide = 60 * 60 * $this->_timeRequestValid;
         $expires = $timeRequete->getTimestamp() + $tempsValide;
         $nowDateTime = new \DateTime(gmdate('M d Y H:i:s T', time()));

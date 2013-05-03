@@ -50,8 +50,6 @@ class AuthorizationManagerTest extends TestCase
 
     public function testTimeActif()
     {
-        $this->assertAttributeEquals(12, '_timeRequestValid', $this->_authorizationManager);
-
         $this->_authorizationManager->setTimeRequestValid(24);
 
         $this->assertAttributeEquals(24, '_timeRequestValid', $this->_authorizationManager);
@@ -342,6 +340,7 @@ class AuthorizationManagerTest extends TestCase
 
     public function testhasExpired()
     {
+        $this->_authorizationManager->setTimeRequestValid(12);
         $this->assertFalse($this->_authorizationManager->hasExpired(new \DateTime(gmdate('M d Y H:i:s T', time()))));
         $this->assertTrue(
             $this->_authorizationManager->hasExpired(
@@ -356,5 +355,9 @@ class AuthorizationManagerTest extends TestCase
                 new \DateTime(gmdate('M d Y H:i:s T', time() - (60 * 60 * 12) - 1))
             )
         );
+    }
+
+    public function testHadExpiredNoTimeNoCheck() {
+        $this->assertFalse($this->_authorizationManager->hasExpired(new \DateTime(gmdate('M d Y H:i:s T', time()))));
     }
 }
