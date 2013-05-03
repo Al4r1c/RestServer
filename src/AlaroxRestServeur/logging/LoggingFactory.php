@@ -3,6 +3,7 @@ namespace AlaroxRestServeur\Logging;
 
 use AlaroxFileManager\AlaroxFile;
 use AlaroxFileManager\FileManager\File;
+use AlaroxRestServeur\Logging\Displayer\AbstractDisplayer;
 use AlaroxRestServeur\Logging\Displayer\Logger;
 use AlaroxRestServeur\Logging\I18n\I18nManager;
 use AlaroxRestServeur\Logging\I18n\TradManager;
@@ -14,17 +15,18 @@ class LoggingFactory
 
     /**
      * @param string $loggingMethode
+     * @param string $logFolder
      * @throws \InvalidArgumentException
-     * @return Displayer\AbstractDisplayer
+     * @return AbstractDisplayer
      */
-    public static function getLogger($loggingMethode)
+    public static function getLogger($loggingMethode, $logFolder)
     {
         switch ($loggingMethode) {
             case 'logger':
                 $logger = new Logger();
                 $logger->setTradManager(self::getI18n());
-                $logger->setFichierLogErreur(self::creerFichierSiNexistePas('errors.log'));
-                $logger->setFichierLogAcces(self::creerFichierSiNexistePas('access.log'));
+                $logger->setFichierLogErreur(self::creerFichierSiNexistePas('errors.log', $logFolder));
+                $logger->setFichierLogAcces(self::creerFichierSiNexistePas('access.log', $logFolder));
                 break;
             default:
                 throw new \InvalidArgumentException(sprintf('Invalid displayer name %s.', $loggingMethode));
@@ -35,7 +37,7 @@ class LoggingFactory
     }
 
     /**
-     * @return I18n\TradManager
+     * @return TradManager
      */
     private static function getI18n()
     {
@@ -50,12 +52,13 @@ class LoggingFactory
 
     /**
      * @param string $nomFichier
+     * @param string $dossierLog
      * @return File
      */
-    private static function creerFichierSiNexistePas($nomFichier)
+    private static function creerFichierSiNexistePas($nomFichier, $dossierLog)
     {
         $alaroxFileManager = new AlaroxFile();
 
-        return $alaroxFileManager->getFile(BASE_PATH . '/log/' . $nomFichier);
+        return $alaroxFileManager->getFile($dossierLog . DIRECTORY_SEPARATOR . $nomFichier);
     }
 }

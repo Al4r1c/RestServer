@@ -20,12 +20,10 @@ class Conteneur
      */
     protected $_conteneur;
 
-    public function __construct()
-    {
-        $this->buildConteneur();
-    }
-
-    private function buildConteneur()
+    /**
+     * @param array $arrayConfig
+     */
+    public function buildConteneur($arrayConfig)
     {
         $conteneur = new \Pimple();
 
@@ -54,9 +52,9 @@ class Conteneur
             return $traitementManager;
         };
 
-        $conteneur['AuthManager'] = function () {
+        $conteneur['AuthManager'] = function () use ($arrayConfig) {
             $alaroxFileManager = new AlaroxFile();
-            $fichier = $alaroxFileManager->getFile(BASE_PATH . '/config/authorization.yaml');
+            $fichier = $alaroxFileManager->getFile($arrayConfig['authorizationFile']);
 
             $authManager = new AuthorizationManager();
             $authManager->chargerFichierAuthorisations($fichier);
@@ -87,9 +85,9 @@ class Conteneur
             };
         };
 
-        $conteneur['DatabaseConfig'] = function () {
+        $conteneur['DatabaseConfig'] = function () use ($arrayConfig) {
             $alaroxFileManager = new AlaroxFile();
-            $fichier = $alaroxFileManager->getFile(BASE_PATH . '/config/databaseConfig.yaml');
+            $fichier = $alaroxFileManager->getFile($arrayConfig['configDatabase']);
 
             $dbConfig = new DatabaseConfig();
             $dbConfig->recupererInformationFichier($fichier);
@@ -107,9 +105,9 @@ class Conteneur
             return $restReponse;
         };
 
-        $conteneur['Config'] = function () {
+        $conteneur['Config'] = function () use ($arrayConfig) {
             $alaroxFileManager = new AlaroxFile();
-            $fichier = $alaroxFileManager->getFile(BASE_PATH . '/config/config.yaml');
+            $fichier = $alaroxFileManager->getFile($arrayConfig['configMain']);
 
             $configurationManager = new Config();
             $configurationManager->chargerConfiguration($fichier);
