@@ -25,7 +25,7 @@ class Config
     public function chargerConfiguration($fichierFramework)
     {
         if (!$fichierFramework instanceof File) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, '\AlaroxFileManager\File', $fichierFramework);
+            throw new ArgumentTypeException(500,  '\AlaroxFileManager\File', $fichierFramework);
         }
 
         try {
@@ -58,7 +58,7 @@ class Config
     public function getConfigValeur($clefConfig)
     {
         if (!is_string($clefConfig)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $clefConfig);
+            throw new ArgumentTypeException(500,  'string', $clefConfig);
         }
 
         if (!is_null($valeur = array_key_multi_get($clefConfig, $this->_applicationConfiguration, true))

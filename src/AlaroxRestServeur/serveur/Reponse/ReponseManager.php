@@ -88,7 +88,7 @@ class ReponseManager
     {
         if (!$headerManager instanceof Header) {
             throw new ArgumentTypeException(
-                1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Reponse\Header\Header', $headerManager
+                500,  '\AlaroxRestServeur\Serveur\Reponse\Header\Header', $headerManager
             );
         }
 
@@ -103,7 +103,7 @@ class ReponseManager
     {
         if (!$configuration instanceof Config) {
             throw new ArgumentTypeException(
-                1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Reponse\Config\Config', $configuration
+                500,  '\AlaroxRestServeur\Serveur\Reponse\Config\Config', $configuration
             );
         }
 
@@ -118,7 +118,7 @@ class ReponseManager
     public function setRenderFactory($renderFactory)
     {
         if (!is_callable($renderFactory)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'callable', $renderFactory);
+            throw new ArgumentTypeException(500,  'callable', $renderFactory);
         }
 
         $this->_renderFactory = $renderFactory;
@@ -132,7 +132,7 @@ class ReponseManager
     public function setFormatsAcceptes($formatsAcceptes)
     {
         if (!is_array($formatsAcceptes)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsAcceptes);
+            throw new ArgumentTypeException(500,  'array', $formatsAcceptes);
         }
 
         if (isNull($formatsAcceptes)) {
@@ -150,7 +150,7 @@ class ReponseManager
     public function setCharset($charset)
     {
         if (!is_string($charset)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $charset);
+            throw new ArgumentTypeException(500,  'string', $charset);
         }
 
         if (!in_array(strtoupper($charset), array_map('strtoupper', mb_list_encodings()))) {
@@ -167,13 +167,13 @@ class ReponseManager
     public function setObserveurs($observeurs)
     {
         if (!is_array($observeurs)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $observeurs);
+            throw new ArgumentTypeException(500,  'array', $observeurs);
         }
 
         foreach ($observeurs as $unObserveur) {
             if (!$unObserveur instanceof AbstractDisplayer) {
                 throw new ArgumentTypeException(
-                    1000, 500, __METHOD__, '\Logging\Displayer\AbstractDisplayer', $unObserveur
+                    500,  '\Logging\Displayer\AbstractDisplayer', $unObserveur
                 );
             }
         }
@@ -217,7 +217,7 @@ class ReponseManager
     public function fabriquerReponse($objetReponse, $formatsDemandes)
     {
         if (!is_array($formatsDemandes)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'array', $formatsDemandes);
+            throw new ArgumentTypeException(500,  'array', $formatsDemandes);
         }
 
         foreach ($formatsDemandes as $unFormatDemande) {

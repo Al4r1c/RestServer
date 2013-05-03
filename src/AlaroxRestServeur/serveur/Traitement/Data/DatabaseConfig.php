@@ -112,7 +112,7 @@ class DatabaseConfig
     public function setDriver($driver)
     {
         if (!is_string($driver)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $driver);
+            throw new ArgumentTypeException(500,  'string', $driver);
         }
 
         $this->_driver = $driver;
@@ -125,7 +125,7 @@ class DatabaseConfig
     public function setHost($host)
     {
         if (!is_string($host)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $host);
+            throw new ArgumentTypeException(500,  'string', $host);
         }
 
         $this->_host = $host;
@@ -139,7 +139,7 @@ class DatabaseConfig
     public function setPort($port)
     {
         if (!is_numeric($port)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'numeric', $port);
+            throw new ArgumentTypeException(500,  'numeric', $port);
         }
 
         if ($port < 1 || $port > 65535) {
@@ -172,7 +172,7 @@ class DatabaseConfig
     public function setDatabase($database)
     {
         if (!is_string($database)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $database);
+            throw new ArgumentTypeException(500,  'string', $database);
         }
 
         $this->_database = $database;

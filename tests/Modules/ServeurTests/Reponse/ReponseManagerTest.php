@@ -34,7 +34,6 @@ class ReponseManagerTest extends TestCase
         $this->_restReponse->setHeader(null);
     }
 
-
     public function testRestSetFormatAcceptes()
     {
         $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json', 'TEXT' => 'txt'));

@@ -82,8 +82,7 @@ class AuthorizationManager
     {
         if (!$authorization instanceof Authorization) {
             throw new ArgumentTypeException(
-                1000, 500, __METHOD__,
-                '\AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization', $authorization
+                500,  '\AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization', $authorization
             );
         }
 
@@ -97,7 +96,7 @@ class AuthorizationManager
     public function setTimeRequestValid($timeActif)
     {
         if (!is_numeric($timeActif)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'int', $timeActif);
+            throw new ArgumentTypeException(500,  'int', $timeActif);
         }
 
         $this->_timeRequestValid = $timeActif;
@@ -111,7 +110,7 @@ class AuthorizationManager
     public function chargerFichierAuthorisations($fichierAuthorization)
     {
         if (!$fichierAuthorization instanceof File) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, '\AlaroxFileManager\File', $fichierAuthorization);
+            throw new ArgumentTypeException(500,  '\AlaroxFileManager\File', $fichierAuthorization);
         }
 
         try {

@@ -21,11 +21,11 @@ class Header
     public function ajouterHeader($champ, $valeur)
     {
         if (!is_string($champ)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $champ);
+            throw new ArgumentTypeException(500,  'string', $champ);
         }
 
         if (!is_string($valeur)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'string', $valeur);
+            throw new ArgumentTypeException(500,  'string', $valeur);
         }
 
         if (!Tools::isValideResponseHeader($champ)) {

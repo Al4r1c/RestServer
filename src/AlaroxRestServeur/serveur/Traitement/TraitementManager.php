@@ -40,7 +40,7 @@ class TraitementManager
     public function setRessourceFactory($callableFactoryRessource)
     {
         if (!is_callable($callableFactoryRessource)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'callable', $callableFactoryRessource);
+            throw new ArgumentTypeException(500,  'callable', $callableFactoryRessource);
         }
 
         $this->_ressourceFactory = $callableFactoryRessource;
@@ -53,7 +53,7 @@ class TraitementManager
     public function setDatabaseFactory($callableDatabaseFactory)
     {
         if (!is_callable($callableDatabaseFactory)) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, 'callable', $callableDatabaseFactory);
+            throw new ArgumentTypeException(500,  'callable', $callableDatabaseFactory);
         }
 
         $this->_databaseFactory = $callableDatabaseFactory;
@@ -67,7 +67,7 @@ class TraitementManager
     {
         if (!$databaseConfig instanceof DatabaseConfig) {
             throw new ArgumentTypeException(
-                1000, 500, __METHOD__, 'AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig', $databaseConfig
+                500,  'AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig', $databaseConfig
             );
         }
 
@@ -82,7 +82,7 @@ class TraitementManager
     {
         if (!$authManager instanceof AuthorizationManager) {
             throw new ArgumentTypeException(
-                1000, 500, __METHOD__, 'AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig', $authManager
+                500,  'AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig', $authManager
             );
         }
 

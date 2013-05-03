@@ -9,21 +9,26 @@ class ArgumentTypeException extends MainException
     private $_obtenu;
 
     /**
-     * @param string $code
      * @param int $codeStatus
      * @param string $methode
      * @param string $attendu
      * @param mixed $typeVariable
      */
-    public function __construct($code, $codeStatus, $methode, $attendu, $typeVariable)
+    public function __construct($codeStatus, $attendu, $typeVariable)
     {
+        $trace = debug_backtrace();
+        $caller = array_shift($trace);
+
         if (!is_object($typeVariable)) {
             $this->setObtenu(gettype($typeVariable));
         } else {
             $this->setObtenu($this->_obtenu = get_class($typeVariable));
         }
 
-        parent::__construct($code, $codeStatus, $methode, $attendu, $this->_obtenu);
+        parent::__construct(
+            1000, $codeStatus, $caller['file'] . '::' . $caller['object']->getTrace()[0]['function'] . '()', $attendu,
+            $this->_obtenu
+        );
     }
 
     /**

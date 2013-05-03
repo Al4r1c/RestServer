@@ -11,7 +11,7 @@ class ArgumentTypeExceptionTest extends TestCase
 
     private function setMainException($variable)
     {
-        $this->_argumentException = new ArgumentTypeException(10000, 500, 'Methode()', 'attendu', $variable);
+        $this->_argumentException = new ArgumentTypeException(500, 'attendu', $variable);
     }
 
     public function testGetObtenuInt()
