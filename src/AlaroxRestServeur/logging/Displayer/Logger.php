@@ -28,7 +28,7 @@ class Logger extends AbstractDisplayer
     public function setFichierLogAcces($fichierLogAcces)
     {
         if (!$fichierLogAcces instanceof File) {
-            throw new \InvalidArgumentException('Object "\AlaroxFileManager\File" required.');
+            throw new \InvalidArgumentException('Object "\AlaroxFileManager\File" expected.');
         }
 
         $this->_fichierLogAcces = $fichierLogAcces;
@@ -41,7 +41,7 @@ class Logger extends AbstractDisplayer
     public function setFichierLogErreur($fichierLogErreur)
     {
         if (!$fichierLogErreur instanceof File) {
-            throw new \InvalidArgumentException('Object "\AlaroxFileManager\File" required.');
+            throw new \InvalidArgumentException('Object "\AlaroxFileManager\File" expected.');
         }
 
         $this->_fichierLogErreur = $fichierLogErreur;

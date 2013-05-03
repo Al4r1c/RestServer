@@ -59,6 +59,10 @@ class LoggingFactory
     {
         $alaroxFileManager = new AlaroxFile();
 
-        return $alaroxFileManager->getFile($dossierLog . DIRECTORY_SEPARATOR . $nomFichier);
+        $file = $alaroxFileManager->getFile($dossierLog . DIRECTORY_SEPARATOR . $nomFichier);
+
+        $file->createFile();
+
+        return $file;
     }
 }
