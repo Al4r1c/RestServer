@@ -13,7 +13,7 @@ abstract class AbstractRenderer
     public function render($donnees)
     {
         if (!is_array($donnees)) {
-            throw new ArgumentTypeException(500,  'array', $donnees);
+            throw new ArgumentTypeException(500, 'array', $donnees);
         }
 
         return $this->genererRendu($donnees);

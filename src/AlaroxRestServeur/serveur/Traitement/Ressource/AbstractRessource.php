@@ -29,7 +29,7 @@ abstract class AbstractRessource implements IRessource
     {
         if (!$dbConnection instanceof AbstractDatabase) {
             throw new ArgumentTypeException(
-                500,  '\AlaroxRestServeur\Serveur\Traitement\Data\AbstractDatabase', $dbConnection
+                500, '\AlaroxRestServeur\Serveur\Traitement\Data\AbstractDatabase', $dbConnection
             );
         }
 

@@ -18,7 +18,7 @@ class Main
     /**
      * @var array
      */
-    private static $clefsMinimales = array('configMain', 'configDatabase', 'authorizationFile');
+    private static $_clefsMinimales = array('configMain', 'configDatabase', 'authorizationFile');
 
     /**
      * @param array $arrayConfig
@@ -27,7 +27,7 @@ class Main
      */
     public function __construct($arrayConfig, $driverList)
     {
-        foreach (self::$clefsMinimales as $uneConfigObligatoire) {
+        foreach (self::$_clefsMinimales as $uneConfigObligatoire) {
             if (!array_key_exists($uneConfigObligatoire, $arrayConfig)) {
                 throw new \Exception(sprintf('Missing configuration key %s', $uneConfigObligatoire));
             }

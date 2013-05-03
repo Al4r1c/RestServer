@@ -121,7 +121,7 @@ class Conteneur
             return function ($nomClasseRendu) {
                 if (class_exists(
                     $nomVue =
-                        '\\AlaroxRestServeur\\Serveur\\Reponse\\Renderers\\' . ucfirst(strtolower($nomClasseRendu))
+                    '\\AlaroxRestServeur\\Serveur\\Reponse\\Renderers\\' . ucfirst(strtolower($nomClasseRendu))
                 )
                 ) {
                     return new $nomVue();

@@ -82,7 +82,7 @@ class AuthorizationManager
     {
         if (!$authorization instanceof Authorization) {
             throw new ArgumentTypeException(
-                500,  '\AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization', $authorization
+                500, '\AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization', $authorization
             );
         }
 
@@ -96,7 +96,7 @@ class AuthorizationManager
     public function setTimeRequestValid($timeActif)
     {
         if (!is_numeric($timeActif)) {
-            throw new ArgumentTypeException(500,  'int', $timeActif);
+            throw new ArgumentTypeException(500, 'int', $timeActif);
         }
 
         $this->_timeRequestValid = $timeActif;
@@ -110,7 +110,7 @@ class AuthorizationManager
     public function chargerFichierAuthorisations($fichierAuthorization)
     {
         if (!$fichierAuthorization instanceof File) {
-            throw new ArgumentTypeException(500,  '\AlaroxFileManager\File', $fichierAuthorization);
+            throw new ArgumentTypeException(500, '\AlaroxFileManager\File', $fichierAuthorization);
         }
 
         try {
@@ -209,8 +209,7 @@ class AuthorizationManager
             return false;
         }
 
-        $tempsValide = 60 * 60 * $this->_timeRequestValid;
-        $expires = $timeRequete->getTimestamp() + $tempsValide;
+        $expires = $timeRequete->getTimestamp() + (60 * 60 * $this->_timeRequestValid);
         $nowDateTime = new \DateTime(gmdate('M d Y H:i:s T', time()));
 
         if ($expires - $nowDateTime->getTimestamp() < 0) {
@@ -229,8 +228,6 @@ class AuthorizationManager
         $couple = explode(':', substr($requete->getAuthorization(), 4));
 
         if (!is_null($authorization = $this->getUneAuthorization($couple[0]))) {
-            $decoderBase64 = base64_decode($couple[1]);
-
             $motDePasseEncode =
                 hash_hmac(
                     'sha256', $requete->getPlainParametres(),
@@ -238,7 +235,7 @@ class AuthorizationManager
                     $requete->getDateRequete()->getTimestamp(), true
                 );
 
-            return strcmp($decoderBase64, $motDePasseEncode) == 0;
+            return strcmp(base64_decode($couple[1]), $motDePasseEncode) == 0;
         }
 
         return false;

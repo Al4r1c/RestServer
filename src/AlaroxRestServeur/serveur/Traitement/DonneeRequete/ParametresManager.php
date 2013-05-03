@@ -74,7 +74,7 @@ class ParametresManager
     {
         if (!$donneesRequete instanceof ChampRequete) {
             throw new ArgumentTypeException(
-                500,  '\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\DonneeRequete', $donneesRequete
+                500, '\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\DonneeRequete', $donneesRequete
             );
         }
 
@@ -89,7 +89,7 @@ class ParametresManager
     {
         if (!$tri instanceof Tri) {
             throw new ArgumentTypeException(
-                500,  '\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\Tri', $tri
+                500, '\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\Tri', $tri
             );
         }
 

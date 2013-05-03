@@ -24,7 +24,7 @@ class RequeteManager
     {
         if (!$server instanceof Server) {
             throw new ArgumentTypeException(
-                500,  '\AlaroxRestServeur\Serveur\Requete\Server\Server', $server
+                500, '\AlaroxRestServeur\Serveur\Requete\Server\Server', $server
             );
         }
 
@@ -56,7 +56,7 @@ class RequeteManager
         $httpAccept = $this->_server->getUneVariableServeur('HTTP_ACCEPT');
 
         if (!is_string($httpAccept)) {
-            throw new ArgumentTypeException(400,  'string', $httpAccept);
+            throw new ArgumentTypeException(400, 'string', $httpAccept);
         }
 
         return $httpAccept;
@@ -88,7 +88,7 @@ class RequeteManager
         $uri = $this->_server->getUneVariableServeur('REQUEST_URI');
 
         if (!is_string($uri)) {
-            throw new ArgumentTypeException(400,  'string', $uri);
+            throw new ArgumentTypeException(400, 'string', $uri);
         }
 
         if (($pos = strpos($uri, '?')) !== false) {
@@ -236,7 +236,7 @@ class RequeteManager
         $ip = $this->_server->getUneVariableServeur('REMOTE_ADDR');
 
         if (!is_string($ip)) {
-            throw new ArgumentTypeException(400,  'string', $ip);
+            throw new ArgumentTypeException(400, 'string', $ip);
         }
 
         if (!filter_var($ip, FILTER_VALIDATE_IP)) {

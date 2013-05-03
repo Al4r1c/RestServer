@@ -61,7 +61,7 @@ class ObjetReponse
     public function setStatusHttp($statusHttp)
     {
         if (!is_int($statusHttp)) {
-            throw new ArgumentTypeException(500,  'int', $statusHttp);
+            throw new ArgumentTypeException(500, 'int', $statusHttp);
         }
 
         if (!Tools::isValideHttpCode($statusHttp)) {
@@ -78,7 +78,7 @@ class ObjetReponse
     public function setDonneesReponse($donneesReponse)
     {
         if (!is_array($donneesReponse)) {
-            throw new ArgumentTypeException(500,  'array', $donneesReponse);
+            throw new ArgumentTypeException(500, 'array', $donneesReponse);
         }
 
         $this->_donneesReponse = $donneesReponse;

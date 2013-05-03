@@ -28,7 +28,7 @@ class Authorization
     public function setEntityId($idEntity)
     {
         if (!is_string($idEntity)) {
-            throw new ArgumentTypeException(500,  'string', $idEntity);
+            throw new ArgumentTypeException(500, 'string', $idEntity);
         }
 
         $this->_entityId = $idEntity;
@@ -38,7 +38,7 @@ class Authorization
     public function setClefPrivee($clefPrivee)
     {
         if (!is_string($clefPrivee)) {
-            throw new ArgumentTypeException(500,  'string', $clefPrivee);
+            throw new ArgumentTypeException(500, 'string', $clefPrivee);
         }
 
         $this->_clefPrivee = $clefPrivee;

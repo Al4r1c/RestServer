@@ -18,7 +18,7 @@ class TypeDetector
     public function __construct($mimesTypes)
     {
         if (!is_array($mimesTypes)) {
-            throw new ArgumentTypeException(500,  'array', $mimesTypes);
+            throw new ArgumentTypeException(500, 'array', $mimesTypes);
         }
 
         $this->_constanteMimes = $mimesTypes;

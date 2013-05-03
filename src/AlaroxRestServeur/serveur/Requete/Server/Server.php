@@ -30,7 +30,7 @@ class Server
     public function setVarServeur($varServeur)
     {
         if (!is_array($varServeur)) {
-            throw new ArgumentTypeException(500,  'array', $varServeur);
+            throw new ArgumentTypeException(500, 'array', $varServeur);
         }
 
         $this->setServeurVariables($varServeur);
@@ -65,7 +65,7 @@ class Server
     public function setServeurVariables($serverVar)
     {
         if (!is_array($serverVar)) {
-            throw new ArgumentTypeException(500,  'array', $serverVar);
+            throw new ArgumentTypeException(500, 'array', $serverVar);
         }
 
         foreach (self::$_tabClefsMinimales as $uneClefMini) {
