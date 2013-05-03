@@ -77,7 +77,7 @@ class Conteneur
         $conteneur['DatabaseFactory'] = function () {
             return function ($nomDriverDatabase) {
                 $nomClasseDatabase =
-                    '\\AlaroxRestServer\\Drivers\\MongoDB\\\Database' . ucfirst(strtolower($nomDriverDatabase));
+                    '\\AlaroxRestServeur\\Drivers\\MongoDB\\\Database' . ucfirst(strtolower($nomDriverDatabase));
 
                 if (class_exists($nomClasseDatabase)) {
                     return new $nomClasseDatabase();
