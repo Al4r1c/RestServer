@@ -87,7 +87,9 @@ class ReponseManager
     public function setHeader($headerManager)
     {
         if (!$headerManager instanceof Header) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Reponse\Header\Header', $headerManager);
+            throw new ArgumentTypeException(
+                1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Reponse\Header\Header', $headerManager
+            );
         }
 
         $this->_header = $headerManager;
@@ -100,7 +102,9 @@ class ReponseManager
     public function setConfig($configuration)
     {
         if (!$configuration instanceof Config) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Reponse\Config\Config', $configuration);
+            throw new ArgumentTypeException(
+                1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Reponse\Config\Config', $configuration
+            );
         }
 
         $this->setFormatsAcceptes($configuration->getConfigValeur('render'));

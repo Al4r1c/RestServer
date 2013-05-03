@@ -74,7 +74,8 @@ class ParametresManager
     {
         if (!$donneesRequete instanceof ChampRequete) {
             throw new ArgumentTypeException(
-                1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\DonneeRequete', $donneesRequete
+                1000, 500, __METHOD__,
+                '\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\DonneeRequete', $donneesRequete
             );
         }
 

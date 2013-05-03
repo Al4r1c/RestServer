@@ -82,7 +82,8 @@ class AuthorizationManager
     {
         if (!$authorization instanceof Authorization) {
             throw new ArgumentTypeException(
-                1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization', $authorization
+                1000, 500, __METHOD__,
+                '\AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization', $authorization
             );
         }
 
@@ -231,7 +232,7 @@ class AuthorizationManager
                 hash_hmac(
                     'sha256', $requete->getPlainParametres(),
                     $authorization->getClefPrivee() . $requete->getMethode() . $requete->getHttpAccept() .
-                        $requete->getDateRequete()->getTimestamp(), true
+                    $requete->getDateRequete()->getTimestamp(), true
                 );
 
             return strcmp($decoderBase64, $motDePasseEncode) == 0;

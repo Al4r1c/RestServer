@@ -23,7 +23,9 @@ class RequeteManager
     public function setServer($server)
     {
         if (!$server instanceof Server) {
-            throw new ArgumentTypeException(1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Requete\Server\Server', $server);
+            throw new ArgumentTypeException(
+                1000, 500, __METHOD__, '\AlaroxRestServeur\Serveur\Requete\Server\Server', $server
+            );
         }
 
         $this->_server = $server;
