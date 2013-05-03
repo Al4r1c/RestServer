@@ -1,5 +1,14 @@
 {
 	"name": "alarox-restserver/RestServer",
+	"description": "Rest Server.",
+	"type": "library",
+	"homepage": "https://github.com/Al4r1c/RestServer/",
+	"authors": [
+		{
+			"name": "KURDIJAKA Y.",
+			"email": "yann.kurdijaka@wanadoo.fr"
+		}
+	],
 	"repositories": [
 		{
 			"type": "vcs",
@@ -15,6 +24,7 @@
 		}
 	],
 	"require": {
+		"php": ">=5.4.0",
 		"alarox/AlaroxClassLoader": "v1.0",
 		"alarox/AlaroxFileManager": "v0.2",
 		"alarox/AlaroxXMLParser": "v0.3",
