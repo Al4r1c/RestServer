@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Lib;
 
-use Serveur\Lib\ObjetReponse;
+use AlaroxRestServeur\Serveur\Lib\ObjetReponse;
 use Tests\TestCase;
 
 class ObjetReponseTest extends TestCase
@@ -22,7 +22,7 @@ class ObjetReponseTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testCodeHttpNonInt()
@@ -31,7 +31,7 @@ class ObjetReponseTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 10100
      */
     public function testCodeHttpInvalide()
@@ -46,7 +46,7 @@ class ObjetReponseTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testContenuInvalide()
@@ -72,7 +72,7 @@ class ObjetReponseTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 10101
      */
     public function testFormatErrone()

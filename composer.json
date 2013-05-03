@@ -21,10 +21,9 @@
 		"pimple/pimple": "v1.0.2",
 		"mikey179/vfsStream": "v1.2.0"
 	},
-	"config": {
-		"vendor-dir": "libraries"
-	},
 	"autoload": {
-		"files": [ "src/serveur/Main.php" ]
+		"psr-0": {
+			"AlaroxRestServer": "src/"
+		}
 	}
 }

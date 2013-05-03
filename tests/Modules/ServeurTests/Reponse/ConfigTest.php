@@ -2,7 +2,7 @@
 namespace Tests\ServeurTests\Reponse;
 
 use AlaroxFileManager\FileManager\File;
-use Serveur\Reponse\Config\Config;
+use AlaroxRestServeur\Serveur\Reponse\Config\Config;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -36,7 +36,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testChargerConfigurationArgumentDoitEtreFichier()
@@ -45,7 +45,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40200
      */
     public function testloadFileInexistant()
@@ -58,7 +58,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40201
      */
     public function testChargerFichierInvalide()
@@ -86,7 +86,7 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testGetValeurNonString()

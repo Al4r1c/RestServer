@@ -1,7 +1,7 @@
 <?php
 namespace Tests\LoggingTests\I18n;
 
-use Logging\I18n\I18nManager;
+use AlaroxRestServeur\Logging\I18n\I18nManager;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -77,7 +77,8 @@ class I18nManagerTest extends TestCase
 
         $this->assertThat(
             $i18nManager->getFichierTraduction(), $this->logicalAnd(
-                $this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')
+                $this->logicalNot($this->isNull()),
+                $this->isInstanceOf('AlaroxRestServeur\Serveur\Lib\XMLParser\XMLParser')
             )
         );
     }
@@ -101,7 +102,8 @@ class I18nManagerTest extends TestCase
 
         $this->assertThat(
             $i18nManager->getFichierTraduction(), $this->logicalAnd(
-                $this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')
+                $this->logicalNot($this->isNull()),
+                $this->isInstanceOf('AlaroxRestServeur\Serveur\Lib\XMLParser\XMLParser')
             )
         );
     }
@@ -134,7 +136,8 @@ class I18nManagerTest extends TestCase
 
         $this->assertThat(
             $i18nManager->getFichierTraduction(), $this->logicalAnd(
-                $this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')
+                $this->logicalNot($this->isNull()),
+                $this->isInstanceOf('AlaroxRestServeur\Serveur\Lib\XMLParser\XMLParser')
             )
         );
     }
@@ -172,7 +175,8 @@ class I18nManagerTest extends TestCase
 
         $this->assertThat(
             $i18nManager->getFichierTraduction(), $this->logicalAnd(
-                $this->logicalNot($this->isNull()), $this->isInstanceOf('Serveur\Lib\XMLParser\XMLParser')
+                $this->logicalNot($this->isNull()),
+                $this->isInstanceOf('AlaroxRestServeur\Serveur\Lib\XMLParser\XMLParser')
             )
         );
     }

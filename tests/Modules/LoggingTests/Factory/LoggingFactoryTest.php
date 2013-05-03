@@ -1,7 +1,7 @@
 <?php
 namespace Tests\LoggingTests\Factory;
 
-use Logging\LoggingFactory;
+use AlaroxRestServeur\Logging\LoggingFactory;
 use Tests\TestCase;
 
 class LoggingFactoryTest extends TestCase
@@ -9,7 +9,7 @@ class LoggingFactoryTest extends TestCase
     public function testRecupererLogger()
     {
         $factory = LoggingFactory::getLogger('logger');
-        $this->assertInstanceOf("Logging\\Displayer\\AbstractDisplayer", $factory);
+        $this->assertInstanceOf("AlaroxRestServeur\\Logging\\Displayer\\AbstractDisplayer", $factory);
     }
 
     /**

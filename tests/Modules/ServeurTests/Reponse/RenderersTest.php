@@ -1,10 +1,10 @@
 <?php
 namespace Tests\ServeurTests\Reponse;
 
-use Serveur\Reponse\Renderers\Html;
-use Serveur\Reponse\Renderers\Json;
-use Serveur\Reponse\Renderers\Plain;
-use Serveur\Reponse\Renderers\Xml;
+use AlaroxRestServeur\Serveur\Reponse\Renderers\Html;
+use AlaroxRestServeur\Serveur\Reponse\Renderers\Json;
+use AlaroxRestServeur\Serveur\Reponse\Renderers\Plain;
+use AlaroxRestServeur\Serveur\Reponse\Renderers\Xml;
 use Tests\TestCase;
 
 class RenderersTest extends TestCase
@@ -24,7 +24,7 @@ class RenderersTest extends TestCase
     );
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRenderNonArrayDonnees()
@@ -58,7 +58,8 @@ class RenderersTest extends TestCase
 </li>
 </ul>
 </li>
-</ul>\n"
+</ul>
+"
         );
 
         $this->assertEquals($sortie, $renderer->render(self::$donnee));

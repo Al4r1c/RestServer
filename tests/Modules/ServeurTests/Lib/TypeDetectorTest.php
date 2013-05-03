@@ -1,7 +1,8 @@
 <?php
 namespace Tests\ServeurTests\Lib;
 
-use Serveur\Lib\TypeDetector;
+use AlaroxRestServeur\Serveur\Lib\TypeDetector;
+use AlaroxRestServeur\Serveur\Utils\Constante;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -22,7 +23,7 @@ class TypeDetectorTest extends TestCase
 
     public function setUp()
     {
-        /** @var $constantes \Serveur\Utils\Constante * */
+        /** @var $constantes Constante * */
         $constantes =
             $this->createStaticMock('Constante', new MockArg('chargerConfig', self::$mimeFichier, array('mimes')));
 
@@ -30,7 +31,7 @@ class TypeDetectorTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testNewTypeDetectorArgumentNonArray()

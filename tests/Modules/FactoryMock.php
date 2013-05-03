@@ -2,28 +2,28 @@
 namespace Tests;
 
 use AlaroxFileManager\FileManager\File;
-use Conteneur\Conteneur;
-use Logging\Displayer\AbstractDisplayer;
-use Logging\I18n\I18nManager;
-use Logging\I18n\TradManager;
-use Serveur\GestionErreurs\ErreurManager;
-use Serveur\GestionErreurs\Handler\ErreurHandler;
-use Serveur\GestionErreurs\Types\Error;
-use Serveur\GestionErreurs\Types\Notice;
-use Serveur\Lib\ObjetReponse;
-use Serveur\Reponse\Config\Config;
-use Serveur\Reponse\Header\Header;
-use Serveur\Reponse\Renderers\AbstractRenderer;
-use Serveur\Reponse\ReponseManager;
-use Serveur\Requete\RequeteManager;
-use Serveur\Requete\Server\Server;
-use Serveur\Traitement\Authorization\Authorization;
-use Serveur\Traitement\Authorization\AuthorizationManager;
-use Serveur\Traitement\Data\AbstractDatabase;
-use Serveur\Traitement\Data\DatabaseConfig;
-use Serveur\Traitement\Ressource\AbstractRessource;
-use Serveur\Traitement\TraitementManager;
-use Serveur\Utils\Constante;
+use AlaroxRestServeur\Conteneur\Conteneur;
+use AlaroxRestServeur\Logging\Displayer\AbstractDisplayer;
+use AlaroxRestServeur\Logging\I18n\I18nManager;
+use AlaroxRestServeur\Logging\I18n\TradManager;
+use AlaroxRestServeur\Serveur\GestionErreurs\ErreurManager;
+use AlaroxRestServeur\Serveur\GestionErreurs\Handler\ErreurHandler;
+use AlaroxRestServeur\Serveur\GestionErreurs\Types\Error;
+use AlaroxRestServeur\Serveur\GestionErreurs\Types\Notice;
+use AlaroxRestServeur\Serveur\Lib\ObjetReponse;
+use AlaroxRestServeur\Serveur\Reponse\Config\Config;
+use AlaroxRestServeur\Serveur\Reponse\Header\Header;
+use AlaroxRestServeur\Serveur\Reponse\Renderers\AbstractRenderer;
+use AlaroxRestServeur\Serveur\Reponse\ReponseManager;
+use AlaroxRestServeur\Serveur\Requete\RequeteManager;
+use AlaroxRestServeur\Serveur\Requete\Server\Server;
+use AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization;
+use AlaroxRestServeur\Serveur\Traitement\Authorization\AuthorizationManager;
+use AlaroxRestServeur\Serveur\Traitement\Data\AbstractDatabase;
+use AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig;
+use AlaroxRestServeur\Serveur\Traitement\Ressource\AbstractRessource;
+use AlaroxRestServeur\Serveur\Traitement\TraitementManager;
+use AlaroxRestServeur\Serveur\Utils\Constante;
 use XMLElement;
 use XMLParser;
 
@@ -133,7 +133,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAbstractDatabase($methodes = array())
     {
-        return $this->getMockAbstractClass('Serveur\Traitement\Data\AbstractDatabase', $methodes);
+        return $this->getMockAbstractClass('AlaroxRestServeur\Serveur\Traitement\Data\AbstractDatabase', $methodes);
     }
 
     /**
@@ -142,7 +142,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAbstractDisplayer($methodes = array())
     {
-        return $this->getMockAbstractClass('Logging\Displayer\AbstractDisplayer', $methodes);
+        return $this->getMockAbstractClass('AlaroxRestServeur\Logging\Displayer\AbstractDisplayer', $methodes);
     }
 
     /**
@@ -151,7 +151,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAbstractRenderer($methodes = array())
     {
-        return $this->getMockAbstractClass('Serveur\Reponse\Renderers\AbstractRenderer', $methodes);
+        return $this->getMockAbstractClass('AlaroxRestServeur\Serveur\Reponse\Renderers\AbstractRenderer', $methodes);
     }
 
     /**
@@ -160,7 +160,9 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAbstractRessource($methodes = array())
     {
-        return $this->getMockAbstractClass('Serveur\Traitement\Ressource\AbstractRessource', $methodes);
+        return $this->getMockAbstractClass(
+            'AlaroxRestServeur\Serveur\Traitement\Ressource\AbstractRessource', $methodes
+        );
     }
 
     /**
@@ -169,7 +171,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAuth($methodes = array())
     {
-        return $this->getMock('Serveur\Traitement\Authorization\Authorization', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization', $methodes);
     }
 
     /**
@@ -178,7 +180,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockAuthManager($methodes = array())
     {
-        return $this->getMock('Serveur\Traitement\Authorization\AuthorizationManager', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Traitement\Authorization\AuthorizationManager', $methodes);
     }
 
     /**
@@ -187,7 +189,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockConfig($methodes = array())
     {
-        return $this->getMock('Serveur\Reponse\Config\Config', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Reponse\Config\Config', $methodes);
     }
 
     /**
@@ -196,7 +198,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockConstante($methodes = array())
     {
-        return $this->getMock('Serveur\Utils\Constante', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Utils\Constante', $methodes);
     }
 
     /**
@@ -205,7 +207,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockConteneur($methodes = array())
     {
-        return $this->getMock('\Conteneur\Conteneur', $methodes);
+        return $this->getMock('AlaroxRestServeur\Conteneur\Conteneur', $methodes);
     }
 
     /**
@@ -214,7 +216,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockDatabaseConfig($methodes = array())
     {
-        return $this->getMock('Serveur\Traitement\Data\DatabaseConfig', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig', $methodes);
     }
 
     /**
@@ -223,7 +225,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockErreur($methodes = array())
     {
-        return $this->getMock('Serveur\GestionErreurs\Types\Error', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\GestionErreurs\Types\Error', $methodes);
     }
 
     /**
@@ -232,7 +234,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockErreurHandler($methodes)
     {
-        return $this->getMock('Serveur\GestionErreurs\Handler\ErreurHandler', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\GestionErreurs\Handler\ErreurHandler', $methodes);
     }
 
     /**
@@ -241,7 +243,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockErrorManager($methodes)
     {
-        return $this->getMock('Serveur\GestionErreurs\ErrorManager', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\GestionErreurs\ErrorManager', $methodes);
     }
 
     /**
@@ -259,7 +261,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockHeaders($methodes = array())
     {
-        return $this->getMock('Serveur\Reponse\Header\Header', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Reponse\Header\Header', $methodes);
     }
 
     /**
@@ -268,7 +270,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockI18nManager($methodes = array())
     {
-        return $this->getMock('Logging\I18n\I18nManager', $methodes);
+        return $this->getMock('AlaroxRestServeur\Logging\I18n\I18nManager', $methodes);
     }
 
     /**
@@ -277,7 +279,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockNotice($methodes = array())
     {
-        return $this->getMock('Serveur\GestionErreurs\Types\Notice', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\GestionErreurs\Types\Notice', $methodes);
     }
 
     /**
@@ -286,7 +288,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockObjetReponse($methodes = array())
     {
-        return $this->getMock('Serveur\Lib\ObjetReponse', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Lib\ObjetReponse', $methodes);
     }
 
     /**
@@ -295,7 +297,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockRestRequete($methodes = array())
     {
-        return $this->getMock('Serveur\Requete\RequeteManager', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Requete\RequeteManager', $methodes);
     }
 
     /**
@@ -304,7 +306,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockRestReponse($methodes = array())
     {
-        return $this->getMock('Serveur\Reponse\ReponseManager', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Reponse\ReponseManager', $methodes);
     }
 
     /**
@@ -313,7 +315,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockServer($methodes = array())
     {
-        return $this->getMock('Serveur\Requete\Server\Server', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Requete\Server\Server', $methodes);
     }
 
     /**
@@ -322,7 +324,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockTradManager($methodes = array())
     {
-        return $this->getMock('Logging\I18n\TradManager', $methodes);
+        return $this->getMock('AlaroxRestServeur\Logging\I18n\TradManager', $methodes);
     }
 
     /**
@@ -331,7 +333,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockTraitementManager($methodes = array())
     {
-        return $this->getMock('Serveur\Traitement\TraitementManager', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Traitement\TraitementManager', $methodes);
     }
 
     /**
@@ -340,7 +342,7 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockXmlElement($methodes = array())
     {
-        return $this->getMock('Serveur\Lib\XMLParser\XMLElement', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Lib\XMLParser\XMLElement', $methodes);
     }
 
     /**
@@ -349,6 +351,6 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
      */
     protected function getMockXmlParser($methodes = array())
     {
-        return $this->getMock('Serveur\Lib\XMLParser\XMLParser', $methodes);
+        return $this->getMock('AlaroxRestServeur\Serveur\Lib\XMLParser\XMLParser', $methodes);
     }
 }

@@ -11,7 +11,7 @@ if (!defined('SERVER_NAMESPACE')) {
 
 include_once(BASE_PATH . '/functions/functions.php');
 
-include_once(BASE_PATH . '/libraries/autoload.php');
+include_once(BASE_PATH . '/vendor/autoload.php');
 
 
 $GLOBALS['global_function_ajouterErreur'] = 'throwExceptionEnvTest';
@@ -20,9 +20,7 @@ function throwExceptionEnvTest($erreurNumber, $codeErreur)
 }
 
 
-$classLoader = new ClassLoader('.class.php');
-$classLoader->ajouterNamespace('Serveur', BASE_PATH . '/src/serveur');
-$classLoader->ajouterNamespace('Conteneur', BASE_PATH . '/src/conteneur');
-$classLoader->ajouterNamespace('Logging', BASE_PATH . '/src/logging');
+$classLoader = new ClassLoader();
+$classLoader->ajouterNamespace('AlaroxRestServeur', BASE_PATH . '/src/AlaroxRestServeur');
 $classLoader->ajouterNamespace('Tests', realpath(__DIR__ . '/Modules') . DIRECTORY_SEPARATOR, '.php');
 $classLoader->register();

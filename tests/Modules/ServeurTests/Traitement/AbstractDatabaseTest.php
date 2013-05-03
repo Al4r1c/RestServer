@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Traitement\Data\AbstractDatabase;
+use AlaroxRestServeur\Serveur\Traitement\Data\AbstractDatabase;
 use Tests\TestCase;
 
 class AbstractDatabaseTest extends TestCase

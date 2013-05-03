@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Traitement\DonneeRequete\Tri;
+use AlaroxRestServeur\Serveur\Traitement\DonneeRequete\Tri;
 use Tests\TestCase;
 
 class TriTest extends TestCase
@@ -18,7 +18,7 @@ class TriTest extends TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf('\\Serveur\\Traitement\\DonneeRequete\\Tri', $this->_tri);
+        $this->assertInstanceOf('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\Tri', $this->_tri);
     }
 
     public function testTypeTri()

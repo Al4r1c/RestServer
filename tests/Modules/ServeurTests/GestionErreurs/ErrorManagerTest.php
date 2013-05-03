@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\GestionErreurs;
 
-use Serveur\GestionErreurs\ErreurManager;
+use AlaroxRestServeur\Serveur\GestionErreurs\ErreurManager;
 use Tests\MockArg;
 use Tests\TestCase;
 

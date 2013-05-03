@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Traitement\Authorization\Authorization;
+use AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization;
 use Tests\TestCase;
 
 class AuthorizationTest extends TestCase
@@ -24,7 +24,7 @@ class AuthorizationTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testUsernameString()
     {
@@ -39,7 +39,7 @@ class AuthorizationTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testPrivateKeyString()
     {

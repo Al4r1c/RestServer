@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Requete;
 
-use Serveur\Requete\RequeteManager;
+use AlaroxRestServeur\Serveur\Requete\RequeteManager;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -25,7 +25,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException    \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20000
      */
     public function testRestMethodeValide()
@@ -50,7 +50,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestAcceptFormatInvalide()
@@ -68,7 +68,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20001
      */
     public function testRestFormatValide()
@@ -86,7 +86,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestUriErronee()
@@ -229,7 +229,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestSetServerEronnee()
@@ -255,7 +255,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestIpErrone()
@@ -266,7 +266,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20002
      */
     public function testRestIpFake()
@@ -300,7 +300,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20003
      */
     public function testGetContentTypeErrone()
@@ -359,7 +359,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20004
      */
     public function testRecupererPutPostContentTypeInconnu()
@@ -382,7 +382,7 @@ class RequeteManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20005
      */
     public function testGetAuthorizationHeaderInvalid()

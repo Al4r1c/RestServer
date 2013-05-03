@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Reponse;
 
-use Serveur\Reponse\Header\Header;
+use AlaroxRestServeur\Serveur\Reponse\Header\Header;
 use Tests\TestCase;
 
 class HeaderManagerTest extends TestCase
@@ -23,7 +23,7 @@ class HeaderManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testAjouterHeaderChampNonString()
@@ -32,7 +32,7 @@ class HeaderManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testAjouterHeaderValeurNonString()
@@ -41,7 +41,7 @@ class HeaderManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40100
      */
     public function testAjouterHeaderSiValide()

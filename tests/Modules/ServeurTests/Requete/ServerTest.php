@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Requete;
 
-use Serveur\Requete\Server\Server;
+use AlaroxRestServeur\Serveur\Requete\Server\Server;
 use Tests\TestCase;
 
 class ServerTest extends TestCase
@@ -76,7 +76,7 @@ class ServerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 20100
      */
     public function testWhiteList()
@@ -87,7 +87,7 @@ class ServerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testSetServeurDonneesErronee()
@@ -96,7 +96,7 @@ class ServerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testSetServeurVariableErronee()
@@ -104,13 +104,15 @@ class ServerTest extends TestCase
         $this->_server->setServeurVariables(null);
     }
 
-    public function testGetUneVariableServeur() {
+    public function testGetUneVariableServeur()
+    {
         $this->_server->setVarServeur(self::$donneesServer);
 
         $this->assertEquals('server.com', $this->_server->getUneVariableServeur('HTTP_HOST'));
     }
 
-    public function testGetUneVariableServeurNonTrouveRenvoiNull() {
+    public function testGetUneVariableServeurNonTrouveRenvoiNull()
+    {
         $this->_server->setVarServeur(self::$donneesServer);
 
         $this->assertNull($this->_server->getUneVariableServeur('NO_NO_NO'));

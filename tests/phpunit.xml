@@ -9,7 +9,8 @@
 		<whitelist>
 			<directory suffix=".php">../src</directory>
 			<exclude>
-				<directory suffix=".php">../src/conteneur</directory>
+				<directory suffix=".php">../src/AlaroxRestServeur/conteneur</directory>
+				<directory suffix=".php">../src/AlaroxRestServeur/Main.php</directory>
 			</exclude>
 		</whitelist>
 	</filter>

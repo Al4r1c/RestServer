@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Traitement\Authorization\AuthorizationManager;
+use AlaroxRestServeur\Serveur\Traitement\Authorization\AuthorizationManager;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -33,7 +33,7 @@ class AuthorizationManagerTest extends TestCase
     public function testGetAuthorizations()
     {
         $this->_authorizationManager->addAuthorization(
-            $auth = $this->getMock('Serveur\Traitement\Authorization\Authorization')
+            $auth = $this->getMock('AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization')
         );
 
         $this->assertCount(1, $this->_authorizationManager->getAuthorizations());
@@ -41,7 +41,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testGetAddAuthorizationsType()
     {
@@ -58,7 +58,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testTimeActifNumeric()
     {
@@ -77,7 +77,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testChargerFichierType()
     {
@@ -85,7 +85,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30200
      */
     public function testChargerFichierNotExist()
@@ -98,7 +98,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30201
      */
     public function testKeyNotFound()
@@ -113,7 +113,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30201
      */
     public function testKeyNotFound2()
@@ -128,7 +128,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30202
      */
     public function testKeyMinLengthInvalid()
@@ -144,7 +144,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30203
      */
     public function testKeyTooShort()
@@ -161,7 +161,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30204
      */
     public function testKeyNeedLower()
@@ -178,7 +178,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30205
      */
     public function testKeyNeedUpper()
@@ -195,7 +195,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30206
      */
     public function testKeyNeedNumber()
@@ -212,7 +212,7 @@ class AuthorizationManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30207
      */
     public function testKeyNeedSpecialChar()

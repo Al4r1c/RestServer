@@ -3,9 +3,9 @@ namespace Tests\LoggingTests\Displayer;
 
 use AlaroxFileManager\AlaroxFile;
 use AlaroxFileManager\FileManager\File;
-use Logging\Displayer\Logger;
-use Serveur\GestionErreurs\Types\Error;
-use Serveur\GestionErreurs\Types\Notice;
+use AlaroxRestServeur\Logging\Displayer\Logger;
+use AlaroxRestServeur\Serveur\GestionErreurs\Types\Error;
+use AlaroxRestServeur\Serveur\GestionErreurs\Types\Notice;
 use Tests\MockArg;
 use Tests\TestCase;
 use org\bovigo\vfs\vfsStream;

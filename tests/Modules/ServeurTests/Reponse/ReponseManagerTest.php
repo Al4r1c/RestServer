@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Reponse;
 
-use Serveur\Reponse\ReponseManager;
+use AlaroxRestServeur\Serveur\Reponse\ReponseManager;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -26,7 +26,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestSetHeaderInvalide()
@@ -42,7 +42,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestSetFormatAcceptesInvalid()
@@ -51,7 +51,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40000
      */
     public function testRestSetFormatAcceptesVide()
@@ -66,7 +66,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestSetCharsetInvalide()
@@ -75,7 +75,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40001
      */
     public function testRestSetCharsetInvalid()
@@ -96,7 +96,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestSetConfigInvalide()
@@ -114,7 +114,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testSetFactoryOnlyCallable()
     {
@@ -122,7 +122,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testRestRenderBug()
@@ -174,10 +174,11 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40002
      */
-    public function testClasseRenderNexistePas() {
+    public function testClasseRenderNexistePas()
+    {
         $renderFactory = function () {
             return false;
         };
@@ -188,10 +189,11 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 40003
      */
-    public function testRenderFactoryNonDefini() {
+    public function testRenderFactoryNonDefini()
+    {
         $this->_restReponse->setFormatsAcceptes(array('JSON' => 'json'));
         $this->_restReponse->fabriquerReponse($this->getMockObjetReponse(), array('json'));
     }
@@ -205,7 +207,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testSetObserveursErrone()
@@ -215,7 +217,7 @@ class ReponseManagerTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testSetObserveursErroneDansArray()

@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Traitement\DonneeRequete\ChampRequete;
+use AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ChampRequete;
 use Tests\TestCase;
 
 class ChampRequeteTest extends TestCase
@@ -18,7 +18,9 @@ class ChampRequeteTest extends TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf('\\Serveur\\Traitement\\DonneeRequete\\ChampRequete', $this->_filtreDonnee);
+        $this->assertInstanceOf(
+            '\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ChampRequete', $this->_filtreDonnee
+        );
     }
 
     public function testChamp()
@@ -35,13 +37,19 @@ class ChampRequeteTest extends TestCase
         $this->assertEquals('value', $this->_filtreDonnee->getValeurs());
     }
 
-    public function testOperateur() {
-        $this->_filtreDonnee->setOperateur($operateur = $this->getMock('\\Serveur\\Traitement\\DonneeRequete\\Operateur'));
+    public function testOperateur()
+    {
+        $this->_filtreDonnee->setOperateur(
+            $operateur = $this->getMock('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\Operateur')
+        );
 
         $this->assertSame($operateur, $this->_filtreDonnee->getOperateur());
     }
 
-    public function testOperateurInitial() {
-        $this->assertInstanceOf('\\Serveur\\Traitement\\DonneeRequete\\Operateur', $this->_filtreDonnee->getOperateur());
+    public function testOperateurInitial()
+    {
+        $this->assertInstanceOf(
+            '\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\Operateur', $this->_filtreDonnee->getOperateur()
+        );
     }
 }

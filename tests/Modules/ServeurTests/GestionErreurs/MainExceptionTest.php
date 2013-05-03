@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\GestionErreurs;
 
-use Serveur\GestionErreurs\Exceptions\MainException;
+use AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException;
 use Tests\TestCase;
 
 class MainExceptionTest extends TestCase
@@ -23,6 +23,8 @@ class MainExceptionTest extends TestCase
     public function testGetCodeStatus()
     {
         $this->setMainException(10000, 500);
-        $this->assertInstanceOf('Serveur\Lib\ObjetReponse', $this->_mainException->getObjetReponseErreur());
+        $this->assertInstanceOf(
+            'AlaroxRestServeur\Serveur\Lib\ObjetReponse', $this->_mainException->getObjetReponseErreur()
+        );
     }
 }

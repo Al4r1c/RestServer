@@ -1,8 +1,8 @@
 <?php
 namespace Tests\ServeurTests\Application;
 
-use Serveur\GestionErreurs\Exceptions\MainException;
-use Serveur\MainApplication;
+use AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException;
+use AlaroxRestServeur\Serveur\MainApplication;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -78,5 +78,4 @@ class MainApplicationTest extends TestCase
         $mainApp = new MainApplication($conteneur);
         $mainApp->run();
     }
-
 }

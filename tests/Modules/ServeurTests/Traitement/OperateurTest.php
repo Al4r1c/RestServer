@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Traitement\DonneeRequete\Operateur;
+use AlaroxRestServeur\Serveur\Traitement\DonneeRequete\Operateur;
 use Tests\TestCase;
 
 class OperateurTest extends TestCase
@@ -18,7 +18,7 @@ class OperateurTest extends TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf('\\Serveur\\Traitement\\DonneeRequete\\Operateur', $this->_operateur);
+        $this->assertInstanceOf('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\Operateur', $this->_operateur);
     }
 
     public function testType()
@@ -34,7 +34,7 @@ class OperateurTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30300
      */
     public function testTypeInvalide()

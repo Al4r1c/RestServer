@@ -1,7 +1,7 @@
 <?php
 namespace Tests\LoggingTests\I18n;
 
-use Logging\I18n\TradManager;
+use AlaroxRestServeur\Logging\I18n\TradManager;
 use Tests\TestCase;
 
 class TradManagerTest extends TestCase
@@ -83,7 +83,7 @@ class TradManagerTest extends TestCase
 
         $this->tradManager->setFichierTraduction($xmlParser);
 
-        $class = new \ReflectionClass('Logging\I18n\TradManager');
+        $class = new \ReflectionClass('AlaroxRestServeur\Logging\I18n\TradManager');
         $method = $class->getMethod('getTraduction');
         $method->setAccessible(true);
 
@@ -98,7 +98,7 @@ class TradManagerTest extends TestCase
 
         $this->tradManager->setFichierTraduction($xmlParser);
 
-        $class = new \ReflectionClass('Logging\I18n\TradManager');
+        $class = new \ReflectionClass('AlaroxRestServeur\Logging\I18n\TradManager');
         $method = $class->getMethod('getTraduction');
         $method->setAccessible(true);
 

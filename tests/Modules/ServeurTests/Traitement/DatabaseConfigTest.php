@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Traitement\Data\DatabaseConfig;
+use AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -24,7 +24,7 @@ class DatabaseConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testDriverString()
@@ -51,7 +51,7 @@ class DatabaseConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testHostString()
@@ -66,7 +66,7 @@ class DatabaseConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testPortNumeric()
@@ -75,7 +75,7 @@ class DatabaseConfigTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30100
      */
     public function testPortOutRange()
@@ -90,7 +90,7 @@ class DatabaseConfigTest extends TestCase
     }
 
     /**
-     * @expectedException     \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      * @expectedExceptionCode 1000
      */
     public function testDatabaseString()
@@ -116,7 +116,7 @@ class DatabaseConfigTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30101
      */
     public function testInformationManquante()

@@ -1,8 +1,8 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Lib\ObjetReponse;
-use Serveur\Traitement\Ressource\AbstractRessource;
+use AlaroxRestServeur\Serveur\Lib\ObjetReponse;
+use AlaroxRestServeur\Serveur\Traitement\Ressource\AbstractRessource;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -18,7 +18,7 @@ class AbstractRessourceTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testSetDatabaseEronnne()
     {
@@ -39,7 +39,7 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoGetPourRecherche()
     {
-        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+        $paramManager = $this->getMock('\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager');
 
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
@@ -52,7 +52,7 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoPutCreateOrUpdate()
     {
-        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+        $paramManager = $this->getMock('\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager');
 
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
@@ -65,7 +65,7 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoPutCollection()
     {
-        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+        $paramManager = $this->getMock('\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager');
 
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
@@ -92,7 +92,7 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoPostUpdate()
     {
-        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+        $paramManager = $this->getMock('\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager');
 
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
@@ -107,7 +107,7 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoPostCreate()
     {
-        $paramManager = $this->getMock('\Serveur\Traitement\DonneeRequete\ParametresManager');
+        $paramManager = $this->getMock('\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager');
 
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
@@ -170,7 +170,7 @@ class AbstractRessourceTest extends TestCase
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock('AbstractRessource');
 
-        $class = new \ReflectionClass('Serveur\Traitement\Ressource\AbstractRessource');
+        $class = new \ReflectionClass('AlaroxRestServeur\Serveur\Traitement\Ressource\AbstractRessource');
         $method = $class->getMethod('forbidden');
         $method->setAccessible(true);
 

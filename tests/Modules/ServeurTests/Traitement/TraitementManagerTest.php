@@ -1,9 +1,9 @@
 <?php
 namespace Tests\ServeurTests\Traitement;
 
-use Serveur\Requete\RequeteManager;
-use Serveur\Traitement\Data\DatabaseConfig;
-use Serveur\Traitement\TraitementManager;
+use AlaroxRestServeur\Serveur\Requete\RequeteManager;
+use AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig;
+use AlaroxRestServeur\Serveur\Traitement\TraitementManager;
 use Tests\MockArg;
 use Tests\TestCase;
 
@@ -32,7 +32,7 @@ class TraitementManagerTest extends TestCase
                 ->method($doMethod)
                 ->with(
                     $this->equalTo($requete->getUriVariables()),
-                    $this->isInstanceOf('\Serveur\Traitement\DonneeRequete\ParametresManager')
+                    $this->isInstanceOf('\AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager')
                 )
                 ->will($this->returnValue($this->getMockObjetReponse()));
 
@@ -71,7 +71,7 @@ class TraitementManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testSetFactoryOnlyCallable()
     {
@@ -88,7 +88,7 @@ class TraitementManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testSetDatabaseFactoryOnlyCallable()
     {
@@ -104,7 +104,7 @@ class TraitementManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testSetDatabaseConfigErrone()
     {
@@ -120,7 +120,7 @@ class TraitementManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
      */
     public function testSetAuthManagerErrone()
     {
@@ -141,7 +141,7 @@ class TraitementManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30001
      */
     public function testTraiterImpossibleConnexionDatabase()
@@ -190,7 +190,8 @@ class TraitementManagerTest extends TestCase
         $this->setFakeDatabaseAuthOk('doGet', $requete);
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+            'AlaroxRestServeur\Serveur\Lib\ObjetReponse',
+            $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
         );
     }
 
@@ -206,7 +207,8 @@ class TraitementManagerTest extends TestCase
         $this->setFakeDatabaseAuthOk('doPut', $requete);
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+            'AlaroxRestServeur\Serveur\Lib\ObjetReponse',
+            $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
         );
     }
 
@@ -222,7 +224,8 @@ class TraitementManagerTest extends TestCase
         $this->setFakeDatabaseAuthOk('doPost', $requete);
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+            'AlaroxRestServeur\Serveur\Lib\ObjetReponse',
+            $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
         );
     }
 
@@ -269,7 +272,8 @@ class TraitementManagerTest extends TestCase
 
 
         $this->assertInstanceOf(
-            'Serveur\Lib\ObjetReponse', $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
+            'AlaroxRestServeur\Serveur\Lib\ObjetReponse',
+            $this->_traitementManager->traiterRequeteEtRecupererResultat($requete)
         );
     }
 
@@ -368,7 +372,7 @@ class TraitementManagerTest extends TestCase
     }
 
     /**
-     * @expectedException \Serveur\GestionErreurs\Exceptions\MainException
+     * @expectedException \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException
      * @expectedExceptionCode 30000
      */
     public function testTraiterInstanceManquante()

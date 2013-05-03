@@ -1,7 +1,7 @@
 <?php
 namespace Tests\ServeurTests\GestionErreurs;
 
-use Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
+use AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use Tests\TestCase;
 
 class ArgumentTypeExceptionTest extends TestCase
