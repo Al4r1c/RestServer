@@ -22,9 +22,10 @@ class Main
 
     /**
      * @param array $arrayConfig
+     * @param array $driverList
      * @throws \Exception
      */
-    public function __construct($arrayConfig)
+    public function __construct($arrayConfig, $driverList)
     {
         foreach (self::$clefsMinimales as $uneConfigObligatoire) {
             if (!array_key_exists($uneConfigObligatoire, $arrayConfig)) {
@@ -33,7 +34,7 @@ class Main
         }
 
         $conteneur = new Conteneur();
-        $conteneur->buildConteneur($arrayConfig + array('logFolder' => '.'));
+        $conteneur->buildConteneur($arrayConfig + array('logFolder' => '.'), $driverList);
 
         $this->_main = new MainApplication($conteneur);
         $this->_main->ajouterObserveur(LoggingFactory::getLogger('logger', $arrayConfig['logFolder']));

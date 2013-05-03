@@ -22,8 +22,9 @@ class Conteneur
 
     /**
      * @param array $arrayConfig
+     * @param array $driverList
      */
-    public function buildConteneur($arrayConfig)
+    public function buildConteneur($arrayConfig, $driverList)
     {
         $conteneur = new \Pimple();
 
@@ -52,6 +53,16 @@ class Conteneur
             return $traitementManager;
         };
 
+        $conteneur['DatabaseFactory'] = function () use ($driverList) {
+            return function ($nomDriverDatabase) use ($driverList) {
+                if (array_key_exists($nomDriverDatabase, $driverList)) {
+                    return $driverList[$nomDriverDatabase];
+                } else {
+                    return false;
+                }
+            };
+        };
+
         $conteneur['AuthManager'] = function () use ($arrayConfig) {
             $alaroxFileManager = new AlaroxFile();
             $fichier = $alaroxFileManager->getFile($arrayConfig['authorizationFile']);
@@ -66,19 +77,6 @@ class Conteneur
             return function ($nomRessourceDemandee) {
                 if (class_exists($classeRessource = '\\Ressource\\' . ucfirst(strtolower($nomRessourceDemandee)))) {
                     return new $classeRessource();
-                } else {
-                    return false;
-                }
-            };
-        };
-
-        $conteneur['DatabaseFactory'] = function () {
-            return function ($nomDriverDatabase) {
-                $nomClasseDatabase =
-                    '\\AlaroxRestServeurDrivers\\Drivers\\Database' . ucfirst(strtolower($nomDriverDatabase));
-
-                if (class_exists($nomClasseDatabase)) {
-                    return new $nomClasseDatabase();
                 } else {
                     return false;
                 }
@@ -121,7 +119,11 @@ class Conteneur
 
         $conteneur['RenderFactory'] = function () {
             return function ($nomClasseRendu) {
-                if (class_exists($nomVue = '\\AlaroxRestServeur\\Serveur\\Reponse\\Renderers\\' . ucfirst(strtolower($nomClasseRendu)))) {
+                if (class_exists(
+                    $nomVue =
+                        '\\AlaroxRestServeur\\Serveur\\Reponse\\Renderers\\' . ucfirst(strtolower($nomClasseRendu))
+                )
+                ) {
                     return new $nomVue();
                 } else {
                     return false;
