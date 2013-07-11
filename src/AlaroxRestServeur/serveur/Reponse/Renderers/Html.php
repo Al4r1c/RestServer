@@ -42,19 +42,19 @@ class Html extends AbstractRenderer
      */
     private function convertTableauToListeHtml(array $array)
     {
-        $list = "<ul>\n";
+        $list = "<ul>";
 
         foreach ($array as $clef => $valeur) {
             $list .= "<li><strong>" . $clef . ":</strong>&nbsp;";
             if (is_array($valeur)) {
-                $list .= "\n" . $this->convertTableauToListeHtml($valeur);
+                $list .= $this->convertTableauToListeHtml($valeur);
             } else {
                 $list .= $valeur;
             }
-            $list .= "</li>\n";
+            $list .= "</li>";
         }
 
-        return $list . "</ul>\n";
+        return $list . "</ul>";
     }
 
     /**

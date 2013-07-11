@@ -40,26 +40,7 @@ class RenderersTest extends TestCase
 
         $sortie = sprintf(
             $renderer->getTemplateHtml(),
-            "<ul>
-<li><strong>param1:</strong>&nbsp;1</li>
-<li><strong>param2:</strong>&nbsp;
-<ul>
-<li><strong>one:</strong>&nbsp;onevar2</li>
-<li><strong>two:</strong>&nbsp;
-<ul>
-<li><strong>0:</strong>&nbsp;yosh</li>
-<li><strong>1:</strong>&nbsp;
-<ul>
-<li><strong>key1:</strong>&nbsp;val1</li>
-<li><strong>key2:</strong>&nbsp;val2</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-"
+            "<ul><li><strong>param1:</strong>&nbsp;1</li><li><strong>param2:</strong>&nbsp;<ul><li><strong>one:</strong>&nbsp;onevar2</li><li><strong>two:</strong>&nbsp;<ul><li><strong>0:</strong>&nbsp;yosh</li><li><strong>1:</strong>&nbsp;<ul><li><strong>key1:</strong>&nbsp;val1</li><li><strong>key2:</strong>&nbsp;val2</li></ul></li></ul></li></ul></li></ul>"
         );
 
         $this->assertEquals($sortie, $renderer->render(self::$donnee));
