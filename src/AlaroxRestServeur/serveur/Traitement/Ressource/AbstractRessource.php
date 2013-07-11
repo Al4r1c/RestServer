@@ -29,7 +29,7 @@ abstract class AbstractRessource implements IRessource
     {
         if (!$dbConnection instanceof AbstractDatabase) {
             throw new ArgumentTypeException(
-                500, '\AlaroxRestServeur\Serveur\Traitement\Data\AbstractDatabase', $dbConnection
+                500, '\\AlaroxRestServeur\\Serveur\\Traitement\\Data\\AbstractDatabase', $dbConnection
             );
         }
 
@@ -112,5 +112,112 @@ abstract class AbstractRessource implements IRessource
         $objetReponse->setErreurHttp(403);
 
         return $objetReponse;
+    }
+
+    /**
+     * @param string $id
+     * @return ObjetReponse
+     */
+    public function getOne($id)
+    {
+        return $this->getConnectionDatabase()->recupererId($id);
+    }
+
+    /**
+     * @param ParametresManager $filters
+     * @return ObjetReponse
+     */
+    public function getAll($filters)
+    {
+        return $this->getConnectionDatabase()->recuperer($filters);
+    }
+
+    /**
+     * @param ParametresManager $data
+     * @return ObjetReponse
+     */
+    public function createOne($data)
+    {
+        return $this->getConnectionDatabase()->inserer($data);
+    }
+
+    /**
+     * @param string $id
+     * @param ParametresManager $data
+     * @return ObjetReponse
+     */
+    public function updateOne($id, $data)
+    {
+        return $this->getConnectionDatabase()->mettreAJour($id, $data);
+    }
+
+    /**
+     * @param string $id
+     * @param ParametresManager $data
+     * @return ObjetReponse
+     */
+    public function createOrUpdateIdempotent($id, $data)
+    {
+        return $this->getConnectionDatabase()->insererIdempotent($id, $data);
+    }
+
+    /**
+     * @param string $id
+     * @return ObjetReponse
+     */
+    public function deleteOne($id)
+    {
+        return $this->getConnectionDatabase()->supprimerId($id);
+    }
+
+    /**
+     * @return ObjetReponse
+     */
+    public function deleteAll()
+    {
+        return $this->getConnectionDatabase()->supprimer();
+    }
+
+    /**
+     * @param string $id
+     * @param string $collectionName
+     * @param ParametresManager $listeObjects
+     * @return ObjetReponse
+     */
+    public function putCollection($id, $collectionName, $listeObjects)
+    {
+        return $this->getConnectionDatabase()->setCollection($id, $collectionName, $listeObjects);
+    }
+
+    /**
+     * @param string $id
+     * @param string $collectionName
+     * @param string $idObject
+     * @return ObjetReponse
+     */
+    public function putOneInCollection($id, $collectionName, $idObject)
+    {
+        return $this->getConnectionDatabase()->ajouterDansCollection($id, $collectionName, $idObject);
+    }
+
+    /**
+     * @param string $id
+     * @param string $collectionName
+     * @return ObjetReponse
+     */
+    public function deleteCollection($id, $collectionName)
+    {
+        return $this->getConnectionDatabase()->supprimerCollection($id, $collectionName);
+    }
+
+    /**
+     * @param string $id
+     * @param string $collectionName
+     * @param string $idObjetDansCollection
+     * @return ObjetReponse
+     */
+    public function deleteInCollection($id, $collectionName, $idObjetDansCollection)
+    {
+        return $this->getConnectionDatabase()->supprimerDansCollection($id, $collectionName, $idObjetDansCollection);
     }
 }
