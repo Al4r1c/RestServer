@@ -21,6 +21,7 @@ use AlaroxRestServeur\Serveur\Traitement\Authorization\Authorization;
 use AlaroxRestServeur\Serveur\Traitement\Authorization\AuthorizationManager;
 use AlaroxRestServeur\Serveur\Traitement\Data\AbstractDatabase;
 use AlaroxRestServeur\Serveur\Traitement\Data\DatabaseConfig;
+use AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager;
 use AlaroxRestServeur\Serveur\Traitement\Ressource\AbstractRessource;
 use AlaroxRestServeur\Serveur\Traitement\TraitementManager;
 use AlaroxRestServeur\Serveur\Utils\Constante;
@@ -93,6 +94,9 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
             case 'objetreponse';
                 $mock = $this->getMockObjetReponse($methodes);
                 break;
+            case 'parametresmanager':
+                $mock = $this->getMockParamManager($methodes);
+                break;
             case 'requetemanager':
                 $mock = $this->getMockRestRequete($methodes);
                 break;
@@ -161,7 +165,8 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
     protected function getMockAbstractRessource($methodes = array())
     {
         return $this->getMockAbstractClass(
-            'AlaroxRestServeur\Serveur\Traitement\Ressource\AbstractRessource', $methodes
+            'AlaroxRestServeur\Serveur\Traitement\Ressource\AbstractRessource',
+            $methodes
         );
     }
 
@@ -289,6 +294,15 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
     protected function getMockObjetReponse($methodes = array())
     {
         return $this->getMock('AlaroxRestServeur\Serveur\Lib\ObjetReponse', $methodes);
+    }
+
+    /**
+     * @param array $methodes
+     * @return \PHPUnit_Framework_MockObject_MockObject|ParametresManager
+     */
+    protected function getMockParamManager($methodes = array())
+    {
+        return $this->getMock('AlaroxRestServeur\Serveur\Traitement\DonneeRequete\ParametresManager', $methodes);
     }
 
     /**

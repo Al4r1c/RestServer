@@ -18,6 +18,7 @@ class TraitementTests
         $suite = new \PHPUnit_Framework_TestSuite('TestSuite');
 
         $suite->addTestSuite('Tests\ServeurTests\Traitement\AbstractRessourceTest');
+        $suite->addTestSuite('Tests\ServeurTests\Traitement\AbstractRessourceMethodsTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\AbstractDatabaseTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\AuthorizationManagerTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\AuthorizationTest');
