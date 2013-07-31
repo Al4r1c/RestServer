@@ -7,6 +7,8 @@ use AlaroxRestServeur\Serveur\GestionErreurs\Handler\ErreurHandler;
 use AlaroxRestServeur\Serveur\Reponse\Config\Config;
 use AlaroxRestServeur\Serveur\Reponse\Header\Header;
 use AlaroxRestServeur\Serveur\Reponse\ReponseManager;
+use AlaroxRestServeur\Serveur\Requete\compressor\Compressor;
+use AlaroxRestServeur\Serveur\Requete\compressor\CompressorFactory;
 use AlaroxRestServeur\Serveur\Requete\RequeteManager;
 use AlaroxRestServeur\Serveur\Requete\Server\Server;
 use AlaroxRestServeur\Serveur\Traitement\Authorization\AuthorizationManager;
@@ -29,10 +31,19 @@ class Conteneur
         $conteneur = new \Pimple();
 
         $conteneur['RequeteManager'] = function ($c) {
-            $restRequete = new RequeteManager();
-            $restRequete->setServer($c['Server']);
+            $requeteManager = new RequeteManager();
+            $requeteManager->setServer($c['Server']);
+            $requeteManager->setCompressor($c['Compressor']);
 
-            return $restRequete;
+            return $requeteManager;
+        };
+
+
+        $conteneur['Compressor'] = function () {
+            $compressor = new Compressor();
+            $compressor->setCompressorFactory(new CompressorFactory());
+
+            return $compressor;
         };
 
         $conteneur['Server'] = function () {
@@ -121,7 +132,7 @@ class Conteneur
             return function ($nomClasseRendu) {
                 if (class_exists(
                     $nomVue =
-                    '\\AlaroxRestServeur\\Serveur\\Reponse\\Renderers\\' . ucfirst(strtolower($nomClasseRendu))
+                        '\\AlaroxRestServeur\\Serveur\\Reponse\\Renderers\\' . ucfirst(strtolower($nomClasseRendu))
                 )
                 ) {
                     return new $nomVue();

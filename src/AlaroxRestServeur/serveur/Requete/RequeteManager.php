@@ -5,6 +5,7 @@ use AlaroxRestServeur\Logging\Displayer\AbstractDisplayer;
 use AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException;
 use AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\MainException;
 use AlaroxRestServeur\Serveur\Lib\TypeDetector;
+use AlaroxRestServeur\Serveur\Requete\compressor\Compressor;
 use AlaroxRestServeur\Serveur\Requete\Server\Server;
 use AlaroxRestServeur\Serveur\Utils\Constante;
 use AlaroxRestServeur\Serveur\Utils\Tools;
@@ -15,6 +16,11 @@ class RequeteManager
      * @var Server
      */
     private $_server;
+
+    /**
+     * @var Compressor
+     */
+    private $_compressor;
 
     /**
      * @param Server $server
@@ -29,6 +35,21 @@ class RequeteManager
         }
 
         $this->_server = $server;
+    }
+
+    /**
+     * @param compressor $compressor
+     * @throws ArgumentTypeException
+     */
+    public function setCompressor($compressor)
+    {
+        if (!$compressor instanceof Compressor) {
+            throw new ArgumentTypeException(
+                500, '\AlaroxRestServeur\Serveur\Requete\compressor\Compressor', $compressor
+            );
+        }
+
+        $this->_compressor = $compressor;
     }
 
     /**
@@ -175,7 +196,13 @@ class RequeteManager
                 break;
             case 'POST':
             case 'PUT':
-                return $this->_server->getUneVariableServeur('PHP_INPUT');
+                $data = $this->_server->getUneVariableServeur('PHP_INPUT');
+
+                if (!is_null($compressorType = $this->_server->getUneVariableServeur('HTTP_CONTENT_ENCODING'))) {
+                    $data = $this->_compressor->uncompress($data, $compressorType);
+                }
+
+                return $data;
                 break;
         }
 

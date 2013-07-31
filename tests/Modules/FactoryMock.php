@@ -58,6 +58,9 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
             case 'authmanager':
                 $mock = $this->getMockAuthManager($methodes);
                 break;
+            case 'compressor':
+                $mock = $this->getMockCompressor($methodes);
+                break;
             case 'config':
                 $mock = $this->getMockConfig($methodes);
                 break;
@@ -186,6 +189,15 @@ class FactoryMock extends \PHPUnit_Framework_TestCase
     protected function getMockAuthManager($methodes = array())
     {
         return $this->getMock('AlaroxRestServeur\Serveur\Traitement\Authorization\AuthorizationManager', $methodes);
+    }
+
+    /**
+     * @param array $methodes
+     * @return \PHPUnit_Framework_MockObject_MockObject|Config
+     */
+    protected function getMockCompressor($methodes = array())
+    {
+        return $this->getMock('AlaroxRestServeur\Serveur\Requete\compressor\Compressor', $methodes);
     }
 
     /**

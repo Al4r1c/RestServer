@@ -195,6 +195,27 @@ class RequeteManagerTest extends TestCase
         $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
     }
 
+    public function testRecupererPostCrypte()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'POST', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', null, array('CONTENT_TYPE')),
+            new MockArg('getUneVariableServeur', gzencode('once=var1&twice=var2'), array('PHP_INPUT')),
+            new MockArg('getUneVariableServeur', 'gzip', array('HTTP_CONTENT_ENCODING'))
+        );
+
+        $compressor = $this->createMock(
+            'Compressor',
+            new MockArg('uncompress', 'once=var1&twice=var2', array(gzencode('once=var1&twice=var2'), 'gzip'))
+        );
+
+        $this->restRequete->setServer($mockServer);
+        $this->restRequete->setCompressor($compressor);
+
+        $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
+    }
+
     public function testRecupererPut()
     {
         $mockServer = $this->createMock(
@@ -219,6 +240,7 @@ class RequeteManagerTest extends TestCase
         $this->assertEquals(array(), $this->restRequete->getParametres());
     }
 
+
     public function testRestSetServer()
     {
         $serveur = $this->createMock('Server');
@@ -235,6 +257,24 @@ class RequeteManagerTest extends TestCase
     public function testRestSetServerEronnee()
     {
         $this->restRequete->setServer(null);
+    }
+
+    public function testRestSetCompressor()
+    {
+        $compressor = $this->createMock('Compressor');
+
+        $this->restRequete->setCompressor($compressor);
+
+        $this->assertAttributeEquals($compressor, '_compressor', $this->restRequete);
+    }
+
+    /**
+     * @expectedException     \AlaroxRestServeur\Serveur\GestionErreurs\Exceptions\ArgumentTypeException
+     * @expectedExceptionCode 1000
+     */
+    public function testRestSetCompressorEronnee()
+    {
+        $this->restRequete->setCompressor(null);
     }
 
     public function testRestDateRequete()
@@ -286,7 +326,8 @@ class RequeteManagerTest extends TestCase
     public function testLogRequete()
     {
         $abstractDisplayer = $this->createMock(
-            'AbstractDisplayer', new MockArg('logRequete', null, array($this->restRequete))
+            'AbstractDisplayer',
+            new MockArg('logRequete', null, array($this->restRequete))
         );
 
         $this->restRequete->logRequete(array($abstractDisplayer));
@@ -354,7 +395,8 @@ class RequeteManagerTest extends TestCase
         $this->restRequete->setServer($mockServer);
 
         $this->assertEquals(
-            array('first' => array('attri' => 'var1'), 'second' => 'var2'), $this->restRequete->getParametres()
+            array('first' => array('attri' => 'var1'), 'second' => 'var2'),
+            $this->restRequete->getParametres()
         );
     }
 

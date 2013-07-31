@@ -1,0 +1,43 @@
+<?php
+namespace AlaroxRestServeur\Serveur\Requete\compressor;
+
+class Compressor
+{
+    /**
+     * @var CompressorFactory
+     */
+    private $_compressorFactory;
+
+    /**
+     * @param CompressorFactory $compressorFactory
+     * @throws \InvalidArgumentException
+     */
+    public function setCompressorFactory($compressorFactory)
+    {
+        if (!$compressorFactory instanceof CompressorFactory) {
+            throw new \InvalidArgumentException(
+                'Expected parameter 1 $compressorFactory to be instance of CompressorFactory.'
+            );
+        }
+
+        $this->_compressorFactory = $compressorFactory;
+    }
+
+    /**
+     * @param $data
+     * @param string $format
+     * @throws \Exception
+     * @internal param string $tabDonnees
+     * @return string
+     */
+    public function uncompress($data, $format)
+    {
+        if (!$this->_compressorFactory instanceof CompressorFactory) {
+            throw new \Exception('Compressor factory is not set.');
+        }
+
+        $classCompressor = $this->_compressorFactory->getCompressor($format);
+
+        return $classCompressor->uncompress($data);
+    }
+}
