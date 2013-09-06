@@ -24,8 +24,8 @@ class TraitementTests
         $suite->addTestSuite('Tests\ServeurTests\Traitement\AuthorizationTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\ChampRequeteTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\DatabaseConfigTest');
-        $suite->addTestSuite('Tests\ServeurTests\Traitement\DonneeRequeteManagerTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\OperateurTest');
+        $suite->addTestSuite('Tests\ServeurTests\Traitement\ParametresManagerTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\TraitementManagerTest');
         $suite->addTestSuite('Tests\ServeurTests\Traitement\TriTest');
 
