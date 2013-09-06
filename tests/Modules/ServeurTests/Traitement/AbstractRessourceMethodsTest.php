@@ -40,9 +40,9 @@ class AbstractRessourceMethodsTest extends TestCase
 
     public function testGetOne()
     {
-        $this->setFakeDatabase(new MockArg('recupererId', array('hello world'), array(5)));
+        $this->setFakeDatabase(new MockArg('recupererId', array('hello world'), array(5, false)));
 
-        $this->assertEquals(array('hello world'), $this->_abstractRess->getOne(5));
+        $this->assertEquals(array('hello world'), $this->_abstractRess->getOne(5, false));
     }
 
     public function testGetAll()

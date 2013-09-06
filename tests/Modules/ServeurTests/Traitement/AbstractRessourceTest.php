@@ -29,12 +29,15 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoGetPourSingle()
     {
+        $paramManager = $this->createMock('ParametresManager', new MockArg('isLazyLoad', false));
+
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('getOne', new ObjetReponse(200), array(1))
+            'AbstractRessource',
+            new MockArg('getOne', new ObjetReponse(200), array(1))
         );
 
-        $this->assertEquals(200, $abstractRessource->doGet(array('resource', 1), null)->getStatusHttp());
+        $this->assertEquals(200, $abstractRessource->doGet(array('resource', 1), $paramManager)->getStatusHttp());
     }
 
     public function testDoGetPourRecherche()
@@ -74,7 +77,8 @@ class AbstractRessourceTest extends TestCase
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doPut(array('resource', 4, 'newCollection'), $paramManager)->getStatusHttp()
+            200,
+            $abstractRessource->doPut(array('resource', 4, 'newCollection'), $paramManager)->getStatusHttp()
         );
     }
 
@@ -82,11 +86,13 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('putOneInCollection', new ObjetReponse(200), array(4, 'newCollection', 30))
+            'AbstractRessource',
+            new MockArg('putOneInCollection', new ObjetReponse(200), array(4, 'newCollection', 30))
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doPut(array('resource', 4, 'newCollection', 30), null)->getStatusHttp()
+            200,
+            $abstractRessource->doPut(array('resource', 4, 'newCollection', 30), null)->getStatusHttp()
         );
     }
 
@@ -101,7 +107,8 @@ class AbstractRessourceTest extends TestCase
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doPost(array('resource', 5), $paramManager)->getStatusHttp()
+            200,
+            $abstractRessource->doPost(array('resource', 5), $paramManager)->getStatusHttp()
         );
     }
 
@@ -111,11 +118,13 @@ class AbstractRessourceTest extends TestCase
 
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('createOne', new ObjetReponse(201), array($paramManager))
+            'AbstractRessource',
+            new MockArg('createOne', new ObjetReponse(201), array($paramManager))
         );
 
         $this->assertEquals(
-            201, $abstractRessource->doPost(array('resource', null), $paramManager)->getStatusHttp()
+            201,
+            $abstractRessource->doPost(array('resource', null), $paramManager)->getStatusHttp()
         );
     }
 
@@ -123,7 +132,8 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('deleteOne', new ObjetReponse(200), array(200500))
+            'AbstractRessource',
+            new MockArg('deleteOne', new ObjetReponse(200), array(200500))
         );
 
         $this->assertEquals(200, $abstractRessource->doDelete(array('resource', 200500))->getStatusHttp());
@@ -133,11 +143,13 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('deleteAll', new ObjetReponse(200))
+            'AbstractRessource',
+            new MockArg('deleteAll', new ObjetReponse(200))
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doDelete(array('resource', null))->getStatusHttp()
+            200,
+            $abstractRessource->doDelete(array('resource', null))->getStatusHttp()
         );
     }
 
@@ -145,11 +157,13 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('deleteCollection', new ObjetReponse(200), array(3, 'nomCollection'))
+            'AbstractRessource',
+            new MockArg('deleteCollection', new ObjetReponse(200), array(3, 'nomCollection'))
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doDelete(array('resource', 3, 'nomCollection'))->getStatusHttp()
+            200,
+            $abstractRessource->doDelete(array('resource', 3, 'nomCollection'))->getStatusHttp()
         );
     }
 
@@ -157,11 +171,13 @@ class AbstractRessourceTest extends TestCase
     {
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
-            'AbstractRessource', new MockArg('deleteInCollection', new ObjetReponse(200), array(3, 'nomCollection', 80))
+            'AbstractRessource',
+            new MockArg('deleteInCollection', new ObjetReponse(200), array(3, 'nomCollection', 80))
         );
 
         $this->assertEquals(
-            200, $abstractRessource->doDelete(array('resource', 3, 'nomCollection', 80))->getStatusHttp()
+            200,
+            $abstractRessource->doDelete(array('resource', 3, 'nomCollection', 80))->getStatusHttp()
         );
     }
 

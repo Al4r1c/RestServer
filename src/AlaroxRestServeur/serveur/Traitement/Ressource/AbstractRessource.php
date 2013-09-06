@@ -44,7 +44,7 @@ abstract class AbstractRessource implements IRessource
     public function doGet($dataUri, $parametres)
     {
         if (!isNull($dataUri[1])) {
-            return $this->getOne($dataUri[1]);
+            return $this->getOne($dataUri[1], $parametres->isLazyLoad());
         } else {
             return $this->getAll($parametres);
         }
@@ -116,11 +116,12 @@ abstract class AbstractRessource implements IRessource
 
     /**
      * @param string $id
+     * @param boolean $lazyLoad
      * @return ObjetReponse
      */
-    public function getOne($id)
+    public function getOne($id, $lazyLoad)
     {
-        return $this->getConnectionDatabase()->recupererId($id);
+        return $this->getConnectionDatabase()->recupererId($id, $lazyLoad);
     }
 
     /**

@@ -16,6 +16,11 @@ class ParametresManager
     private $_tris = array();
 
     /**
+     * @var bool
+     */
+    private $_lazyLoad = false;
+
+    /**
      * @var array
      */
     private static $_motsClef = array('orderBy', 'orderWay', 'pageSize', 'pageNum');
@@ -26,6 +31,14 @@ class ParametresManager
     public function getChampsRequete()
     {
         return $this->_champsRequete;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isLazyLoad()
+    {
+        return $this->_lazyLoad;
     }
 
     /**
@@ -101,11 +114,13 @@ class ParametresManager
      */
     public function parseTabParametres($tabParametres)
     {
-        foreach ($tabParametres as $clef => $uneCondition) {
-            if (in_array($clef, self::$_motsClef, true)) {
-                $this->traiterTri($clef, $uneCondition);
+        foreach ($tabParametres as $clef => $valeurParametre) {
+            if ($clef == 'lazyLoad' && $valeurParametre == 'true') {
+                $this->_lazyLoad = true;
+            } elseif (in_array($clef, self::$_motsClef, true)) {
+                $this->traiterTri($clef, $valeurParametre);
             } else {
-                $this->traiterNouveauChampRequete($clef, $uneCondition);
+                $this->traiterNouveauChampRequete($clef, $valeurParametre);
             }
         }
     }

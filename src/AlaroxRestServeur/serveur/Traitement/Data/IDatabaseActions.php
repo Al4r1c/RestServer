@@ -19,9 +19,10 @@ interface IDatabaseActions
 
     /**
      * @param string $id
+     * @param boolean $lazyLoad
      * @return ObjetReponse
      */
-    public function recupererId($id);
+    public function recupererId($id, $lazyLoad);
 
     /**
      * @param ParametresManager $filtres

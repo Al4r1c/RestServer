@@ -8,9 +8,10 @@ interface IRessource
 {
     /**
      * @param string $id
+     * @param boolean $lazyLoad
      * @return ObjetReponse
      */
-    public function getOne($id);
+    public function getOne($id, $lazyLoad);
 
     /**
      * @param ParametresManager $filters

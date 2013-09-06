@@ -19,7 +19,8 @@ class ParametresManagerTest extends TestCase
     public function testInstance()
     {
         $this->assertInstanceOf(
-            '\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ParametresManager', $this->_parametresManager
+            '\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ParametresManager',
+            $this->_parametresManager
         );
     }
 
@@ -34,7 +35,8 @@ class ParametresManagerTest extends TestCase
 
     public function testGetUnChamp()
     {
-        $champRequete = $this->getMock('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ChampRequete', array('getChamp'));
+        $champRequete =
+            $this->getMock('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ChampRequete', array('getChamp'));
 
         $champRequete->expects($this->once())->method('getChamp')->will($this->returnValue('champs'));
 
@@ -130,5 +132,18 @@ class ParametresManagerTest extends TestCase
 
         $this->assertEquals('pageNum', $this->_parametresManager->getTris()[0]->getTypeTri());
         $this->assertEquals(3, $this->_parametresManager->getTris()[0]->getValeur());
+    }
+
+    public function testLazyLoad()
+    {
+        $this->assertFalse($this->_parametresManager->isLazyLoad());
+    }
+
+    public function testParseLazyLoad() {
+        $this->_parametresManager->parseTabParametres(array('lazyLoad' => 'true'));
+
+        $this->assertEmpty($this->_parametresManager->getChampsRequete());
+        $this->assertEmpty($this->_parametresManager->getTris());
+        $this->assertTrue($this->_parametresManager->isLazyLoad());
     }
 }
