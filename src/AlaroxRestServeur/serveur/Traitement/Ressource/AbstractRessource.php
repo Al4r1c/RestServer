@@ -116,7 +116,7 @@ abstract class AbstractRessource implements IRessource
 
     /**
      * @param string $id
-     * @param boolean $lazyLoad
+     * @param mixed $lazyLoad
      * @return ObjetReponse
      */
     public function getOne($id, $lazyLoad)
