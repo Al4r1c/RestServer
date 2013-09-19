@@ -49,7 +49,7 @@ class Html extends AbstractRenderer
             if (is_array($valeur)) {
                 $list .= $this->convertTableauToListeHtml($valeur);
             } elseif (is_object($valeur) && get_class($valeur) == 'DateTime') {
-                $list .= $valeur->getTimestamp();
+                $list .= $valeur->format('Y-m-d H:i:s e');
             } else {
                 $list .= $valeur;
             }

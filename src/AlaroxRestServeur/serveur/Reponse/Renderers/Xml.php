@@ -23,9 +23,7 @@ class Xml extends AbstractRenderer
     private function arrayToXml($contenu, \SimpleXMLElement &$simpleXmlObject)
     {
         foreach ($contenu as $clef => $valeur) {
-            if (!is_array($valeur)) {
-                $simpleXmlObject->addChild($clef, $valeur);
-            } else {
+            if (is_array($valeur)) {
                 if (is_numeric(key($valeur))) {
                     foreach ($valeur as $uneValeur) {
                         if (!is_array($uneValeur)) {
@@ -39,6 +37,10 @@ class Xml extends AbstractRenderer
                     $subnode = $simpleXmlObject->addChild($clef);
                     $this->arrayToXml($valeur, $subnode);
                 }
+            } elseif (is_object($valeur) && get_class($valeur) == 'DateTime') {
+                $simpleXmlObject->addChild($clef, $valeur->format('Y-m-d H:i:s e'));
+            } else {
+                $simpleXmlObject->addChild($clef, $valeur);
             }
         }
     }

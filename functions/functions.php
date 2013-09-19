@@ -164,6 +164,8 @@ function arrayToString(array $donnees, $level = 0)
 
         if (is_array($valeur)) {
             $valeurs .= $clef . " => \n" . arrayToString($valeur, ($level + 1));
+        } elseif (is_object($valeur) && get_class($valeur) == 'DateTime') {
+            $valeurs .= $clef . " => " . $valeur->format('Y-m-d H:i:s e'). "\n";
         } else {
             $valeurs .= $clef . " => " . $valeur . "\n";
         }
