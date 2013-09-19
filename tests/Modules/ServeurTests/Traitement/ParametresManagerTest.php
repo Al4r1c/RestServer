@@ -136,7 +136,7 @@ class ParametresManagerTest extends TestCase
 
     public function testLazyLoad()
     {
-        $this->assertFalse($this->_parametresManager->isLazyLoad());
+        $this->assertFalse($this->_parametresManager->getLazyLoad());
     }
 
     public function testParseLazyLoad() {
@@ -144,6 +144,14 @@ class ParametresManagerTest extends TestCase
 
         $this->assertEmpty($this->_parametresManager->getChampsRequete());
         $this->assertEmpty($this->_parametresManager->getTris());
-        $this->assertTrue($this->_parametresManager->isLazyLoad());
+        $this->assertTrue($this->_parametresManager->getLazyLoad());
+    }
+
+    public function testParseLazyLoadValue() {
+        $this->_parametresManager->parseTabParametres(array('lazyLoad' => 'hello'));
+
+        $this->assertEmpty($this->_parametresManager->getChampsRequete());
+        $this->assertEmpty($this->_parametresManager->getTris());
+        $this->assertEquals('hello', $this->_parametresManager->getLazyLoad());
     }
 }

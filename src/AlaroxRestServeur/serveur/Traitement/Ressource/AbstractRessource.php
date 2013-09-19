@@ -44,7 +44,7 @@ abstract class AbstractRessource implements IRessource
     public function doGet($dataUri, $parametres)
     {
         if (!isNull($dataUri[1])) {
-            return $this->getOne($dataUri[1], $parametres->isLazyLoad());
+            return $this->getOne($dataUri[1], $parametres->getLazyLoad());
         } else {
             return $this->getAll($parametres);
         }

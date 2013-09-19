@@ -16,7 +16,7 @@ class ParametresManager
     private $_tris = array();
 
     /**
-     * @var bool
+     * @var mixed
      */
     private $_lazyLoad = false;
 
@@ -34,9 +34,9 @@ class ParametresManager
     }
 
     /**
-     * @return boolean
+     * @return mixed
      */
-    public function isLazyLoad()
+    public function getLazyLoad()
     {
         return $this->_lazyLoad;
     }
@@ -115,8 +115,12 @@ class ParametresManager
     public function parseTabParametres($tabParametres)
     {
         foreach ($tabParametres as $clef => $valeurParametre) {
-            if ($clef == 'lazyLoad' && $valeurParametre == 'true') {
-                $this->_lazyLoad = true;
+            if ($clef == 'lazyLoad') {
+                if ($valeurParametre == 'true') {
+                    $this->_lazyLoad = true;
+                } else {
+                    $this->_lazyLoad = $valeurParametre;
+                }
             } elseif (in_array($clef, self::$_motsClef, true)) {
                 $this->traiterTri($clef, $valeurParametre);
             } else {

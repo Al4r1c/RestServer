@@ -29,7 +29,7 @@ class AbstractRessourceTest extends TestCase
 
     public function testDoGetPourSingle()
     {
-        $paramManager = $this->createMock('ParametresManager', new MockArg('isLazyLoad', false));
+        $paramManager = $this->createMock('ParametresManager', new MockArg('getLazyLoad', false));
 
         /** @var $abstractRessource AbstractRessource */
         $abstractRessource = $this->createMock(
