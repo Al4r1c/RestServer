@@ -25,8 +25,8 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-		"alarox/AlaroxClassLoader": "v1.0",
-		"alarox/AlaroxFileManager": "v0.4",
+		"alarox/AlaroxClassLoader": "v1.01",
+		"alarox/AlaroxFileManager": "v0.41",
 		"alarox/AlaroxXMLParser": "v0.3",
 		"pimple/pimple": "v1.0.2",
 		"mikey179/vfsStream": "v1.2.0"
