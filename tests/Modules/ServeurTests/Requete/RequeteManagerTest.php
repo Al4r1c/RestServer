@@ -229,6 +229,19 @@ class RequeteManagerTest extends TestCase
         $this->assertEquals(array('once' => 'var1', 'twice' => 'var2'), $this->restRequete->getParametres());
     }
 
+    public function testRecupererPutEmptyAndJson()
+    {
+        $mockServer = $this->createMock(
+            'Server',
+            new MockArg('getUneVariableServeur', 'PUT', array('REQUEST_METHOD')),
+            new MockArg('getUneVariableServeur', 'application/json', array('CONTENT_TYPE')),
+            new MockArg('getUneVariableServeur', '', array('PHP_INPUT'))
+        );
+        $this->restRequete->setServer($mockServer);
+
+        $this->assertEquals(array(), $this->restRequete->getParametres());
+    }
+
     public function testRecupererDelete()
     {
         $mockServer = $this->createMock(
