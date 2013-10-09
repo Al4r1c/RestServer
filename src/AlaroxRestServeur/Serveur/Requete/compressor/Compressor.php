@@ -24,10 +24,9 @@ class Compressor
     }
 
     /**
-     * @param $data
+     * @param string $data
      * @param string $format
      * @throws \Exception
-     * @internal param string $tabDonnees
      * @return string
      */
     public function uncompress($data, $format)
