@@ -82,7 +82,7 @@ class ErreurHandler
     public function exceptionHandler(\Exception $exception)
     {
         $erreur = new Error($exception->getCode());
-        $erreur->setMessage($exception->getMessage() . 'File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine());
+        $erreur->setMessage($exception->getMessage() . ' - File: ' . $exception->getFile() . ' - Line: ' . $exception->getLine());
         $this->ecrireErreur($erreur);
     }
 
