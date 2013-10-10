@@ -177,9 +177,7 @@ class RequeteManager
             $donnees = array();
         } else {
             foreach ($donnees as $clef => $uneDonnee) {
-                if (is_null($uneDonnee) || (is_string($uneDonnee) && $uneDonnee == '') ||
-                    (is_array($uneDonnee) && count($uneDonnee) == 0)
-                ) {
+                if (is_null($uneDonnee) || (is_string($uneDonnee) && $uneDonnee == '')) {
                     $donnees[$clef] = null;
                 }
             }
