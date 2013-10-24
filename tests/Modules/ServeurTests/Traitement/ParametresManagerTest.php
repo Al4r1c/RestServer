@@ -19,15 +19,15 @@ class ParametresManagerTest extends TestCase
     public function testInstance()
     {
         $this->assertInstanceOf(
-            '\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ParametresManager',
-            $this->_parametresManager
+             '\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ParametresManager',
+                 $this->_parametresManager
         );
     }
 
     public function testAjoutDonne()
     {
         $this->_parametresManager->addChampRequete(
-            $this->getMock('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ChampRequete')
+                                 $this->getMock('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\ChampRequete')
         );
 
         $this->assertCount(1, $this->_parametresManager->getChampsRequete());
@@ -62,7 +62,7 @@ class ParametresManagerTest extends TestCase
     public function testAjoutTri()
     {
         $this->_parametresManager->addTri(
-            $this->getMock('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\Tri')
+                                 $this->getMock('\\AlaroxRestServeur\Serveur\\Traitement\\DonneeRequete\\Tri')
         );
 
         $this->assertCount(1, $this->_parametresManager->getTris());
@@ -139,7 +139,8 @@ class ParametresManagerTest extends TestCase
         $this->assertFalse($this->_parametresManager->getLazyLoad());
     }
 
-    public function testParseLazyLoad() {
+    public function testParseLazyLoad()
+    {
         $this->_parametresManager->parseTabParametres(array('lazyLoad' => true));
 
         $this->assertEmpty($this->_parametresManager->getChampsRequete());
@@ -147,7 +148,17 @@ class ParametresManagerTest extends TestCase
         $this->assertTrue($this->_parametresManager->getLazyLoad());
     }
 
-    public function testParseLazyLoadValue() {
+    public function testParseLazyLoadInt()
+    {
+        $this->_parametresManager->parseTabParametres(array('lazyLoad' => 1));
+
+        $this->assertEmpty($this->_parametresManager->getChampsRequete());
+        $this->assertEmpty($this->_parametresManager->getTris());
+        $this->assertTrue($this->_parametresManager->getLazyLoad());
+    }
+
+    public function testParseLazyLoadValue()
+    {
         $this->_parametresManager->parseTabParametres(array('lazyLoad' => 'hello'));
 
         $this->assertEmpty($this->_parametresManager->getChampsRequete());

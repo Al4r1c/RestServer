@@ -116,7 +116,7 @@ class ParametresManager
     {
         foreach ($tabParametres as $clef => $valeurParametre) {
             if ($clef == 'lazyLoad') {
-                if ($valeurParametre === true) {
+                if ($valeurParametre === true || is_int($valeurParametre) && $valeurParametre == 1) {
                     $this->_lazyLoad = true;
                 } else {
                     $this->_lazyLoad = $valeurParametre;
