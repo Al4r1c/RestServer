@@ -1,0 +1,25 @@
+<phpunit bootstrap="TestEnv.php">
+	<testsuites>
+		<testsuite name="Test Suite Rest Server">
+			<directory>./</directory>
+		</testsuite>
+	</testsuites>
+
+	<filter>
+		<whitelist>
+			<directory suffix=".php">../src</directory>
+			<exclude>
+				<directory suffix=".php">../src/AlaroxRestServeur/conteneur</directory>
+				<directory suffix=".php">../src/AlaroxRestServeur/Main.php</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+
+	<logging>
+		<log type="coverage-html" target="../../build/coverage" title="Server Rest"
+		     charset="UTF-8" yui="true" highlight="true"
+		     lowUpperBound="35" highLowerBound="70"/>
+		<log type="coverage-clover" target="../../build/logs/clover.xml"/>
+		<log type="junit" target="../../build/logs/junit.xml" logIncompleteSkipped="false"/>
+	</logging>
+</phpunit>

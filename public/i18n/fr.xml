@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "xmli18n.dtd">
+
+<language lang="fr">
+
+	<trad>
+		<message code="notice">Remarque</message>
+		<message code="warning">Attention</message>
+		<message code="error">Erreur</message>
+		<message code="fatalerror">Erreur critique</message>
+		<message code="file">Fichier</message>
+		<message code="line">Ligne</message>
+		<message code="remoteIp">Ip client distant</message>
+		<message code="method">Méthode</message>
+		<message code="arguments">Paramètres</message>
+		<message code="reponseCode">Code retour</message>
+		<message code="reponseFormat">Format retour</message>
+	</trad>
+
+	<errorType>
+		<message code="1">Erreur PHP</message>
+		<message code="100">Paramètre invalide</message>
+		<message code="101">Objet de réponse</message>
+		<message code="200">Requête</message>
+		<message code="201">Variables de serveur et d'exécution</message>
+		<message code="300">Gestionnaire de traitement</message>
+		<message code="301">Configuration de la base de données</message>
+		<message code="302">Gestionnaire des authorisations</message>
+		<message code="303">Opérateur</message>
+		<message code="400">Réponse</message>
+		<message code="401">Gestionnaire des entêtes</message>
+		<message code="402">Fichier de configuration</message>
+	</errorType>
+
+	<errorMessage>
+		<message code="1000">Paramètre de la fonction %s() doit être du type %s, %s obtenu.</message>
+		<message code="10100">Code HTTP "%" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html à propos des code HTTP.</message>
+		<message code="10101">Format "%s" invalide.</message>
+		<message code="20000">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
+		<message code="20001">Aucun format de retour valide trouvé.</message>
+		<message code="20002">L'IP du client distant "%s" est invalide.</message>
+		<message code="20003">Format "%s" invalide.</message>
+		<message code="20004">Format de la requête "%s" inconnu.</message>
+		<message code="20005">Méthode de l'entête Authorization (%s) invalide. (devrait être ARS)</message>
+		<message code="20100">Variable serveur "%s" manquante.</message>
+		<message code="20101">Méthode HTML "%s" invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html pour plus d'informations à propos des méthodes.</message>
+		<message code="30000">Impossible d'exécuter la requête: %s n'est pas paramétré.</message>
+		<message code="30001">Classe de la base de données %s non trouvée.</message>
+		<message code="30100">Numéro de port invalide %s. [0-65535]</message>
+		<message code="30200">Le fichier "%s" n'existe pas.</message>
+		<message code="30201">Clef "%s" absente. (%s)</message>
+		<message code="30202">Valeur "%s" pour la clef "%s" invalide.</message>
+		<message code="30203">La clef privée "%s" est trop courte. [>=%s]</message>
+		<message code="30204">La clef privée "%s" doit contenir au moins une lettre minuscule unicode.</message>
+		<message code="30205">La clef privée "%s" doit contenir au moins une lettre majuscule unicode.</message>
+		<message code="30206">La clef privée "%s" doit contenir au moins un chiffre.</message>
+		<message code="30207">La clef privée "%s" doit contenir au moins un caractère unicode non alphanumérique.</message>
+		<message code="30300">Opérateur "%s" invalide.</message>
+		<message code="40000">Les formats de retour acceptés sont invalides.</message>
+		<message code="40001">Charset %s invalide.</message>
+		<message code="40002">La classe du rendu de la sortie spécifiée (%s) n'a pas été trouvée.</message>
+		<message code="40003">La factory des classes de rendues n'a pas été paramétrée.</message>
+		<message code="40100">L'entête HTTP "%s" pour la réponse est invalide. Consulter http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html pour plus d'information sur les entêtes.</message>
+		<message code="40200">Le fichier de configuration du framework est introuvable. (Devrait être: %s)</message>
+		<message code="40201">La clef %s est obligatoire dans la configuration mais n'existe pas.</message>
+		<message code="40202">La clef %s n'existe pas dans la configuration.</message>
+	</errorMessage>
+
+</language>

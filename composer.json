@@ -1,0 +1,39 @@
+{
+	"name": "alarox-restserver/RestServer",
+	"description": "Rest Server.",
+	"type": "library",
+	"homepage": "https://github.com/Al4r1c/RestServer/",
+	"authors": [
+		{
+			"name": "KURDIJAKA Y.",
+			"email": "yann.kurdijaka@wanadoo.fr"
+		}
+	],
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/Al4r1c/AlaroxClassLoader"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/Al4r1c/AlaroxFileManager"
+		},
+		{
+			"type": "vcs",
+			"url": "https://github.com/Al4r1c/AlaroxXMLParser"
+		}
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"alarox/AlaroxClassLoader": "v1.01",
+		"alarox/AlaroxFileManager": "v0.42",
+		"alarox/AlaroxXMLParser": "v0.3",
+		"pimple/pimple": "v1.0.2",
+		"mikey179/vfsStream": "v1.2.0"
+	},
+	"autoload": {
+		"psr-0": {
+			"AlaroxRestServeur": "src/"
+		}
+	}
+}

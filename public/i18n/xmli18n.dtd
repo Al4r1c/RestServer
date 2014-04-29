@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT language (errorMessage|errorType|trad)*>
+<!ATTLIST language lang CDATA #REQUIRED>
+
+	<!ELEMENT errorMessage (message+)>
+	<!ELEMENT errorType (message+)>
+	<!ELEMENT trad (message+)>
+
+		<!ELEMENT message (#PCDATA)>
+		<!ATTLIST message code CDATA #REQUIRED>

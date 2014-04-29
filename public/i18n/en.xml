@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "xmli18n.dtd">
+
+<language lang="en">
+
+	<trad>
+		<message code="notice">Notice</message>
+		<message code="warning">Warning</message>
+		<message code="error">Error</message>
+		<message code="fatalerror">Fatal error</message>
+		<message code="file">File</message>
+		<message code="line">Line</message>
+		<message code="remoteIp">Remote IP</message>
+		<message code="method">Method</message>
+		<message code="arguments">Arguments</message>
+		<message code="reponseCode">Response code</message>
+		<message code="reponseFormat">Response format</message>
+	</trad>
+
+	<errorType>
+		<message code="1">PHP Error</message>
+		<message code="100">Invalid Argument</message>
+		<message code="101">Response Object</message>
+		<message code="200">Request</message>
+		<message code="201">Server and execution environment information</message>
+		<message code="300">Handling manager</message>
+		<message code="301">Database configuration</message>
+		<message code="302">Authorization Manager</message>
+		<message code="303">Operator</message>
+		<message code="400">Response</message>
+		<message code="401">Header Manager</message>
+		<message code="402">Configuration file</message>
+	</errorType>
+
+	<errorMessage>
+		<message code="1000">Argument passed to %s() must be an instance of %s, %s given.</message>
+		<message code="10100">HTTP code "%s" is not valid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html for more informations about HTTP code.</message>
+		<message code="10101">Invalid format "%s".</message>
+		<message code="20000">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
+		<message code="20001">No valid return format found.</message>
+		<message code="20002">Remote client ip "%s" is not valid.</message>
+		<message code="20003">Invalid format "%s".</message>
+		<message code="20004">Unknown request format "%s".</message>
+		<message code="20005">Authorization header's method (%s) invalid. (should be ARS)</message>
+		<message code="20100">Missing server key variable "%s".</message>
+		<message code="20101">Invalid HTML method "%s". Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html for more informations about valid methods.</message>
+		<message code="30000">Can't execute request: %s is not set.</message>
+		<message code="30001">Database class %s not found.</message>
+		<message code="30100">Invalid port number %s. [0-65535]</message>
+		<message code="30200">File "%s" does not exist.</message>
+		<message code="30201">Missing key %s. (%s)</message>
+		<message code="30202">Value "%s" for key "%s" invalid.</message>
+		<message code="30203">Private key "%s" is too short. [>=%s]</message>
+		<message code="30204">Private key "%s" must contains at least one lower case unicode letter.</message>
+		<message code="30205">Private key "%s" must contains at least one upper case unicode letter.</message>
+		<message code="30206">Private key "%s" must contains at least one number.</message>
+		<message code="30207">Private key "%s" must contains at least one non unicode alphanumerical character.</message>
+		<message code="30300">Invalid operator "%s".</message>
+		<message code="40000">Accepted output format are invalid.</message>
+		<message code="40001">Invalid charset %s.</message>
+		<message code="40002">Specified output rendering class (%s) not found.</message>
+		<message code="40003">Render classe factory is not set.</message>
+		<message code="40100">Response header "%s" is invalid. Check http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html for more informations about headers.</message>
+		<message code="40200">Framework's configuration file not found. (Should be located: %s)</message>
+		<message code="40201">Key %s must be present but does not exist in the configuration.</message>
+		<message code="40202">Key %s does not exist in the configuration.</message>
+	</errorMessage>
+
+</language>
